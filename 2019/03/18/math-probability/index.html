@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>概率论笔记 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="概率论基础相关笔记 
+一、基础
+原文：prob140/textbook/notebooks/ch01
+译者：飞龙
+协议：CC BY-NC-SA 4.0
+自豪地采用谷歌翻译
+
+究竟是什么概率，一直是有争议的辩论主题。有些人认为概率是长期的频率，只适用于在相同条件下可能反复发生的事件。其他人则认为概率量化了个体对任何事件的不确定性的主观程度，并且可能因人而异。还有一些人并不严格属于这些分组。
+概率含义的争论使伟大的概率论者吉米·萨维奇（Jimmie Savage，1917-1971）观察到“自从巴别">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、基础"><span class="toc-number">1.</span> <span class="toc-text">一、基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#结果空间和事件"><span class="toc-number">1.1.</span> <span class="toc-text">结果空间和事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例一：排列"><span class="toc-number">1.1.1.</span> <span class="toc-text">示例一：排列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#等可能结果"><span class="toc-number">1.2.</span> <span class="toc-text">等可能结果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#等可能的结果空间中的概率"><span class="toc-number">1.2.1.</span> <span class="toc-text">等可能的结果空间中的概率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例一：随机排列"><span class="toc-number">1.2.2.</span> <span class="toc-text">示例一：随机排列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例二：随机数生成"><span class="toc-number">1.2.3.</span> <span class="toc-text">示例二：随机数生成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#散列中的碰撞"><span class="toc-number">1.3.</span> <span class="toc-text">散列中的碰撞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无碰撞"><span class="toc-number">1.3.1.</span> <span class="toc-text">无碰撞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#至少一个碰撞"><span class="toc-number">1.3.2.</span> <span class="toc-text">至少一个碰撞</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生日问题"><span class="toc-number">1.4.</span> <span class="toc-text">生日问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#随机性假设"><span class="toc-number">1.4.1.</span> <span class="toc-text">随机性假设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配的概率"><span class="toc-number">1.4.2.</span> <span class="toc-text">匹配的概率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算几率"><span class="toc-number">1.4.3.</span> <span class="toc-text">计算几率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生日“悖论”"><span class="toc-number">1.4.4.</span> <span class="toc-text">生日“悖论”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指数近似"><span class="toc-number">1.5.</span> <span class="toc-text">指数近似</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤-1：仅仅近似需要近似的项"><span class="toc-number">1.5.1.</span> <span class="toc-text">步骤 1：仅仅近似需要近似的项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤-2：使用对数将乘法变成加法"><span class="toc-number">1.5.2.</span> <span class="toc-text">步骤 2：使用对数将乘法变成加法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤-3：使用对数的性质"><span class="toc-number">1.5.3.</span> <span class="toc-text">步骤 3：使用对数的性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤-4：按需转换来完成近似"><span class="toc-number">1.5.4.</span> <span class="toc-text">步骤 4：按需转换来完成近似</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#近似值有多好"><span class="toc-number">1.5.5.</span> <span class="toc-text">近似值有多好</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、计算几率"><span class="toc-number">2.</span> <span class="toc-text">二、计算几率</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#加法"><span class="toc-number">2.1.</span> <span class="toc-text">加法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第三个公理，加法规则"><span class="toc-number">2.1.1.</span> <span class="toc-text">第三个公理，加法规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#嵌套事件"><span class="toc-number">2.1.2.</span> <span class="toc-text">嵌套事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减法规则"><span class="toc-number">2.1.3.</span> <span class="toc-text">减法规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#补集"><span class="toc-number">2.1.4.</span> <span class="toc-text">补集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#补集规则"><span class="toc-number">2.1.4.1.</span> <span class="toc-text">补集规则</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-number">2.2.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例-2：骰子的-12-次投掷的最大值"><span class="toc-number">2.3.</span> <span class="toc-text">示例 2：骰子的 12 次投掷的最大值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-3：大于第一个随机数的第二个随机数"><span class="toc-number">2.3.1.</span> <span class="toc-text">示例 3：大于第一个随机数的第二个随机数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#乘法"><span class="toc-number">2.4.</span> <span class="toc-text">乘法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无放回随机抽取"><span class="toc-number">2.4.1.</span> <span class="toc-text">无放回随机抽取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#条件概率"><span class="toc-number">2.4.2.</span> <span class="toc-text">条件概率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-1：两张牌中的两个-A"><span class="toc-number">2.4.3.</span> <span class="toc-text">示例 1：两张牌中的两个 A</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-2：99-岁"><span class="toc-number">2.4.4.</span> <span class="toc-text">示例 2：99 岁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多示例"><span class="toc-number">2.5.</span> <span class="toc-text">更多示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-1：基本方法-从划分开始"><span class="toc-number">2.5.1.</span> <span class="toc-text">示例 1：基本方法 - 从划分开始</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-2：波利亚坛子模型"><span class="toc-number">2.5.2.</span> <span class="toc-text">示例 2：波利亚坛子模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新概率"><span class="toc-number">2.6.</span> <span class="toc-text">更新概率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例：真阳性"><span class="toc-number">2.6.1.</span> <span class="toc-text">示例：真阳性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#贝叶斯规则"><span class="toc-number">2.6.2.</span> <span class="toc-text">贝叶斯规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#先验的影响"><span class="toc-number">2.6.3.</span> <span class="toc-text">先验的影响</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、随机变量"><span class="toc-number">3.</span> <span class="toc-text">三、随机变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#结果空间上的函数"><span class="toc-number">3.1.</span> <span class="toc-text">结果空间上的函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#乘积空间"><span class="toc-number">3.1.1.</span> <span class="toc-text">乘积空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结果空间上的函数-1"><span class="toc-number">3.1.2.</span> <span class="toc-text">结果空间上的函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#随机变量的函数"><span class="toc-number">3.1.2.1.</span> <span class="toc-text">随机变量的函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#由S确定的事件"><span class="toc-number">3.1.3.</span> <span class="toc-text">由S确定的事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分布"><span class="toc-number">3.2.</span> <span class="toc-text">分布</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#展示分布"><span class="toc-number">3.2.1.</span> <span class="toc-text">展示分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Plot的注解"><span class="toc-number">3.2.2.</span> <span class="toc-text">Plot的注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S的分布的注解"><span class="toc-number">3.2.3.</span> <span class="toc-text">S的分布的注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#展示事件的概率"><span class="toc-number">3.2.4.</span> <span class="toc-text">展示事件的概率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数学和代码的对应"><span class="toc-number">3.2.5.</span> <span class="toc-text">数学和代码的对应</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相等性"><span class="toc-number">3.3.</span> <span class="toc-text">相等性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相同"><span class="toc-number">3.3.1.</span> <span class="toc-text">相同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同分布"><span class="toc-number">3.3.2.</span> <span class="toc-text">同分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相等性之间的关系"><span class="toc-number">3.3.3.</span> <span class="toc-text">相等性之间的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例：来自小牌组的两张牌"><span class="toc-number">3.3.4.</span> <span class="toc-text">示例：来自小牌组的两张牌</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            概率论笔记
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2019/03/18/math-probability/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-03-18T02:52:38.000Z" itemprop="datePublished">2019-03-18</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/Math/">Math</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>概率论基础相关笔记<br><a id="more"></a> </p>
+<h1 id="一、基础"><a href="#一、基础" class="headerlink" title="一、基础"></a>一、基础</h1><blockquote>
+<p>原文：<a href="https://nbviewer.jupyter.org/github/prob140/textbook/blob/gh-pages/notebooks/Chapter_01/" target="_blank" rel="noopener">prob140/textbook/notebooks/ch01</a></p>
+<p>译者：<a href="https://github.com/wizardforcel" target="_blank" rel="noopener">飞龙</a></p>
+<p>协议：<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></p>
+<p>自豪地采用<a href="https://translate.google.cn/" target="_blank" rel="noopener">谷歌翻译</a></p>
+</blockquote>
+<p>究竟是什么概率，一直是有争议的辩论主题。有些人认为概率是长期的频率，只适用于在相同条件下可能反复发生的事件。其他人则认为概率量化了个体对任何事件的不确定性的主观程度，并且可能因人而异。还有一些人并不严格属于这些分组。</p>
+<p>概率含义的争论使伟大的概率论者吉米·萨维奇（Jimmie Savage，1917-1971）观察到“自从巴别塔以来很少有这种完全的分歧和争论。”</p>
+<p>现在，频率论者和主观主义者之间的分歧，并不像以前那么广泛。在 Prob140 中，对于概率的含义，欢迎你自己做出决定。</p>
+<p>无论哲学上的争论如何，概率的基本组合方式都可以通过考虑比例来理解。这就是我们将在前两章中探讨的内容。我们先来介绍一些概率论的标准术语。</p>
+<h2 id="结果空间和事件"><a href="#结果空间和事件" class="headerlink" title="结果空间和事件"></a>结果空间和事件</h2><p>任何涉及随机性的实验都会产生许多可能的结果之一。结果空间是所有这些结果的集合。</p>
+<p>形式上，结果空间只是一个集合，通常用<code>Ω</code>表示。这是大写的希腊字母 Omega。</p>
+<p>现在我们将假设<code>Ω</code>是有限的。从某种意义上说，这不是限制性的，因为即使是最大的数据集也是有限的，而且功能最强大的计算机每个任务都执行许多有限操作。但是，我们很快就会看到，允许无限的可能结果，不仅会产生丰富而优雅的理论，而且会让我们更深入地了解涉及有限结果空间的问题。因此，一旦我们理清了有限的情况，那么<code>Ω</code>是有限的假设将在后面的章节中被解除。</p>
+<p>结果<code>ω</code>是结果空间<code>Ω</code>的一个元素。虽然<code>ω</code>看起来像字母<code>w</code>，但它是小写的希腊 omega，通常比<code>w</code>更圆润。</p>
+<p>事件是<code>Ω</code>的一个子集。允许空集<code>φ</code>和整个空间<code>Ω</code>作为子集。按照惯例，像<code>A</code>和<code>B</code>这样的前面几个字母通常用作事件的符号。</p>
+<h3 id="示例一：排列"><a href="#示例一：排列" class="headerlink" title="示例一：排列"></a>示例一：排列</h3><p>假设你正在对三张牌洗牌，分别是<code>a</code>，<code>b</code>和<code>c</code>。 那么所有可能的结果空间是：</p>
+<p><img src="/2019/03/18/math-probability/tex-7c1a08dab870b2514f78ee305126226e.gif" alt="\Omega ~=~ \{ abc, ~acb, ~bac, ~bca, ~cab, ~cba \}"></p>
+<p>事件<code>{abc, acb}</code>可以被描述为“首先出现<code>a</code>”。 通过将事件定义为子集，事件的这种口头描述变得正式。这是发展精确而一致的理论的第一步，同时也应用于自然语言中。</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>口头描述</th>
+<th>子集</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>A</code></td>
+<td><code>a</code>首先出现</td>
+<td><code>{abc, acb}</code></td>
+</tr>
+<tr>
+<td><code>B</code></td>
+<td><code>b</code>和<code>c</code>不挨着</td>
+<td><code>{bac, cab}</code></td>
+</tr>
+<tr>
+<td><code>C</code></td>
+<td>字母是字母表中的顺序</td>
+<td><code>{abc}</code></td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td><code>a</code>首先出现，<code>b</code>其次，但是<code>c</code>不是第三个</td>
+<td><code>ϕ</code></td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td><code>c</code>是第一个，第二个或者第三个</td>
+<td><code>Ω</code></td>
+</tr>
+<tr>
+<td><code>F</code></td>
+<td>字母来自于表示<code>&quot;taxi&quot;</code>的单词</td>
+<td><code>{cab}</code></td>
+</tr>
+</tbody>
+</table>
+<p>“类型”的注解：结果<code>ω = cab</code>与事件<code>F = {cab}</code>不同。结果是结果空间的一部分，事件是结果空间的一个子集。 这个子集碰巧只包含一个结果，但它仍然是一个子集，而不是一个元素。 你可以把它看作类似 Python 中的不同类型：<code>&#39;cab&#39;</code>是一个字符串，而<code>[&#39;cab&#39;]</code>是一个列表。</p>
+<p>该表包含六个事件，你可以想出更多。 对于每一个，看看你是否可以提供一个有趣的口头描述。</p>
+<p>当你为游戏洗牌时，目标是使牌的顺序变得“随机”。 最好是，你希望任何排列与其他排列可能性相同。 那么让我们开始研究等可能的结果。</p>
+<h2 id="等可能结果"><a href="#等可能结果" class="headerlink" title="等可能结果"></a>等可能结果</h2><p>“如果投掷一枚硬币，那么它是正面的几率是多少呢？”提出这个问题，你会得到的最常见的答案是 1/2。如果你询问理由，没有意外会听到，“因为硬币有两面。”一枚硬币确实有两面，但是注意到一个隐藏在你所得到的“推理”中的假设：两面中的每一面都与另一面相同。</p>
+<p>等可能的结果的假设是一种简单而古老的随机性模型。它将概率定义为比例。<code>Ω</code>是有限的假设，使得易于将比例识别为结果总数的一小部分。</p>
+<p>对于一些<code>n&gt;1</code>，令<code>Ω</code>包含<code>n</code>个结果。让<code>A ⊆ Ω</code>成为一个事件。将<code>#(A)</code>定义为子集<code>A</code>中结果的数量。因此，对于任何其他事件，<code>#(Ω )= n</code>，<code>#(φ) = 0</code>，并且<code>0 &lt; #(A) &lt; n</code>。</p>
+<p>对于事件<code>A</code>，设<code>P(A)</code>表示 <code>A</code>发生的概率或几率。我们将同义地使用“probability”和“chance”两个词（翻译为“概率”或“几率”），并且我们通常会使用“happens”而不是更正式的“occurs”（都翻译为“发生”）。</p>
+<h3 id="等可能的结果空间中的概率"><a href="#等可能的结果空间中的概率" class="headerlink" title="等可能的结果空间中的概率"></a>等可能的结果空间中的概率</h3><p>假设<code>Ω</code>中的所有<code>n</code>个结果是等可能的，则事件<code>A</code>发生的概率由下式定义：</p>
+<p><img src="/2019/03/18/math-probability/tex-89c473499b7fb7797293253419935bac.gif" alt="P(A) ~=~ \frac{\#(A)}{\#(\Omega )} ~=~ \frac{\#(A)}{n} ~=~ \text{proportion of outcomes in } A"></p>
+<p>这种概率是比例的想法是许多计算的核心。 你将会看到，比例的组合规则成为概率的组合规则，无论所有结果是否是等可能的。 但是现在我们将在结果可能性相同的自然假设下开展工作。</p>
+<h3 id="示例一：随机排列"><a href="#示例一：随机排列" class="headerlink" title="示例一：随机排列"></a>示例一：随机排列</h3><p>设<code>Ω</code>是字母<code>a</code>，<code>b</code>和<code>c</code>的所有排列的空间。 那么<code>Ω</code>包含<code>n = 6</code>个结果：</p>
+<p><img src="/2019/03/18/math-probability/tex-7c1a08dab870b2514f78ee305126226e.gif" alt="\Omega ~=~ \{ abc, ~acb, ~bac, ~bca, ~cab, ~cba \}"></p>
+<p>如果我们假设所有六种排列是等可能的，我们着手于三个字母的随机排列。 在这个假设下，我们可以用一列几率来扩展我们的事件表。</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>口头描述</th>
+<th>子集</th>
+<th>概率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>A</code></td>
+<td><code>a</code>首先出现</td>
+<td><code>{abc, acb}</code></td>
+<td><code>2/6 = 1/3</code></td>
+</tr>
+<tr>
+<td><code>B</code></td>
+<td><code>b</code>和<code>c</code>不挨着</td>
+<td><code>{bac, cab}</code></td>
+<td>1/3</td>
+</tr>
+<tr>
+<td><code>C</code></td>
+<td>字母是字母表中的顺序</td>
+<td><code>{abc}</code></td>
+<td>1/6</td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td><code>a</code>首先出现，<code>b</code>其次，但是<code>c</code>不是第三个</td>
+<td><code>ϕ</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td><code>c</code>是第一个，第二个或者第三个</td>
+<td><code>Ω</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>F</code></td>
+<td>字母来自于表示<code>&quot;taxi&quot;</code>的单词</td>
+<td><code>{cab}</code></td>
+<td>1/6</td>
+</tr>
+</tbody>
+</table>
+<p>要注意：</p>
+<p><img src="/2019/03/18/math-probability/tex-b31d5c0301132f4c81a1c143fd7788e8.gif" alt="P(a \text{ appears last}) = \frac{\#\{ bca, ~cba \}}{6} ~=~ \frac{1}{3} ~=~ \frac{\#\{ bac, ~cab \}}{6} ~=~ P(a \text{ appears second})"></p>
+<p>因此，所有排列等可能的假设，使得所有三个位置是等可能的。你应该检查<code>b</code>和<code>c</code>的位置也是如此。</p>
+<h3 id="示例二：随机数生成"><a href="#示例二：随机数生成" class="headerlink" title="示例二：随机数生成"></a>示例二：随机数生成</h3><p>假设一个随机数生成器从<code>00,01,02,...,98,99</code>的 100 个偶对  中返回一对数字，使得所有偶对等可能返回。</p>
+<p>你会注意到这些偶对与 0 到 99 的 100 个整数相对应。在下面的内容中，乘法法则会很有用：</p>
+<p>第一个数字有 10 个选项：<code>0,1,2,3,4,5,6,7,8,9</code>。<br>对应于第一位数字的每个选择，第二位数字有 10 个选择。<br>所以总共有<code>10×10 = 100</code>对数字。</p>
+<p>这里“偶对”是两个数字的序列，一个接一个。偶对 27 与 72 不同。它们有时称为“有序对”。在本文中，所有序列都是有序的。</p>
+<p>现在我们来计算一些事件的概率。通过假设，所有偶对都是等可能的。因此，每个答案将包括计算事件中的偶对数量，然后除以总数，即 100。</p>
+<p>（1）偶对由两个不同的数字组成的概率是多少？</p>
+<p>我们必须计算<code>a ≠ b</code>的偶对<code>ab</code>的数量。数字<code>a</code>可以按 10 种方式选择；对于每种方式，只有 9 种方法用于选择<code>b</code>，因为<code>b</code>必须与<code>a</code>不同。所以答案是：</p>
+<p><img src="/2019/03/18/math-probability/tex-bfc12cbbbc8aad16ff9ecdc363714a5c.gif" alt="P(\text{the pair consists of two different digits}) ~=~ \frac{90}{100} ~=~ 0.9"></p>
+<p>（2）两个数字相同的几率是多少？</p>
+<p>让我们尝试使用我们对（1）的回答。 在 100 对中的每一对中，两个数字相同或不同。 没有一对可以属于两个类别，所以按照我们的比例规则：</p>
+<p><img src="/2019/03/18/math-probability/tex-340b682411d5eb7e688345def2593809.gif" alt="P(\text{the two digits are the same}) ~=~ 1 ~-~ P(\text{the pair consists of two different digits}) ~=~ 0.1"></p>
+<p>为了通过计数来检查这一点，你必须统计<code>aa</code>形式的偶对。 有 10 种方法可供选择，之后就没有更多的选择了。 所以答案是<code>10/100 = 0.1</code>，证实了以上我们的计算。</p>
+<h2 id="散列中的碰撞"><a href="#散列中的碰撞" class="headerlink" title="散列中的碰撞"></a>散列中的碰撞</h2><p>在计算机科学中，散列函数将一个称为散列值的代码分配给一组个体中的每一个。为每个个体分配一个独特的值是很重要的。如果相同的值分配给了两个个体，则会发生碰撞，这会产生认证问题。然而，跟踪哪些散列值已分配或未分配是很麻烦的，因为散列值和个体的数量可能非常大。</p>
+<p>如果散列值只是随机分配，而并不考虑哪些已经分配了呢？如果存在大量不同的值和相对较少的个体，那么认为碰撞的可能性很小，似乎是合理的。例如，如果有 1,000 个可用的散列值并且只有 5 个个体，那么如果你为这 5 个个体选择了 5 个值的随机序列，则似乎不太可能会发生冲突。</p>
+<p>让我们对随机性做一些假设，找出没有碰撞的概率。假设有<code>N</code>个散列值和<code>n</code>个个体，并且假设你的散列函数是这样的，那么对个体的所有 <img src="/2019/03/18/math-probability/tex-0e0bd2c8e68af9a3b617b79a9f082157.gif" alt="N^n"> 个赋值都是等可能的。赋值是序列 <img src="/2019/03/18/math-probability/tex-0372e3cea95dcc5a60801b51b94d0ec8.gif" alt="a_0 a_1 \ldots a_n">，其中，对于每个<code>i</code>，将散列值 <img src="/2019/03/18/math-probability/tex-2aecb1dc57e87620a373d19b0a889efb.gif" alt="a_i"> 分配给个体<code>i</code>。</p>
+<p>请注意，我们假定<code>n</code>个个体中的每一个，都可以被分配<code>N</code>个值中的任何一个，而不管分配给其他人的是什么。这包括了不幸的概率，所有<code>n</code>个个体被赋予相同值。</p>
+<h3 id="无碰撞"><a href="#无碰撞" class="headerlink" title="无碰撞"></a>无碰撞</h3><p>无碰撞的概率是什么？</p>
+<p>如果个体数量<code>n</code>大于散列值<code>N</code>的数量，则答案为 0。如果个体数量多于个人数量，那么你将不得不重复使用某些值，因此无法避免碰撞。</p>
+<p>但是我们对<code>n</code>很小的情况感兴趣，所以假设<code>n ≤ N</code>，我们没有问题。</p>
+<p>如果回顾前一部分中，随机数生成器的例子中的第（1）部分，你会发现，在<code>N = 10</code>且<code>n = 2</code>的情况下，它与我们当前的问题相同。 我们可以按照相同的流程来获得我们的答案。</p>
+<p>根据假设，所有 <img src="/2019/03/18/math-probability/tex-0e0bd2c8e68af9a3b617b79a9f082157.gif" alt="N^n"> 个可能的赋值都是等可能的。其中一些赋值不包含碰撞。我们的工作是统计它有多少。</p>
+<p>你熟悉 Python 的从 0 开始的索引系统，它在这里派上用场。 我们必须计算序列 <img src="/2019/03/18/math-probability/tex-0f58d8a274ae77180a3d1b04c6035cf1.gif" alt="a_0a_1 \ldots a_{n-1}"> 的数量，其中每个 <img src="/2019/03/18/math-probability/tex-2aecb1dc57e87620a373d19b0a889efb.gif" alt="a_i"> 是 N 个哈希值之一，并且所有 <img src="/2019/03/18/math-probability/tex-2aecb1dc57e87620a373d19b0a889efb.gif" alt="a_i"> 都彼此不同。</p>
+<ul>
+<li><img src="/2019/03/18/math-probability/tex-6a9275b7f966e45ffb33492e358c8dff.gif" alt="a_0"> 有<code>N</code>个选项。</li>
+<li>对于每一种选择，<img src="/2019/03/18/math-probability/tex-027c3429f98f7c39bab027549e1b9c7b.gif" alt="a_1"> 都有<code>N-1</code>个选项，因为 <img src="/2019/03/18/math-probability/tex-027c3429f98f7c39bab027549e1b9c7b.gif" alt="a_1"> 必须与 <img src="/2019/03/18/math-probability/tex-6a9275b7f966e45ffb33492e358c8dff.gif" alt="a_0"> 不同。</li>
+<li>因此，有<code>N(N-1)</code>种方式填充位置 0 和 1 而避免碰撞。</li>
+<li>对于这些选择 <img src="/2019/03/18/math-probability/tex-6a9275b7f966e45ffb33492e358c8dff.gif" alt="a_0"> 和 <img src="/2019/03/18/math-probability/tex-027c3429f98f7c39bab027549e1b9c7b.gif" alt="a_1"> 的<code>N(N-1)</code>种方法，<img src="/2019/03/18/math-probability/tex-30c872662b356aa720d1971361b45724.gif" alt="a_2"> 有<code>N-2</code>个选择。 这是因为 <img src="/2019/03/18/math-probability/tex-30c872662b356aa720d1971361b45724.gif" alt="a_2"> 必须不同于彼此不同的 <img src="/2019/03/18/math-probability/tex-6a9275b7f966e45ffb33492e358c8dff.gif" alt="a_0"> 和 <img src="/2019/03/18/math-probability/tex-027c3429f98f7c39bab027549e1b9c7b.gif" alt="a_1">。</li>
+<li>因此，有<code>N(N-1)(N-2)</code>种填充位置 0, 1 和 2 的方式。</li>
+<li>请注意，对于每个<code>i</code>，与位置<code>i</code>对应的乘积中的项是<code>N-i</code>。这使序列容易延续到最后，即位置<code>(n-1)</code>。</li>
+</ul>
+<p><img src="/2019/03/18/math-probability/tex-35e5b85e233ca4b4cf8457ef9cf2fa91.gif" alt="P(\mbox{no collisions}) ~=~ \frac{N(N-1)(N-2) \cdots (N-(n-1))}{N^n} ~=~ \frac{N(N-1)(N-2) \cdots (N-n+1)}{N^n}"></p>
+<p>“延续序列”是一个需要数学证明的非正式过程。 你可以通过归纳法来证明。</p>
+<p>分子中的乘积有<code>n</code>项，分母中有<code>n</code>个因子。 这使我们可以用不同的方式编写公式，作为<code>n</code>个分数的乘积：</p>
+<p><img src="/2019/03/18/math-probability/tex-ef2daf1a9ce67c174a9611b731a12b02.gif" alt="P(\mbox{no collisions}) ~=~ frac{N}{N} \cdot \frac{N-1}{N} \cdot \frac{N-2}{N} \cdots \frac{N-n+1}{N} ~=~ \prod_{i=0}^{n-1} \frac{N-i}{N}"></p>
+<p>符号 <img src="/2019/03/18/math-probability/tex-4e4081f921d89e551f9ddbe661b1289d.gif" alt="\prod"> 表示求积，就像 <img src="/2019/03/18/math-probability/tex-7231fa806691800f095133f6fb720d82.gif" alt="\sum"> 表示求和。</p>
+<p>现在是坏消息了：</p>
+<h3 id="至少一个碰撞"><a href="#至少一个碰撞" class="headerlink" title="至少一个碰撞"></a>至少一个碰撞</h3><p>每个序列要么至少有一次碰撞，要么没有碰撞。 没有序列可以位于这两个类别中，所以按照我们的比例规则：</p>
+<p><img src="/2019/03/18/math-probability/tex-44f67f0604ae93fac3e3f9f9297cf21b.gif" alt="P(\mbox{at least one collision}) ~=~ 1 ~-~ \prod_{i=0}^{n-1} \frac{N-i}{N}"></p>
+<p>我们有了公式。这很棒！但是答案很大，还是很小？仅通过观察公式不容易分辨。那么让我们以不同的方式开始检验答案。</p>
+<p>第一种方法是数字。为此，我们必须处理<code>N</code>和<code>n</code>的数值。我们在一个背景中会实现它，这个背景让这个计算变得著名。</p>
+<h2 id="生日问题"><a href="#生日问题" class="headerlink" title="生日问题"></a>生日问题</h2><p>一个经典的概率问题是生日的“碰撞”。这个生日问题由理查德·冯·米塞斯和其他数学家提出 - 它的起源并不完善。主要问题是，“如果一个房间里有<code>n</code>个人，那么他们中的一些人有相同的生日的几率是多少？”</p>
+<h3 id="随机性假设"><a href="#随机性假设" class="headerlink" title="随机性假设"></a>随机性假设</h3><p>这个问题通常在每年 365 天的假设下得到解决，并且无论其他人的生日如何，每个人都有可能在 365 天中的任何一天出生。</p>
+<p>你可以看到，这些假设忽略了闰年以及多胎（例如双胞胎）以及一年中出生分布不均匀的情况。这些假设使得计算更简单，但可能并不能反映人口中的生日的实际情况。数据科学家必须小心他们的假设 - 如果假设没有反映真相，那么结论也不会。</p>
+<p>所以让我们注意，我们正在根据简化的假设进行工作，在对特定的群体做出结论之前我们应该检查一下。在任何情况下，忽略闰年和多胎都不应对结论产生重大影响。如果在一年中的某些时候，出生比其他时候更可能发生，那么就证明了生日相同的几率将大于我们在假设下得到的答案。</p>
+<p>生日问题有很多变化，但我们会专注于经典问题。</p>
+<h3 id="匹配的概率"><a href="#匹配的概率" class="headerlink" title="匹配的概率"></a>匹配的概率</h3><p>我们将简洁地陈述我们的假设，因为“所有 <img src="/2019/03/18/math-probability/tex-080d1ceff1762c59612996f1b8d56e2c.gif" alt="365^n"> 个生日序列是等可能的”。 你可以看到，这使得生日问题与上一节的碰撞问题相同，其中<code>N = 365</code>。 如前所述，唯一有趣的情况是当<code>n ≤ N</code>时，为此：</p>
+<p><img src="/2019/03/18/math-probability/tex-59513632e5b63e4c41bf6f5a533dfeba.gif" alt="P(\text{no match}) ~=~ P(\text{all n birthdays are different}) ~=~ \prod_{i=0}^{n-1} \frac{N-i}{N}"></p>
+<h3 id="计算几率"><a href="#计算几率" class="headerlink" title="计算几率"></a>计算几率</h3><p>当<code>N</code>固定在 365 时，函数<code>p_no_match</code>以<code>n</code>为参数并返回在<code>n</code>个生日之中不存在匹配的概率。</p>
+<p>代码的其余部分在一个表中显示所有结果。该表还包含一列，包含存在碰撞的几率：</p>
+<p><img src="/2019/03/18/math-probability/tex-880e3ea08d18b649f9262934f07c33db.gif" alt="P(\text{at least one matching pair}) ~=~ 1 - P(\text{no match}) ~=~ 1 ~-~ \prod_{i=0}^{n-1} \frac{N-i}{N}"></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">N = <span class="number">365</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_no_match</span><span class="params">(n)</span>:</span></span><br><span class="line">    individuals_array = np.arange(n)</span><br><span class="line">    <span class="keyword">return</span> np.prod( (N - individuals_array)/N )</span><br><span class="line"></span><br><span class="line">results = Table().with_column(<span class="string">'Trials'</span>, np.arange(<span class="number">1</span>, N+<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">different = results.apply(p_no_match, <span class="string">'Trials'</span>)</span><br><span class="line"></span><br><span class="line">results = results.with_columns(</span><br><span class="line">    <span class="string">'P(all different)'</span>, different,</span><br><span class="line">    <span class="string">'P(at least one match)'</span>, <span class="number">1</span> - different</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">results</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Trials</th>
+<th>P(all different)</th>
+<th>P(at least one match)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.99726</td>
+<td>0.00273973</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.991796</td>
+<td>0.00820417</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.983644</td>
+<td>0.0163559</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.972864</td>
+<td>0.0271356</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.959538</td>
+<td>0.0404625</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.943764</td>
+<td>0.0562357</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0.925665</td>
+<td>0.0743353</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0.905376</td>
+<td>0.0946238</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.883052</td>
+<td>0.116948</td>
+</tr>
+</tbody>
+</table>
+<p>… (355 rows omitted)</p>
+<p>表中首先要注意的是，使用标签<code>Trials</code>来表示人。在概率中，通常将随机试验看作是试验序列，其中每个试验的结果取决于旅几率。 在生日问题中，每个人都被认为是一个试验，我们正在研究所有试验中是否至少有一对匹配的生日。</p>
+<p>接下来，请注意，在只有一个人的无聊情况下，不能存在一对匹配的生日，因此<code>P(no match)</code>定义为 1。在许多问题中存在这样的“边界情况”，必须单独处理。</p>
+<p>最后，请注意，当人数很少时，他们生日不同的几率很大。这与我们的直觉是一致的，即如果个体数量相对于可用散列值的数量较小，并且随机给个人赋值，那么碰撞的几率很小。</p>
+<h3 id="生日“悖论”"><a href="#生日“悖论”" class="headerlink" title="生日“悖论”"></a>生日“悖论”</h3><p>但是碰撞几率随人数增加而增加。实际上，它增加得很快。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">results.scatter(<span class="string">'Trials'</span>, <span class="string">'P(at least one match)'</span>)</span><br><span class="line">plt.xlim(<span class="number">0</span>, N/<span class="number">3</span>)</span><br><span class="line">plt.ylim(<span class="number">0</span>, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/03/18/math-probability/1-1.png" alt=""></p>
+<p>你可以看到，如果有超过 50 人，那么生日相同的几率就接近 1。</p>
+<p>为了使碰撞几率超过 50%，必须有多少人？ 让我们看看我们能否找到这种情况发生的最少人数。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">results.where(<span class="string">'P(at least one match)'</span>, are.between(<span class="number">0.5</span>, <span class="number">0.51</span>))</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Trials</th>
+<th>P(all different)</th>
+<th>P(at least one match)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>23</td>
+<td>0.492703</td>
+<td>0.507297</td>
+</tr>
+</tbody>
+</table>
+<p>仅仅是 23 人，碰撞的可能性就大于不碰撞。 这让那些没有做计算的人感到惊讶，因此被称为生日悖论。 但事实上，它根本就没有任何矛盾或矛盾之处。 这与生日相同几率随着人数的增加而增长的方式有关。</p>
+<p>我们已经完成了<code>N = 365</code>的计算，但如果 N 是其他数字，函数的增长有多快？ 如果我们要在生日以外的案例中应用我们的结果，我们需要知道它。</p>
+<p>为了解决这个问题，我们可以重新编写各种不同<code>N</code>值的代码，并查看输出告诉我们的这些值的结果。 但是使用数学更加高效和富有洞察力，这是我们将在下一节中做的事情。</p>
+<h2 id="指数近似"><a href="#指数近似" class="headerlink" title="指数近似"></a>指数近似</h2><p>本节的目标是，了解当有<code>N</code>个散列值且<code>N</code>大于<code>n</code>时，至少有一次碰撞的几率，如何表现为个体数<code>n</code>的函数。</p>
+<p>我们知道几率是：</p>
+<p><img src="/2019/03/18/math-probability/tex-57e290ef423f1450bc92a4efd9ba420c.gif" alt="P(\text{at least one collision}) ~=~ 1 ~-~ \prod_{i=0}^{n-1} \frac{N-i}{N}"></p>
+<p>虽然这给出了准确的几率公式，但它并不能让我们了解函数如何增长。让我们看看我们是否可以开发一个近似值，它的形式更简单，因此更容易学习。</p>
+<p>近似中的主要步骤将在本课程中重复使用，因此我们将在这里详细介绍它们。</p>
+<h3 id="步骤-1：仅仅近似需要近似的项"><a href="#步骤-1：仅仅近似需要近似的项" class="headerlink" title="步骤 1：仅仅近似需要近似的项"></a>步骤 1：仅仅近似需要近似的项</h3><p>虽然这看起来很明显，但值得注意的是，它可以节省大量不必要的操作。 我们正在尝试近似：</p>
+<p><img src="/2019/03/18/math-probability/tex-bee6a767092b3d5f5da8037dc07ec338.gif" alt="1 ~-~ \prod_{i=0}^{n-1} \frac{N-i}{N}"></p>
+<p>所以我们需要近似的所有东西，就是：</p>
+<p><img src="/2019/03/18/math-probability/tex-8cfd45a0c94659dc45ed623db7812873.gif" alt="\prod_{i=0}^{n-1} \frac{N-i}{N}"></p>
+<p>最后我们可以将 1 减去近似值。</p>
+<p>换句话说，我们将近似<code>P(no collision)</code>。</p>
+<h3 id="步骤-2：使用对数将乘法变成加法"><a href="#步骤-2：使用对数将乘法变成加法" class="headerlink" title="步骤 2：使用对数将乘法变成加法"></a>步骤 2：使用对数将乘法变成加法</h3><p>我们的公式是乘法，但使用加法要好得多。 对数函数可帮助我们将乘积变成和：</p>
+<p><img src="/2019/03/18/math-probability/tex-774093857515b14522d3cee22eb82756.gif" alt="\log (P(\text{no collision})) ~=~ \sum_{i=0}^{n-1} \log(\frac{N-i}{N})"></p>
+<p>一旦我们有了<code>log(P(no collision))</code>的近似值，我们就可以使用指数将其转换为我们想要的近似值，即<code>P(no collision)</code>。</p>
+<h3 id="步骤-3：使用对数的性质"><a href="#步骤-3：使用对数的性质" class="headerlink" title="步骤 3：使用对数的性质"></a>步骤 3：使用对数的性质</h3><p>这通常是主要计算的步骤。 请记住对于较小的<code>x</code>，<img src="/2019/03/18/math-probability/tex-73d219ec9862c14b5e7688f45823aea2.gif" alt="\log(1+x) \sim x">，其中符号 <img src="/2019/03/18/math-probability/tex-6588c95074f2609674f5fe10ab63f88f.gif" alt="\sim"> 表示当<code>x</code>变为 0 时，双方的比例变为 1。对于较大的<code>x</code>，近似值可能不是很好，但无论如何让我们尝试一下。</p>
+<p><img src="/2019/03/18/math-probability/tex-c1c85e9c30c5a435a5ed1ac2460eccaf.gif" alt="\begin{align*} \log(P(\text{no collision})) ~ &amp;=~ \sum_{i=0}^{n-1} \log(\frac{N-i}{N}) \\ &amp;=~ \sum_{i=0}^{n-1} \log(1 - \frac{i}{N}) \\ &amp;\sim ~ \sum_{i=0}^{n-1} (- \frac{i}{N}) \\ &amp;=~ -\frac{1}{N} \sum_{i=0}^{n-1} i \\ \\ &amp;= - \frac{1}{N} \cdot \frac{(n-1)n}{2} \end{align*}"></p>
+<p>根据前<code>n-1</code>个正整数的和的公式。</p>
+<h3 id="步骤-4：按需转换来完成近似"><a href="#步骤-4：按需转换来完成近似" class="headerlink" title="步骤 4：按需转换来完成近似"></a>步骤 4：按需转换来完成近似</h3><p>艰苦的工作已经完成，现在我们只需要清理干净。 第 3 步给了我们：</p>
+<p><img src="/2019/03/18/math-probability/tex-7be68142285059ca3f6498978a40e040.gif" alt="\log(P(\text{no collision})) ~\sim ~ - \frac{1}{N} \cdot \frac{(n-1)n}{2}"></p>
+<p>对两边取指数，我们得到：</p>
+<p><img src="/2019/03/18/math-probability/tex-92a9d3bb3285e0ac14e50e092118f540.gif" alt="P(\text{no collision}) ~\sim ~ e^{- \frac{1}{N} \cdot \frac{(n-1)n}{2}} ~=~ e^{- (n-1)n/2N } ~ \sim ~ e^{-n^2/2N}"></p>
+<p>最后：</p>
+<p><img src="/2019/03/18/math-probability/tex-15f48190f02b008362a2fcbed60f1d74.gif" alt="P(\text{at least one collision}) ~\sim ~ 1 - e^{- \frac{(n-1)n}{2N}} ~ \sim ~ 1 - e^{-n^2/2N}"></p>
+<p>现在你可以看到，作为人数的函数，为什么<code>P(at least one collision)</code>迅速上升。 记住<code>N</code>是固定的，<code>n</code>在 1 和<code>N</code>之间变化。随着 n 增加，<code>(n-1)n</code>快速增加，基本上类似<code>n^2</code>。 所以<code>-n2 / 2N</code>快速下降，使得 <img src="/2019/03/18/math-probability/tex-7eca65e424097644f9b7c25dbbe90f49.gif" alt="e^{-n^2 / 2N}"> 迅速下降；这让 <img src="/2019/03/18/math-probability/tex-c0b7d88e8564fb01c1e23bd664a55502.gif" alt="1-e^{-n^2 / 2N}"> 飞了起来。</p>
+<p>值得注意的是，在整个计算中只有一个近似值：它在步骤 3 的中间，我们使用<code>ln(1 + x) ~ x</code>表示较小的<code>x</code>。我们会在课程中多次遇到这个近似值。</p>
+<h3 id="近似值有多好"><a href="#近似值有多好" class="headerlink" title="近似值有多好"></a>近似值有多好</h3><p>为了查看指数近似值与确切概率的相比如何，让我们在生日的背景下开展工作；如果你更喜欢不同的配置，你可以在代码中更改<code>N</code>。</p>
+<p>为了查看整个步骤序列，我们将重新进行精确计算并用一列近似值扩展它们。 我们将使用上述两者的更精细的近似。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">N = <span class="number">365</span> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_no_match</span><span class="params">(n)</span>:</span></span><br><span class="line">    individuals_array = np.arange(n)</span><br><span class="line">    <span class="keyword">return</span> np.prod((N - individuals_array)/N)</span><br><span class="line"></span><br><span class="line">trials = np.arange(<span class="number">1</span>, N+<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">results = Table().with_column(<span class="string">'Trials'</span>, trials)</span><br><span class="line">different = results.apply(p_no_match, <span class="string">'Trials'</span>)</span><br><span class="line"></span><br><span class="line">results = results.with_columns(</span><br><span class="line">    <span class="string">'P(at least one match)'</span>, <span class="number">1</span> - different,</span><br><span class="line">    <span class="string">'Exponential Approximation'</span>, <span class="number">1</span> - np.e**( -(trials - <span class="number">1</span>)*trials/(<span class="number">2</span>*N) )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">results</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Trials</th>
+<th>P(at least one match)</th>
+<th>Exponential Approximation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.00273973</td>
+<td>0.00273598</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.00820417</td>
+<td>0.00818549</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.0163559</td>
+<td>0.016304</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.0271356</td>
+<td>0.0270254</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.0404625</td>
+<td>0.0402629</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.0562357</td>
+<td>0.0559104</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0.0743353</td>
+<td>0.0738438</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0.0946238</td>
+<td>0.0939222</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.116948</td>
+<td>0.115991</td>
+</tr>
+</tbody>
+</table>
+<p>… (355 rows omitted)</p>
+<p>前 10 个近似值看起来不错。 让我们来看看更多。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">results.scatter(<span class="string">'Trials'</span>)</span><br><span class="line">plt.xlim(<span class="number">0</span>, N/<span class="number">3</span>)</span><br><span class="line">plt.ylim(<span class="number">0</span>, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/03/18/math-probability/1-2.png" alt=""></p>
+<p>在这张图的尺度上，蓝点（精确值）与金点（我们的指数近似值）几乎没有区别。 你可以再次运行代码，使用不精确的近似法，它将<code>(n-1)n</code>替换为<code>n^2</code>，并看到近似值仍然很好。</p>
+<p>我们从近似的第二种形式中学到，<code>n</code>个指定值中至少有一次碰撞的几率，大致是 <img src="/2019/03/18/math-probability/tex-0792d8075d99ec1c81bfabb57e49ab00.gif" alt="1-e^{-cn^2}">，其中<code>c</code>是正的常数。</p>
+<p>当我们稍后在课程中研究瑞利（Rayleigh）分布时，我们将再次遇到函数 <img src="/2019/03/18/math-probability/tex-ce34cb05ecc78dcba11b5f5b1fac9e23.gif" alt="1-e^{-cx^2}">。</p>
+<h1 id="二、计算几率"><a href="#二、计算几率" class="headerlink" title="二、计算几率"></a>二、计算几率</h1><blockquote>
+<p>原文：<a href="https://nbviewer.jupyter.org/github/prob140/textbook/blob/gh-pages/notebooks/Chapter_02/" target="_blank" rel="noopener">prob140/textbook/notebooks/ch02</a></p>
+<p>译者：<a href="https://github.com/wizardforcel" target="_blank" rel="noopener">飞龙</a></p>
+<p>协议：<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></p>
+<p>自豪地采用<a href="https://translate.google.cn/" target="_blank" rel="noopener">谷歌翻译</a></p>
+</blockquote>
+<p>一旦你开始处理概率问题，你很快就会意识到所有可能结果是等可能的假设并不总是合理的。例如，如果你认为硬币有偏差，那么你就不会认为它的正反面具有相同的几率。</p>
+<p>为了处理一些情况，其中某些结果比其他结果几率更高，需要更普遍的理论。在 20 世纪 30 年代，俄罗斯数学家<a href="https://en.wikipedia.org/wiki/Andrey_Kolmogorov" target="_blank" rel="noopener">安德烈科尔莫戈罗夫</a>（Andrey Kolmogorov，1903-1987）提出了一些基本规则，称为公理，涵盖了丰富的情况，并成为现代概率论的基础。</p>
+<p>公理从结果空间<code>Ω</code>开始。我们现在假设<code>Ω</code>是有限的。概率是一个定义在事件上的函数<code>P</code>，正如你所知，它是<code>Ω</code>的子集。前两个公理只是设置了度量的尺度：他们将概率定义为 0 和 1 之间的数字。</p>
+<ul>
+<li>概率是非负的：对于每个事件<code>A</code>，<img src="/2019/03/18/math-probability/tex-5aa3d3366d9ef343439c8ae22c28aced.gif" alt="P(A) \ge 0">。</li>
+<li>整个空间的概率为 1：<img src="/2019/03/18/math-probability/tex-2113ec3dd272dc40e3ccb36d61f5fd25.gif" alt="P(\Omega)= 1">。</li>
+</ul>
+<p>第三个也是最后一个公理，它是概率成为事件“测度”的关键。在我们制定了一些相关术语后，我们会研究它。</p>
+<h2 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h2><p>第三个公理关于互斥事件。非正式来讲，如果最多只有一个事件发生，则两个事件<code>A</code>和<code>B</code>是互斥的；换句话说，它们不能同时发生。</p>
+<p>例如，假设你从一门课中随机抽取一名学生，其中 40% 的学生是新生，20% 是大二学生。每个学生既可以是大一学生，也可以是大二学生，也可以什么都不是；但没有一个学生既是大一学生，也是大二学生。所以如果<code>A</code>是“所选学生是新生”而<code>B</code>是事件“所选学生是二年级”的事件，则<code>A</code>和<code>B</code>是相斥的。</p>
+<p>互斥事件有什么大不了的？要理解这一点，首先考虑所选学生是大一学生或大二学生的事件。在集合论的语言中，这是“新生”和“大二”两个事件的结合。使用维恩图来显示事件是一个好主意。在下图中，将<code>A</code>和<code>B</code>设想为两个互斥的事件，显示为蓝色和金色圆圈。因为事件是互斥的，所以相应的圆不重叠。并集是两个圆圈中所有点的集合。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_disjoint_union</span><span class="params">()</span>:</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">10</span>, <span class="number">20</span>))</span><br><span class="line">    <span class="comment"># create the circles with shapely</span></span><br><span class="line">    a = sg.Point(<span class="number">1.4</span>,<span class="number">2.5</span>).buffer(<span class="number">1.0</span>)</span><br><span class="line">    b = sg.Point(<span class="number">3.3</span>,<span class="number">2.5</span>).buffer(<span class="number">0.75</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># use descartes to create the matplotlib patches</span></span><br><span class="line">    ax = plt.subplot(<span class="number">121</span>)</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(a, fc=<span class="string">'darkblue'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(b, fc=<span class="string">'gold'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.6</span>))</span><br><span class="line">    ax.annotate(<span class="string">'A'</span>, [<span class="number">1.4</span>, <span class="number">2.5</span>])</span><br><span class="line">    ax.annotate(<span class="string">'B'</span>, [<span class="number">3.3</span>, <span class="number">2.5</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># control display</span></span><br><span class="line">    plt.title(<span class="string">'Mutually Exclusive Events'</span>)</span><br><span class="line">    plt.axis(<span class="string">'off'</span>)</span><br><span class="line">    ax.set_xlim(<span class="number">0</span>, <span class="number">5</span>); ax.set_ylim(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">    ax.set_aspect(<span class="string">'equal'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># use descartes to create the matplotlib patches</span></span><br><span class="line">    ax = plt.subplot(<span class="number">122</span>)</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(a, fc=<span class="string">'blue'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(b, fc=<span class="string">'blue'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># control display</span></span><br><span class="line">    plt.title(<span class="string">'Disjoint Union'</span>)</span><br><span class="line">    plt.axis(<span class="string">'off'</span>)</span><br><span class="line">    ax.set_xlim(<span class="number">0</span>, <span class="number">5</span>); ax.set_ylim(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">    ax.set_aspect(<span class="string">'equal'</span>)</span><br><span class="line">    </span><br><span class="line">show_disjoint_union()</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/03/18/math-probability/2-1.png" alt=""></p>
+<p>学生是大一或大二的几率是多少？ 在总体中，40% 是大一，20% 是大二，所以自然答案是 60%。 这是满足我们“大一或大二”标准的学生的百分比。 简单的加法是有效的，因为两组不相交。</p>
+<p>科尔莫戈罗夫用这个想法来形成第三个，也是最重要的概率公理。正式来讲，如果交集为空，则<code>A</code>和<code>B</code>是互斥事件：</p>
+<p><img src="/2019/03/18/math-probability/tex-398aa94355880929719adb1b0a428f5b.gif" alt="A \cap B = \phi"></p>
+<h3 id="第三个公理，加法规则"><a href="#第三个公理，加法规则" class="headerlink" title="第三个公理，加法规则"></a>第三个公理，加法规则</h3><p>在有限结果空间的背景下，公理表明：</p>
+<ul>
+<li>如果<code>A</code>和<code>B</code>是互斥事件，那么 <img src="/2019/03/18/math-probability/tex-b02d53d522143362b6b10fa842841142.gif" alt="P(A \cup B) = P(A) + P(B)">。</li>
+</ul>
+<p>你将在练习中表明这个公理蕴涵着更一般的东西：</p>
+<ul>
+<li><p>对于任何固定的<code>n</code>，如果 <img src="/2019/03/18/math-probability/tex-a7d2ce711184629ec0d433a7383f76d6.gif" alt="A_1, A_2, \ldots, A_n"> 是互斥的（也就是对于所有 <img src="/2019/03/18/math-probability/tex-98b2a945d25f65d49f6307c48aa4396e.gif" alt="i \ne j">，<img src="/2019/03/18/math-probability/tex-34b2fca5e2fc5370deca0f42e6023ffd.gif" alt="A_i \cap A_j = \phi">），那么：</p>
+<p><img src="/2019/03/18/math-probability/tex-fc9ef33ee9f6e1f32ad2c1b78147573d.gif" alt="P\big{(} \bigcup_{i=1}^n A_i \big{)} = \sum_{i=1}^n P(A_i)"></p>
+<p>有时叫做有限可加性公理。</p>
+</li>
+</ul>
+<p>这个看似简单的公理具有巨大的力量，特别是当它扩展到无数个互斥的事件时。首先，它可以用来创建一些方便的计算工具。</p>
+<h3 id="嵌套事件"><a href="#嵌套事件" class="headerlink" title="嵌套事件"></a>嵌套事件</h3><p>假设一个班级中有 50% 的学生将数据科学作为他们的专业之一，40% 的学生主修数据科学和计算机科学（CS）。 如果你随机选择一个学生，那么该学生主修数据科学，但不是 CS 的几率是什么？</p>
+<p>下面的维恩图显示了一个对应于事件<code>A</code>（数据科学作为专业之一）的深蓝色圆圈，和一个对应<code>B</code>（主修数据科学和 CS）的金色圆圈（未按比例绘制）。这两个事件是嵌套的，因为<code>B</code>是<code>A</code>的一个子集：<code>B</code>中的每个人都把数据科学作为他们的专业之一。</p>
+<p>所以 <img src="/2019/03/18/math-probability/tex-f81f4a46db1952c4e197212112d0fe89.gif" alt="B \subseteq A">，那些主修数据科学但不是 CS 的人是<code>A</code>与<code>B</code>的差：</p>
+<p><img src="/2019/03/18/math-probability/tex-aec064b5fca63519d526562b083e2320.gif" alt="A - B = A \cap \bar B"></p>
+<p>其中 <img src="/2019/03/18/math-probability/tex-7b7b058a0864ef97ef6c08fe44ed07e3.gif" alt="\bar B"> 是<code>B</code>的补集。差是右侧浅蓝色的圆圈。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_difference</span><span class="params">()</span>:</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">10</span>, <span class="number">20</span>))</span><br><span class="line">    <span class="comment"># create the circles with shapely</span></span><br><span class="line">    a = sg.Point(<span class="number">2</span>,<span class="number">2.5</span>).buffer(<span class="number">1.0</span>)</span><br><span class="line">    b = sg.Point(<span class="number">2</span>,<span class="number">2.5</span>).buffer(<span class="number">0.75</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># compute the 2 parts</span></span><br><span class="line">    left = a.difference(b)</span><br><span class="line">    middle = a.intersection(b)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># use descartes to create the matplotlib patches</span></span><br><span class="line">    ax = plt.subplot(<span class="number">121</span>)</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(left, fc=<span class="string">'darkblue'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(middle, fc=<span class="string">'olive'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># control display</span></span><br><span class="line">    plt.title(<span class="string">'Nested Events'</span>)</span><br><span class="line">    plt.axis(<span class="string">'off'</span>)</span><br><span class="line">    ax.set_xlim(<span class="number">0</span>, <span class="number">5</span>); ax.set_ylim(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">    ax.set_aspect(<span class="string">'equal'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># use descartes to create the matplotlib patches</span></span><br><span class="line">    ax = plt.subplot(<span class="number">122</span>)</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(left, fc=<span class="string">'blue'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(middle, fc=<span class="string">'None'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># control display</span></span><br><span class="line">    plt.title(<span class="string">'The Difference'</span>)</span><br><span class="line">    plt.axis(<span class="string">'off'</span>)</span><br><span class="line">    ax.set_xlim(<span class="number">0</span>, <span class="number">5</span>); ax.set_ylim(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">    ax.set_aspect(<span class="string">'equal'</span>)</span><br><span class="line"></span><br><span class="line">show_difference()</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/03/18/math-probability/2-2.png" alt=""></p>
+<p>这个学生在浅蓝色的差中的几率是多少呢？ 如果你回答“50% - 40% = 10%”，你是对的，你的直觉说概率的行为就像区域一样。他们是这样。 事实上，这个计算是从可加性的公理出发的，我们也通过查看这些区域来受它们启发。</p>
+<h3 id="减法规则"><a href="#减法规则" class="headerlink" title="减法规则"></a>减法规则</h3><p>假设<code>A</code>和<code>B</code>是事件，<img src="/2019/03/18/math-probability/tex-f81f4a46db1952c4e197212112d0fe89.gif" alt="B \subseteq A">。那么 <img src="/2019/03/18/math-probability/tex-8433d9058de35af9844139042f8452a3.gif" alt="P(A - B) = P(A) - P(B)">。</p>
+<p>证明。由于 <img src="/2019/03/18/math-probability/tex-f81f4a46db1952c4e197212112d0fe89.gif" alt="B \subseteq A">，</p>
+<p><img src="/2019/03/18/math-probability/tex-aea8d7375cedc42183a53a91fc5b15a7.gif" alt="A = B \cup (A - B)"></p>
+<p>这是个不相交集合，根据加法公理：</p>
+<p><img src="/2019/03/18/math-probability/tex-e25a6743dc3154e3402145e14c779dd6.gif" alt="P(A) = P(B) + P(A - B)"></p>
+<p>所以，</p>
+<p><img src="/2019/03/18/math-probability/tex-8433d9058de35af9844139042f8452a3.gif" alt="P(A - B) = P(A) - P(B)"></p>
+<h3 id="补集"><a href="#补集" class="headerlink" title="补集"></a>补集</h3><p>如果一个事件的几率是 40%，它不会发生的几率是多少？ 60% 的“明显”答案是减法规则的特例。</p>
+<h4 id="补集规则"><a href="#补集规则" class="headerlink" title="补集规则"></a>补集规则</h4><p>对于任何事件<code>B</code>，<img src="/2019/03/18/math-probability/tex-f25228eb55301a1b8c2b072264694463.gif" alt="P(\bar B) = 1 - P(B)">。</p>
+<p>证明。 下面的维恩图显示了要做什么。 在减法公式取<code>A = Ω</code>，记住第二个公理 <img src="/2019/03/18/math-probability/tex-a9116f6690a6ff2638fa1ae6ce2b42ab.gif" alt="P(Ω)= 1">。或者，在这种特殊情况下为减法规则重新取参数。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_complement</span><span class="params">()</span>:</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">10</span>, <span class="number">20</span>))</span><br><span class="line">    <span class="comment"># create the square and circle with shapely</span></span><br><span class="line">    a = sg.box(<span class="number">0</span>, <span class="number">0</span>, <span class="number">4.5</span>, <span class="number">4.5</span>) </span><br><span class="line">    b = sg.Point(<span class="number">2.25</span>,<span class="number">2.5</span>).buffer(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># compute the 2 parts</span></span><br><span class="line">    left = a.difference(b)</span><br><span class="line">    middle = a.intersection(b)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># use descartes to create the matplotlib patches</span></span><br><span class="line">    ax = plt.subplot(<span class="number">121</span>)</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(left, fc=<span class="string">'None'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(middle, fc=<span class="string">'darkblue'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># control display</span></span><br><span class="line">    plt.title(<span class="string">'An Event (Square = Omega)'</span>)</span><br><span class="line">    plt.axis(<span class="string">'off'</span>)</span><br><span class="line">    ax.set_xlim(<span class="number">0</span>, <span class="number">5</span>); ax.set_ylim(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">    ax.set_aspect(<span class="string">'equal'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># use descartes to create the matplotlib patches</span></span><br><span class="line">    ax = plt.subplot(<span class="number">122</span>)</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(left, fc=<span class="string">'blue'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(middle, fc=<span class="string">'None'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># control display</span></span><br><span class="line">    plt.title(<span class="string">'The Complement'</span>)</span><br><span class="line">    plt.axis(<span class="string">'off'</span>)</span><br><span class="line">    ax.set_xlim(<span class="number">0</span>, <span class="number">5</span>); ax.set_ylim(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">    ax.set_aspect(<span class="string">'equal'</span>)</span><br><span class="line"></span><br><span class="line">show_complement()</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/03/18/math-probability/2-3.png" alt=""></p>
+<p>当你在概率计算中看到减号时，就像在上面的补集规则中一样，你会经常发现减号是由于在附加规则的应用中，术语的重新排列。</p>
+<p>当你加或减概率时，你就隐式地将一个事件分解成不相交的部分。这被称为划分事件，是需要掌握的一项基本的重要技术。在随后的章节中，你将看到很多划分的用法。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>让我们看看我们是否可以使用我们开发的结果来计算一些几率。一些步骤不计算也能清楚；其他东西需要更多的工作。</p>
+<p>示例 1：<code>n</code>次投掷中的正面和反面</p>
+<p>一枚硬币被抛出<code>n</code>次，以使所有 <img src="/2019/03/18/math-probability/tex-d1db0d9c696a8c056e7117dbbb4ef6db.gif" alt="2^n"> 种可能的正反面序列是等可能的。</p>
+<p>问题。获得至少一个正面和至少一个反面的几率是多少？</p>
+<p>回答。许多序列中每一面至少出现一次。例如，如果<code>n = 4</code>，则这样的序列包括<code>HTTT</code>，<code>HTHT</code>，<code>TTHT</code>等等。</p>
+<p>方法 - 补集：当一个事件可能以多种不同的方式发生时，查看它不会发生的方式可能是一个好主意，因为这样情况较少。</p>
+<p>对于<code>n = 4</code>，每个面没有至少出现一次的唯一序列是<code>HHHH</code>和<code>TTTT</code>。事实上，对于任何<code>n</code>，只有两个序列，我们不能从中得到两个面：所有都是正面和所有都是反面。这些是所有元素都相同的两个序列。</p>
+<p>让<code>A</code>成为事件“我们得到至少一个正面和至少一个反面”。问题要求<code>P(A)</code>。因为 <img src="/2019/03/18/math-probability/tex-f5f080ae3aced6664bd17ae27c9076af.gif" alt="\bar A"> 是事件“序列的所有元素都相同”，所以我们有：</p>
+<p><img src="/2019/03/18/math-probability/tex-1fbeef79ec3c19c5e67a245bc61d8531.gif" alt="P(\bar A) = \frac{2}{2^n} = \frac{1}{2^{n-1}}"></p>
+<p>根据补集规则：</p>
+<p><img src="/2019/03/18/math-probability/tex-dfef92ee17fa690649c3eb1a18d85bbb.gif" alt="P(A) = 1 - \frac{1}{2^{n-1}}"></p>
+<p>请注意，随着<code>n</code>变大，答案趋于 1。随着大量的投掷，你几乎肯定可以看到正面和反面。</p>
+<h2 id="示例-2：骰子的-12-次投掷的最大值"><a href="#示例-2：骰子的-12-次投掷的最大值" class="headerlink" title="示例 2：骰子的 12 次投掷的最大值"></a>示例 2：骰子的 12 次投掷的最大值</h2><p>一个骰子投掷了 12 次，所以所有 <img src="/2019/03/18/math-probability/tex-9c5510029a122667f995e58a66beef19.gif" alt="6^12"> 个点数序列是等可能的。将 12 个投掷的最大值定义为 12 个点数中出现的最大值。 例如，序列<code>354222143351</code>的最大值是 5。</p>
+<p>问题 1。最大值小于 5 的概率是多少？</p>
+<p>答案 1。关键是观察事件“最大值小于 5”与事件“所有 12 个面都小于 5”相同。 为了发生这种情况，12 个点数中的每一个都必须具有四个值 1 到 4 之一。所以：</p>
+<p><img src="/2019/03/18/math-probability/tex-2c97b5d10c1ba5089c1a921d9e787a06.gif" alt="P(\text{maximum is less than 5}) = \frac{4^{12}}{6^{12}}"></p>
+<p>是的，我们可以进一步简化，但我们不打算，因为很快就会明白原因。</p>
+<p>问题 2。最大值小于 4 的概率是多少？</p>
+<p>答案 2。这里没有什么新东西，除了在问题 1 中将 5 替换成 4。</p>
+<p><img src="/2019/03/18/math-probability/tex-96b0b846c223b6d246a1ad160cdb7872.gif" alt="P(\text{maximum is less than 4}) = \frac{3^{12}}{6^{12}}"></p>
+<p>问题 3。最大值等于 4 的概率是多少？</p>
+<p>答案 3：写下所有最大值等于 4 的序列的并不容易。 让我们看看，我们是否可以使用我们已经知道的。 最大值等于 4：</p>
+<p>最大值必须小于 5，<br>并且不能小于 4。</p>
+<p>我们将集合<code>{4}</code>看作一个差：<code>{1,2,3,4} - {1,2,3}</code>。</p>
+<p>所以通过减法规则，</p>
+<p><img src="/2019/03/18/math-probability/tex-ba00c56566f02327abd0399d6bad5fb3.gif" alt="\begin{align*} P(\text{maximum is equal to 4}) &amp;= P(\text{maximum is less than 5}) - P(\text{maximum is less than 4}) \\ &amp;= \frac{4^{12}}{6^{12}} - \frac{3^{12}}{6^{12}} \end{align*}"></p>
+<p>12 次投掷没有什么特别之处。你可以在整个过程中用<code>n</code>代替 12，并且参数将如上所述。</p>
+<p>最大值是一个极值的例子，另一个是最小值。</p>
+<p>解决问题的技巧：当你使用极值时，请记住我们在本例中使用的观察结果：说最大值很小等同于说所有元素都很小。类似地，说最小值很大等同于说所有元素都很大。</p>
+<h3 id="示例-3：大于第一个随机数的第二个随机数"><a href="#示例-3：大于第一个随机数的第二个随机数" class="headerlink" title="示例 3：大于第一个随机数的第二个随机数"></a>示例 3：大于第一个随机数的第二个随机数</h3><p>一个随机数生成器产生两个数字，因此所有 100 对数字都是等可能的。</p>
+<p>问题。第二位数字大于第一位的可能性是多少？</p>
+<p>答案，方法一 - 划分：制定事件发生的所有方式的组织清单。 列出第二个数字大于第一个数字的一个好方法是，根据第一个数字的值来划分它们：</p>
+<ul>
+<li>第一位数字 0，第二位 1 到 9</li>
+<li>第一位数字 1，第二位 2 到 9</li>
+<li>第一位数字 2，第二位 3 到 9</li>
+<li>等等，直到</li>
+<li>第一位数字 8，第二位 9</li>
+</ul>
+<p>这个划分使其很容易计算，在 100 个可能的偶对中，第二个数字大于第一个数字的所有偶对：有<code>9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 = (9×10) / 2 = 45</code>种。所以答案是 0.45。</p>
+<p>答案，方法二 - 对称性：用一些对称性说服自己：第二个数字大于第一个数字的几率与第一个数字大于第二个数字的几率相同。一种方法是根据第二个数字的值，来划分第二个事件，并注意与方法一中的划分的对应关系。</p>
+<p>所以如果 <img src="/2019/03/18/math-probability/tex-5d95ec31686e9ae4ea3b58af1b2ea8fc.gif" alt="p = P(\text{second digit is greater than the first})">，加法规则表明：</p>
+<p><img src="/2019/03/18/math-probability/tex-98d7251da181926e878c9f14d3b51077.gif" alt="\begin{align*} 1 &amp;= P(\text{first digit is greater than the second}) + P(\text{the two digits are equal}) + P(\text{second digit is greater than the first}) \\ &amp;= p + \frac{10}{100} + p \end{align*}"></p>
+<p>因为有 10 对相等的数字：<code>00, 11, 22, ..., 99</code>。现在求解<code>p</code>：</p>
+<p><img src="/2019/03/18/math-probability/tex-97b745ad50ff802c4fb29d0c7a72e493.gif" alt="p = \frac{1 - 0.1}{2} = 0.45"></p>
+<p>像之前一样。</p>
+<p>学习这两种方法是一个好主意。划分和对称将在整个课程中使用。</p>
+<h2 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h2><p>概率的主要公理有关互斥事件，事实证明，我们不需要任何其他公理来处理相交的事件。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_intersection</span><span class="params">()</span>:</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">8</span>, <span class="number">16</span>))</span><br><span class="line">    <span class="comment"># create the circles with shapely</span></span><br><span class="line">    a = sg.Point(<span class="number">-.5</span>,<span class="number">0</span>).buffer(<span class="number">1.0</span>)</span><br><span class="line">    b = sg.Point(<span class="number">0.5</span>,<span class="number">0</span>).buffer(<span class="number">0.75</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># compute the 3 parts</span></span><br><span class="line">    left = a.difference(b)</span><br><span class="line">    right = b.difference(a)</span><br><span class="line">    middle = a.intersection(b)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># use descartes to create the matplotlib patches</span></span><br><span class="line">    ax = plt.subplot(<span class="number">121</span>)</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(left, fc=<span class="string">'darkblue'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(right, fc=<span class="string">'gold'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.6</span>))</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(middle, fc=<span class="string">'olive'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line">    ax.annotate(<span class="string">'A'</span>, [<span class="number">-0.5</span>, <span class="number">0</span>])</span><br><span class="line">    ax.annotate(<span class="string">'B'</span>, [<span class="number">0.5</span>, <span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># control display</span></span><br><span class="line">    plt.title(<span class="string">'Two Events'</span>)</span><br><span class="line">    plt.axis(<span class="string">'off'</span>)</span><br><span class="line">    ax.set_xlim(<span class="number">-2</span>, <span class="number">2</span>); ax.set_ylim(<span class="number">-2</span>, <span class="number">2</span>)</span><br><span class="line">    ax.set_aspect(<span class="string">'equal'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># use descartes to create the matplotlib patches</span></span><br><span class="line">    ax = plt.subplot(<span class="number">122</span>)</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(left, fc=<span class="string">'None'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(right, fc=<span class="string">'None'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line">    ax.add_patch(descartes.PolygonPatch(middle, fc=<span class="string">'blue'</span>, ec=<span class="string">'k'</span>, alpha=<span class="number">0.8</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># control display</span></span><br><span class="line">    plt.title(<span class="string">'The Intersection'</span>)</span><br><span class="line">    plt.axis(<span class="string">'off'</span>)</span><br><span class="line">    ax.set_xlim(<span class="number">-2</span>, <span class="number">2</span>); ax.set_ylim(<span class="number">-2</span>, <span class="number">2</span>)</span><br><span class="line">    ax.set_aspect(<span class="string">'equal'</span>)</span><br><span class="line">    </span><br><span class="line">show_intersection()</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/03/18/math-probability/2-4.png" alt=""></p>
+<p>让<code>A</code>和<code>B</code>为两个事件。 交集<code>A ∩ B</code>是<code>A</code>和<code>B</code>都是发生的事件，右侧的维恩图中以亮蓝色显示。</p>
+<p>因为我们会一直遇到交集，所以在我们的表示法中我们会有点偷懒：我们将使用<code>AB</code>来表示交集，而不会写入交集符号<code>∩</code>。你必须记住<code>AB</code>是一个事件，而不是乘积。</p>
+<p>这里有一个例子可以帮助解释我们即将制定的一些定义。</p>
+<h3 id="无放回随机抽取"><a href="#无放回随机抽取" class="headerlink" title="无放回随机抽取"></a>无放回随机抽取</h3><p>假设我有一个小牌组，由一张红色，一张绿色和一张蓝色的牌组成。假设我洗牌，抽一张，给剩下的两张洗牌，然后从中抽出一张。这被称为在不从牌组替换的情况下，随机抽取两张牌。</p>
+<p>一个合理的结果空间是<code>Ω = {RG, RB, GB, GR, BR, BG}</code>，其中所有六个元素的等可能的。</p>
+<p>我们首先获得绿色，然后是红色的牌的几率，是单个序列<code>GR</code>的几率：</p>
+<p><img src="/2019/03/18/math-probability/tex-92a8855401ab7449a599ce6f60f37877.gif" alt="P(\text{GR}) = \frac{\#\{\text{GR}\}}{6} = \frac{1}{6}"></p>
+<p>简单的计算包含更有趣的东西。 注意：</p>
+<p><img src="/2019/03/18/math-probability/tex-ac67960e2fc54d0c9edd2cf2aa909cb7.gif" alt="P(\text{GR}) = \frac{1}{6} = \frac{1}{3} \times \frac{1}{2}"></p>
+<p>第二个因子 1/2 是什么？要理解这一点，只要看看<code>G</code>排在第一位的偶对。 其中，只有一个的下一张牌是<code>R</code>。乘积的第二个因子是：</p>
+<p><img src="/2019/03/18/math-probability/tex-5b2670ad93455706432c9ca5d4e8e150.gif" alt="\frac{\#\{\text{GR}\}}{\#\{\text{GR, GB}\}} = \frac{1}{2}"></p>
+<p>这个分数被称为，在<code>G</code>是第一个的条件下，<code>R</code>是第二个的条件概率。</p>
+<p>它表示为<code>P(second card R∣first card G)</code>。这是垂直的条形，不是倾斜的。</p>
+<p>现在我们对这张牌的原始计算可以写成一次一张牌：</p>
+<p><img src="/2019/03/18/math-probability/tex-33a56facb4a8735aa17fede8ec84d40f.gif" alt="\begin{align*} P(\text{GR}) &amp;= \frac{\#\{\text{GR}\}}{6} \\ \\ &amp;= \frac{\#\{\text{GR, GB}\}}{6} \times \frac{\#\{\text{GR}\}}{\#\{\text{GR, GB}\}} \\ \\ &amp;= P(\text{first card G}) \times P(\text{second card R} \mid \text{first card G}) \end{align*}"></p>
+<h3 id="条件概率"><a href="#条件概率" class="headerlink" title="条件概率"></a>条件概率</h3><p>像上面这样的计算启发了一个新的定义。让<code>A</code>和<code>B</code>为两个事件。那么<code>B</code>在<code>A</code>条件下的条件概率定义为：</p>
+<p>除法规则：</p>
+<p><img src="/2019/03/18/math-probability/tex-863df6fc8ca943658f48b9856bf2c6e2.gif" alt="P(B \mid A) = \frac{P(AB)}{P(A)}"></p>
+<p>这里有一些滥用符号的情况。<code>B|A</code>不是一个事件。 但是符号很方便。整个左侧应被理解为“在发生<code>A</code>的情况下的<code>B</code>发生的概率”。</p>
+<p>定义表明：给定<code>A</code>发生了，所以把你的注意力限制在<code>A</code>发生的结果上。 这就是你现在的整个空间，所以所有的几率必须相对于<code>P(A)</code>来计算。 现在<code>B</code>发生的几率是什么？答案是<code>P(AB)/P(A)</code>。</p>
+<p>我们除以<code>P(A)</code>，你们之间更加小心可能会想知道如果<code>P(A) = 0</code>会发生什么。 那么，在这种情况下，我们不会给定<code>A</code>发生，因为<code>A</code>不会发生。所以我们不必担心这种情况。</p>
+<p>乘法规则：</p>
+<p>这只是条件概率定义的重新排列，但它也许是所有规则中最常用的规则。</p>
+<p>让<code>A</code>和<code>B</code>为两个事件。 那么他们都发生的几率是：</p>
+<p><img src="/2019/03/18/math-probability/tex-1cdc265cd024dba629cefa9e95123daa.gif" alt="P(AB) = P(A) \cdot P(B \mid A)"></p>
+<p>注意答案是“小部分的小部分”。<code>A</code>和<code>B</code>都发生的几率小于<code>A</code>发生的几率 - 事件上条件越多，发生的概率就越小。</p>
+<p>由于<code>AB ⊆ B</code>，你知道<code>P(AB)</code>小于<code>P(B)</code>。你也检查一下：</p>
+<p><img src="/2019/03/18/math-probability/tex-55fae0eaabeda0001b1b81ad0d17478c.gif" alt="P(AB) = P(B) \cdot P(A \mid B)"></p>
+<p>我们将以一些简单的例子结束本节。 下一节包含一些需要更多工作的例子。</p>
+<h3 id="示例-1：两张牌中的两个-A"><a href="#示例-1：两张牌中的两个-A" class="headerlink" title="示例 1：两张牌中的两个 A"></a>示例 1：两张牌中的两个 A</h3><p>标准牌组由 52 张牌组成，其中 4 张是 A。两张牌无放回地随机发放。</p>
+<p>问题 1。给定第一张牌是 A，第二张牌是 A 的几率是多少？</p>
+<p>答案 1。3/51，因为现在你的套牌有 51 张牌，其中 3 张是 A。</p>
+<p>问题 2。两张牌都是 A 的机会是多少？</p>
+<p>答案 2：通过乘法规则和答案 1，答案是：</p>
+<p><img src="/2019/03/18/math-probability/tex-4d51062709b4d2aab31dbf26cdc67d03.gif" alt="\frac{4}{52} \cdot \frac{3}{51}"></p>
+<p>问题 3。如果带放回地发牌，问题 1 和问题 2 的答案如何改变？</p>
+<p>答案 3（究竟谁带放回地发牌？仅仅在概率班里面……）在抽出第二张牌之前，你放回了牌。在这个假设下，你每次都从完全相同的牌组上进行抽取，所以：</p>
+<p><img src="/2019/03/18/math-probability/tex-0cb91da40de029d64dd20cff1d2e0992.gif" alt="P(\text{second card is an ace} \mid \text{first card is an ace}) = \frac{4}{52}"></p>
+<p>无论第一张牌是什么，答案都是一样的。同时：</p>
+<p><img src="/2019/03/18/math-probability/tex-b1e5661abac6644a1dc9f0c27f50f726.gif" alt="P(\text{both aces}) = \frac{4}{52} \cdot \frac{4}{52}"></p>
+<p>注意，改变随机性的性质不会改变你是否乘以几率。你仍然在寻找交集的几率，所以你打算做乘法。假设的改变只会改变你的相乘方式。</p>
+<h3 id="示例-2：99-岁"><a href="#示例-2：99-岁" class="headerlink" title="示例 2：99 岁"></a>示例 2：99 岁</h3><p>根据你在 Data8 中看到的人口普查估计，2014 年美国人口为 318,857,056。 共有 9,037 名 99 岁男性和 32,791 名 99 岁女性。</p>
+<p>问题。假设你在 2014 年从美国人口中随机挑选了一个人，那个人是 99 岁。根据这些信息，这个人是女性的几率是多少？</p>
+<p>回答。答案自然是 99 岁中的女性百分比：</p>
+<p><img src="/2019/03/18/math-probability/tex-7f38f62c03c6b150c4dbca1f02248224.gif" alt="\frac{32791}{32791 + 9037} = 78.4\%"></p>
+<p>这与条件概率的定义一致，即你应该计算：</p>
+<p><img src="/2019/03/18/math-probability/tex-18e61ace2fc92a4d8c7bba60afad8fee.gif" alt="\begin{align*} P(\text{woman} \mid \text{99 years old}) &amp;=  \frac{P(\text{woman and 99 years old})}{P(\text{99 years old})} \\ \\ &amp;= \frac{32791\big{/}318857056}{(32791 + 9037)\big{/}318857056} \\ \\ &amp;= \frac{32791}{32791 + 9037} = 78.4\% \end{align*}"></p>
+<p>美国整体人口数字并不需要；它可以消去。 这是条件的重要观察。当你随机抽样并且你知道你的选择位于特定的子组中时，该子组内的数字都是重要的。</p>
+<p>给定 99 岁的年龄，这个人的女性的概率几乎是男性的四倍。但正如你在 Data 8 中看到的，在我们最年轻的居民中 - 新生儿 - 男性多于女性。</p>
+<h2 id="更多示例"><a href="#更多示例" class="headerlink" title="更多示例"></a>更多示例</h2><p>仅仅是一个加法规则和一个乘法规则 - 这就是所需要的一切。以下是标准问题求解技巧的一些示例。</p>
+<h3 id="示例-1：基本方法-从划分开始"><a href="#示例-1：基本方法-从划分开始" class="headerlink" title="示例 1：基本方法 - 从划分开始"></a>示例 1：基本方法 - 从划分开始</h3><p>一个盒子包含 6 个黑巧克力和 4 个牛奶巧克力。 我随机挑选了两个，不带放回。</p>
+<p>问题。我得到每一种的几率是多少？</p>
+<p>回答。你会注意到这个问题没有说明第一个是黑的还是牛奶。两个都可能发生。因此，请列出事件发生的不同方式，即事件划分：</p>
+<p>第一个是黑的然后是牛奶：根据乘法规则，几率为<code>(6/10)·(4/9)</code><br>第一个是牛奶然后是黑的：几率为<code>(4/10)·(6/9)</code></p>
+<p>（啊！这两项是相同的！为无放回抽样中的更多这样的对称性做好准备。）</p>
+<p>现在将两个几率相加。 答案是<code>2·(6/10)·(4/9)</code>。</p>
+<p>这种方法应该像呼吸一样自然。 你应该在不自然的假设下重做这个问题，即巧克力是带放回抽样的，看看什么变化了，什么保持不变。</p>
+<h3 id="示例-2：波利亚坛子模型"><a href="#示例-2：波利亚坛子模型" class="headerlink" title="示例 2：波利亚坛子模型"></a>示例 2：波利亚坛子模型</h3><p>一个盒子包含<code>b</code>个黑球和<code>w</code>个白球。随机抽取一个球，然后把它放回，并放入<code>d</code>个同颜色更多的球。然后从坛子中随机抽出一个球。</p>
+<p>问题 1。第一个抽出的球是黑色的几率是多少？</p>
+<p>答案 1。不需要太多努力。</p>
+<p><img src="/2019/03/18/math-probability/tex-d22a54c961e06f84e8c48e79a27265fa.gif" alt="P(\text{first ball black}) = \frac{b}{b+w}"></p>
+<p>问题 2：第二个抽出的球是黑色的几率是多少？</p>
+<p>答案 2。你自然而然会想，第一个球是什么，所以根据那个球的颜色进行划分，然后相加。基本方法再次发挥作用。</p>
+<p><img src="/2019/03/18/math-probability/tex-e521d1827e03b16662b3681fe9429e8d.gif" alt="\begin{align*} P(\text{second ball black}) &amp;= P(WB) + P(BB) \\ \\ &amp;= \frac{w}{b+w} \cdot \frac{b}{b+w+d} ~+~ \frac{b}{b+w} \cdot \frac{b+d}{b+w+d} \\ \\ &amp;= \frac{wb + b^2 + bd}{(b+w)(b+w+d)} \\ \\ &amp;= \frac{b(b+w+d)}{(b+w)(b+w+d)} \\ \\ &amp;= \frac{b}{b+w} \end{align*}"></p>
+<p>这与第一个球是黑色的几率是一样的，不管<code>d</code>是什么。这个规律很有趣！</p>
+<p>问题 3：给定第一个球是黑色的，第二个球是黑色的概率是多少？</p>
+<p>答案 3。我们已经在上面的计算中使用了它。 “随时间前进”的条件概率通常可以从问题中的信息中读出，例如：</p>
+<p><img src="/2019/03/18/math-probability/tex-9d3ffb4dadffee1144379a304920e443.gif" alt="P(\text{second ball black} \mid \text{first ball black}) = \frac{b+d}{b+w+d}"></p>
+<p>问题 4：给定第二个球是黑色的，第一个球是黑色的几率是多少？</p>
+<p>答案 4，这种“时光倒流”的条件概率不易读出。这是除法规则的所在。</p>
+<p><img src="/2019/03/18/math-probability/tex-1eee67bcf23d5754f47ea7c2430d87ec.gif" alt="\begin{align*} P(\text{first ball black} \mid \text{second ball black}) &amp;= \frac{P(BB)}{P(\text{second ball black})} \\ \\ &amp;= \frac{\frac{b}{b+w} \cdot \frac{b+d}{b+w+d}}{\frac{b}{b+w}} \\ \\ &amp;= \frac{b+d}{b+w+d} \end{align*}"></p>
+<p>这个确实取决于<code>d</code>，但它与答案3一样。前后颠倒似乎没有什么区别。</p>
+<p>现在你开始明白，为什么这个规律带有着名的创始人乔治波利亚（George Polya，1887-1985）的名字。你可以继续重复这个规律 - 用<code>d</code>个另一个颜色的球代替抽出的球，然后再次抽出 - 获得一个过程，具有美丽和有用的属性，以便在数据进入时更新观点。我们将在课程的后面看到。</p>
+<h2 id="更新概率"><a href="#更新概率" class="headerlink" title="更新概率"></a>更新概率</h2><p>数据改变了思想。我们可能会从世界如何运作的一系列假设开始，但随着我们收集更多数据，我们可能需要根据数据中看到的内容更新我们的观点。</p>
+<p>观点可以通过概率来反映，而这些观点也可以在信息进入时更新。在本节中，我们将建立一个给定数据情况下的概率更新方法。我们将从一个例子开始，然后我们将更广泛地陈述该方法。</p>
+<h3 id="示例：真阳性"><a href="#示例：真阳性" class="headerlink" title="示例：真阳性"></a>示例：真阳性</h3><p>人口中有一种罕见的疾病：只有 0.4% 的人拥有它。有一种针对这种疾病的检验，用于拥有这种病的人，有 99% 的几率返回阳性结果。用于没有疾病的人，它有 99.5% 的机会返回阴性结果。总的来说，这是一个相当不错的检验。</p>
+<p>从这个人口中随机挑选一个人。给定这个人的测试结果为阳性，这个人患病的概率有多大？</p>
+<p>以下是我们在 Data8 中绘制的树状图，用于总结问题中的信息。</p>
+<p><img src="/2019/03/18/math-probability/2-5.png" alt=""></p>
+<p>为了解决这个问题，我们将使用除法规则。 让<code>D</code>为患者拥有疾病的事件，并且在一些数学符号被滥用的情况下，让<code>+</code>成为患者测试结果为阳性的事件。 那么我们要找的是<code>P(D | +)</code>。按照除法规则，</p>
+<p><img src="/2019/03/18/math-probability/tex-4b558272cb751c8f02c7f14a30cad83f.gif" alt="P(D \mid + ) = \frac{P(D \text{ and } +)}{P(+)} = \frac{0.004 \cdot 0.99}{0.004 \cdot 0.99 + 0.996 \cdot 0.005} = 44.3\%"></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">.004</span>*<span class="number">.99</span>)/(<span class="number">0.004</span>*<span class="number">.99</span> + <span class="number">0.996</span>*<span class="number">.005</span>)</span><br><span class="line"><span class="comment"># 0.44295302013422816</span></span><br></pre></td></tr></table></figure>
+<h3 id="贝叶斯规则"><a href="#贝叶斯规则" class="headerlink" title="贝叶斯规则"></a>贝叶斯规则</h3><p>一般来说，如果整个结果空间可以划分为事件 <img src="/2019/03/18/math-probability/tex-de89f67fe8885bfc7f23ed30955999b1.gif" alt="A_1, A_2 \ldots , A_n">，<code>B</code>是一个正概率事件，那么对于每个<code>i</code>，</p>
+<p><img src="/2019/03/18/math-probability/tex-2c8e82fbef5a0d1d3e6221907e661f58.gif" alt=""></p>
+<p>这种计算称为贝叶斯规则，是一个环境下的除法规则的应用，其中事件 <img src="/2019/03/18/math-probability/tex-de89f67fe8885bfc7f23ed30955999b1.gif" alt="A_1, A_2 \ldots , A_n"> 可以看做“较早”阶段的结果，并且<code>B</code>是“较晚”阶段的结果。通过计算，我们可以求出给定较晚事件的，较早事件的“时光倒流”的条件概率，通过写出给定较早事件的，较晚事件的“随时间前进”的条件概率。</p>
+<h3 id="先验的影响"><a href="#先验的影响" class="headerlink" title="先验的影响"></a>先验的影响</h3><p>让我们仔细看看在我们在例子中得到的答案的数值。这有点令人不安。它说，即使这个人结果为阳性，他们患病的几率也不到 50%。这似乎很奇怪，因为测试的准确率非常高。</p>
+<p>这不是测试或贝叶斯规则的错误。这是因为我们的前提是“这个人是随机从人群中挑选的”。这种疾病非常罕见，患有该疾病并且是阳性的人的比例，实际上比没有该疾病并且测试结果错误的人少一些。这解释了为什么随机挑选的人的答案少于 50%。</p>
+<p>但是做疾病测试的人，通常由于他们或他们的医生认为他们应该做。在这种情况下，他们不再是“随机挑选”的人口成员。</p>
+<p>对于这样的人，我们必须重新思考我们对随机性的假设。如果一个人认为他们可能患有这种疾病，那么他们患这种疾病的主观概率，应该大于随机成员的概率。让我们执行以下步骤，看看之前的差异有多大。</p>
+<ul>
+<li>我们将把疾病的“先验概率”从 0.004 改为其他值；“无疾病”的先验概率将相应做出改变。</li>
+<li>我们将保持测试准确率不变。</li>
+<li>我们将观察对于先验的不同值，给定某人是阳性，疾病的“后验概率”的变化。</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">prior = make_array(<span class="number">0.004</span>, <span class="number">0.01</span>, <span class="number">0.05</span>, <span class="number">0.1</span>, <span class="number">0.5</span>)</span><br><span class="line">Table().with_columns(</span><br><span class="line">   <span class="string">'Prior P(D)'</span>, prior,</span><br><span class="line">    <span class="string">'Posterior P(D|+)'</span>, (prior*<span class="number">0.99</span>)/(prior*<span class="number">0.99</span> + (<span class="number">1</span>-prior)*<span class="number">0.005</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>先验<code>P(D)</code></th>
+<th>后验`P(D</th>
+<th>+)`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.004</td>
+<td>0.442953</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>0.666667</td>
+</tr>
+<tr>
+<td>0.05</td>
+<td>0.912442</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>0.956522</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>0.994975</td>
+</tr>
+</tbody>
+</table>
+<p>该表格显示，给定测试结果为阳性，这个人患病的后验几率，很大程度上取决于先验。例如，如果这个人认为他们甚至有 10% 的几率患病，那么，给定他们测试为阳性，他们患病的概率会更新为 95% 以上。</p>
+<h1 id="三、随机变量"><a href="#三、随机变量" class="headerlink" title="三、随机变量"></a>三、随机变量</h1><blockquote>
+<p>原文：<a href="https://nbviewer.jupyter.org/github/prob140/textbook/blob/gh-pages/notebooks/Chapter_03/" target="_blank" rel="noopener">prob140/textbook/notebooks/ch03</a></p>
+<p>译者：<a href="https://github.com/wizardforcel" target="_blank" rel="noopener">飞龙</a></p>
+<p>协议：<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></p>
+<p>自豪地采用<a href="https://translate.google.cn/" target="_blank" rel="noopener">谷歌翻译</a></p>
+</blockquote>
+<p>许多数据科学涉及数值变量，它的观察值取决于几率。其他值提供的变量的预测值，随机样本中观察到的不同类别个体的数量，以及自举样本的中值，仅仅是几个例子。 你在 Data8 中看到了更多例子。</p>
+<p>在概率论中，随机变量是在结果空间上定义的数值函数。 也就是说，函数的定义域是<code>Ω</code>，它的值域是实数行。 随机变量通常用靠后的字母表示，如<code>X</code>和<code>Y</code>。</p>
+<h2 id="结果空间上的函数"><a href="#结果空间上的函数" class="headerlink" title="结果空间上的函数"></a>结果空间上的函数</h2><p>随机抽样可以看做重复的随机试验，因此许多结果空间由序列组成。代表硬币投掷两次的结果空间是：</p>
+<p><img src="/2019/03/18/math-probability/tex-7b442b531d78cf538998b558a3defdcc.gif" alt="\Omega = \{ \text{HH, HT, TH, TT} \}"></p>
+<p>如果你投掷 10 次，结果空间将包含 10 个元素的 2^10 个序列，其中每个元素是<code>H</code>或<code>T</code>。手动列出结果比较痛苦，但计算机善于为我们避免这种痛苦。</p>
+<h3 id="乘积空间"><a href="#乘积空间" class="headerlink" title="乘积空间"></a>乘积空间</h3><p>两个集合<code>A</code>和<code>B</code>的乘积是所有偶对<code>(a, b)</code>的集合，其中<code>a ∈ A</code>和<code>b ∈ B</code>。 这个概念正是我们需要的，用于描述代表多个试验的空间。</p>
+<p>例如，表示一枚硬币投掷结果的空间是 <img src="/2019/03/18/math-probability/tex-79e485bf071fd5b30d831bfb1fb2b216.gif" alt="Ω1 = {H，T}">。<img src="/2019/03/18/math-probability/tex-8120259535edb94ea8008996dc666c93.gif" alt="Ω1"> 与其本身的乘积是偶对的集合<code>(H, H), (H, T), (T, H), (T, T)</code>，你可以认出这是硬币投掷的结果。 这个新空间和 <img src="/2019/03/18/math-probability/tex-8120259535edb94ea8008996dc666c93.gif" alt="Ω1"> 的乘积是代表三次投掷的空间，以此类推。</p>
+<p>Python 模块<code>itertools</code>包含构造乘积空间的函数<code>product</code>。 让我们导入它。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> product</span><br></pre></td></tr></table></figure>
+<p>要了解<code>product</code>是如何工作的，我们将从投掷硬币的结果开始。我们正在使用<code>make_array</code>创建一个数组，但你可以使用任何其他方式创建数组或列表。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">one_toss = make_array(<span class="string">'H'</span>, <span class="string">'T'</span>)</span><br></pre></td></tr></table></figure>
+<p>为了使用<code>product</code>，我们必须指定基本空间和重复次数，然后将结果转换为列表。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">two_tosses = list(product(one_toss, repeat=<span class="number">2</span>))</span><br><span class="line">two_tosses</span><br><span class="line"></span><br><span class="line"><span class="comment"># [('H', 'H'), ('H', 'T'), ('T', 'H'), ('T', 'T')]</span></span><br></pre></td></tr></table></figure>
+<p>对于三次投掷，只需改变重复次数：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">three_tosses = list(product(one_toss, repeat=<span class="number">3</span>))</span><br><span class="line">three_tosses</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[('H', 'H', 'H'),</span></span><br><span class="line"><span class="string"> ('H', 'H', 'T'),</span></span><br><span class="line"><span class="string"> ('H', 'T', 'H'),</span></span><br><span class="line"><span class="string"> ('H', 'T', 'T'),</span></span><br><span class="line"><span class="string"> ('T', 'H', 'H'),</span></span><br><span class="line"><span class="string"> ('T', 'H', 'T'),</span></span><br><span class="line"><span class="string"> ('T', 'T', 'H'),</span></span><br><span class="line"><span class="string"> ('T', 'T', 'T')]</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>概率空间是结果空间，带有所有结果的概率。 如果假设三次投掷的八次结果是等可能的，则概率均为 1/8：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">three_toss_probs = (<span class="number">1</span>/<span class="number">8</span>)*np.ones(<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+<p>相应的概率空间：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">three_toss_space = Table().with_columns(</span><br><span class="line">    <span class="string">'omega'</span>, three_tosses,</span><br><span class="line">    <span class="string">'P(omega)'</span>, three_toss_probs</span><br><span class="line">)</span><br><span class="line">three_toss_space</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>omega</th>
+<th>P(omega)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[&#39;H&#39; &#39;H&#39; &#39;H&#39;]</code></td>
+<td>0.125</td>
+</tr>
+<tr>
+<td><code>[&#39;H&#39; &#39;H&#39; &#39;T&#39;]</code></td>
+<td>0.125</td>
+</tr>
+<tr>
+<td><code>[&#39;H&#39; &#39;T&#39; &#39;H&#39;]</code></td>
+<td>0.125</td>
+</tr>
+<tr>
+<td><code>[&#39;H&#39; &#39;T&#39; &#39;T&#39;]</code></td>
+<td>0.125</td>
+</tr>
+<tr>
+<td><code>[&#39;T&#39; &#39;H&#39; &#39;H&#39;]</code></td>
+<td>0.125</td>
+</tr>
+<tr>
+<td><code>[&#39;T&#39; &#39;H&#39; &#39;T&#39;]</code></td>
+<td>0.125</td>
+</tr>
+<tr>
+<td><code>[&#39;T&#39; &#39;T&#39; &#39;H&#39;]</code></td>
+<td>0.125</td>
+</tr>
+<tr>
+<td><code>[&#39;T&#39; &#39;T&#39; &#39;T&#39;]</code></td>
+<td>0.125</td>
+</tr>
+</tbody>
+</table>
+<p>乘积空间增长得非常快。 如果你投掷 5 次，将会有近 8000 种可能的结果：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span>**<span class="number">5</span></span><br><span class="line"><span class="comment"># 7776</span></span><br></pre></td></tr></table></figure>
+<p>但是我们有<code>product</code>，所以我们仍然可以列出所有乘积！ 这是一个表示 5 次骰子投掷的概率空间。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">die = np.arange(<span class="number">1</span>, <span class="number">7</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">five_rolls = list(product(die, repeat=<span class="number">5</span>))  <span class="comment"># All possible results of 5 rolls</span></span><br><span class="line"></span><br><span class="line">five_roll_probs = (<span class="number">1</span>/<span class="number">6</span>**<span class="number">5</span>)**np.ones(<span class="number">6</span>**<span class="number">5</span>)  <span class="comment"># Each result has chance 1/6**5</span></span><br><span class="line"></span><br><span class="line">five_roll_space = Table().with_columns(</span><br><span class="line">   <span class="string">'omega'</span>, five_rolls,</span><br><span class="line">    <span class="string">'P(omega)'</span>, five_roll_probs</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">five_roll_space</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>omega</th>
+<th>P(omega)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[1 1 1 1 1]</code></td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 2]</code></td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 3]</code></td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 4]</code></td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 5]</code></td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 6]</code></td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 1]</code></td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 2]</code></td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 3]</code></td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 4]</code></td>
+<td>0.000128601</td>
+</tr>
+</tbody>
+</table>
+<p>… (7766 rows omitted)</p>
+<h3 id="结果空间上的函数-1"><a href="#结果空间上的函数-1" class="headerlink" title="结果空间上的函数"></a>结果空间上的函数</h3><p>假设你投掷一个骰子五次，并将你看到的点数加起来。如果这看起来不清楚，请耐心等待一会儿，你很快就会明白为什么它很有趣。</p>
+<p>点数的总和是五个点数的结果空间<code>Ω</code>上的数值函数。 总和是一个随机变量。我们称它为<code>S</code>。然后，在形式上，</p>
+<p><img src="/2019/03/18/math-probability/tex-336362902729ee4114c1ee0444f916d2.gif" alt="S: \Omega \rightarrow \{ 5, 6, \ldots, 30 \}"></p>
+<p><code>S</code>的范围是 5 到 30 的整数，因为每个骰子至少有一个点，最多六个点。 我们也可以使用相同的符号：</p>
+<p><img src="/2019/03/18/math-probability/tex-a2f6b1b5bd36823c681dae18d3e4b03e.gif" alt="\Omega \stackrel{S}{\rightarrow} \{ 5, 6, \ldots, 30 \}"></p>
+<p>从计算的角度来看，<code>Ω</code>的元素位于<code>five_roll_space</code>的<code>omega</code>列中。让我们应用这个函数并创建一个更大的表格。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">five_rolls_sum = Table().with_columns(</span><br><span class="line">    <span class="string">'omega'</span>, five_rolls,</span><br><span class="line">    <span class="string">'S(omega)'</span>, five_roll_space.apply(sum, <span class="string">'omega'</span>),</span><br><span class="line">    <span class="string">'P(omega)'</span>, five_roll_probs</span><br><span class="line">)</span><br><span class="line">five_rolls_sum</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>omega</th>
+<th>S(omega)</th>
+<th>P(omega)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[1 1 1 1 1]</code></td>
+<td>5</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 2]</code></td>
+<td>6</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 3]</code></td>
+<td>7</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 4]</code></td>
+<td>8</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 5]</code></td>
+<td>9</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 6]</code></td>
+<td>10</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 1]</code></td>
+<td>6</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 2]</code></td>
+<td>7</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 3]</code></td>
+<td>8</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 4]</code></td>
+<td>9</td>
+<td>0.000128601</td>
+</tr>
+</tbody>
+</table>
+<p>… (7766 rows omitted)</p>
+<p>我们现在有五次投掷的所有可能的结果，以及它的总点数。你可以看到表格的第一行显示了尽可能少的点数，对应于所有投掷都显示 1 点。 第 7776 行显示了最大的：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">five_rolls_sum.take(<span class="number">7775</span>)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>omega</th>
+<th>S(omega)</th>
+<th>P(omega)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[6 6 6 6 6]</code></td>
+<td>30</td>
+<td>0.000128601</td>
+</tr>
+</tbody>
+</table>
+<p><code>S</code>的所有其他值都在这两个极端之间。</p>
+<h4 id="随机变量的函数"><a href="#随机变量的函数" class="headerlink" title="随机变量的函数"></a>随机变量的函数</h4><p>随机变量是<code>Ω</code>上的数值函数。 因此，通过复合，随机变量的数值函数也是随机变量。</p>
+<p>例如，<img src="/2019/03/18/math-probability/tex-5ad83b44f7458dc7e77258c700e8a861.gif" alt="S^2"> 是一个随机变量，计算如下：</p>
+<p><img src="/2019/03/18/math-probability/tex-925d6df68ed1d54d36f2b16723cbaa19.gif" alt="S^2(\omega) = \big{(} S(\omega)\big{)}^2"></p>
+<p>所以 <img src="/2019/03/18/math-probability/tex-f2843560c3c8b7b6354a8ebb862b6f23.gif" alt="S^2(\text{[6 6 6 6 6]}) = 30^2 = 900">。</p>
+<h3 id="由S确定的事件"><a href="#由S确定的事件" class="headerlink" title="由S确定的事件"></a>由<code>S</code>确定的事件</h3><p>从表<code>five_rolls_sum</code>中，很难判断有多少行显示 6 或 10 或其他任何值。 为了更好地理解<code>S</code>的属性，我们必须组织<code>five_rolls_sum</code>中的信息。</p>
+<p>对于<code>S</code>中的任何子集<code>A</code>，定义事件<code>{S∈A}</code>为：</p>
+<p><img src="/2019/03/18/math-probability/tex-5f4074f4fa5d450d8efc549950551144.gif" alt="\{S \in A \} = \{\omega: S(\omega) \in A \}"></p>
+<p>在特殊情况下尝试这个定义。令<code>A = {5,30}</code>。 然后<code>{S∈A}</code>，当且仅当所有点数都是 1 点或 6 点。 所以：</p>
+<p><img src="/2019/03/18/math-probability/tex-84e17d83407719152ae5ea9a53997143.gif" alt="\{S \in A\} = \{\text{[1 1 1 1 1], [6 6 6 6 6]}\}"></p>
+<p>询问总和是否为某个特定值的几率是很自然的，例如 10。读取表格并不容易，但我们可以访问相应的行：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">five_rolls_sum.where(<span class="string">'S(omega)'</span>, are.equal_to(<span class="number">10</span>))</span><br></pre></td></tr></table></figure>
+<p>… (116 rows omitted)</p>
+<p><code>S(ω)=10</code>的<code>ω</code>有 126 个值。由于所有的<code>ω</code>都相同，因此<code>S</code>的值为 10 的几率是 126/7776。</p>
+<p>非正式情况下，我们通常会用符号表示，写成<code>{S = 10}</code>而不是<code>{S∈{10}}</code>。</p>
+<h2 id="分布"><a href="#分布" class="headerlink" title="分布"></a>分布</h2><p>我们的空间是骰子的五次投掷的结果，而我们的随机变量<code>S</code>是五次投掷的点数总数。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">five_rolls_sum</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>omega</th>
+<th>S(omega)</th>
+<th>P(omega)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[1 1 1 1 1]</code></td>
+<td>5</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 2]</code></td>
+<td>6</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 3]</code></td>
+<td>7</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 4]</code></td>
+<td>8</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 5]</code></td>
+<td>9</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 1 6]</code></td>
+<td>10</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 1]</code></td>
+<td>6</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 2]</code></td>
+<td>7</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 3]</code></td>
+<td>8</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td><code>[1 1 1 2 4]</code></td>
+<td>9</td>
+<td>0.000128601</td>
+</tr>
+</tbody>
+</table>
+<p>… (7766 rows omitted)</p>
+<p>在最后一节中，我们找到了<code>P(S = 10)</code>。我们可以使用相同的过程，为每个可能的<code>s</code>值查找<code>P(S = s)</code>。<code>group</code>方法允许我们在同一时间为所有<code>s</code>这样做。</p>
+<p>为此，我们首先丢掉<code>omega</code>列。 然后，我们将按<code>S(omega)</code>的不同值对表格进行分组，并使用<code>sum</code>来将每组中的所有概率相加。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dist_S = five_rolls_sum.drop(<span class="string">'omega'</span>).group(<span class="string">'S(omega)'</span>, sum)</span><br><span class="line">dist_S</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>S(omega)</th>
+<th>P(omega) sum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.000643004</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.00192901</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0.00450103</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0.00900206</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.0162037</td>
+</tr>
+<tr>
+<td>11</td>
+<td>0.0263632</td>
+</tr>
+<tr>
+<td>12</td>
+<td>0.0392233</td>
+</tr>
+<tr>
+<td>13</td>
+<td>0.0540123</td>
+</tr>
+<tr>
+<td>14</td>
+<td>0.0694444</td>
+</tr>
+</tbody>
+</table>
+<p>… (16 rows omitted)</p>
+<p>该表格显示了所有可能的<code>S</code>值及其所有概率。它被称为<code>S</code>的概率分布表。</p>
+<p>表中的内容 - 随机变量的所有可能值及其所有概率 - 称为<code>S</code>的概率分布，或者简称为<code>S</code>的分布。该分布显示了 100% 的总概率如何分布在<code>S</code>的所有可能值上。</p>
+<p>让我们来检查一下，以确保结果空间中的所有<code>ω</code>都已经在概率一列中得到了解释。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dist_S.column(<span class="number">1</span>).sum()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 0.99999999999999911</span></span><br></pre></td></tr></table></figure>
+<p>它在计算环境中是 1。这是任何概率分布的一个特征：</p>
+<p>分布的概率是非负的，总和为 1。</p>
+<h3 id="展示分布"><a href="#展示分布" class="headerlink" title="展示分布"></a>展示分布</h3><p>在 Data8 中，你使用<code>datascience</code>库来处理数据分布。<code>prob140</code>库建立在它上面，为处理概率分布和事件提供了一些便利的工具。</p>
+<p>首先，我们将构造一个概率分布对象，虽然它看起来非常像上面的表格，但它的第二列中预计会有概率分布，并且如果它发现了其他任何东西，就会报错。</p>
+<p>为了使代码易于阅读，让我们以数组的形式分别提取可能的值和概率：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = dist_S.column(<span class="number">0</span>)</span><br><span class="line">p_s = dist_S.column(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>要将这些转换为概率分布对象，请从空表开始，然后使用表的<code>values</code>和<code>probability</code>方法。<code>values</code>的参数是可能值的列表或数组，而<code>probability</code>的参数是相应概率的列表或数组。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dist_S = Table().values(s).probability(p_s)</span><br><span class="line">dist_S</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>0.000128601</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.000643004</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.00192901</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0.00450103</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0.00900206</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.0162037</td>
+</tr>
+<tr>
+<td>11</td>
+<td>0.0263632</td>
+</tr>
+<tr>
+<td>12</td>
+<td>0.0392233</td>
+</tr>
+<tr>
+<td>13</td>
+<td>0.0540123</td>
+</tr>
+<tr>
+<td>14</td>
+<td>0.0694444</td>
+</tr>
+</tbody>
+</table>
+<p>… (16 rows omitted)</p>
+<p>除了列标签更具可读性之外，这看起来与我们之前的表完全相同。但是这是好处：在直方图中展示分布，只需使用<code>prob140</code>的<code>Plot</code>方法，如下。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Plot(dist_S)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/03/18/math-probability/3-1.png" alt=""></p>
+<h3 id="Plot的注解"><a href="#Plot的注解" class="headerlink" title="Plot的注解"></a><code>Plot</code>的注解</h3><ul>
+<li><p>回想一下，<code>datascience</code>库中的<code>hist</code>显示原始数据的直方图，包含在表格的列中。<code>prob140</code>库中的<code>Plot</code>显示概率直方图，基于概率分布作为输入。</p>
+</li>
+<li><p><code>Plot</code>仅适用于概率分布对象，使用<code>values</code>和<code>probability</code>方法创建的。 它不适用于<code>Table</code>类的普通成员。</p>
+</li>
+<li><p><code>Plot</code>适用于具有整数值的随机变量。 你将在接下来的几章中遇到的许多随机变量是整数值。 为了展示其他随机变量的分布，分箱决策更加复杂。</p>
+</li>
+</ul>
+<h3 id="S的分布的注解"><a href="#S的分布的注解" class="headerlink" title="S的分布的注解"></a><code>S</code>的分布的注解</h3><p>在这里，五次投掷的点数总和的分布曲线出现了钟形。 注意这个直方图和你在 Data 8 中看到的钟形分布之间的差异。</p>
+<p>这个显示确切的分布。它是根据实验的所有可能结果进行计算的。这不是一个近似值也不是一个经验直方图。</p>
+<p>Data8 中的中心极限定理的表述表明，大型随机样本总和的分布大致是正态的。但是在这里你看到的只是五次投掷的总和呈现钟形分布。如果你从均匀的分布开始（这是单次投掷的分布），那么在总和的概率分布变成正态之前，你不需要大型样本。</p>
+<h3 id="展示事件的概率"><a href="#展示事件的概率" class="headerlink" title="展示事件的概率"></a>展示事件的概率</h3><p>从 Data8 中可知，钟形曲线拐点之间的区间约占曲线面积的 68%。 虽然上面的直方图并不完全是一个钟形曲线 - 它是一个只有 26 个条形的离散直方图 - 但它非常接近。 拐点似乎大约是 14 和 21。</p>
+<p><code>Plot</code>的<code>event</code>参数可让你可视化事件的概率，如下所示。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Plot(dist_S, event = np.arange(<span class="number">14</span>, <span class="number">22</span>, <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/03/18/math-probability/3-2.png" alt=""></p>
+<p>金色区域是<code>P(14 &lt;= S &lt;= 21)</code>。</p>
+<p><code>prob_event</code>方法操作概率分布对象，来返回事件的概率。为了找到<code>P(14 &lt;= S &lt;= 21)</code>，请按如下所示使用它。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dist_S.prob_event(np.arange(<span class="number">14</span>, <span class="number">22</span>, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 0.6959876543209863</span></span><br></pre></td></tr></table></figure>
+<p>几率是 69.6%，离 68% 并不远。</p>
+<h3 id="数学和代码的对应"><a href="#数学和代码的对应" class="headerlink" title="数学和代码的对应"></a>数学和代码的对应</h3><p><code>P(14 &lt;= S &lt;= 21)</code>可以通过将事件划分为 14 到 21 范围内的事件<code>{S = s}</code>的并集，然后使用加法规则来找到。</p>
+<p><img src="/2019/03/18/math-probability/tex-577d80326abe5514de2bc8179c269669.gif" alt="P(14 \le S \le 21) = \sum_{s = 14}^{21} P(S = s)"></p>
+<p>请小心使用小写字母<code>s</code>作为通用可能值，与大写字母<code>S</code>作为随机变量相对应；不这样做会使公式含义非常混乱。</p>
+<p>这意味着：</p>
+<p>首先为 14 到 21 范围内的每个<code>s</code>值抽取事件<code>{S = s}</code>：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">event_table = dist_S.where(<span class="number">0</span>, are.between(<span class="number">14</span>, <span class="number">22</span>))</span><br><span class="line">event_table</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14</td>
+<td>0.0694444</td>
+</tr>
+<tr>
+<td>15</td>
+<td>0.0837191</td>
+</tr>
+<tr>
+<td>16</td>
+<td>0.0945216</td>
+</tr>
+<tr>
+<td>17</td>
+<td>0.100309</td>
+</tr>
+<tr>
+<td>18</td>
+<td>0.100309</td>
+</tr>
+<tr>
+<td>19</td>
+<td>0.0945216</td>
+</tr>
+<tr>
+<td>20</td>
+<td>0.0837191</td>
+</tr>
+<tr>
+<td>21</td>
+<td>0.0694444</td>
+</tr>
+</tbody>
+</table>
+<p>然后将所有这些事件的概率相加。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">event_table.column(<span class="string">'Probability'</span>).sum()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 0.6959876543209863</span></span><br></pre></td></tr></table></figure>
+<p><code>prob_event</code>方法一步完成所有这些。 在这里再次进行比较。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dist_S.prob_event(np.arange(<span class="number">14</span>, <span class="number">22</span>, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 0.6959876543209863</span></span><br></pre></td></tr></table></figure>
+<p>你可以通过各种方式，使用相同的基本方法来查找由<code>S</code>确定的任何事件的概率。这里有两个例子。</p>
+<p>示例 1：<img src="/2019/03/18/math-probability/tex-0726af08bb7acf32c508c68c13f6d82d.gif" alt="P(S^2 = 400) = P(S = 20) = 8.37\%"></p>
+<p>示例 2：<img src="/2019/03/18/math-probability/tex-4881da8576e73b280b40340815d49cc4.gif" alt="P(S &gt; 20) = \sum_{s=20}^{30} P(S = s)"></p>
+<p>一个查找数值的简便方法：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dist_S.prob_event(np.arange(<span class="number">20</span>, <span class="number">31</span>, <span class="number">1</span>))</span><br><span class="line"><span class="comment"># 0.30516975308642047</span></span><br></pre></td></tr></table></figure>
+<p>示例 3：<img src="/2019/03/18/math-probability/tex-63f343588242b46118d81c7922511f15.gif" alt="P(\big{\vert} S - 10 \big{|} \le 6) ~ = ~ P(4 \le S \le 16) ~ = ~ \sum_{s=4}^{16} P(S=s)"></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dist_S.prob_event(np.arange(<span class="number">4</span>, <span class="number">17</span>, <span class="number">1</span>))</span><br><span class="line"><span class="comment"># 0.39969135802469169</span></span><br></pre></td></tr></table></figure>
+<h2 id="相等性"><a href="#相等性" class="headerlink" title="相等性"></a>相等性</h2><p>我们知道两个数字相等意味着什么。 然而，随机变量的相等可能不止一种。</p>
+<h3 id="相同"><a href="#相同" class="headerlink" title="相同"></a>相同</h3><p>如果相同结果空间上定义的两个随机变量<code>X</code>和<code>Y</code>的值，对于空间中的每个结果都是相同的，那么它们是相同的。符号<code>X = Y</code>意味着 <img src="/2019/03/18/math-probability/tex-9dd203c51c14f216fb7ff59c9d6446a0.gif" alt="X(\omega) = Y(\omega) \text{ for all } \omega \in \Omega">。非正式来说，无论结果如何， 如果<code>X</code>是10，那么<code>Y</code>也必须是 10；如果<code>X</code>是11，<code>Y</code>必须是 11，依此类推。</p>
+<p>一个例子会把它说清楚。 假设 <img src="/2019/03/18/math-probability/tex-62c5cc90270449db38e6fb4f2db71c55.gif" alt="N_H"> 是三次硬币投掷的正面数量，并且 <img src="/2019/03/18/math-probability/tex-2ff981529c25d70a18e76b06ff14074e.gif" alt="N_T"> 是相同的三次投掷的背面数量。 那么两个随机变量 <img src="/2019/03/18/math-probability/tex-62c5cc90270449db38e6fb4f2db71c55.gif" alt="N_H"> 和 <img src="/2019/03/18/math-probability/tex-dbc32fccffc80d4fefc0236165c1e50c.gif" alt="3 - N_T"> 是相等的。 对于三次投掷的每一种可能结果，<img src="/2019/03/18/math-probability/tex-62c5cc90270449db38e6fb4f2db71c55.gif" alt="N_H"> 的值等于 <img src="/2019/03/18/math-probability/tex-dbc32fccffc80d4fefc0236165c1e50c.gif" alt="3 - N_T"> 的值。</p>
+<p>我们简单地写成 <img src="/2019/03/18/math-probability/tex-0f8d12c04dd7df13d495b12cc8d61513.gif" alt="N_H = 3 - N_T">。</p>
+<h3 id="同分布"><a href="#同分布" class="headerlink" title="同分布"></a>同分布</h3><p>如上所述，<img src="/2019/03/18/math-probability/tex-62c5cc90270449db38e6fb4f2db71c55.gif" alt="N_H"> 和 <img src="/2019/03/18/math-probability/tex-2ff981529c25d70a18e76b06ff14074e.gif" alt="N_T"> 不相等。例如，<img src="/2019/03/18/math-probability/tex-3d93ffabeaf6331ee99781629c6a2b32.gif" alt="">。</p>
+<p>然而，有一种感觉是，正面数量与背面数量“以相同的方式出现”。两个随机变量具有相同的概率分布。</p>
+<p>结果空间是<code>three_tosses</code>：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">coin = make_array(<span class="string">'H'</span>, <span class="string">'T'</span>)</span><br><span class="line">three_tosses = list(product(coin, repeat=<span class="number">3</span>))</span><br><span class="line">three_tosses</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[('H', 'H', 'H'),</span></span><br><span class="line"><span class="string"> ('H', 'H', 'T'),</span></span><br><span class="line"><span class="string"> ('H', 'T', 'H'),</span></span><br><span class="line"><span class="string"> ('H', 'T', 'T'),</span></span><br><span class="line"><span class="string"> ('T', 'H', 'H'),</span></span><br><span class="line"><span class="string"> ('T', 'H', 'T'),</span></span><br><span class="line"><span class="string"> ('T', 'T', 'H'),</span></span><br><span class="line"><span class="string"> ('T', 'T', 'T')]</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>只有 8 个结果，因此很容易检查上表并写出 <img src="/2019/03/18/math-probability/tex-62c5cc90270449db38e6fb4f2db71c55.gif" alt="N_H"> 和 <img src="/2019/03/18/math-probability/tex-2ff981529c25d70a18e76b06ff14074e.gif" alt="N_T"> 的分布。它们都取值为 0, 1, 2 和 3，概率分别为 1/8，3/8，3/8 和 1/8。该分布如下表所示。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dist = Table().values(np.arange(<span class="number">4</span>)).probability(make_array(<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>)/<span class="number">8</span>)</span><br><span class="line">dist</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.125</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.375</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.375</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.125</td>
+</tr>
+</tbody>
+</table>
+<p>我们说 <img src="/2019/03/18/math-probability/tex-62c5cc90270449db38e6fb4f2db71c55.gif" alt="N_H"> 和 <img src="/2019/03/18/math-probability/tex-2ff981529c25d70a18e76b06ff14074e.gif" alt="N_T"> 是同分布的。</p>
+<p>一般而言，如果两个随机变量具有相同的概率分布，则它们是同分布的。 这表示为 <img src="/2019/03/18/math-probability/tex-16f969832226dd64d82957577735d7db.gif" alt="X \stackrel{d}{=} Y">。</p>
+<h3 id="相等性之间的关系"><a href="#相等性之间的关系" class="headerlink" title="相等性之间的关系"></a>相等性之间的关系</h3><p>相同比同分布更强。如果两个随机变量在结果层面上相同，那么它们必须具有相同的分布，因为它们在结果空间上是相同的函数。</p>
+<p>也就是说，对于任意两个随机变量<code>X</code>和<code>Y</code>，<img src="/2019/03/18/math-probability/tex-f01efb0fdb29947bbb261cf8ab742a34.gif" alt="X = Y \implies X \stackrel{d}{=} Y">。</p>
+<p>但三次投掷的正面和反面的例子表明，反面不一定是正确的。</p>
+<h3 id="示例：来自小牌组的两张牌"><a href="#示例：来自小牌组的两张牌" class="headerlink" title="示例：来自小牌组的两张牌"></a>示例：来自小牌组的两张牌</h3><p>一个牌组包含 10 张牌，分别标记为<code>1,2,2,3,3,3,4,4,4,4</code>。两张牌是不放回随机发放的。让 <img src="/2019/03/18/math-probability/tex-0d5fa3f335333b23d4aaf795d1336587.gif" alt="X_1"> 为第一张卡上的标记，<img src="/2019/03/18/math-probability/tex-e209e24a3d42a840c21481572570342f.gif" alt="X_2"> 为第二张卡上的标记。</p>
+<p>问题 1。<img src="/2019/03/18/math-probability/tex-0d5fa3f335333b23d4aaf795d1336587.gif" alt="X_1"> 和 <img src="/2019/03/18/math-probability/tex-e209e24a3d42a840c21481572570342f.gif" alt="X_2"> 是否相同？</p>
+<p>答案是否定的，因为结果可能是 31，在这种情况下 <img src="/2019/03/18/math-probability/tex-194e94b9967765089b85c68ffccd674b.gif" alt="X_1 = 3"> 和 <img src="/2019/03/18/math-probability/tex-8dee702addd2234295927bb102877b95.gif" alt="X_2 = 1">。</p>
+<p>问题 2。<img src="/2019/03/18/math-probability/tex-0d5fa3f335333b23d4aaf795d1336587.gif" alt="X_1"> 和 <img src="/2019/03/18/math-probability/tex-e209e24a3d42a840c21481572570342f.gif" alt="X_2"> 是否同分布？</p>
+<p>回答 2。让我们找到两个分布并进行比较。显然，每种情况下可能的值是 1,2,3 和 4。<img src="/2019/03/18/math-probability/tex-0d5fa3f335333b23d4aaf795d1336587.gif" alt="X_1"> 的分布很简单：<img src="/2019/03/18/math-probability/tex-2ce9e0165d80db1d9b4bf8b122f0c80b.gif" alt="P(X_1 = i ) = \frac{i}{10} , ~~ i = 1, 2, 3, 4">。当分布由这样的公式定义时，你可以定义一个函数来表示公式所说的内容：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prob1</span><span class="params">(i)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> i/<span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>然后，你可以像之前一样，使用<code>value</code>创建一个概率分布对象，但现在使用<code>probability_function</code>，它将函数的名称作为其参数：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">possible_i = np.arange(<span class="number">1</span>, <span class="number">5</span>, <span class="number">1</span>)</span><br><span class="line">dist_X1 = Table().values(possible_i).probability_function(prob1)</span><br><span class="line">dist_X1</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.4</td>
+</tr>
+</tbody>
+</table>
+<p>相信下面的函数<code>prob2</code>会为每个<code>i</code>返回<code>P(X_2 = i)</code>。事件已根据 <img src="/2019/03/18/math-probability/tex-0d5fa3f335333b23d4aaf795d1336587.gif" alt="X_1"> 的值进行划分。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prob2</span><span class="params">(i)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> i == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">9</span>/<span class="number">10</span>)*(<span class="number">1</span>/<span class="number">9</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> (i/<span class="number">10</span>)*((i<span class="number">-1</span>)/<span class="number">9</span>) + ((<span class="number">10</span>-i)/<span class="number">10</span>)*(i/<span class="number">9</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dist_X2 = Table().values(possible_i).probability_function(prob2)</span><br><span class="line">dist_X2</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.4</td>
+</tr>
+</tbody>
+</table>
+<p>这两个分布是相同的！这是另一个不放回抽样的对称性的例子。 结论是 <img src="/2019/03/18/math-probability/tex-9efa419104b6d7f0e9e1484b6966efa1.gif" alt="X_1 \stackrel{d}{=} X_2">。</p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2019/03/18/math-probability/';
+        this.page.title = '概率论笔记';
+        this.page.identifier = '2019/03/18/math-probability/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

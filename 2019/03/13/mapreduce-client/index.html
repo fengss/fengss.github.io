@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>MapReduce-交互源码分析 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="MapReduce 与Yarn 交互源码相关笔记 
+案例一份很简单的单词统计代码案例
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677package cn.coderss.hadoop.remote;import org.apache.hadoop.conf">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#案例"><span class="toc-number">1.</span> <span class="toc-text">案例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MapReduce"><span class="toc-number">2.</span> <span class="toc-text">MapReduce</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本运行机制"><span class="toc-number">2.1.</span> <span class="toc-text">基本运行机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分片与格式化"><span class="toc-number">2.2.</span> <span class="toc-text">分片与格式化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分片-split-操作"><span class="toc-number">2.2.1.</span> <span class="toc-text">分片(split)操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据格式化-Format-操作"><span class="toc-number">2.2.2.</span> <span class="toc-text">数据格式化(Format)操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输入类型"><span class="toc-number">2.2.3.</span> <span class="toc-text">输入类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map阶段"><span class="toc-number">2.3.</span> <span class="toc-text">Map阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Map端Shuffle"><span class="toc-number">2.3.1.</span> <span class="toc-text">Map端Shuffle</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#partition如何分组"><span class="toc-number">2.3.1.1.</span> <span class="toc-text">partition如何分组</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reduce阶段"><span class="toc-number">2.4.</span> <span class="toc-text">Reduce阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reduce端shuffle"><span class="toc-number">2.4.1.</span> <span class="toc-text">Reduce端shuffle</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Copy阶段"><span class="toc-number">2.4.1.1.</span> <span class="toc-text">Copy阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sort-Merge-阶段"><span class="toc-number">2.4.1.2.</span> <span class="toc-text">Sort(Merge)阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#memToMemMerger"><span class="toc-number">2.4.1.2.1.</span> <span class="toc-text">memToMemMerger</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#inMemoryMerger"><span class="toc-number">2.4.1.2.2.</span> <span class="toc-text">inMemoryMerger</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#onDiskMerger"><span class="toc-number">2.4.1.2.3.</span> <span class="toc-text">onDiskMerger</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reduce阶段-1"><span class="toc-number">2.4.1.3.</span> <span class="toc-text">Reduce阶段</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Client"><span class="toc-number">3.</span> <span class="toc-text">Client</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Job"><span class="toc-number">3.1.</span> <span class="toc-text">Job</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Submit"><span class="toc-number">3.2.</span> <span class="toc-text">Submit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#submitJobInternal"><span class="toc-number">3.3.</span> <span class="toc-text">submitJobInternal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ClientProtocol-submitJob"><span class="toc-number">3.4.</span> <span class="toc-text">ClientProtocol#submitJob</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ResourceMgrDelegate-submitApplication"><span class="toc-number">3.5.</span> <span class="toc-text">ResourceMgrDelegate#submitApplication</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#YarnClientImpl-submitApplication"><span class="toc-number">3.6.</span> <span class="toc-text">YarnClientImpl#submitApplication</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            MapReduce-交互源码分析
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2019/03/13/mapreduce-client/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-03-13T02:01:58.000Z" itemprop="datePublished">2019-03-13</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/MapReduce/">MapReduce</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>MapReduce 与Yarn 交互源码相关笔记<br><a id="more"></a> </p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><p>一份很简单的单词统计代码案例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.coderss.hadoop.remote;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Job;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Mapper;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Reducer;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.lib.input.FileInputFormat;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.StringTokenizer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> shenwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WordCount</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TokenizerMapper</span></span></span><br><span class="line"><span class="class">            <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">Object</span>, <span class="title">Text</span>, <span class="title">Text</span>, <span class="title">IntWritable</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> IntWritable one = <span class="keyword">new</span> IntWritable(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">private</span> Text word = <span class="keyword">new</span> Text();</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">map</span><span class="params">(Object key, Text value, Context context</span></span></span><br><span class="line"><span class="function"><span class="params">        )</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">            StringTokenizer itr = <span class="keyword">new</span> StringTokenizer(value.toString());</span><br><span class="line">            <span class="keyword">while</span> (itr.hasMoreTokens()) &#123;</span><br><span class="line">                word.set(itr.nextToken());</span><br><span class="line">                context.write(word, one);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntSumReducer</span></span></span><br><span class="line"><span class="class">            <span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">Text</span>, <span class="title">IntWritable</span>, <span class="title">Text</span>, <span class="title">IntWritable</span>&gt; </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> IntWritable result = <span class="keyword">new</span> IntWritable();</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterable&lt;IntWritable&gt; values,</span></span></span><br><span class="line"><span class="function"><span class="params">                           Context context</span></span></span><br><span class="line"><span class="function"><span class="params">        )</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (IntWritable val : values) &#123;</span><br><span class="line">                sum += val.get();</span><br><span class="line">            &#125;</span><br><span class="line">            result.set(sum);</span><br><span class="line">            context.write(key, result);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.setProperty(<span class="string">"HADOOP_USER_NAME"</span>, <span class="string">"root"</span>);</span><br><span class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">        conf.set(<span class="string">"mapreduce.app-submission.cross-platform"</span>, <span class="string">"true"</span>);</span><br><span class="line">        conf.set(<span class="string">"yarn.resourcemanager.hostname"</span>, <span class="string">"192.168.4.227"</span>);</span><br><span class="line">        conf.set(<span class="string">"yarn.resourcemanager.address"</span>, <span class="string">"192.168.4.227:8032"</span>);</span><br><span class="line">        <span class="comment">//集群的方式运行，非本地运行。</span></span><br><span class="line">        conf.set(<span class="string">"mapreduce.framework.name"</span>, <span class="string">"yarn"</span>);</span><br><span class="line">        <span class="comment">//工作jar</span></span><br><span class="line">        conf.set(<span class="string">"mapreduce.job.jar"</span>,<span class="string">"/Users/shenwei/Desktop/some_Java_app/hadoop-test/target/hadoop-test-1.0-SNAPSHOT-jar-with-dependencies.jar"</span>);</span><br><span class="line"></span><br><span class="line">        Job job = Job.getInstance(conf, <span class="string">"word count remote"</span>);</span><br><span class="line">        job.setJarByClass(WordCount.class);</span><br><span class="line">        job.setMapperClass(TokenizerMapper.class);</span><br><span class="line">        job.setCombinerClass(IntSumReducer.class);</span><br><span class="line">        job.setReducerClass(IntSumReducer.class);</span><br><span class="line">        job.setOutputKeyClass(Text.class);</span><br><span class="line">        job.setOutputValueClass(IntWritable.class);</span><br><span class="line">        FileInputFormat.addInputPath(job, <span class="keyword">new</span> Path(args[<span class="number">0</span>]));</span><br><span class="line">        FileOutputFormat.setOutputPath(job, <span class="keyword">new</span> Path(args[<span class="number">1</span>]));</span><br><span class="line">        System.exit(job.waitForCompletion(<span class="keyword">true</span>) ? <span class="number">0</span> : <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h1 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h1><p>MapReduce是一种编程模型，用于大规模数据集(大于1TB)的并行运算。概念”Map(映射)”和”Reduce(归约)”。</p>
+<p><img src="/2019/03/13/mapreduce-client/image-01.png" width="700px"></p>
+<h2 id="基本运行机制"><a href="#基本运行机制" class="headerlink" title="基本运行机制"></a>基本运行机制</h2><p><img src="/2019/03/13/mapreduce-client/image-02.png" width="700px"></p>
+<p>MapReduce将作业job的整个运行过程分为两个阶段:Map阶段和Reduce阶段。</p>
+<p>按照时间顺序包括：输入分片(input split)、map阶段、combiner阶段、shuffle阶段和reduce阶段。</p>
+<p>系统执行排序、将map输出作为输入传给reducer的过程称为<code>shuffle</code>(<code>shuffle</code>是MapReducer的心脏)</p>
+<p>Map阶段由一定数量的 Map Task组成 </p>
+<ol>
+<li>输入数据格式解析： InputFormat </li>
+<li>输入数据处理： Mapper </li>
+<li>数据分组： Partitioner</li>
+<li>本地合并： Combiner(local reduce) </li>
+</ol>
+<p>Reduce阶段由一定数量的 Reduce Task组成 </p>
+<ol>
+<li>数据远程拷贝 </li>
+<li>数据按照key排序 </li>
+<li>数据处理： Reducer </li>
+<li>数据输出格式： OutputFormat</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第一步：假设一个文件有三行英文单词作为 MapReduce 的Input(输入)这里经过 Splitting 过程把文件分割为3块。分割后的3块数据就可以并行处理，每一块交给一个 map 线程处理。 </span><br><span class="line">第二步：每个 map 线程中，以每个单词为key，以1作为词频数value，然后输出。 </span><br><span class="line">第三步：每个 map 的输出要经过 shuffling(混洗)，将相同的单词key放在一个桶里面，然后交给 reduce 处理。 </span><br><span class="line">第四步：reduce 接受到 shuffling 后的数据， 会将相同的单词进行合并，得到每个单词的词频数，最后将统计好的每个单词的词频数作为输出结果。</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="分片与格式化"><a href="#分片与格式化" class="headerlink" title="分片与格式化"></a>分片与格式化</h2><h3 id="分片-split-操作"><a href="#分片-split-操作" class="headerlink" title="分片(split)操作"></a>分片(split)操作</h3><p>split只是将源文件的内容分片形成一系列的InputSplit，每个InputSpilt中存储着对应分片的数据信息(例如，文件块信息、起始位置、数据长度、所在节点列表…)，并不是将源文件分割成多个小文件，每个InputSplit都由一个mapper进行后续处理。</p>
+<p>每个分片大小参数是很重要的，splitSize是组成分片规则很重要的一个参数，该参数由三个值来确定：</p>
+<ul>
+<li>minSize：splitSize的最小值，由mapred-site.xml配置文件中<code>mapred.min.split.size</code>参数确定。</li>
+<li>maxSize：splitSize的最大值，由mapred-site.xml配置文件中<code>mapreduce.jobtracker.split.metainfo.maxsize</code>参数确定。<code>控制该文件的最大大小</code></li>
+<li>blockSize：HDFS中文件存储的快大小，由hdfs-site.xml配置文件中<code>dfs.block.size</code>参数确定。</li>
+</ul>
+<blockquote>
+<p>Mapper是基于文件自动产生的，如何自己控制Mapper的个数？需要通过参数的控制来调节Mapper的个数。<br>减少Mapper的个数就要合并小文件，这种小文件有可能是直接来自于数据源的小文件，也可能是Reduce产生的小文件。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">设置合并器：(set都是在hive脚本，也可以配置Hadoop)</span><br><span class="line">    设置合并器本身：</span><br><span class="line">    set hive.input.format=org.apache.hadoop.hive.ql.io.CombineHiveInputFormat;</span><br><span class="line">    set hive.merge.mapFiles=true;</span><br><span class="line">    set hive.merge.mapredFiles=true;</span><br><span class="line">    set hive.merge.size.per.task=256000000;//每个Mapper要处理的数据，就把上面的5M10M……合并成为一个</span><br><span class="line"></span><br><span class="line">一般还要配合一个参数：</span><br><span class="line">    set mapred.max.split.size=256000000 // mapred切分的大小</span><br><span class="line">    set mapred.min.split.size.per.node=128000000</span><br><span class="line">            //低于128M就算小文件，数据在一个节点会合并，在多个不同的节点会把数据抓过来进行合并。</span><br><span class="line"></span><br><span class="line">Hadoop中的参数：可以通过控制文件的数量控制mapper数量</span><br><span class="line">    mapreduce.input.fileinputformat.split.minsize(default：0)，小于这个值会合并</span><br><span class="line">    mapreduce.input.fileinputformat.split.maxsize 大于这个值会切分</span><br></pre></td></tr></table></figure>
+<p>splitSize的确定规则：splitSize=max{minSize，min{maxSize，blockSize}}</p>
+<h3 id="数据格式化-Format-操作"><a href="#数据格式化-Format-操作" class="headerlink" title="数据格式化(Format)操作"></a>数据格式化(Format)操作</h3><p>将划分好的InputSplit格式化成键值对形式的数据。其中key为偏移量，value是每一行的内容。</p>
+<p>值得注意的是，在map任务执行过程中，会不停的执行数据格式化操作，每生成一个键值对就会将其传入map，进行处理。所以map和数据格式化操作并不存在前后时间差，而是同时进行的。</p>
+<h3 id="输入类型"><a href="#输入类型" class="headerlink" title="输入类型"></a>输入类型</h3><ul>
+<li><p>FileInputFormat类<br>FileInputFormat 是所有使用文件作为其数据源的 InputFormat 实现的基类。它提供了两个功能：一个定义哪些文件包含在一个作业的输入中；一个为输入文件生成分片的实现。把分片分割成记录的作业由其子类来完成。</p>
+</li>
+<li><p>TextlnputFormat类<br>TextInputFormat 是默认的 InputFormat。每条记录是一行输入。键是 LongWritable 类型，存储该行在整个文件中的字节偏移量。值是这行的内容，不包括任何行终止符(换行符和回车符)，它是 Text 类型的。但是输入分片和HDFS块之间可能不能很好的匹配，出现跨块的情况</p>
+</li>
+<li><p>KeyValueTextlnputFormat类<br>TextInputFormat 的键，即每一行在文件中的字节偏移量，通常并不是特别有用。通常情况下，文件中的每一行是一个键／值对，使用某个分界符进行分隔，比如制表符。例如 以下由 Hadoop 默认 OutputFormat(即 TextOutputFormat)产生的输出。如果要正确处理这类 文件，KeyValueTextInputFormat 比较合适。可以通过 key.value.separator.in.input.line 属性来指定分隔符。它的默认值是一个制表符。</p>
+</li>
+<li><p>NLineInputFormat类<br>与TextInputFormat一样，键是文件中行的字节偏移量，值是行本身。主要是希望mapper收到固定行数的输入。</p>
+</li>
+<li><p>MultipleInputs多种输入<br>MultipleInputs类处理多种格式的输入，允许为每个输入路径指定InputFormat和Mapper。两个mapper的输出类型是一样的，所以reducer看到的是聚集后的map输出，并不知道输入是不同的mapper产生的。<br>重载版本：addInputPath(),没有mapper参数，主要支持多种输入格式只有一个mapper。 </p>
+</li>
+</ul>
+<p><br></p>
+<h2 id="Map阶段"><a href="#Map阶段" class="headerlink" title="Map阶段"></a>Map阶段</h2><p>Map阶段是由一定数量的 Map Task组成。这些Map Task可以同时运行，每个Map Task又是由以下三个部分组成。 
+　　 </p>
+<ol>
+<li>InputFormat输入数据格式解析组件：<br>因为不同的数据可能存储的数据格式不一样，这就需要有一个InputFormat组件来解析这些数据的存放格式，默认情况下，它提供了一个TextInputFormat文本文件输入格式来解释数据格式。<br>它会将文件的每一行解释成(key,value)，key代表每行偏移量，value代表每行数据内容，通常情况我们不需要自定义InputFormat，因为MapReduce提供了多种支持不同数据格式InputFormat的实现 
+　　　　 </li>
+<li>Mapper输入数据处理：这个Mapper是必须要实现的，因为根据不同的业务对数据有不同的处理 
+　　 </li>
+<li>Partitioner数据分组：<br>Mapper数据处理之后输出之前，输出key会经过Partitioner分组或者分桶选择不同的reduce，默认的情况下Partitioner会对map输出的key进行hash取模。<br>比如有6个ReduceTask，它就是模6，如果key的hash值为0，就选择第0个ReduceTask(为1，选Reduce Task1)。这样不同的map对相同单词key，它的hash值取模是一样的，所以会交给同一个reduce来处理。</li>
+</ol>
+<p><img src="/2019/03/13/mapreduce-client/image-03.png" width="600px"></p>
+<h3 id="Map端Shuffle"><a href="#Map端Shuffle" class="headerlink" title="Map端Shuffle"></a>Map端Shuffle</h3><blockquote>
+<p>map端的shuffle包括环形内存缓冲区执行溢出写，partition，sort，combiner，生成溢出写文件，合并</p>
+</blockquote>
+<p><img src="/2019/03/13/mapreduce-client/image-05.png" width="300px"></p>
+<p>Map端会处理输入数据并产生中间结果，这个中间结果会写到本地磁盘，而不是HDFS。map函数开始产生输出时并非简单地将它输出到磁盘。因为频繁的磁盘操作会导致性能严重下降。它的处理过程更复杂，数据首先写到内存中的一个缓冲区，并做一些预排序，以提升效率</p>
+<p>每个map任务都有一个环形内存缓冲区，用于存储任务的输出(默认大小100MB，<code>mapreduce.task.io.sort.mb</code>调整)，被缓冲的K-V对记录已经被序列化，但没有排序。而且每个K-V对都附带一些额外的审计信息。<br>一旦缓冲内容达到阈值(<code>mapreduce.map.io.sort.spill.percent</code>,默认0.80，或者80%)，就会创建一个溢出写文件，同时开启一个后台线程把数据溢出写(spill)到本地磁盘中。溢出写过程按轮询方式将缓冲区中的内容写到<code>mapreduce.cluster.local.dir</code>属性指定的目录中。</p>
+<p>在写磁盘之前，线程首先根据数据最终要传递到的Reducer把数据划分成相应的分区(partition)，输出key会经过Partitioner分组或者分桶选择不同的reduce。默认的情况下Partitioner会对map输出的key进行hash取模，比如有6个ReduceTask，它就是模6，如果key的hash值为0，就选择第0个ReduceTask(为1，选Reduce Task1)。这样不同的map对相同单词key，它的hash值取模是一样的，所以会交给同一个reduce来处理。目的是将记录划分到不同的Reducer上去，以期望能够达到负载均衡，以后的Reducer就会根据partition来读取自己对应的数据。</p>
+<p>然后在每个分区中，后台线程将数据按Key进行排序(排序方式为快速排序)。接着运行combiner在本地节点内存中将每个Map任务输出的中间结果按键做本地聚合(如果设置了的话)，可以减少传递给Reducer的数据量。可以通过setCombinerClass()方法来指定一个作业的combiner。当溢出写文件生成数至少为3时(<code>mapreduce.map.combine.minspills</code>属性设置)，combiner函数就会在它排序后的输出文件写到磁盘之前运行。</p>
+<p>在写磁盘过程中，另外的20%内存可以继续写入数据，两种操作互不干扰，但如果在此期间缓冲区被填满，那么map就会阻塞写入内存的操作，让写入磁盘操作完成后再执行写入内存。<br>在map任务写完其最后一个输出记录之后，可能产生多个spill文件，在每个Map任务完成前，溢出写文件被合并成一个索引文件和数据文件(多路归并排序)(Sort阶段)。一次最多合并多少流由<code>io.sort.factor</code>控制，默认为10。至此，Map端的shuffle过程就结束了。</p>
+<p>溢出写文件归并完毕后，Map将删除所有的临时溢出写文件，并告知NodeManager任务已完成，只要其中一个MapTask完成，ReduceTask就开始复制它的输出(Copy阶段分区输出文件通过http的方式提供给reducer)</p>
+<h4 id="partition如何分组"><a href="#partition如何分组" class="headerlink" title="partition如何分组"></a>partition如何分组</h4><blockquote>
+<p>一个输出元组的分割指数是多少？(分区的指数)在Mapper.Context.write()内部被指定：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">partitionIdx = (key.hashCode() &amp; Integer.MAX_VALUE) % numReducers</span><br><span class="line">partitionID的值=(键的哈希值 按位与 int的最大值)%reduce的数量</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="Reduce阶段"><a href="#Reduce阶段" class="headerlink" title="Reduce阶段"></a>Reduce阶段</h2><ul>
+<li>数据运程拷贝 </li>
+</ul>
+<p>Reduce Task要远程拷贝每个map处理的结果，从每个map中读取一部分结果，每个Reduce Task拷贝哪些数据，是由上面Partitioner决定的。</p>
+<ul>
+<li>数据按照key排序 </li>
+</ul>
+<p>Reduce Task读取完数据后，要按照key进行排序，相同的key被分到一组，交给同一个Reduce Task处理</p>
+<ul>
+<li><p>Reducer数据处理<br>以WordCount为例，相同的单词key分到一组，交个同一个Reducer处理，这样就实现了对每个单词的词频统计。</p>
+</li>
+<li><p>OutputFormat数据输出格式<br>Reducer统计的结果将按照OutputFormat格式输出(默认情况下的输出格式为TextOutputFormat)</p>
+</li>
+</ul>
+<p><img src="/2019/03/13/mapreduce-client/image-04.png" width="600px"></p>
+<h3 id="Reduce端shuffle"><a href="#Reduce端shuffle" class="headerlink" title="Reduce端shuffle"></a>Reduce端shuffle</h3><p><img src="/2019/03/13/mapreduce-client/image-06.png" width="400px"></p>
+<p>Reduce端的shuffle主要包括三个阶段: <code>Copy，Sort(Merge)，Reduce</code></p>
+<p>Map的输出文件放置在运行MapTask的NodeManager的本地磁盘上，它是运行ReduceTask的TaskTracker所需要的输入数据，但是Reduce输出不是这样的，它一般写到HDFS中(Reduce阶段)。</p>
+<p><br></p>
+<h4 id="Copy阶段"><a href="#Copy阶段" class="headerlink" title="Copy阶段"></a>Copy阶段</h4><p>Reduce进程启动一些数据copy线程，通过HTTP方式请求MapTask所在的NodeManager以获取输出文件。<br>NodeManager需要为分区文件运行reduce任务。并且reduce任务需要集群上若干个map任务的map输出作为其特殊的分区文件。而每个map任务的完成时间可能不同，因此只要有一个任务完成，reduce任务就开始复制其输出。</p>
+<p>reduce任务有少量复制线程，因此能够并行取得map输出。默认线程数为5，但这个默认值可以通过<code>mapreduce.reduce.shuffle.parallelcopies</code>属性进行设置。</p>
+<ul>
+<li>Reducer如何知道自己应该处理哪些数据呢？</li>
+</ul>
+<p>因为Map端进行partition的时候，实际上就相当于指定了每个Reducer要处理的数据(partition就对应了Reducer)，所以Reducer在拷贝数据的时候只需拷贝与自己对应的partition中的数据即可。每个Reducer会处理一个或者多个partition。</p>
+<ul>
+<li>reducer如何知道要从哪台机器上去的map输出呢？</li>
+</ul>
+<p>map任务完成后，它们会使用心跳机制通知它们的application master、因此对于指定作业，application master知道map输出和主机位置之间的映射关系。reducer中的一个线程定期询问master以便获取map输出主机的位置。知道获得所有输出位置。</p>
+<p>由于reducer可能失败，因此tasktracker并没有在第一个reducer检索到map输出时就立即从磁盘上删除它们。相反，tasktracker会等待，直到jobtracker告知它可以删除map输出，这是作业完成后执行的。</p>
+<p>1、由于job的每一个map都会根据reduce(n)数将数据分成map 输出结果分成n个partition，所以map的中间结果中是有可能包含每一个reduce需要处理的部分数据的。所以，为了优化reduce的执行时间，hadoop中是等job的第一个map结束后，所有的reduce就开始尝试从完成的map中下载该reduce对应的partition部分数据，因此map和reduce是交叉进行的，其实就是shuffle。Reduce任务通过HTTP向各个Map任务拖取(下载)它所需要的数据(网络传输)，Reducer是如何知道要去哪些机器取数据呢？一旦map任务完成之后，就会通过常规心跳通知应用程序的Application Master。reduce的一个线程会周期性地向master询问，直到提取完所有数据(如何知道提取完？)数据被reduce提走之后，map机器不会立刻删除数据，这是为了预防reduce任务失败需要重做。因此map输出数据是在整个作业完成之后才被删除掉的。</p>
+<p>2、reduce进程启动数据copy线程(Fetcher)，通过HTTP方式请求maptask所在的TaskTracker获取maptask的输出文件。由于map通常有许多个，所以对一个reduce来说，下载也可以是并行的从多个map下载，那到底同时到多少个Mapper下载数据？？这个并行度是可以通过mapreduce.reduce.shuffle.parallelcopies(default5)调整。默认情况下，每个Reducer只会有5个map端并行的下载线程在从map下数据，如果一个时间段内job完成的map有100个或者更多，那么reduce也最多只能同时下载5个map的数据，所以这个参数比较适合map很多并且完成的比较快的job的情况下调大，有利于reduce更快的获取属于自己部分的数据。 在Reducer内存和网络都比较好的情况下，可以调大该参数；</p>
+<p>3、reduce的每一个下载线程在下载某个map数据的时候，有可能因为那个map中间结果所在机器发生错误，或者中间结果的文件丢失，或者网络瞬断等等情况，这样reduce的下载就有可能失败，所以reduce的下载线程并不会无休止的等待下去，当一定时间后下载仍然失败，那么下载线程就会放弃这次下载，并在随后尝试从另外的地方下载(因为这段时间map可能重跑)。reduce下载线程的这个最大的下载时间段是可以通过mapreduce.reduce.shuffle.read.timeout(default180000秒)调整的。如果集群环境的网络本身是瓶颈，那么用户可以通过调大这个参数来避免reduce下载线程被误判为失败的情况。一般情况下都会调大这个参数，这是企业级最佳实战。</p>
+<p><br></p>
+<h4 id="Sort-Merge-阶段"><a href="#Sort-Merge-阶段" class="headerlink" title="Sort(Merge)阶段"></a>Sort(Merge)阶段</h4><p>中间输出结果的合并与溢出 </p>
+<ul>
+<li>1)内存到内存(memToMemMerger) </li>
+<li>2)内存中Merge(inMemoryMerger) </li>
+<li>3)磁盘上的Merge(onDiskMerger)具体包括两个:(一)Copy过程中磁盘合并(二)磁盘到磁盘。</li>
+</ul>
+<h5 id="memToMemMerger"><a href="#memToMemMerger" class="headerlink" title="memToMemMerger"></a>memToMemMerger</h5><blockquote>
+<p>内存到内存Merge</p>
+</blockquote>
+<p>Hadoop定义了一种MemToMem合并，这种合并将内存中的map输出合并，然后再写入内存。这种合并默认关闭，可以通过mapreduce.reduce.merge.memtomem.enabled(default:false)打开，当map输出文件达到<code>mapreduce.reduce.merge.memtomem.threshold</code>时，触发这种合并。</p>
+<h5 id="inMemoryMerger"><a href="#inMemoryMerger" class="headerlink" title="inMemoryMerger"></a>inMemoryMerger</h5><blockquote>
+<p>内存中Merge</p>
+</blockquote>
+<p>当缓冲中数据达到配置的阈值时，这些数据在内存中被合并、写入机器磁盘。阈值有2种配置方式：</p>
+<p>配置内存比例：前面提到reduceJVM堆内存的一部分用于存放来自map任务的输入，在这基础之上配置一个开始合并数据的比例。假设用于存放map输出的内存为500M，mapreduce.reduce.shuffle.merge.percent配置为0.66，则当内存中的数据达到330M的时候，会触发合并写入。</p>
+<p>配置map输出数量： 通过mapreduce.reduce.merge.inmem.threshold配置。在合并的过程中，会对被合并的文件做全局的排序。如果作业配置了Combiner，则会运行combine函数，减少写入磁盘的数据量。</p>
+<h5 id="onDiskMerger"><a href="#onDiskMerger" class="headerlink" title="onDiskMerger"></a>onDiskMerger</h5><blockquote>
+<p>磁盘上的Merge</p>
+</blockquote>
+<ul>
+<li><p>3.1 Copy过程中磁盘Merge：在copy过来的数据不断写入磁盘的过程中，一个后台线程会把这些文件合并为更大的、有序的文件。如果map的输出结果进行了压缩，则在合并过程中，需要在内存中解压后才能给进行合并。这里的合并只是为了减少最终合并的工作量，也就是在map输出还在拷贝时，就开始进行一部分合并工作。合并的过程一样会进行全局排序。</p>
+</li>
+<li><p>3.2 最终磁盘中Merge：当所有map输出都拷贝完毕之后，所有数据被最后合并成一个整体有序的文件，作为reduce任务的输入。这个合并过程是一轮一轮进行的，最后一轮的合并结果直接推送给reduce作为输入，节省了磁盘操作的一个来回。最后(所以map输出都拷贝到reduce之后)进行合并的map输出可能来自合并后写入磁盘的文件，也可能来及内存缓冲，在最后写入内存的map输出可能没有达到阈值触发合并，所以还留在内存中。</p>
+</li>
+</ul>
+<p>每一轮合并不一定合并平均数量的文件数，指导原则是使用整个合并过程中写入磁盘的数据量最小，为了达到这个目的，则需要最终的一轮合并中合并尽可能多的数据，因为最后一轮的数据直接作为reduce的输入，无需写入磁盘再读出。因此我们让最终的一轮合并的文件数达到最大，即合并因子的值，通过mapreduce.task.io.sort.factor(default：10)配置</p>
+<p>Reduce阶段中一个Reduce过程可能的合并方式为：假设现在有20个map输出文件，合并因子配置为5，则需要4轮的合并。最终的一轮确保合并5个文件，其中包括2个来自前2轮的合并结果，因此原始的20个中，再留出3个给最终一轮。</p>
+<p><br></p>
+<h4 id="Reduce阶段-1"><a href="#Reduce阶段-1" class="headerlink" title="Reduce阶段"></a>Reduce阶段</h4><p>在reduce阶段，对已排序输出中的每个键都要调用reduce函数。此阶段的输出直接写到输出文件系统，一般为HDFS。</p>
+<p>如果采用HDFS，由于NodeManager也运行数据节点，所以第一个块副本将被写到本地磁盘。</p>
+<ul>
+<li>1、当reduce将所有的map上对应自己partition的数据下载完成后，reducetask真正进入reduce函数的计算阶段。由于reduce计算时同样是需要内存作为buffer，可以用mapreduce.reduce.input.buffer.percent（default 0.0）(源代码MergeManagerImpl.java：674行)来设置reduce的缓存。</li>
+</ul>
+<p>这个参数默认情况下为0，也就是说，reduce是全部从磁盘开始读处理数据。如果这个参数大于0，那么就会有一定量的数据被缓存在内存并输送给reduce，当reduce计算逻辑消耗内存很小时，可以分一部分内存用来缓存数据，可以提升计算的速度。所以默认情况下都是从磁盘读取数据，如果内存足够大的话，务必设置该参数让reduce直接从缓存读数据，这样做就有点Spark Cache的感觉。</p>
+<ul>
+<li>2、Reduce在这个阶段，框架为已分组的输入数据中的每个键值对对调用一次 reduce(WritableComparable,Iterator, OutputCollector, Reporter)方法。Reduce任务的输出通常是通过调用 OutputCollector.collect(WritableComparable,Writable)写入文件系统的。Reducer的输出是没有排序的。</li>
+</ul>
+<p><br><br><br></p>
+<h1 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h1><h2 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h2><blockquote>
+<p>从<code>main</code>函数中的<code>job.waitForCompletion</code>入手  </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">waitForCompletion</span><span class="params">(<span class="keyword">boolean</span> verbose)</span> <span class="keyword">throws</span> IOException, InterruptedException, ClassNotFoundException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state == Job.JobState.DEFINE) &#123;</span><br><span class="line">        <span class="keyword">this</span>.submit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (verbose) &#123;</span><br><span class="line">        <span class="keyword">this</span>.monitorAndPrintJob();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> completionPollIntervalMillis = getCompletionPollInterval(<span class="keyword">this</span>.cluster.getConf());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(!<span class="keyword">this</span>.isComplete()) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep((<span class="keyword">long</span>)completionPollIntervalMillis);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException var4) &#123;</span><br><span class="line">                ;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.isSuccessful();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>判断了<code>state == JobState.DEFINE</code>中变量<code>state</code>已为<code>JobState.DEFINE</code>,<code>所以执行submit提交Job</code>       </p>
+</li>
+<li><p><code>verbose</code>为<code>true</code>(是否监控和打印Job),<code>monitorAndPrintJob</code>监测job运行情况并打印相应信息;否则自身进入循环以一定的时间间隔轮询检查所提交的Job是是否执行完成。如果执行完成跳出循环调用<code>isSuccessful()</code>函数返回执行后的状态</p>
+</li>
+</ul>
+<p><br></p>
+<h2 id="Submit"><a href="#Submit" class="headerlink" title="Submit"></a>Submit</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">submit</span><span class="params">()</span> <span class="keyword">throws</span> IOException, InterruptedException, ClassNotFoundException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.ensureState(Job.JobState.DEFINE);</span><br><span class="line">    <span class="keyword">this</span>.setUseNewAPI();</span><br><span class="line">    <span class="keyword">this</span>.connect();</span><br><span class="line">    <span class="keyword">final</span> JobSubmitter submitter = <span class="keyword">this</span>.getJobSubmitter(<span class="keyword">this</span>.cluster.getFileSystem(), <span class="keyword">this</span>.cluster.getClient());</span><br><span class="line">    <span class="keyword">this</span>.status = (JobStatus)<span class="keyword">this</span>.ugi.doAs(<span class="keyword">new</span> PrivilegedExceptionAction&lt;JobStatus&gt;() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> JobStatus <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> IOException, InterruptedException, ClassNotFoundException </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> submitter.submitJobInternal(Job.<span class="keyword">this</span>, Job.<span class="keyword">this</span>.cluster);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">this</span>.state = Job.JobState.RUNNING;</span><br><span class="line">    LOG.info(<span class="string">"The url to track the job: "</span> + <span class="keyword">this</span>.getTrackingURL());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>ensureState(JobState.DEFINE)</code>再次校验job状态；</li>
+<li><code>setUseNewAPI()</code>设定一些api<code>(mapred.input.format.class、mapred.partitioner.class、mapred.output.format.class等)</code>的使用,默认使用使用hadoop2中api；</li>
+<li><code>connect()</code>获取需的调用协议(<code>ClientProtocol</code>)信息，连接信息，最后写入<code>Cluster</code>对象中;</li>
+<li>然后获取<code>JobSubmitter</code>任务提交者,调用<code>JobSubmitter</code>下的<code>submitJobInternal()</code>函数,放入<code>Job</code>和<code>Cluster</code>对象</li>
+<li>将state设为RUNNING。</li>
+</ul>
+<p><br></p>
+<h2 id="submitJobInternal"><a href="#submitJobInternal" class="headerlink" title="submitJobInternal"></a>submitJobInternal</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">JobStatus <span class="title">submitJobInternal</span><span class="params">(Job job, Cluster cluster)</span> </span></span><br><span class="line"><span class="function">  <span class="keyword">throws</span> ClassNotFoundException, InterruptedException, IOException </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//validate the jobs output specs </span></span><br><span class="line">    checkSpecs(job);</span><br><span class="line"> </span><br><span class="line">    Configuration conf = job.getConfiguration();</span><br><span class="line">    addMRFrameworkToDistributedCache(conf);</span><br><span class="line"> </span><br><span class="line">    Path jobStagingArea = JobSubmissionFiles.getStagingDir(cluster, conf);</span><br><span class="line">    <span class="comment">//configure the command line options correctly on the submitting dfs</span></span><br><span class="line">    InetAddress ip = InetAddress.getLocalHost();</span><br><span class="line">    <span class="keyword">if</span> (ip != <span class="keyword">null</span>) &#123;</span><br><span class="line">      submitHostAddress = ip.getHostAddress();</span><br><span class="line">      submitHostName = ip.getHostName();</span><br><span class="line">      conf.set(MRJobConfig.JOB_SUBMITHOST,submitHostName);</span><br><span class="line">      conf.set(MRJobConfig.JOB_SUBMITHOSTADDR,submitHostAddress);</span><br><span class="line">    &#125;</span><br><span class="line">    JobID jobId = submitClient.getNewJobID();</span><br><span class="line">    job.setJobID(jobId);</span><br><span class="line">    Path submitJobDir = <span class="keyword">new</span> Path(jobStagingArea, jobId.toString());</span><br><span class="line">    JobStatus status = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      conf.set(MRJobConfig.USER_NAME,</span><br><span class="line">          UserGroupInformation.getCurrentUser().getShortUserName());</span><br><span class="line">      conf.set(<span class="string">"hadoop.http.filter.initializers"</span>, </span><br><span class="line">          <span class="string">"org.apache.hadoop.yarn.server.webproxy.amfilter.AmFilterInitializer"</span>);</span><br><span class="line">      conf.set(MRJobConfig.MAPREDUCE_JOB_DIR, submitJobDir.toString());</span><br><span class="line">      LOG.debug(<span class="string">"Configuring job "</span> + jobId + <span class="string">" with "</span> + submitJobDir </span><br><span class="line">          + <span class="string">" as the submit dir"</span>);</span><br><span class="line">      <span class="comment">// get delegation token for the dir</span></span><br><span class="line">      TokenCache.obtainTokensForNamenodes(job.getCredentials(),</span><br><span class="line">          <span class="keyword">new</span> Path[] &#123; submitJobDir &#125;, conf);</span><br><span class="line">      </span><br><span class="line">      populateTokenCache(conf, job.getCredentials());</span><br><span class="line"> </span><br><span class="line">      <span class="comment">// generate a secret to authenticate shuffle transfers</span></span><br><span class="line">      <span class="keyword">if</span> (TokenCache.getShuffleSecretKey(job.getCredentials()) == <span class="keyword">null</span>) &#123;</span><br><span class="line">        KeyGenerator keyGen;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          keyGen = KeyGenerator.getInstance(SHUFFLE_KEYGEN_ALGORITHM);</span><br><span class="line">          keyGen.init(SHUFFLE_KEY_LENGTH);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Error generating shuffle secret key"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">        SecretKey shuffleKey = keyGen.generateKey();</span><br><span class="line">        TokenCache.setShuffleSecretKey(shuffleKey.getEncoded(),</span><br><span class="line">            job.getCredentials());</span><br><span class="line">      &#125;</span><br><span class="line"> </span><br><span class="line">      copyAndConfigureFiles(job, submitJobDir);</span><br><span class="line">      Path submitJobFile = JobSubmissionFiles.getJobConfPath(submitJobDir);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// Create the splits for the job</span></span><br><span class="line">      LOG.debug(<span class="string">"Creating splits at "</span> + jtFs.makeQualified(submitJobDir));</span><br><span class="line">      <span class="keyword">int</span> maps = writeSplits(job, submitJobDir);</span><br><span class="line">      conf.setInt(MRJobConfig.NUM_MAPS, maps);</span><br><span class="line">      LOG.info(<span class="string">"number of splits:"</span> + maps);</span><br><span class="line"> </span><br><span class="line">      <span class="comment">// write "queue admins of the queue to which job is being submitted"</span></span><br><span class="line">      <span class="comment">// to job file.</span></span><br><span class="line">      String queue = conf.get(MRJobConfig.QUEUE_NAME,</span><br><span class="line">          JobConf.DEFAULT_QUEUE_NAME);</span><br><span class="line">      AccessControlList acl = submitClient.getQueueAdmins(queue);</span><br><span class="line">      conf.set(toFullPropertyName(queue,</span><br><span class="line">          QueueACL.ADMINISTER_JOBS.getAclName()), acl.getAclString());</span><br><span class="line"> </span><br><span class="line">      <span class="comment">// removing jobtoken referrals before copying the jobconf to HDFS</span></span><br><span class="line">      <span class="comment">// as the tasks don't need this setting, actually they may break</span></span><br><span class="line">      <span class="comment">// because of it if present as the referral will point to a</span></span><br><span class="line">      <span class="comment">// different job.</span></span><br><span class="line">      TokenCache.cleanUpTokenReferral(conf);</span><br><span class="line"> </span><br><span class="line">      <span class="keyword">if</span> (conf.getBoolean(</span><br><span class="line">          MRJobConfig.JOB_TOKEN_TRACKING_IDS_ENABLED,</span><br><span class="line">          MRJobConfig.DEFAULT_JOB_TOKEN_TRACKING_IDS_ENABLED)) &#123;</span><br><span class="line">        <span class="comment">// Add HDFS tracking ids</span></span><br><span class="line">        ArrayList&lt;String&gt; trackingIds = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">        <span class="keyword">for</span> (Token&lt;? extends TokenIdentifier&gt; t :</span><br><span class="line">            job.getCredentials().getAllTokens()) &#123;</span><br><span class="line">          trackingIds.add(t.decodeIdentifier().getTrackingId());</span><br><span class="line">        &#125;</span><br><span class="line">        conf.setStrings(MRJobConfig.JOB_TOKEN_TRACKING_IDS,</span><br><span class="line">            trackingIds.toArray(<span class="keyword">new</span> String[trackingIds.size()]));</span><br><span class="line">      &#125;</span><br><span class="line"> </span><br><span class="line">      <span class="comment">// Write job file to submit dir</span></span><br><span class="line">      writeConf(conf, submitJobFile);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">//</span></span><br><span class="line">      <span class="comment">// Now, actually submit the job (using the submit name)</span></span><br><span class="line">      <span class="comment">//</span></span><br><span class="line">      printTokens(jobId, job.getCredentials());</span><br><span class="line">      status = submitClient.submitJob(</span><br><span class="line">          jobId, submitJobDir.toString(), job.getCredentials());</span><br><span class="line">      <span class="keyword">if</span> (status != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> status;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Could not launch job"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (status == <span class="keyword">null</span>) &#123;</span><br><span class="line">        LOG.info(<span class="string">"Cleaning up the staging area "</span> + submitJobDir);</span><br><span class="line">        <span class="keyword">if</span> (jtFs != <span class="keyword">null</span> &amp;&amp; submitJobDir != <span class="keyword">null</span>)</span><br><span class="line">          jtFs.delete(submitJobDir, <span class="keyword">true</span>);</span><br><span class="line"> </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>检验输出参数,获取配置信息和提交Job主机的地址,确定jobId,确定job submit目录,设置一些参数</li>
+<li>生成密钥用于shuffle传输认证</li>
+<li>拷贝所需的files,libjars,archives,jobJar(wordcount程序jar包)</li>
+<li>job进行分片,并获取分片数量,用于确定map的数量</li>
+<li>设置job提交队列</li>
+<li>将配置写到job submit目录</li>
+<li>调用YARNRunner类下的submitJob()函数，提交Job，传入相应参数(JobID,job submit目录,Credentials)。</li>
+<li>等待submit()执行返回Job执行状态，最后删除相应的工作目录。</li>
+</ul>
+<p><br></p>
+<h2 id="ClientProtocol-submitJob"><a href="#ClientProtocol-submitJob" class="headerlink" title="ClientProtocol#submitJob"></a>ClientProtocol#submitJob</h2><ul>
+<li>YARNRunner (yarn集群运行者)</li>
+<li>LocalJobRunner (本地运行者)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> JobStatus <span class="title">submitJob</span><span class="params">(JobID jobId, String jobSubmitDir, Credentials ts)</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.addHistoryToken(ts);</span><br><span class="line">    ApplicationSubmissionContext appContext = <span class="keyword">this</span>.createApplicationSubmissionContext(<span class="keyword">this</span>.conf, jobSubmitDir, ts);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ApplicationId applicationId = <span class="keyword">this</span>.resMgrDelegate.submitApplication(appContext);</span><br><span class="line">        ApplicationReport appMaster = <span class="keyword">this</span>.resMgrDelegate.getApplicationReport(applicationId);</span><br><span class="line">        String diagnostics = appMaster == <span class="keyword">null</span> ? <span class="string">"application report is null"</span> : appMaster.getDiagnostics();</span><br><span class="line">        <span class="keyword">if</span> (appMaster != <span class="keyword">null</span> &amp;&amp; appMaster.getYarnApplicationState() != YarnApplicationState.FAILED &amp;&amp; appMaster.getYarnApplicationState() != YarnApplicationState.KILLED) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.clientCache.getClient(jobId).getJobStatus(jobId);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Failed to run job : "</span> + diagnostics);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (YarnException var8) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IOException(var8);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化Application上下文信息,上下文信息包括MRAppMaster所需要的内存、CPU,jobJar,jobConf,数据split,执行MRAppMaster的命令</li>
+<li>然后调用ResourceMgrDelegate的submitApplication()方法将application提交到ResourceManager，同时传入Application上下文信息,提交Job到ResourceManager,函数执行最后返回已生成的ApplicationId(实际生成JobID的时候ApplicationId就已经生成)。</li>
+<li>最后返回Job此时的状态</li>
+</ul>
+<p><br></p>
+<h2 id="ResourceMgrDelegate-submitApplication"><a href="#ResourceMgrDelegate-submitApplication" class="headerlink" title="ResourceMgrDelegate#submitApplication"></a>ResourceMgrDelegate#submitApplication</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ApplicationId <span class="title">submitApplication</span><span class="params">(ApplicationSubmissionContext appContext)</span> <span class="keyword">throws</span> YarnException, IOException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.client.submitApplication(appContext);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>client对象是YarnClient,找到YarnClient的实现YarnClientImpl中的submitApplication方法</p>
+</blockquote>
+<p><br></p>
+<h2 id="YarnClientImpl-submitApplication"><a href="#YarnClientImpl-submitApplication" class="headerlink" title="YarnClientImpl#submitApplication"></a>YarnClientImpl#submitApplication</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ApplicationId <span class="title">submitApplication</span><span class="params">(ApplicationSubmissionContext appContext)</span> <span class="keyword">throws</span> YarnException, IOException </span>&#123;</span><br><span class="line">    ApplicationId applicationId = appContext.getApplicationId();</span><br><span class="line">    <span class="keyword">if</span> (applicationId == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ApplicationIdNotProvidedException(<span class="string">"ApplicationId is not provided in ApplicationSubmissionContext"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        SubmitApplicationRequest request = (SubmitApplicationRequest)Records.newRecord(SubmitApplicationRequest.class);</span><br><span class="line">        request.setApplicationSubmissionContext(appContext);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.isSecurityEnabled() &amp;&amp; <span class="keyword">this</span>.timelineV1ServiceEnabled) &#123;</span><br><span class="line">            <span class="keyword">this</span>.addTimelineDelegationToken(appContext.getAMContainerSpec());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.rmClient.submitApplication(request);</span><br><span class="line">        <span class="keyword">int</span> pollCount = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">        EnumSet&lt;YarnApplicationState&gt; waitingStates = EnumSet.of(YarnApplicationState.NEW, YarnApplicationState.NEW_SAVING, YarnApplicationState.SUBMITTED);</span><br><span class="line">        EnumSet failToSubmitStates = EnumSet.of(YarnApplicationState.FAILED, YarnApplicationState.KILLED);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    ApplicationReport appReport = <span class="keyword">this</span>.getApplicationReport(applicationId);</span><br><span class="line">                    YarnApplicationState state = appReport.getYarnApplicationState();</span><br><span class="line">                    <span class="keyword">if</span> (!waitingStates.contains(state)) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (failToSubmitStates.contains(state)) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> <span class="keyword">new</span> YarnException(<span class="string">"Failed to submit "</span> + applicationId + <span class="string">" to YARN : "</span> + appReport.getDiagnostics());</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        LOG.info(<span class="string">"Submitted application "</span> + applicationId);</span><br><span class="line">                        <span class="keyword">return</span> applicationId;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">long</span> elapsedMillis = System.currentTimeMillis() - startTime;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="keyword">this</span>.enforceAsyncAPITimeout() &amp;&amp; elapsedMillis &gt;= <span class="keyword">this</span>.asyncApiPollTimeoutMillis) &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> YarnException(<span class="string">"Timed out while waiting for application "</span> + applicationId + <span class="string">" to be submitted successfully"</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    ++pollCount;</span><br><span class="line">                    <span class="keyword">if</span> (pollCount % <span class="number">10</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                        LOG.info(<span class="string">"Application submission is not finished, submitted application "</span> + applicationId + <span class="string">" is still in "</span> + state);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="keyword">this</span>.submitPollIntervalMillis);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException var15) &#123;</span><br><span class="line">                        String msg = <span class="string">"Interrupted while waiting for application "</span> + applicationId + <span class="string">" to be successfully submitted."</span>;</span><br><span class="line">                        LOG.error(msg);</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> YarnException(msg, var15);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (ApplicationNotFoundException var16) &#123;</span><br><span class="line">                    LOG.info(<span class="string">"Re-submit application "</span> + applicationId + <span class="string">"with the same ApplicationSubmissionContext"</span>);</span><br><span class="line">                    <span class="keyword">this</span>.rmClient.submitApplication(request);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置ApplicationId </li>
+<li>封装提交Application请求,将上下文信息设置进去。</li>
+<li>增加安全权限认证一些东西。</li>
+<li>rmClient.submitApplication 用Hadoop RPC远程调用ResourcesManager端的ClientRMService类下的submitApplication()方法</li>
+<li>定时获取Application状态，当Application状态为NEW或NEW_SAVING时，Application提交成功，或是在限定时间内一直没有提交成功就报超时错误。若是获取不到Application信息，就再一次用RPC远程调用提交Application。</li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2019/03/13/mapreduce-client/';
+        this.page.title = 'MapReduce-交互源码分析';
+        this.page.identifier = '2019/03/13/mapreduce-client/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

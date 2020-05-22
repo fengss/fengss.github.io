@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Flume组件 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Flume日志搜集组件解析  
+简介主要描述Apache Flume是一个分布式,可靠且可用的系统:用于有效地从许多不同的源收集、聚合和移动大量日志数据到一个集中式的数据存储区。
+不只限于日志数据。因为数据源可以定制也可以被用来传输大量事件数据  
+这些数据不仅仅包括网络通讯数据、社交媒体产生的数据、电子邮件信息等等。
+历史Apache Flume 是 Apache 基金会的顶级项目,在加入 Apache 之前由 cloudera 公司开发以及维护。  
+Apache Flume 目前有两种主版">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#主要描述"><span class="toc-number">1.1.</span> <span class="toc-text">主要描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#历史"><span class="toc-number">1.2.</span> <span class="toc-text">历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对比Logstash优势"><span class="toc-number">1.3.</span> <span class="toc-text">对比Logstash优势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#架构"><span class="toc-number">2.</span> <span class="toc-text">架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据流模型"><span class="toc-number">2.1.</span> <span class="toc-text">数据流模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Source"><span class="toc-number">2.1.1.</span> <span class="toc-text">Source</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channel"><span class="toc-number">2.1.2.</span> <span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Slink"><span class="toc-number">2.1.3.</span> <span class="toc-text">Slink</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂的流"><span class="toc-number">2.2.</span> <span class="toc-text">复杂的流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#合并情景"><span class="toc-number">2.2.1.</span> <span class="toc-text">合并情景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多Agent流情景"><span class="toc-number">2.2.2.</span> <span class="toc-text">多Agent流情景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优势"><span class="toc-number">2.3.</span> <span class="toc-text">优势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#可靠性"><span class="toc-number">2.3.1.</span> <span class="toc-text">可靠性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可恢复"><span class="toc-number">2.3.2.</span> <span class="toc-text">可恢复</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Channel-1"><span class="toc-number">3.1.</span> <span class="toc-text">Channel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Memory-Channel"><span class="toc-number">3.1.1.</span> <span class="toc-text">Memory Channel</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Source-1"><span class="toc-number">3.2.</span> <span class="toc-text">Source</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spooling-Directory-Source"><span class="toc-number">3.2.1.</span> <span class="toc-text">Spooling Directory Source</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置-1"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#案例"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解析"><span class="toc-number">3.2.1.3.</span> <span class="toc-text">解析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Taildir-Source"><span class="toc-number">3.2.2.</span> <span class="toc-text">Taildir Source</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置-2"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#案例-1"><span class="toc-number">3.2.2.2.</span> <span class="toc-text">案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题"><span class="toc-number">3.2.2.3.</span> <span class="toc-text">问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Interceptor"><span class="toc-number">3.2.3.</span> <span class="toc-text">Interceptor</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介-1"><span class="toc-number">3.2.3.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#案例-2"><span class="toc-number">3.2.3.2.</span> <span class="toc-text">案例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sink"><span class="toc-number">3.3.</span> <span class="toc-text">Sink</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ElasticSearchSink"><span class="toc-number">3.3.1.</span> <span class="toc-text">ElasticSearchSink</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置-3"><span class="toc-number">3.3.1.1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#案例-3"><span class="toc-number">3.3.1.2.</span> <span class="toc-text">案例</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Kibana"><span class="toc-number">4.</span> <span class="toc-text">Kibana</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础查询"><span class="toc-number">4.1.</span> <span class="toc-text">基础查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于Lucene查询语法"><span class="toc-number">4.1.1.</span> <span class="toc-text">基于Lucene查询语法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Visualize"><span class="toc-number">4.2.</span> <span class="toc-text">Visualize</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Line"><span class="toc-number">4.2.1.</span> <span class="toc-text">Line</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Area"><span class="toc-number">4.2.2.</span> <span class="toc-text">Area</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HorizontalBar"><span class="toc-number">4.2.3.</span> <span class="toc-text">HorizontalBar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pie"><span class="toc-number">4.2.4.</span> <span class="toc-text">Pie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HeatMap"><span class="toc-number">4.2.5.</span> <span class="toc-text">HeatMap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VerticalBar"><span class="toc-number">4.2.6.</span> <span class="toc-text">VerticalBar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Metric"><span class="toc-number">4.2.7.</span> <span class="toc-text">Metric</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Timelion"><span class="toc-number">4.3.</span> <span class="toc-text">Timelion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DashBoard"><span class="toc-number">4.4.</span> <span class="toc-text">DashBoard</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Flume组件
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2019/01/08/flume/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-01-08T05:30:18.000Z" itemprop="datePublished">2019-01-08</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/flume/">flume</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Flume日志搜集组件解析<br><a id="more"></a>  </p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h2 id="主要描述"><a href="#主要描述" class="headerlink" title="主要描述"></a>主要描述</h2><p>Apache Flume是一个分布式,可靠且可用的系统:用于有效地从许多不同的源收集、聚合和移动大量日志数据到一个集中式的数据存储区。</p>
+<p>不只限于日志数据。因为数据源可以定制也可以被用来传输大量事件数据  </p>
+<p>这些数据不仅仅包括网络通讯数据、社交媒体产生的数据、电子邮件信息等等。</p>
+<h2 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h2><p>Apache Flume 是 Apache 基金会的顶级项目,在加入 Apache 之前由 cloudera 公司开发以及维护。  </p>
+<p>Apache Flume 目前有两种主版本： 0.9.x 和 1.x。   </p>
+<p>其中 0.9.x 是历史版本，我们称之为 Flume OG（original generation）。</p>
+<p>2011 年 10 月 22 号，cloudera 完成了 Flume-728，对 Flume 进行了里程碑式的改动：重构核心组件、核心配置以及代码架构</p>
+<p>重构后的版本统称为 Flume NG(next generation),也就是 1.x 版本。  </p>
+<p><br></p>
+<h2 id="对比Logstash优势"><a href="#对比Logstash优势" class="headerlink" title="对比Logstash优势"></a>对比Logstash优势</h2><ul>
+<li>Flume注重数据事务,注重传输的事务正确性</li>
+<li>因为有些Flume Channel支持数据会持久化,所以不存在Logstash Buffer的数据丢失</li>
+</ul>
+<h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><h2 id="数据流模型"><a href="#数据流模型" class="headerlink" title="数据流模型"></a>数据流模型</h2><p><img src="/2019/01/08/flume/image-04.png" width="450px"></p>
+<p>其中最核心的三个组件是 Source、Chanel 以及 Slink。</p>
+<h3 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h3><p>消费由外部源（如Web服务器）传递给它的事件。外部源以一定的格式发送数据给 Flume，这个格式的定义由目标 Flume Source 来确定。</p>
+<p>例如:一个<code>Avro Flume source</code>可以从 Avro<code>(Avro是一个hadoop的一个子项目,基于二进制数据传输的高性能中间件)</code>  </p>
+<p>客户端接收 Avro 事件,也可以从其他<code>Flume Agents</code>(该 Flume agents 有 Avro sink)接收 Avro 事件。 </p>
+<p>同样，我们可以定义一个<code>Thrift Flume Source</code>接收来自<code>Thrift Sink</code>、<code>Flume Thrift RPC</code></p>
+<p>客户端或者其他任意客户端（该客户端可以使用任何语言编写，只要满足 Flume thrift 协议）的事件。</p>
+<h3 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h3><p>可以理解为缓存区，用来保存从<code>Source</code>那拿到的数据，直到<code>Flume Slink</code>将数据消费。</p>
+<p><code>File Chanel</code>是一个例子，它将数据保存在文件系统中（当然你可以将数据放在内存中）。</p>
+<h3 id="Slink"><a href="#Slink" class="headerlink" title="Slink"></a>Slink</h3><p>从 channel 消费完数据就会将数据从<code>Channel</code>中清除,随后将数据放到外部存储系统例如<code>HDFS(使用 Flume HDFS Sink)</code>或发送到其他 <code>Flume Agent</code>的<code>Source</code>中。</p>
+<p>不管是<code>Source</code>还是<code>Slink</code>都是异步发送和消费数据。  </p>
+<h2 id="复杂的流"><a href="#复杂的流" class="headerlink" title="复杂的流"></a>复杂的流</h2><h3 id="合并情景"><a href="#合并情景" class="headerlink" title="合并情景"></a>合并情景</h3><p><img src="/2019/01/08/flume/image-01.png" width="450px"></p>
+<h3 id="多Agent流情景"><a href="#多Agent流情景" class="headerlink" title="多Agent流情景"></a>多Agent流情景</h3><p><img src="/2019/01/08/flume/image-02.png" width="450px"></p>
+<p><img src="/2019/01/08/flume/image-03.png" width="450px"></p>
+<p><br></p>
+<h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><h3 id="可靠性"><a href="#可靠性" class="headerlink" title="可靠性"></a>可靠性</h3><p>事件被存储在每个<code>Flume Agent</code>的<code>Channel</code>中。 </p>
+<p>随后这些事件会发送到流中的下一个<code>Flume Agent</code>或者设备存储中（例如 HDFS）。</p>
+<p>只有事件已经被存储在下一个<code>Flume Agent</code>的<code>Channel</code>中或设备存储中时,当前<code>Channel</code>会清除该事件。</p>
+<p>这种机制保证了流在端到端的传输中具有可靠性。</p>
+<p>Flume使用事务方法(transactional approach)来保证事件的可靠传输。</p>
+<p>在 source 和 slink 中，事件的存储以及恢复作为事务进行封装,存放事件到 channel 中以及从 channel 中拉取事件均是事务性的。</p>
+<p>这保证了流中的事件在节点之间传输是可靠的。</p>
+<p><br></p>
+<h3 id="可恢复"><a href="#可恢复" class="headerlink" title="可恢复"></a>可恢复</h3><p>事件在 channel 中进行,该 channel 负责保障事件从故障中恢复。</p>
+<p>Flume 支持一个由本地文件系统支持的持久化文件<code>(文件模式:channel.type=&quot;file&quot;)</code>channel。</p>
+<p>同样也支持内存模式<code>(channel.type=&quot;memmory&quot;)</code>,即将事件保存在内存队列中。</p>
+<p>显然内存模式相对与文件模型性能会更好,但是当 agent 进程不幸挂掉时,内存模式下存储在 channel 中的事件将丢失,无法进行恢复。</p>
+<p><br></p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>Flume agent 的配置保存在一个本地配置文件中<code>conf/flume-conf.properties</code>。</p>
+<p>可以在同一配置文件中指定一个或多个 agent 的配置。</p>
+<p>配置文件指定了 agnet 中每个 source、channel、slink 的属性，以及三者如何组合形成数据流。</p>
+<p>流中的每一个组件(source、channel、slink)都有自己的名称、类型以及一系列配置属性。例如以下组件</p>
+<h2 id="Channel-1"><a href="#Channel-1" class="headerlink" title="Channel"></a>Channel</h2><h3 id="Memory-Channel"><a href="#Memory-Channel" class="headerlink" title="Memory Channel"></a>Memory Channel</h3><p>Memory Channel是使用内存来存储Event，使用内存的意味着数据传输速率会很快，但是当Agent挂掉后，存储在Channel中的数据将会丢失。</p>
+<table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>type</strong></td>
+<td>–</td>
+<td>类型指定为：memory</td>
+</tr>
+<tr>
+<td>capacity</td>
+<td>100</td>
+<td>存储在channel中的最大容量</td>
+</tr>
+<tr>
+<td>transactionCapacity</td>
+<td>100</td>
+<td>从一个source中去或者给一个sink，每个事务中最大的事件数</td>
+</tr>
+<tr>
+<td>keep-alive</td>
+<td>3</td>
+<td>对于添加或者删除一个事件的超时的秒钟</td>
+</tr>
+<tr>
+<td>byteCapacityBufferPercentage</td>
+<td>20</td>
+<td>定义缓存百分比</td>
+</tr>
+<tr>
+<td>byteCapacity</td>
+<td>see description</td>
+<td>Channel中允许存储的最大字节总数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a1.channels = c1</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 10000</span><br><span class="line">a1.channels.c1.transactionCapacity = 10000</span><br><span class="line">a1.channels.c1.byteCapacityBufferPercentage = 20</span><br><span class="line">a1.channels.c1.byteCapacity = 800000</span><br></pre></td></tr></table></figure>
+<p>除此之外还有FileChannel,KafkaChannel,JDBC Channel,具体介绍于:<a href="http://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html" target="_blank" rel="noopener">http://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html</a></p>
+<h2 id="Source-1"><a href="#Source-1" class="headerlink" title="Source"></a>Source</h2><h3 id="Spooling-Directory-Source"><a href="#Spooling-Directory-Source" class="headerlink" title="Spooling Directory Source"></a>Spooling Directory Source</h3><p>Spooling Directory Source可以获取硬盘上”spooling”目录的数据  </p>
+<p>这个Source将监视指定目录是否有新文件,如果有新文件的话,就解析这个新文件。</p>
+<p>事件的解析逻辑是可插拔的。在文件的内容所有的都读取到Channel之后</p>
+<p>Spooling Directory Source会重名或者是删除该文件以表示文件已经读取完成。</p>
+<p>不像Exec Source，这个Source是可靠的,且不会丢失数据。即使Flume重启或者被Kill。但是需要注意如下两点:</p>
+<ul>
+<li>1:如果文件在放入spooling目录之后还在写，那么Flume会打印错误日志，并且停止处理该文件。</li>
+<li>2:如果文件之后重复使用，Flume将打印错误日志，并且停止处理。</li>
+</ul>
+<p>为了避免以上问题，我们可以使用唯一的标识符来命令文件，例如：时间戳。</p>
+<h4 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h4><table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>channels</strong></td>
+<td>–</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>type</strong></td>
+<td>–</td>
+<td>组件类型名称需要为“spooldir”。</td>
+</tr>
+<tr>
+<td><strong>spoolDir</strong></td>
+<td>–</td>
+<td>要从中读取文件的目录。</td>
+</tr>
+<tr>
+<td>fileSuffix</td>
+<td>.COMPLETED</td>
+<td>文件的后缀</td>
+</tr>
+<tr>
+<td>deletePolicy</td>
+<td>never</td>
+<td>何时删除已完成的文件: <code>never</code> or <code>immediate</code></td>
+</tr>
+<tr>
+<td>fileHeader</td>
+<td>false</td>
+<td>是否添加存储绝对路径添加到header中,解析出来的event在header上将添加一个属性</td>
+</tr>
+<tr>
+<td>fileHeaderKey</td>
+<td>file</td>
+<td>当将绝对路径附加到event header使用的Key。</td>
+</tr>
+<tr>
+<td>basenameHeader</td>
+<td>false</td>
+<td>是否添加存储文件名的标题到event header中。</td>
+</tr>
+<tr>
+<td>basenameHeaderKey</td>
+<td>basename</td>
+<td>将文件名附加到event header时使用的Key。</td>
+</tr>
+<tr>
+<td>includePattern</td>
+<td>^.*$</td>
+<td>指定要包含哪些文件的正则表达式。它可以和ignorePattern一起使用。<br>如果一个文件同时匹配’ ignorePattern ‘和’ includePattern ‘ regex，该文件将被忽略。</td>
+</tr>
+<tr>
+<td>ignorePattern</td>
+<td>^$</td>
+<td>指定要忽略(跳过)哪些文件的正则表达式。它可以和includePattern一起使用。<br>如果一个文件同时匹配’ ignorePattern ‘和’ includePattern ‘ regex，该文件将被忽略。</td>
+</tr>
+<tr>
+<td>trackerDir</td>
+<td>.flumespool</td>
+<td>目录存储与文件处理相关的元数据。<br>如果此路径不是绝对路径，则将其解释为相对于spoolDir。</td>
+</tr>
+<tr>
+<td>consumeOrder</td>
+<td>oldest</td>
+<td>消费spooling目录文件的规则,分别有：oldest，youngest和random。在oldest 和 youngest的情况下，<br>通过文件的最后修改时间来比较文件。如果最后修改时间相同，就根据字典的序列从小开始。<br>在随机的情况下，就随意读取文件。如果文件列表很长，采用oldest/youngest可能会很慢,因为用oldest/youngest要扫描文件。<br>但是如果采用random的话，就可能造成新的文件消耗的很快，老的文件一直都没有被消费。</td>
+</tr>
+<tr>
+<td>pollDelay</td>
+<td>500</td>
+<td>轮询新文件时使用的延迟(毫秒)。</td>
+</tr>
+<tr>
+<td>recursiveDirectorySearch</td>
+<td>false</td>
+<td>是否监视要读取的新文件的子目录。</td>
+</tr>
+<tr>
+<td>maxBackoff</td>
+<td>4000</td>
+<td>如果Channel已经满了，那么该Source连续尝试写入该Channel的最长时间（单位：毫秒）。</td>
+</tr>
+<tr>
+<td>batchSize</td>
+<td>100</td>
+<td>批量传输到Channel的粒度。</td>
+</tr>
+<tr>
+<td>inputCharset</td>
+<td>UTF-8</td>
+<td>字符集</td>
+</tr>
+<tr>
+<td>decodeErrorPolicy</td>
+<td><code>FAIL</code></td>
+<td>在文件中有不可解析的字符时的解析策略。<br><code>FAIL</code>: 抛出一个异常，并且不能解析该文件。<br><code>REPLACE</code>: 取代不可<br>解析的字符，通常用Unicode U+FFFD. <br><code>IGNORE</code>: 丢弃不可能解析字符序列。</td>
+</tr>
+<tr>
+<td>deserializer</td>
+<td><code>LINE</code></td>
+<td>自定序列化的方式，自定的话，必须实现<code>EventDeserializer.Builder</code>.</td>
+</tr>
+<tr>
+<td>deserializer.*</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>bufferMaxLines</td>
+<td>–</td>
+<td>已废弃</td>
+</tr>
+<tr>
+<td>bufferMaxLineLength</td>
+<td>5000</td>
+<td>(不推荐使用) 一行中最大的长度，可以使用deserializer.maxLineLength代替。</td>
+</tr>
+<tr>
+<td>selector.type</td>
+<td>replicating</td>
+<td>replicating（复制） 或 multiplexing（复用）</td>
+</tr>
+<tr>
+<td>selector.*</td>
+<td></td>
+<td>取决于selector.type的值</td>
+</tr>
+<tr>
+<td>interceptors</td>
+<td>–</td>
+<td>空格分割的interceptor列表。</td>
+</tr>
+<tr>
+<td>interceptors.*</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p>一个a-1的<code>Agent Sources</code>的例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a1.channels = ch-1</span><br><span class="line">a1.sources = src-1</span><br><span class="line"></span><br><span class="line">a1.sources.src-1.type = spooldir</span><br><span class="line">a1.sources.src-1.channels = ch-1</span><br><span class="line">a1.sources.src-1.spoolDir = /var/log/apache/flumeSpool</span><br><span class="line">a1.sources.src-1.fileHeader = true</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>完整的例子  </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">a1.sources = source1</span><br><span class="line">a1.sinks = sink1</span><br><span class="line">a1.channels = channel1</span><br><span class="line"> </span><br><span class="line">#sources</span><br><span class="line">a1.sources.source1.type = spooldir</span><br><span class="line">a1.sources.source1.channels = channel1</span><br><span class="line">a1.sources.source1.spoolDir = /data/workspace/logs</span><br><span class="line">a1.sources.source1.fileHeader = true</span><br><span class="line">a1.sources.source1.fileHeaderKey = file</span><br><span class="line">a1.sources.source1.basenameHeader = true</span><br><span class="line">a1.sources.source1.basenameHeaderKey = basename</span><br><span class="line"> </span><br><span class="line">a1.sinks.sink1.type = file_roll</span><br><span class="line">a1.sinks.sink1.sink.directory = /data/workspace/file_roll</span><br><span class="line">a1.sinks.sink1.sink.rollInterval = 300</span><br><span class="line">a1.sinks.sink1.sink.serializer = TEXT</span><br><span class="line">a1.sinks.sink1.sink.batchSize = 100</span><br><span class="line"> </span><br><span class="line">a1.channels.channel1.type = memory</span><br><span class="line">a1.channels.channel1.capacity = 1000</span><br><span class="line">a1.channels.channel1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line">a1.sources.source1.channels = channel1</span><br><span class="line">a1.sinks.sink1.channel = channel1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>组件存放目录</p>
+</blockquote>
+<p><code>192.168.4.218  /data/workspace/apache-flume-1.8.0-bin</code></p>
+<blockquote>
+<p>执行命令</p>
+</blockquote>
+<p><code>bin/flume-ng agent --conf conf --conf-file conf/flume-directory.properties --name a1 -Dflume.root.logger=INFO,console</code></p>
+<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><blockquote>
+<p>配置相关</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//spool目录</span></span><br><span class="line">    spoolDirectory = context.getString(SPOOL_DIRECTORY);</span><br><span class="line">    Preconditions.checkState(spoolDirectory != <span class="keyword">null</span>,</span><br><span class="line">        <span class="string">"Configuration must specify a spooling directory"</span>);</span><br><span class="line">    <span class="comment">//完成后的文件后缀</span></span><br><span class="line">    completedSuffix = context.getString(SPOOLED_FILE_SUFFIX,</span><br><span class="line">        DEFAULT_SPOOLED_FILE_SUFFIX);</span><br><span class="line">    <span class="comment">//删除策略，never：不删除 或 immediate：立即删除</span></span><br><span class="line">    deletePolicy = context.getString(DELETE_POLICY, DEFAULT_DELETE_POLICY);</span><br><span class="line">    <span class="comment">//以下四个参数是是否在header中加入文件名和文件路径。</span></span><br><span class="line">    fileHeader = context.getBoolean(FILENAME_HEADER,</span><br><span class="line">        DEFAULT_FILE_HEADER);</span><br><span class="line">    fileHeaderKey = context.getString(FILENAME_HEADER_KEY,</span><br><span class="line">        DEFAULT_FILENAME_HEADER_KEY);</span><br><span class="line">    basenameHeader = context.getBoolean(BASENAME_HEADER,</span><br><span class="line">        DEFAULT_BASENAME_HEADER);</span><br><span class="line">    basenameHeaderKey = context.getString(BASENAME_HEADER_KEY,</span><br><span class="line">        DEFAULT_BASENAME_HEADER_KEY);</span><br><span class="line">    <span class="comment">//批量处理的数量</span></span><br><span class="line">    batchSize = context.getInteger(BATCH_SIZE,</span><br><span class="line">        DEFAULT_BATCH_SIZE);</span><br><span class="line">    <span class="comment">//字符集</span></span><br><span class="line">    inputCharset = context.getString(INPUT_CHARSET, DEFAULT_INPUT_CHARSET);</span><br><span class="line">    <span class="comment">//在文件中有不可解析的字符时的解析策略</span></span><br><span class="line">    decodeErrorPolicy = DecodeErrorPolicy.valueOf(</span><br><span class="line">        context.getString(DECODE_ERROR_POLICY, DEFAULT_DECODE_ERROR_POLICY)</span><br><span class="line">        .toUpperCase(Locale.ENGLISH));</span><br><span class="line">    <span class="comment">//过滤文件的正则表达式</span></span><br><span class="line">    ignorePattern = context.getString(IGNORE_PAT, DEFAULT_IGNORE_PAT);</span><br><span class="line">    <span class="comment">//被处理文件的元数据的存储目录</span></span><br><span class="line">    trackerDirPath = context.getString(TRACKER_DIR, DEFAULT_TRACKER_DIR);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//序列化</span></span><br><span class="line">    deserializerType = context.getString(DESERIALIZER, DEFAULT_DESERIALIZER);</span><br><span class="line">    deserializerContext = <span class="keyword">new</span> Context(context.getSubProperties(DESERIALIZER +</span><br><span class="line">        <span class="string">"."</span>));</span><br><span class="line">    <span class="comment">//消费spooling目录文件的规则</span></span><br><span class="line">    consumeOrder = ConsumeOrder.valueOf(context.getString(CONSUME_ORDER, </span><br><span class="line">        DEFAULT_CONSUME_ORDER.toString()).toUpperCase(Locale.ENGLISH));</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// "Hack" to support backwards compatibility with previous generation of</span></span><br><span class="line">    <span class="comment">// spooling directory source, which did not support deserializers</span></span><br><span class="line">    Integer bufferMaxLineLength = context.getInteger(BUFFER_MAX_LINE_LENGTH);</span><br><span class="line">    <span class="keyword">if</span> (bufferMaxLineLength != <span class="keyword">null</span> &amp;&amp; deserializerType != <span class="keyword">null</span> &amp;&amp;</span><br><span class="line">        deserializerType.equalsIgnoreCase(DEFAULT_DESERIALIZER)) &#123;</span><br><span class="line">      deserializerContext.put(LineDeserializer.MAXLINE_KEY,</span><br><span class="line">          bufferMaxLineLength.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    maxBackoff = context.getInteger(MAX_BACKOFF, DEFAULT_MAX_BACKOFF);</span><br><span class="line">    <span class="keyword">if</span> (sourceCounter == <span class="keyword">null</span>) &#123;</span><br><span class="line">      sourceCounter = <span class="keyword">new</span> SourceCounter(getName());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>启动</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    logger.info(<span class="string">"SpoolDirectorySource source starting with directory: &#123;&#125;"</span>,</span><br><span class="line">        spoolDirectory);</span><br><span class="line"> </span><br><span class="line">    executor = Executors.newSingleThreadScheduledExecutor();</span><br><span class="line"> </span><br><span class="line">    File directory = <span class="keyword">new</span> File(spoolDirectory);</span><br><span class="line">    <span class="comment">//构建ReliableSpoolingFileEventReader对象</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      reader = <span class="keyword">new</span> ReliableSpoolingFileEventReader.Builder()</span><br><span class="line">          .spoolDirectory(directory)</span><br><span class="line">          .completedSuffix(completedSuffix)</span><br><span class="line">          .ignorePattern(ignorePattern)</span><br><span class="line">          .trackerDirPath(trackerDirPath)</span><br><span class="line">          .annotateFileName(fileHeader)</span><br><span class="line">          .fileNameHeader(fileHeaderKey)</span><br><span class="line">          .annotateBaseName(basenameHeader)</span><br><span class="line">          .baseNameHeader(basenameHeaderKey)</span><br><span class="line">          .deserializerType(deserializerType)</span><br><span class="line">          .deserializerContext(deserializerContext)</span><br><span class="line">          .deletePolicy(deletePolicy)</span><br><span class="line">          .inputCharset(inputCharset)</span><br><span class="line">          .decodeErrorPolicy(decodeErrorPolicy)</span><br><span class="line">          .consumeOrder(consumeOrder)</span><br><span class="line">          .build();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException ioe) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> FlumeException(<span class="string">"Error instantiating spooling event parser"</span>,</span><br><span class="line">          ioe);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//构建SpoolDirectoryRunnable线程。</span></span><br><span class="line">    Runnable runner = <span class="keyword">new</span> SpoolDirectoryRunnable(reader, sourceCounter);</span><br><span class="line">    <span class="comment">//每隔POLL_DELAY_MS（500ms）执行以下SpoolDirectoryRunnable线程。</span></span><br><span class="line">    executor.scheduleWithFixedDelay(</span><br><span class="line">        runner, <span class="number">0</span>, POLL_DELAY_MS, TimeUnit.MILLISECONDS);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">super</span>.start();</span><br><span class="line">    logger.debug(<span class="string">"SpoolDirectorySource source started"</span>);</span><br><span class="line">    sourceCounter.start();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>执行流程</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">SpoolDirectoryRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ReliableSpoolingFileEventReader reader;</span><br><span class="line">    <span class="keyword">private</span> SourceCounter sourceCounter;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpoolDirectoryRunnable</span><span class="params">(ReliableSpoolingFileEventReader reader,</span></span></span><br><span class="line"><span class="function"><span class="params">        SourceCounter sourceCounter)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.reader = reader;</span><br><span class="line">      <span class="keyword">this</span>.sourceCounter = sourceCounter;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> backoffInterval = <span class="number">250</span>;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (!Thread.interrupted()) &#123;</span><br><span class="line">          <span class="comment">//ReliableSpoolingFileEventReader读取batchSize大小的Event</span></span><br><span class="line">          List&lt;Event&gt; events = reader.readEvents(batchSize);</span><br><span class="line">          <span class="keyword">if</span> (events.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="comment">//统计</span></span><br><span class="line">          sourceCounter.addToEventReceivedCount(events.size());</span><br><span class="line">          sourceCounter.incrementAppendBatchReceivedCount();</span><br><span class="line"> </span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//将Event数组发送到Channel</span></span><br><span class="line">            getChannelProcessor().processEventBatch(events);</span><br><span class="line">            <span class="comment">//commit会记录最后一次读取的行数，以便下次知道从哪里开始读</span></span><br><span class="line">            reader.commit();</span><br><span class="line">          &#125; <span class="keyword">catch</span> (ChannelException ex) &#123;</span><br><span class="line">            <span class="comment">//ChannelProcessor批量提交Event出错，会抛出ChannelException异常，此时reader.commit是没有执行的</span></span><br><span class="line">            <span class="comment">//所以在接下来的continue后，继续通过reader读取文件的话，还是从原来的位置读取，以保证数据不会丢失。</span></span><br><span class="line">            logger.warn(<span class="string">"The channel is full, and cannot write data now. The "</span> +</span><br><span class="line">              <span class="string">"source will try again after "</span> + String.valueOf(backoffInterval) +</span><br><span class="line">              <span class="string">" milliseconds"</span>);</span><br><span class="line">            hitChannelException = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">if</span> (backoff) &#123;</span><br><span class="line">              TimeUnit.MILLISECONDS.sleep(backoffInterval);</span><br><span class="line">              backoffInterval = backoffInterval &lt;&lt; <span class="number">1</span>;</span><br><span class="line">              backoffInterval = backoffInterval &gt;= maxBackoff ? maxBackoff :</span><br><span class="line">                                backoffInterval;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          backoffInterval = <span class="number">250</span>;</span><br><span class="line">          sourceCounter.addToEventAcceptedCount(events.size());</span><br><span class="line">          sourceCounter.incrementAppendBatchAcceptedCount();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">        logger.error(<span class="string">"FATAL: "</span> + SpoolDirectorySource.<span class="keyword">this</span>.toString() + <span class="string">": "</span> +</span><br><span class="line">            <span class="string">"Uncaught exception in SpoolDirectorySource thread. "</span> +</span><br><span class="line">            <span class="string">"Restart or reconfigure Flume to continue processing."</span>, t);</span><br><span class="line">        hasFatalError = <span class="keyword">true</span>;</span><br><span class="line">        Throwables.propagate(t);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//========ReliableSpoolingFileEventReader读取Event</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Event&gt; <span class="title">readEvents</span><span class="params">(<span class="keyword">int</span> numEvents)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="comment">//committed初始化为true</span></span><br><span class="line">    <span class="keyword">if</span> (!committed) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!currentFile.isPresent()) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"File should not roll when "</span> +</span><br><span class="line">            <span class="string">"commit is outstanding."</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      logger.info(<span class="string">"Last read was never committed - resetting mark position."</span>);</span><br><span class="line">      <span class="comment">//正常情况下，会在SpoolDirectorySource类中记录读取的字节数之后，将commited设置为true</span></span><br><span class="line">      <span class="comment">//没有设置为true，可能是因为发送到Channel异常了，调用下面reset方法可以保证数据不丢失。</span></span><br><span class="line">      currentFile.get().getDeserializer().reset();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// Check if new files have arrived since last call</span></span><br><span class="line">      <span class="keyword">if</span> (!currentFile.isPresent()) &#123;</span><br><span class="line">        <span class="comment">//读取文件，读取文件过程中使用FileFilter过滤掉completedSuffix后缀的文件，然后根据消费文件的规则（consumeOrder）去消费文件。</span></span><br><span class="line">        currentFile = getNextFile();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// Return empty list if no new files</span></span><br><span class="line">      <span class="keyword">if</span> (!currentFile.isPresent()) &#123;</span><br><span class="line">        <span class="keyword">return</span> Collections.emptyList();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    EventDeserializer des = currentFile.get().getDeserializer();</span><br><span class="line">    <span class="comment">//根据序列化类读取Event</span></span><br><span class="line">    List&lt;Event&gt; events = des.readEvents(numEvents);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (events.isEmpty()) &#123;</span><br><span class="line">      logger.info(<span class="string">"Last read took us just up to a file boundary. Rolling to the next file, if there is one."</span>);</span><br><span class="line">      retireCurrentFile();</span><br><span class="line">      currentFile = getNextFile();</span><br><span class="line">      <span class="keyword">if</span> (!currentFile.isPresent()) &#123;</span><br><span class="line">        <span class="keyword">return</span> Collections.emptyList();</span><br><span class="line">      &#125;</span><br><span class="line">      events = currentFile.get().getDeserializer().readEvents(numEvents);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//添加文件路径到Header</span></span><br><span class="line">    <span class="keyword">if</span> (annotateFileName) &#123;</span><br><span class="line">      String filename = currentFile.get().getFile().getAbsolutePath();</span><br><span class="line">      <span class="keyword">for</span> (Event event : events) &#123;</span><br><span class="line">        event.getHeaders().put(fileNameHeader, filename);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//添加文件名到Header</span></span><br><span class="line">    <span class="keyword">if</span> (annotateBaseName) &#123;</span><br><span class="line">      String basename = currentFile.get().getFile().getName();</span><br><span class="line">      <span class="keyword">for</span> (Event event : events) &#123;</span><br><span class="line">        event.getHeaders().put(baseNameHeader, basename);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    committed = <span class="keyword">false</span>;</span><br><span class="line">    lastFileRead = currentFile;</span><br><span class="line">    <span class="keyword">return</span> events;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Taildir-Source"><a href="#Taildir-Source" class="headerlink" title="Taildir Source"></a>Taildir Source</h3><p>由于<code>SpoolDirectorySource</code>监听目录下的文件不允许动态变化以及无法监听目录嵌套子目录  </p>
+<p>所以使用这个组件即可消除限制,<code>ExecSource</code> + <code>SpoolDirectorySource</code> 的功能  </p>
+<h4 id="配置-2"><a href="#配置-2" class="headerlink" title="配置"></a>配置</h4><table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>channels</strong></td>
+<td>–</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>type</strong></td>
+<td>–</td>
+<td>组件类型名称需要为<code>TAILDIR</code>.</td>
+</tr>
+<tr>
+<td><strong>filegroups</strong></td>
+<td>–</td>
+<td>文件组的以空格分隔的列表。每个文件组表示要跟踪的一组文件.</td>
+</tr>
+<tr>
+<td>filegroups.<code>&lt;filegroupName&gt;</code></td>
+<td>–</td>
+<td>文件组的绝对路径。正则表达式(而不是文件系统模式)只能用于文件名.</td>
+</tr>
+<tr>
+<td>positionFile</td>
+<td>~/.flume/taildir_position.json</td>
+<td>文件的JSON格式，以记录inode、绝对路径和每个尾随文件的最后位置.</td>
+</tr>
+<tr>
+<td>headers.<code>&lt;filegroupName&gt;.&lt;headerKey&gt;</code></td>
+<td>–</td>
+<td></td>
+</tr>
+<tr>
+<td>byteOffsetHeader</td>
+<td>false</td>
+<td>是否将尾部行的字节偏移量添加到名为“byteoffset”的header中。</td>
+</tr>
+<tr>
+<td>skipToEnd</td>
+<td>false</td>
+<td>如果文件没有写在位置文件上,是否跳过位置到EOF。</td>
+</tr>
+<tr>
+<td>idleTimeout</td>
+<td>120000</td>
+<td>关闭非活动文件的时间(ms)。<br>如果将已关闭的文件追加到新行，则该源将自动重新打开它。</td>
+</tr>
+<tr>
+<td>writePosInterval</td>
+<td>3000</td>
+<td>将每个文件的最后一个位置写入位置文件的间隔时间(ms)。</td>
+</tr>
+<tr>
+<td>batchSize</td>
+<td>100</td>
+<td>读取的行数，默认是100</td>
+</tr>
+<tr>
+<td>backoffSleepIncrement</td>
+<td>1000</td>
+<td>重新尝试轮询新数据之前的时间延迟增量，上一次尝试时未发现任何新数据。</td>
+</tr>
+<tr>
+<td>maxBackoffSleep</td>
+<td>5000</td>
+<td>每次重新尝试轮询新数据之间的最大时间延迟,上一次尝试未发现任何新数据。</td>
+</tr>
+<tr>
+<td>cachePatternMatching</td>
+<td>true</td>
+<td>对于包含数千个文件的目录，列出目录并应用filename regex模式可能会很耗时。<br>缓存匹配的文件列表可以提高性能。<br>文件的使用顺序也将被缓存。要求文件系统以至少1秒的粒度跟踪修改时间。</td>
+</tr>
+<tr>
+<td>fileHeader</td>
+<td>false</td>
+<td>是否添加header存储文件绝对路径</td>
+</tr>
+<tr>
+<td>fileHeaderKey</td>
+<td>file</td>
+<td>fileHeader启用时，使用的key</td>
+</tr>
+</tbody>
+</table>
+<h4 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">a1.sources = source1</span><br><span class="line">a1.sinks = sink1</span><br><span class="line">a1.channels = channel1</span><br><span class="line"></span><br><span class="line">#sources描述/配置Source</span><br><span class="line">a1.sources.source1.type=TAILDIR</span><br><span class="line">a1.sources.source1.filegroups=g1</span><br><span class="line">a1.sources.source1.filegroups.g1=/data/workspace/logs/.*</span><br><span class="line">a1.sources.source1.positionFile=/data/workspace/apache-flume-1.8.0-bin/taildir_position.json</span><br><span class="line">a1.sources.source1.channels=c</span><br><span class="line">a1.sources.source1.fileHeader=true</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a1.sinks.sink1.type = file_roll</span><br><span class="line">a1.sinks.sink1.sink.directory = /data/workspace/file_roll</span><br><span class="line">a1.sinks.sink1.sink.rollInterval = 300</span><br><span class="line">a1.sinks.sink1.sink.serializer = TEXT</span><br><span class="line">a1.sinks.sink1.sink.batchSize = 100</span><br><span class="line"></span><br><span class="line">a1.channels.channel1.type = memory</span><br><span class="line">a1.channels.channel1.capacity = 1000</span><br><span class="line">a1.channels.channel1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line">a1.sources.source1.channels = channel1</span><br><span class="line">a1.sinks.sink1.channel = channel1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>组件存放目录</p>
+</blockquote>
+<p><code>192.168.4.218  /data/workspace/apache-flume-1.8.0-bin</code></p>
+<blockquote>
+<p>执行命令</p>
+</blockquote>
+<p><code>bin/flume-ng agent --conf conf --conf-file conf/flume-taildir.properties --name a1 -Dflume.root.logger=INFO,console</code></p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ul>
+<li>由于log更名重复获取数据</li>
+<li>合并异常行功能缺失</li>
+</ul>
+<p>以上问题可直接使用以下项目解决,将target打出的jar包丢入<code>${flume目录}/lib</code>下</p>
+<p><a href="http://192.168.4.210/yanfa/flume-taildir-source" target="_blank" rel="noopener">http://192.168.4.210/yanfa/flume-taildir-source</a></p>
+<p>并按照以上项目的<code>flume source</code>配置方式进行配置</p>
+<p><br></p>
+<h3 id="Interceptor"><a href="#Interceptor" class="headerlink" title="Interceptor"></a>Interceptor</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><p>拦截在<code>source</code>层对<code>event</code>的包装、筛选过滤、提取相关数据等作用</p>
+<ul>
+<li><p>Timestamp Interceptor</p>
+</li>
+<li><p>Host Interceptor</p>
+</li>
+<li><p>Static Interceptor</p>
+</li>
+<li><p>Regex Filtering Interceptor</p>
+</li>
+<li><p>Regex Extractor Interceptor</p>
+</li>
+</ul>
+<h4 id="案例-2"><a href="#案例-2" class="headerlink" title="案例"></a>案例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#sources描述/配置Source</span><br><span class="line">a1.sources.source1.type= com.ybxx.flume.source.taildir.TaildirMultilineSource</span><br><span class="line">a1.sources.source1.filegroups=g1</span><br><span class="line">a1.sources.source1.filegroups.g1=/data/workspace/logs/.*</span><br><span class="line">a1.sources.source1.positionFile=/data/workspace/apache-flume-1.8.0-bin/taildir_position.json</span><br><span class="line">a1.sources.source1.channels=c</span><br><span class="line">a1.sources.source1.lineContains=ERROR|WARN|DEBUG</span><br><span class="line">a1.sources.source1.fileHeader=true</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># interceptors使用</span><br><span class="line">a1.sources.source1.interceptors=i1</span><br><span class="line">a1.sources.source1.interceptors.i1.type=timestamp</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="Sink"><a href="#Sink" class="headerlink" title="Sink"></a>Sink</h2><h3 id="ElasticSearchSink"><a href="#ElasticSearchSink" class="headerlink" title="ElasticSearchSink"></a>ElasticSearchSink</h3><h4 id="配置-3"><a href="#配置-3" class="headerlink" title="配置"></a>配置</h4><table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>channel</strong></td>
+<td>–</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>type</strong></td>
+<td>–</td>
+<td>组件名称<code>org.apache.flume.sink.elasticsearch.ElasticSearchSink</code></td>
+</tr>
+<tr>
+<td><strong>hostNames</strong></td>
+<td>–</td>
+<td>主机名的逗号分隔列表:端口,如果端口不存在将使用默认端口’ 9300 ‘</td>
+</tr>
+<tr>
+<td>indexName</td>
+<td>flume</td>
+<td>将添加日期的索引的名称。<br>示例“flume”-&gt;“flume-yyyy- mm -dd”支持任意标题的替换<br>例如。%{header}用指定事件头的值替换</td>
+</tr>
+<tr>
+<td>indexType</td>
+<td>logs</td>
+<td>支持为文档建立索引的类型，默认为“log”。%{header}用指定事件头的值替换</td>
+</tr>
+<tr>
+<td>clusterName</td>
+<td>elasticsearch</td>
+<td>要连接的ElasticSearch集群的名称</td>
+</tr>
+<tr>
+<td>batchSize</td>
+<td>100</td>
+<td>每个txn要写入的事件数。</td>
+</tr>
+<tr>
+<td>ttl</td>
+<td>–</td>
+<td>TTL在设置的时候会自动删除过期的文档，如果不设置则永远不会自动删除。TTL只接受前面整数形式的整数，<br>还有限定词ms(毫秒)、s(秒)、m(分钟)、h(小时)、d(天)和w(周)。<br>示例ttl = 5d将ttl设置为5天。更多信息请访问<a href="http://www.elasticsearch.org/guide/reference/mapping/ttl-field/" target="_blank" rel="noopener">http://www.elasticsearch.org/guide/reference/mapping/ttl-field/</a>。</td>
+</tr>
+<tr>
+<td>serializer</td>
+<td>org.apache.flume.sink.elasticsearch.ElasticSearchLogStashEventSerializer</td>
+<td>要使用的ElasticSearchIndexRequestBuilderFactory或ElasticSearchEventSerializer。这两个类的实现都可以接受，但最好是ElasticSearchIndexRequestBuilderFactory。</td>
+</tr>
+<tr>
+<td>serializer.*</td>
+<td>–</td>
+<td>要传递给序列化器的属性。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="案例-3"><a href="#案例-3" class="headerlink" title="案例"></a>案例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">a1.sources = source1</span><br><span class="line">a1.sinks = sink1</span><br><span class="line">a1.channels = channel1</span><br><span class="line"></span><br><span class="line">#sources描述/配置Source</span><br><span class="line">a1.sources.source1.type=TAILDIR</span><br><span class="line">a1.sources.source1.filegroups=g1</span><br><span class="line">a1.sources.source1.filegroups.g1=/data/workspace/logs/.*</span><br><span class="line">a1.sources.source1.positionFile=/data/workspace/apache-flume-1.8.0-bin/taildir_position.json</span><br><span class="line">a1.sources.source1.channels=c</span><br><span class="line">a1.sources.source1.fileHeader=true</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a1.sinks.sink1.type = org.apache.flume.sink.elasticsearch.ElasticSearchSink</span><br><span class="line">a1.sinks.sink1.hostNames = 192.168.4.219:9300</span><br><span class="line">a1.sinks.sink1.indexName = log_index</span><br><span class="line">a1.sinks.sink1.indexType = log_type</span><br><span class="line">a1.sinks.sink1.clusterName = CollectorDBCluster</span><br><span class="line">a1.sinks.sink1.batchSize = 500</span><br><span class="line">a1.sinks.sink1.ttl = 5d</span><br><span class="line">a1.sinks.sink1.serializer = org.apache.flume.sink.elasticsearch.ElasticSearchDynamicSerializer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a1.channels.channel1.type = memory</span><br><span class="line">a1.channels.channel1.capacity = 1000</span><br><span class="line">a1.channels.channel1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line">a1.sources.source1.channels = channel1</span><br><span class="line">a1.sinks.sink1.channel = channel1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>组件存放目录</p>
+</blockquote>
+<p><code>192.168.4.218  /data/workspace/apache-flume-1.8.0-bin</code></p>
+<blockquote>
+<p>因flume不支持es的新版本,所以需要自定义ElasticSearchSink</p>
+</blockquote>
+<p>当前问题可直接使用以下项目解决,将以下项目编译,在target打出的zip包内的jar包丢入<code>${flume目录}/lib</code>下</p>
+<p><code>flume-elasticsearch-sink</code></p>
+<p>由以上项目得到的配置文件</p>
+<table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>channel</strong></td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>type</strong></td>
+<td>-</td>
+<td>The component type name, has to be com.cognitree.flume.sink.elasticsearch.ElasticSearchSink</td>
+</tr>
+<tr>
+<td><strong>es.cluster.name</strong></td>
+<td>elasticsearch</td>
+<td>Name of the elasticsearch cluster to connect to</td>
+</tr>
+<tr>
+<td><strong>es.client.hosts</strong></td>
+<td>-</td>
+<td>Comma separated hostname:port pairs ex: host1:9300,host2:9300. The default port is 9300</td>
+</tr>
+<tr>
+<td>es.bulkActions</td>
+<td>1000</td>
+<td>The number of actions to batch into a request</td>
+</tr>
+<tr>
+<td>es.bulkProcessor.name</td>
+<td>flume</td>
+<td>Name of the bulk processor</td>
+</tr>
+<tr>
+<td>es.bulkSize</td>
+<td>5</td>
+<td>Flush the bulk request every mentioned size</td>
+</tr>
+<tr>
+<td>es.bulkSize.unit</td>
+<td>MB</td>
+<td>Bulk request unit, supported values are KB and MB</td>
+</tr>
+<tr>
+<td>es.concurrent.request</td>
+<td>1</td>
+<td>The maximum number of concurrent requests to allow while accumulating new bulk requests</td>
+</tr>
+<tr>
+<td>es.flush.interval.time</td>
+<td>10s</td>
+<td>Flush a batch as a bulk request every mentioned seconds irrespective of the number of requests</td>
+</tr>
+<tr>
+<td>es.backoff.policy.time.interval</td>
+<td>50M</td>
+<td>Backoff policy time interval, wait initially for the 50 miliseconds</td>
+</tr>
+<tr>
+<td>es.backoff.policy.retries</td>
+<td>8</td>
+<td>Number of backoff policy retries</td>
+</tr>
+<tr>
+<td>es.client.transport.sniff</td>
+<td>false</td>
+<td>Enable or disable the sniff feature of the elastic search</td>
+</tr>
+<tr>
+<td>es.client.transport.ignore_cluster_name</td>
+<td>false</td>
+<td>Ignore cluster name validation of connected nodes</td>
+</tr>
+<tr>
+<td>es.client.transport.ping_timeout</td>
+<td>5s</td>
+<td>The time to wait for a ping response from a node</td>
+</tr>
+<tr>
+<td>es.client.transport.nodes_sampler_interval</td>
+<td>5s</td>
+<td>How often to sample / ping the nodes listed and connected</td>
+</tr>
+<tr>
+<td>es.index</td>
+<td>default</td>
+<td>Index name to be used to store the documents</td>
+</tr>
+<tr>
+<td>es.type</td>
+<td>default</td>
+<td>Type to be used to store the documents</td>
+</tr>
+<tr>
+<td>es.index.builder</td>
+<td>com.cognitree. flume.sink. elasticsearch. StaticIndexBuilder</td>
+<td>com.cognitree.flume.sink.elasticsearch的实现。IndexBuilder接口</td>
+</tr>
+<tr>
+<td>es.serializer</td>
+<td>com.cognitree. flume.sink. elasticsearch. SimpleSerializer</td>
+<td>com.cognitree.flume.sink.elasticsearch的实现。序列化器接口</td>
+</tr>
+<tr>
+<td>es.serializer.csv.fields</td>
+<td>-</td>
+<td>逗号分隔的csv字段名与数据类型，即column1:type1,column2:type2，支持的数据类型有string, boolean, int和float</td>
+</tr>
+<tr>
+<td>es.serializer.csv.delimiter</td>
+<td>,(comma)</td>
+<td>事件体中数据的分隔符</td>
+</tr>
+<tr>
+<td>es.serializer.avro.schema.file</td>
+<td>-</td>
+<td>模式配置文件的绝对路径</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">a1.sinks.sink1.type=com.cognitree.flume.sink.elasticsearch.ElasticSearchSink</span><br><span class="line">a1.sinks.sink1.es.bulkActions=5</span><br><span class="line">a1.sinks.sink1.es.bulkProcessor.name=bulkprocessor</span><br><span class="line">a1.sinks.sink1.es.bulkSize=5</span><br><span class="line">a1.sinks.sink1.es.bulkSize.unit=MB</span><br><span class="line">a1.sinks.sink1.es.concurrent.request=1</span><br><span class="line">a1.sinks.sink1.es.flush.interval.time=5m</span><br><span class="line">a1.sinks.sink1.es.backoff.policy.time.interval=50M</span><br><span class="line">a1.sinks.sink1.es.backoff.policy.retries=8</span><br><span class="line">a1.sinks.sink1.es.cluster.name=CollectorDBCluster</span><br><span class="line">a1.sinks.sink1.es.client.transport.sniff=false</span><br><span class="line">a1.sinks.sink1.es.client.transport.ignore_cluster_name=false</span><br><span class="line">a1.sinks.sink1.es.client.transport.ping_timeout=5s</span><br><span class="line">a1.sinks.sink1.es.client.transport.nodes_sampler_interval=5s</span><br><span class="line">a1.sinks.sink1.es.client.hosts=192.168.4.219</span><br><span class="line">a1.sinks.sink1.es.client.port=9300</span><br><span class="line">a1.sinks.sink1.es.index=flume-test</span><br><span class="line">a1.sinks.sink1.es.type=flume-test</span><br><span class="line">a1.sinks.sink1.es.index.builder=com.cognitree.flume.sink.elasticsearch.HeaderBasedIndexBuilder</span><br><span class="line">a1.sinks.sink1.es.serializer=com.cognitree.flume.sink.elasticsearch.ElasticSearchLogStashEventSerializer</span><br><span class="line">a1.sinks.sink1.es.serializer.csv.fields=id:int,name:string</span><br><span class="line">a1.sinks.sink1.es.serializer.csv.delimiter=,</span><br><span class="line">a1.sinks.sink1.es.serializer.avro.schema.file=/usr/local/schema.avsc</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>执行命令</p>
+</blockquote>
+<p><code>bin/flume-ng agent --conf conf --conf-file conf/flume-es.properties --name a1 -Dflume.root.logger=INFO,console</code></p>
+<p><br></p>
+<h1 id="Kibana"><a href="#Kibana" class="headerlink" title="Kibana"></a>Kibana</h1><p>增加<a href="https://www.elastic.co/products/shield" target="_blank" rel="noopener">Shield</a>设置不同的权限级别</p>
+<h2 id="基础查询"><a href="#基础查询" class="headerlink" title="基础查询"></a>基础查询</h2><h3 id="基于Lucene查询语法"><a href="#基于Lucene查询语法" class="headerlink" title="基于Lucene查询语法"></a>基于Lucene查询语法</h3><p>如输入<code>@type: INFO</code>,则将所有<code>@type</code>字段为<code>INFO</code>的文档搜索列举出来</p>
+<p>为了指定复杂的查询条件可以用布尔操作符 <strong>AND</strong> , <strong>OR</strong> , 和 <strong>NOT</strong></p>
+<p><img src="/2019/01/08/flume/image-16.png" width="500px"></p>
+<ul>
+<li>如果不打引号<code>&quot;&quot;</code>,则<code>@message: servlet web</code>,会搜索<code>servlet</code>,<code>web</code>两个关键词</li>
+</ul>
+<p><img src="/2019/01/08/flume/image-05.png" width="500px"></p>
+<h2 id="Visualize"><a href="#Visualize" class="headerlink" title="Visualize"></a>Visualize</h2><h3 id="Line"><a href="#Line" class="headerlink" title="Line"></a>Line</h3><p><img src="/2019/01/08/flume/image-06.png" width="500px"></p>
+<p><br></p>
+<h3 id="Area"><a href="#Area" class="headerlink" title="Area"></a>Area</h3><p><img src="/2019/01/08/flume/image-10.png" width="500px"></p>
+<p><br></p>
+<h3 id="HorizontalBar"><a href="#HorizontalBar" class="headerlink" title="HorizontalBar"></a>HorizontalBar</h3><p><img src="/2019/01/08/flume/image-09.png" width="500px"></p>
+<p><br></p>
+<h3 id="Pie"><a href="#Pie" class="headerlink" title="Pie"></a>Pie</h3><p><img src="/2019/01/08/flume/image-07.png" width="500px"></p>
+<p><img src="/2019/01/08/flume/image-08.png" width="500px"></p>
+<p><br></p>
+<h3 id="HeatMap"><a href="#HeatMap" class="headerlink" title="HeatMap"></a>HeatMap</h3><p><img src="/2019/01/08/flume/image-11.png" width="500px"></p>
+<p><br></p>
+<h3 id="VerticalBar"><a href="#VerticalBar" class="headerlink" title="VerticalBar"></a>VerticalBar</h3><p><img src="/2019/01/08/flume/image-12.png" width="500px"></p>
+<p><br></p>
+<h3 id="Metric"><a href="#Metric" class="headerlink" title="Metric"></a>Metric</h3><p><img src="/2019/01/08/flume/image-13.png" width="500px"></p>
+<p><br></p>
+<h2 id="Timelion"><a href="#Timelion" class="headerlink" title="Timelion"></a>Timelion</h2><p><img src="/2019/01/08/flume/image-17.png" width="600px"></p>
+<p><br></p>
+<h2 id="DashBoard"><a href="#DashBoard" class="headerlink" title="DashBoard"></a>DashBoard</h2><p>通过之前制造的各类图表放入仪表盘,然后通过<code>search</code>可以搜索具体呈现的各类仪表</p>
+<p><img src="/2019/01/08/flume/image-14.png" width="500px"></p>
+<p><img src="/2019/01/08/flume/image-15.png" width="500px"></p>
+<p>未完待续……..</p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2019/01/08/flume/';
+        this.page.title = 'Flume组件';
+        this.page.identifier = '2019/01/08/flume/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

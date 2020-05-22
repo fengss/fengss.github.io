@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Fescar分布式事务协调组件 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="分布式事务协调组件解析 
+前期也是基于Tcc的思想,将Config和Cancel按标准做成自动化执行,这样形成了无业务侵入性  
+后期我司制作的Poseidon通信框架结合,形成开发中无缝的微服务分布式事务协调器   
+而在三月初看到了Fescar技术的开源,就对其进行了解,思想大致与Tcc自动化改造等同  
+基本概述fescar分布式事务1.组件Transaction Coordinator (TC)事务协调器，维护全局事务的运行状态，负责协调并驱动全局事务的提交或回滚。
+Transactio">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概述"><span class="toc-number">1.</span> <span class="toc-text">基本概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fescar分布式事务"><span class="toc-number">1.1.</span> <span class="toc-text">fescar分布式事务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-组件"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Transaction-Coordinator-TC"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">Transaction Coordinator (TC)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transaction-Manager-TM-："><span class="toc-number">1.1.1.2.</span> <span class="toc-text">Transaction Manager (TM)：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Resource-Manager-RM-："><span class="toc-number">1.1.1.3.</span> <span class="toc-text">Resource Manager (RM)：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-一个典型的分布式事务过程"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.一个典型的分布式事务过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-fescar锁设计"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.fescar锁设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fescar一阶段"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">Fescar一阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fescar二阶段"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">Fescar二阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fescar全局锁简单总结"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">Fescar全局锁简单总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#场景分析"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">场景分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写隔离"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">写隔离</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读隔离"><span class="toc-number">1.1.3.6.</span> <span class="toc-text">读隔离</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#源码解读"><span class="toc-number">2.</span> <span class="toc-text">源码解读</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#设计"><span class="toc-number">2.1.</span> <span class="toc-text">设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端"><span class="toc-number">2.2.</span> <span class="toc-text">客户端</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Fescar分布式事务协调组件
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2019/03/20/fescar/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-03-20T05:30:18.000Z" itemprop="datePublished">2019-03-20</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/Fescar/">Fescar</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>分布式事务协调组件解析<br><a id="more"></a> </p>
+<p>前期也是基于Tcc的思想,将Config和Cancel按标准做成自动化执行,这样形成了无业务侵入性  </p>
+<p>后期我司制作的Poseidon通信框架结合,形成开发中无缝的微服务分布式事务协调器   </p>
+<p>而在三月初看到了Fescar技术的开源,就对其进行了解,思想大致与Tcc自动化改造等同  </p>
+<h1 id="基本概述"><a href="#基本概述" class="headerlink" title="基本概述"></a>基本概述</h1><h2 id="fescar分布式事务"><a href="#fescar分布式事务" class="headerlink" title="fescar分布式事务"></a>fescar分布式事务</h2><h3 id="1-组件"><a href="#1-组件" class="headerlink" title="1.组件"></a>1.组件</h3><h4 id="Transaction-Coordinator-TC"><a href="#Transaction-Coordinator-TC" class="headerlink" title="Transaction Coordinator (TC)"></a>Transaction Coordinator (TC)</h4><p>事务协调器，维护全局事务的运行状态，负责协调并驱动全局事务的提交或回滚。</p>
+<h4 id="Transaction-Manager-TM-："><a href="#Transaction-Manager-TM-：" class="headerlink" title="Transaction Manager (TM)："></a>Transaction Manager (TM)：</h4><p>控制全局事务的边界，负责开启一个全局事务，并最终发起全局提交或全局回滚的决议。</p>
+<h4 id="Resource-Manager-RM-："><a href="#Resource-Manager-RM-：" class="headerlink" title="Resource Manager (RM)："></a>Resource Manager (RM)：</h4><p>控制分支事务，负责分支注册、状态汇报，并接收事务协调器的指令，驱动分支（本地）事务的提交和回滚。</p>
+<hr>
+<h3 id="2-一个典型的分布式事务过程"><a href="#2-一个典型的分布式事务过程" class="headerlink" title="2.一个典型的分布式事务过程"></a>2.一个典型的分布式事务过程</h3><ol>
+<li>TM 向 TC 申请开启一个全局事务，全局事务创建成功并生成一个全局唯一的 XID。</li>
+<li>XID 在微服务调用链路的上下文中传播。</li>
+<li>RM 向 TC 注册分支事务，将其纳入 XID 对应全局事务的管辖。</li>
+<li>TM 向 TC 发起针对 XID 的全局提交或回滚决议。</li>
+<li>TC 调度 XID 下管辖的全部分支事务完成提交或回滚请求。</li>
+</ol>
+<p><img src="/2019/03/20/fescar/image-01.png" width="600px"></p>
+<hr>
+<h3 id="3-fescar锁设计"><a href="#3-fescar锁设计" class="headerlink" title="3.fescar锁设计"></a>3.fescar锁设计</h3><h4 id="Fescar一阶段"><a href="#Fescar一阶段" class="headerlink" title="Fescar一阶段"></a>Fescar一阶段</h4><ol>
+<li>本地（Branch）在向TC注册的时候，把本地事务需要修改的数据table+pks提交到server端申请锁，拿到全局锁后，才能提交本地事务</li>
+<li>全局锁的结构：resourceId + table + pks</li>
+<li>锁是存在server端 branchSession中</li>
+</ol>
+<h4 id="Fescar二阶段"><a href="#Fescar二阶段" class="headerlink" title="Fescar二阶段"></a>Fescar二阶段</h4><p>一阶段本地事务提交，db的锁释放了（for update锁），但是全局锁继续保持，<br>直到二阶段决议(注意释放锁的顺序)：</p>
+<ol>
+<li>提交：TC 释放锁,通知branch提交后 (rm端异步处理)</li>
+<li>回滚：TC 通知branch回滚后,释放锁（rm端同步处理 执行undo_log）</li>
+</ol>
+<p><img src="/2019/03/20/fescar/image-02.png" width="600px"></p>
+<p>　<center>分支事务执行顺序图</center>
+　</p>
+<p><img src="/2019/03/20/fescar/image-03.png" width="600px"></p>
+<p>　<center>Fescar中 RM TM TC工作流程图</center></p>
+<h4 id="Fescar全局锁简单总结"><a href="#Fescar全局锁简单总结" class="headerlink" title="Fescar全局锁简单总结"></a>Fescar全局锁简单总结</h4><p>操作一条记录的分支事务，必须等待这条记录的前一个分支事务执行结束（具体commit rollback情况分析如下），才能持有锁。<br>其实相比XA的锁，fescar在每个分支事务的一阶段结束后都释放了db的锁，所以fescar的性能瓶颈应该在于二阶段的执行速度（释放锁的快慢）<br>因为分布式事务在执行事务编排前，一般会校验业务的正确性，所以发生回滚的概率相对较低，所以先考虑二阶段commit操作。</p>
+<h4 id="场景分析"><a href="#场景分析" class="headerlink" title="场景分析"></a>场景分析</h4><p>Commit场景分析：<br> TM通知server进行commit，server立马释 branch的锁，然后再逐个通知RM提交<br> 消耗：1 rpc操作，（branch删除undo_log放在异步队列里面做）</p>
+<p>Rollback场景分析：<br> TM通知server进行rollback，server通知RM回滚后立马释放 branch的锁。<br> 消耗：1 + N的rpc操作 + N的回滚sql操作</p>
+<h4 id="写隔离"><a href="#写隔离" class="headerlink" title="写隔离"></a>写隔离</h4><ol>
+<li>一阶段本地事务提交前，需要确保先拿到 全局锁 。</li>
+<li>拿不到 全局锁 ，不能提交本地事务。</li>
+<li>拿 全局锁 的尝试被限制在一定范围内，超出范围将放弃，并回滚本地事务，释放本地锁。</li>
+</ol>
+<p>以一个示例来说明：</p>
+<p>两个全局事务 tx1 和 tx2，分别对 a 表的 m 字段进行更新操作，m 的初始值 1000。</p>
+<p>tx1 先开始，开启本地事务，拿到本地锁，更新操作 m = 1000 - 100 = 900。本地事务提交前，先拿到该记录的 全局锁 ，本地提交释放本地锁。 tx2 后开始，开启本地事务，拿到本地锁，更新操作 m = 900 - 100 = 800。本地事务提交前，尝试拿该记录的 全局锁 ，tx1 全局提交前，该记录的全局锁被 tx1 持有，tx2 需要重试等待 全局锁 。</p>
+<p><img src="/2019/03/20/fescar/image-04.png" width="600px"></p>
+<p>tx1 二阶段全局提交，释放 全局锁 。tx2 拿到 全局锁 提交本地事务。</p>
+<p><img src="/2019/03/20/fescar/image-05.png" width="600px"></p>
+<p>如果 tx1 的二阶段全局回滚，则 tx1 需要重新获取该数据的本地锁，进行反向补偿的更新操作，实现分支的回滚。</p>
+<p>此时，如果 tx2 仍在等待该数据的 全局锁，同时持有本地锁，则 tx1 的分支回滚会失败。分支的回滚会一直重试，直到 tx2 的 全局锁 等锁超时，放弃 全局锁 并回滚本地事务释放本地锁，tx1 的分支回滚最终成功。</p>
+<p>因为整个过程 全局锁 在 tx1 结束前一直是被 tx1 持有的，所以不会发生 脏写 的问题。</p>
+<h4 id="读隔离"><a href="#读隔离" class="headerlink" title="读隔离"></a>读隔离</h4><p>在数据库本地事务隔离级别 读已提交（Read Committed） 或以上的基础上，Fescar（AT 模式）的默认全局隔离级别是 读未提交（Read Uncommitted） 。</p>
+<p>如果应用在特定场景下，必需要求全局的 读已提交 ，目前 Fescar 的方式是通过 SELECT FOR UPDATE 语句的代理。</p>
+<p><img src="/2019/03/20/fescar/image-06.png" width="600px"></p>
+<p>SELECT FOR UPDATE 语句的执行会申请 全局锁 ，如果 全局锁 被其他事务持有，则释放本地锁（回滚 SELECT FOR UPDATE 语句的本地执行）并重试。这个过程中，查询是被 block 住的，直到 全局锁 拿到，即读取的相关数据是 已提交 的，才返回。</p>
+<p>出于总体性能上的考虑，Fescar 目前的方案并没有对所有 SELECT 语句都进行代理，仅针对 FOR UPDATE 的 SELECT 语句。</p>
+<h1 id="源码解读"><a href="#源码解读" class="headerlink" title="源码解读"></a>源码解读</h1><h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><blockquote>
+<p>源头来源于GlobalTransactionScanner  </p>
+</blockquote>
+<p><img src="/2019/03/20/fescar/image-07.png" width="800px"></p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2019/03/20/fescar/';
+        this.page.title = 'Fescar分布式事务协调组件';
+        this.page.identifier = '2019/03/20/fescar/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

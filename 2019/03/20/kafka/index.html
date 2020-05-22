@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Kafka-消息队列 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Kafka消息队列相关见解资料摘录
+
+
+kafka的优点如下
+
+
+时间复杂度为O(1)；性能与数据量多少无关；
+高吞吐，100k条/s；
+消息分区
+分布式消费。
+Scale out。  
+
+基础概念Brokers
+消息管理;  存储/删除
+
+  
+
+一共三个broker,存储了不同的topic;
+以topic1为例，topic1有多个partitions;图中黄色部分为partition1-4,存储在不同的brokers上,这些是partition的Leader;
+灰色的topic1:parti">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础概念"><span class="toc-number">1.</span> <span class="toc-text">基础概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Brokers"><span class="toc-number">1.1.</span> <span class="toc-text">Brokers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#message结构"><span class="toc-number">1.2.</span> <span class="toc-text">message结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ZK"><span class="toc-number">1.3.</span> <span class="toc-text">ZK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据操作"><span class="toc-number">1.4.</span> <span class="toc-text">数据操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#replica实现"><span class="toc-number">1.4.1.</span> <span class="toc-text">replica实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leader-Election"><span class="toc-number">1.5.</span> <span class="toc-text">Leader Election</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Kafka-消息队列
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2019/03/20/kafka/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-03-20T05:47:23.000Z" itemprop="datePublished">2019-03-20</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/消息队列/">消息队列</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Kafka消息队列相关见解资料摘录<br><a id="more"></a></p>
+<p><img src="/2019/03/20/kafka/image-01.png" width="700px"></p>
+<blockquote>
+<p>kafka的优点如下</p>
+</blockquote>
+<ul>
+<li>时间复杂度为O(1)；性能与数据量多少无关；</li>
+<li>高吞吐，100k条/s；</li>
+<li>消息分区</li>
+<li>分布式消费。</li>
+<li>Scale out。  </li>
+</ul>
+<h1 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h1><h2 id="Brokers"><a href="#Brokers" class="headerlink" title="Brokers"></a>Brokers</h2><blockquote>
+<p>消息管理;  存储/删除</p>
+</blockquote>
+<p><img src="/2019/03/20/kafka/image-02.png" width="650px">  </p>
+<ul>
+<li>一共三个broker,存储了不同的topic;</li>
+<li>以topic1为例，topic1有多个partitions;图中黄色部分为partition1-4,存储在不同的brokers上,这些是partition的Leader;</li>
+<li>灰色的topic1:partition1-4,作为partition的replica,图中我们的的副本数为2,在server.properity配置文件中由参数offsets.topic.replication.factor控制;</li>
+<li>topic1:partition3有一个segments，由一个offset.index和offset.log组成。</li>
+<li>offset.log有多个message顺序写入，命名是起始message的offset。</li>
+</ul>
+<blockquote>
+<p>brokers的存储内容归纳如下：</p>
+</blockquote>
+<ul>
+<li>broker——&gt;topics——&gt;partitions——&gt;segments(index and logs)  </li>
+<li>一个broker上存储不同的topic;</li>
+<li>topic是逻辑结构,相当于query,不同的topic由多个连续的partition组成,每个partition对应一个物理文件夹;</li>
+<li>kafka实现replica的单元是partitions,由参数offsets.topic.replication.factor控制;默认是3,Leader提供读写,由zk配合进行Leader的选举,选举过程见;</li>
+<li>每个partition由多个segments组成(index和log),命名为起始message的offset;</li>
+</ul>
+<blockquote>
+<p>需要了解</p>
+</blockquote>
+<ul>
+<li>信息存储，message的存储格式  </li>
+<li>Replica的数据同步  </li>
+<li>Leader选举  </li>
+<li>HA方案与故障恢复  </li>
+<li>过期数据清理  </li>
+</ul>
+<h2 id="message结构"><a href="#message结构" class="headerlink" title="message结构"></a>message结构</h2><p><img src="/2019/03/20/kafka/image-04.png" width="700px"></p>
+<h2 id="ZK"><a href="#ZK" class="headerlink" title="ZK"></a>ZK</h2><p>zookeepers(负责选举，均衡，meta记录，消费记录)</p>
+<p>zookeeper在集群中与broker和consumer进行交互，维护数据和集群高可用。</p>
+<p>记录consumer消费message的位置信息；<br>partitions故障时进行Leader Election<br>kafka的meta信息在zookeeper如何存储<br>kafka在zookeeper的结构图如下:  </p>
+<p><img src="/2019/03/20/kafka/image-03.png" width="800px"></p>
+<p>三级目录是一些组件：</p>
+<ul>
+<li>consumers consumers的信息，记录对partition访问偏移量，由consumer自己维护，目录/sohudba_kafka/consumers/[consumer]/offsets/[topic]/[partition]</li>
+<li>broders  维护broders的信息，包含borders下的partition，每个partition的ISR，当前leader，目录结构比较复杂，我们后面细说；</li>
+<li>producers  producers的信息，当前zookeeper未记录任何信息</li>
+<li>admin  admin维护删掉的topic，partition的重新分配（过后删除），partition选举Leader(过后删除)</li>
+<li>config</li>
+<li>controlers  增删topic/重新分配replica/RPC通知其他broker</li>
+<li>controler_epoch </li>
+<li>isr_change_notifications</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">get /brokers/topics/shuaige/partitions/0/state</span><br><span class="line">&#123;&quot;controller_epoch&quot;:5,           ##表示kafka集群中的中央控制器选举次数</span><br><span class="line">&quot;leader&quot;:1,                      ##当前partition的leader所在的borker id</span><br><span class="line">&quot;version&quot;:1,                     ##版本编号默认为1</span><br><span class="line">&quot;leader_epoch&quot;:6,                ##leader选举次数</span><br><span class="line">&quot;isr&quot;:[2,1,3]                    ##当前partition的In-sync replica，副本组的borker id列表</span><br><span class="line">&#125;</span><br><span class="line">cZxid = 0x35</span><br><span class="line">ctime = Wed Mar 20 11:40:59 CST 2019</span><br><span class="line">mZxid = 0x35</span><br><span class="line">mtime = Wed Mar 20 11:40:59 CST 2019</span><br><span class="line">pZxid = 0x35</span><br><span class="line">cversion = 0</span><br><span class="line">dataVersion = 0</span><br><span class="line">aclVersion = 0</span><br><span class="line">ephemeralOwner = 0x0</span><br><span class="line">dataLength = 74</span><br><span class="line">numChildren = 0</span><br></pre></td></tr></table></figure>
+<p>borker数据存储示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;&quot;version&quot;:1,</span><br><span class="line">&quot;partitions&quot;:&#123;</span><br><span class="line">        &quot;45&quot;:[2,1,3],</span><br><span class="line">        &quot;34&quot;:[3,2,1],</span><br><span class="line">        &quot;12&quot;:[2,3,1],</span><br><span class="line">        &quot;8&quot;:[1,2,3],</span><br><span class="line">        &quot;19&quot;:[3,1,2],</span><br><span class="line">        &quot;23&quot;:[1,3,2],</span><br><span class="line">        &quot;4&quot;:[3,2,1],</span><br><span class="line">        &quot;40&quot;:[3,2,1],</span><br><span class="line">        &quot;15&quot;:[2,1,3],</span><br><span class="line">        &quot;11&quot;:[1,3,2],</span><br><span class="line">        &quot;9&quot;:[2,1,3],</span><br><span class="line">        &quot;44&quot;:[1,2,3],</span><br><span class="line">        &quot;33&quot;:[2,1,3],</span><br><span class="line">        &quot;22&quot;:[3,2,1],</span><br><span class="line">        &quot;26&quot;:[1,2,3],</span><br><span class="line">        &quot;37&quot;:[3,1,2],</span><br><span class="line">        &quot;13&quot;:[3,1,2],</span><br><span class="line">        &quot;46&quot;:[3,2,1],</span><br><span class="line">        &quot;24&quot;:[2,3,1],</span><br><span class="line">        .......</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h2><p>为避免broker挂后造成数据丢失,kafka实现了高可用方式。</p>
+<ul>
+<li>基于partition实现Replica。并与zookeeper配合实现Leader的选举。</li>
+<li>通过算法将partition的Leader与Fellowers分散于不同的broker。</li>
+</ul>
+<h3 id="replica实现"><a href="#replica实现" class="headerlink" title="replica实现"></a>replica实现</h3><p>在brokers的物理结构中,replication有多个follewers,分散于不同的brokers。通过增量日志实现。</p>
+<p><img src="/2019/03/20/kafka/image-05.png" width="700px">  </p>
+<p>partition的log记录是顺序的，通过server.properties中log.retention.hours参数定义日志保留时长，过期则删除。新写入的message append记录在partition中。</p>
+<p>为提升效率，</p>
+<p>follewers会在message未写入log时，读到message则将ACK发送给Leader，因此只能保证存在Replica，不能保证数据一定持久化了。<br>批量复制<br>ISR是In-Sync Replicate 记录与Leader保持同步的列表。</p>
+<p>同一partition的一条message只能被同一个Consumer Group内的一个Consumer消费。  </p>
+<p>不能够一个consumer group的多个consumer同时消费一个partition。</p>
+<h2 id="Leader-Election"><a href="#Leader-Election" class="headerlink" title="Leader Election"></a>Leader Election</h2><p>判断Replica活着</p>
+<ul>
+<li>(1)与zk有心跳通讯;  </li>
+<li>(2)与Leader通讯及时。两者有一不满足,fellower都会从ISR中移除。  </li>
+</ul>
+<p>选举算法<br>一般的leader选举算法，有Majority Vote/Zab/Raft/PacificA。</p>
+<p>kafka采用的即PacificA,kafka维护多个ISR,但不不像Majorty Vote算法,限制最少的2N+1节点和N+1以上投票。</p>
+<p>即使只有1个follewer,也可完成Leader选举。</p>
+<p><img src="/2019/03/20/kafka/image-06.png" width="700px">  </p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2019/03/20/kafka/';
+        this.page.title = 'Kafka-消息队列';
+        this.page.identifier = '2019/03/20/kafka/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

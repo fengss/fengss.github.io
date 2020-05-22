@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>数据存储篇 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="主要针对Mysql,Redis,Mongodb技术解析
+Mysql
+锁分析快照读：简单的select操作,属于快照读,不加锁。读取的是记录的可见版本(有可能是历史版本),不加锁。
+1select * from table where ?;
+当前读：特殊的读操作,插入/更新/删除操作,属于当前读,需要加锁。当前读,读取的是记录的最新版本,并且当前读返回的记录,都会加上锁,保证其他事务不会再并发修改这条记录。
+12345select * from table where ? lock in shar">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mysql"><span class="toc-number">1.</span> <span class="toc-text">Mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#锁分析"><span class="toc-number">1.1.</span> <span class="toc-text">锁分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#隔离模式"><span class="toc-number">1.1.1.</span> <span class="toc-text">隔离模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体加锁分析"><span class="toc-number">1.1.2.</span> <span class="toc-text">具体加锁分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引"><span class="toc-number">1.2.</span> <span class="toc-text">索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.2.1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引存储"><span class="toc-number">1.2.2.</span> <span class="toc-text">索引存储</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#B树"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">B树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-树"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">B+树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么使用B-Tree-B-Tree-？"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">为什么使用B Tree(B+Tree)？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MyISAM索引实现"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">MyISAM索引实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB索引实现"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">InnoDB索引实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引排序"><span class="toc-number">1.2.3.</span> <span class="toc-text">索引排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#利用自身索引排序"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">利用自身索引排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#排序实现的算法"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">排序实现的算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引使用注意事项"><span class="toc-number">1.2.4.</span> <span class="toc-text">索引使用注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#explain"><span class="toc-number">1.3.</span> <span class="toc-text">explain</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#type"><span class="toc-number">1.3.1.</span> <span class="toc-text">type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extra"><span class="toc-number">1.3.2.</span> <span class="toc-text">extra</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis"><span class="toc-number">2.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据结构与对象"><span class="toc-number">2.2.</span> <span class="toc-text">数据结构与对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SDS"><span class="toc-number">2.2.1.</span> <span class="toc-text">SDS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#C字符串与SDS字符串的区别"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">C字符串与SDS字符串的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LinkedList"><span class="toc-number">2.2.2.</span> <span class="toc-text">LinkedList</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis链表特点"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">Redis链表特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dict"><span class="toc-number">2.2.3.</span> <span class="toc-text">Dict</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DictHt"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">DictHt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DictEntry"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">DictEntry</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#哈希算法"><span class="toc-number">2.2.3.3.</span> <span class="toc-text">哈希算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决哈希冲突"><span class="toc-number">2.2.3.4.</span> <span class="toc-text">解决哈希冲突</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rehash"><span class="toc-number">2.2.3.5.</span> <span class="toc-text">rehash</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SkipList"><span class="toc-number">2.2.4.</span> <span class="toc-text">SkipList</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#跳跃表节点"><span class="toc-number">2.2.4.1.</span> <span class="toc-text">跳跃表节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#跳跃表"><span class="toc-number">2.2.4.2.</span> <span class="toc-text">跳跃表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对象"><span class="toc-number">2.2.5.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#编码和底层实现"><span class="toc-number">2.2.5.0.1.</span> <span class="toc-text">编码和底层实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符串对象"><span class="toc-number">2.2.5.0.2.</span> <span class="toc-text">字符串对象</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#字符串命令的实现"><span class="toc-number">2.2.5.0.2.1.</span> <span class="toc-text">字符串命令的实现</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#列表对象"><span class="toc-number">2.2.5.0.3.</span> <span class="toc-text">列表对象</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#列表命令的实现"><span class="toc-number">2.2.5.0.3.1.</span> <span class="toc-text">列表命令的实现</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#hash对象"><span class="toc-number">2.2.5.0.4.</span> <span class="toc-text">hash对象</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#哈希命令的实现"><span class="toc-number">2.2.5.0.4.1.</span> <span class="toc-text">哈希命令的实现</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#集合对象"><span class="toc-number">2.2.5.0.5.</span> <span class="toc-text">集合对象</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#集合命令的实现"><span class="toc-number">2.2.5.0.5.1.</span> <span class="toc-text">集合命令的实现</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#有序集合对象"><span class="toc-number">2.2.5.0.6.</span> <span class="toc-text">有序集合对象</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#有序集合命令的实现"><span class="toc-number">2.2.5.0.6.1.</span> <span class="toc-text">有序集合命令的实现</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#命令类型"><span class="toc-number">2.2.5.0.7.</span> <span class="toc-text">命令类型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#内存回收"><span class="toc-number">2.2.5.0.8.</span> <span class="toc-text">内存回收</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#对象共享"><span class="toc-number">2.2.5.0.9.</span> <span class="toc-text">对象共享</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDB持久化"><span class="toc-number">2.2.6.</span> <span class="toc-text">RDB持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建"><span class="toc-number">2.2.6.1.</span> <span class="toc-text">创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#载入"><span class="toc-number">2.2.6.2.</span> <span class="toc-text">载入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动间隔性保存"><span class="toc-number">2.2.6.3.</span> <span class="toc-text">自动间隔性保存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RDB文件结构"><span class="toc-number">2.2.6.4.</span> <span class="toc-text">RDB文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#databases部分"><span class="toc-number">2.2.6.4.1.</span> <span class="toc-text">databases部分</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#key-value-pairs"><span class="toc-number">2.2.6.4.1.1.</span> <span class="toc-text">key_value_pairs</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AOF持久化"><span class="toc-number">2.2.7.</span> <span class="toc-text">AOF持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF持久化实现"><span class="toc-number">2.2.7.1.</span> <span class="toc-text">AOF持久化实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#命令追加"><span class="toc-number">2.2.7.1.1.</span> <span class="toc-text">命令追加</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#AOF文件的写入和同步"><span class="toc-number">2.2.7.1.2.</span> <span class="toc-text">AOF文件的写入和同步</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#AOF文件的载入与数据还原"><span class="toc-number">2.2.7.1.3.</span> <span class="toc-text">AOF文件的载入与数据还原</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF文件重写"><span class="toc-number">2.2.7.2.</span> <span class="toc-text">AOF文件重写</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件"><span class="toc-number">2.2.8.</span> <span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文本事件"><span class="toc-number">2.2.8.1.</span> <span class="toc-text">文本事件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#连接应答处理器"><span class="toc-number">2.2.8.1.1.</span> <span class="toc-text">连接应答处理器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#命令请求处理器"><span class="toc-number">2.2.8.1.2.</span> <span class="toc-text">命令请求处理器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#命令回复处理器"><span class="toc-number">2.2.8.1.3.</span> <span class="toc-text">命令回复处理器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#时间事件"><span class="toc-number">2.2.8.2.</span> <span class="toc-text">时间事件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#serverCron函数"><span class="toc-number">2.2.8.2.1.</span> <span class="toc-text">serverCron函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#事件调度与执行"><span class="toc-number">2.2.8.3.</span> <span class="toc-text">事件调度与执行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复制"><span class="toc-number">2.2.9.</span> <span class="toc-text">复制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#旧版复制功能实现"><span class="toc-number">2.2.9.1.</span> <span class="toc-text">旧版复制功能实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#同步"><span class="toc-number">2.2.9.1.1.</span> <span class="toc-text">同步</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#命令传播"><span class="toc-number">2.2.9.1.2.</span> <span class="toc-text">命令传播</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#旧版复制的缺陷"><span class="toc-number">2.2.9.1.3.</span> <span class="toc-text">旧版复制的缺陷</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#新版复制功能实现"><span class="toc-number">2.2.9.2.</span> <span class="toc-text">新版复制功能实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#部分重复制实现"><span class="toc-number">2.2.9.2.1.</span> <span class="toc-text">部分重复制实现</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            数据存储篇
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2018/07/26/storage/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-07-26T01:11:19.000Z" itemprop="datePublished">2018-07-26</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>主要针对Mysql,Redis,Mongodb技术解析<br><a id="more"></a></p>
+<h1 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h1><p><img src="/2018/07/26/storage/image-13.png" width="700px"></p>
+<h2 id="锁分析"><a href="#锁分析" class="headerlink" title="锁分析"></a>锁分析</h2><p>快照读：简单的select操作,属于快照读,不加锁。<br><code>读取的是记录的可见版本(有可能是历史版本),不加锁。</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table where ?;</span><br></pre></td></tr></table></figure>
+<p>当前读：特殊的读操作,插入/更新/删除操作,属于当前读,需要加锁。<code>当前读,读取的是记录的最新版本,并且当前读返回的记录,都会加上锁,保证其他事务不会再并发修改这条记录。</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select * from table where ? lock in share mode;</span><br><span class="line">select * from table where ? for update;</span><br><span class="line">insert into table values (…);</span><br><span class="line">update table set ? where ?;</span><br><span class="line">delete from table where ?;</span><br></pre></td></tr></table></figure>
+<h3 id="隔离模式"><a href="#隔离模式" class="headerlink" title="隔离模式"></a>隔离模式</h3><p>MySQL/InnoDB定义的4种隔离级别：</p>
+<ul>
+<li><p>Read Uncommited<br>可以读取未提交记录。此隔离级别,不会使用,忽略。</p>
+</li>
+<li><p>Read Committed (RC)<br>快照读忽略,本文不考虑。</p>
+</li>
+</ul>
+<p>针对当前读,RC隔离级别保证对读取到的记录加锁 (记录锁),存在幻读现象。</p>
+<ul>
+<li>Repeatable Read (RR)<br>快照读忽略,本文不考虑。</li>
+</ul>
+<p>针对当前读,RR隔离级别保证对读取到的记录加锁<br>(记录锁),同时保证对读取的范围加锁,新的满足查询条件的记录不能够插入<br>(间隙锁),不存在幻读现象。</p>
+<ul>
+<li>Serializable<br>从MVCC并发控制退化为基于锁的并发控制。不区别快照读与当前读,所有的读操作均为当前读,读加读锁 (S锁),写加写锁 (X锁)。</li>
+</ul>
+<p>Serializable隔离级别下,读写冲突,因此并发度急剧下降,在MySQL/InnoDB下不建议使用。</p>
+<h3 id="具体加锁分析"><a href="#具体加锁分析" class="headerlink" title="具体加锁分析"></a>具体加锁分析</h3><p><a href="http://hedengcheng.com/?p=771#_Toc374698312" target="_blank" rel="noopener">加锁知识参考</a></p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>索引的目的在于提高查询效率  </p>
+<blockquote>
+<p>可以类比字典,如果要查“mysql”这个单词,我们肯定需要定位到m字母,然后从下往下找到y字母,再找到剩下的sql。如果没有索引,那么你可能需要把所有单词看一遍才能找到你想要的。      </p>
+</blockquote>
+<blockquote>
+<p>索引的类型:  </p>
+</blockquote>
+<ul>
+<li>UNIQUE(唯一索引):不可以出现相同的值,可以有NULL值  </li>
+<li>INDEX(普通索引):允许出现相同的索引内容  </li>
+<li>PROMARY KEY(主键索引):不允许出现相同的值  </li>
+<li>fulltext index(全文索引):可以针对值中的某个单词,但效率确实不敢恭维  </li>
+<li>组合索引:实质上是将多个字段建到一个索引里,使用最左匹配原则  </li>
+</ul>
+<h3 id="索引存储"><a href="#索引存储" class="headerlink" title="索引存储"></a>索引存储</h3><p><img src="/2018/07/26/storage/image-01.png" alt="img"></p>
+<p><img src="/2018/07/26/storage/image-02.png" alt="img"></p>
+<p><img src="/2018/07/26/storage/image-03.png" alt="img"></p>
+<h4 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h4><ul>
+<li>d&gt;=2,即B-Tree的度;</li>
+<li>每个非叶子结点由n-1个[key, data]和n个指针组成,d&lt;=n&lt;=2d</li>
+<li>所有叶结点都在同一层,深度等于树高h</li>
+</ul>
+<p><img src="/2018/07/26/storage/image-12.png" alt="img"></p>
+<h4 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h4><blockquote>
+<p>B Tree有许多变种,其中最常见的是B+Tree,例如MySQL就普遍使用B+Tree实现其索引结构。</p>
+</blockquote>
+<p>与B-Tree相比,B+Tree有以下不同点:</p>
+<ul>
+<li><p>每个结点的指针上限为2d而不是2d+1。</p>
+</li>
+<li><p>内结点不存储data,只存储key;叶子结点不存储指针。</p>
+</li>
+<li><p>带有顺序访问指针的B+Tree</p>
+<p>  <img src="/2018/07/26/storage/image-05.png" alt="image"></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一般在数据库系统或文件系统中使用的B+Tree结构都在经典B+Tree的基础上进行了优化,增加了顺序访问指针。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/2018/07/26/storage/image-06.png" alt="image"></p>
+<h4 id="为什么使用B-Tree-B-Tree-？"><a href="#为什么使用B-Tree-B-Tree-？" class="headerlink" title="为什么使用B Tree(B+Tree)？"></a>为什么使用B Tree(B+Tree)？</h4><p>索引本身也很大,不可能全部存储在内存中,因此索引往往以索引文件的形式存储的磁盘上。<br>这样的话索引查找过程中就要产生磁盘I/O消耗,相对于内存存取,I/O存取的消耗要高几个数量级<br>索引的结构组织要尽量减少查找过程中磁盘I/O的存取次数。树的高度不能太高      </p>
+<h4 id="MyISAM索引实现"><a href="#MyISAM索引实现" class="headerlink" title="MyISAM索引实现"></a>MyISAM索引实现</h4><p>MyISAM引擎使用B+Tree作为索引结构,叶结点的data域存放的是数据记录的地址    </p>
+<p>以下是主键索引<br><img src="/2018/07/26/storage/image-08.png" alt="image">       </p>
+<p>在MyISAM中,主索引和辅助索引(Secondary key)在结构上没有任何区别,只是主索引要求key是唯一的,而辅助索引的key可以重复。    </p>
+<p>以下是辅助索引<br><img src="/2018/07/26/storage/image-09.png" alt="image">        </p>
+<h4 id="InnoDB索引实现"><a href="#InnoDB索引实现" class="headerlink" title="InnoDB索引实现"></a>InnoDB索引实现</h4><blockquote>
+<p>MyISAM索引文件和数据文件是分离的,索引文件仅保存数据记录的地址。<br>而在InnoDB中表数据文件本身就是按B+Tree组织的一个索引结构,这棵树的叶结点data域保存了完整的数据记录。     </p>
+</blockquote>
+<p>这个索引的key是数据表的主键,因此InnoDB表数据文件本身就是主索引     </p>
+<p>以下是主键索引   </p>
+<p><img src="/2018/07/26/storage/image-10.png" alt="image">        </p>
+<blockquote>
+<p>第二个与MyISAM索引的不同是InnoDB的辅助索引data域存储相应记录主键的值而不是地址。   </p>
+</blockquote>
+<p>换句话说InnoDB的所有辅助索引都引用主键作为data域。    </p>
+<p>以下是辅助索引        </p>
+<p><img src="/2018/07/26/storage/image-11.png" alt="image">       </p>
+<p><a href="https://www.cnblogs.com/tgycoder/p/5410057.html" target="_blank" rel="noopener">存储知识参考</a></p>
+<h3 id="索引排序"><a href="#索引排序" class="headerlink" title="索引排序"></a>索引排序</h3><h4 id="利用自身索引排序"><a href="#利用自身索引排序" class="headerlink" title="利用自身索引排序"></a>利用自身索引排序</h4><blockquote>
+<p>为了优化SQL语句的排序性能,最好的情况是避免排序,合理利用索引是一个不错的方法。<br>因为索引本身也是有序的,如果在需要排序的字段上面建立了合适的索引,假设t1表存在索引key1(key_part1,key_part2),key2(key2)  </p>
+</blockquote>
+<p>a.可以利用索引避免排序的SQL<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part1,key_part2;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> key_part1 = <span class="keyword">constant</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part2;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> key_part1 &gt; <span class="keyword">constant</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part1 <span class="keyword">ASC</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> key_part1 = constant1 <span class="keyword">AND</span> key_part2 &gt; constant2 <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part2;</span><br></pre></td></tr></table></figure></p>
+<p>不能利用索引避免排序的SQL<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//排序字段在多个索引中,无法使用索引排序</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part1,key_part2, key2;</span><br><span class="line"> </span><br><span class="line">//排序键顺序与索引中列顺序不一致,无法使用索引排序</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part2, key_part1;</span><br><span class="line"> </span><br><span class="line">//升降序不一致,无法使用索引排序</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part1 <span class="keyword">DESC</span>, key_part2 <span class="keyword">ASC</span>;</span><br><span class="line"> </span><br><span class="line">//key_part1是范围查询,key_part2无法使用索引排序</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> key_part1&gt; <span class="keyword">constant</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part2;</span><br></pre></td></tr></table></figure></p>
+<h4 id="排序实现的算法"><a href="#排序实现的算法" class="headerlink" title="排序实现的算法"></a>排序实现的算法</h4><p>对于不能利用索引避免排序的SQL,数据库不得不自己实现排序功能以满足用户需求  </p>
+<p>此时SQL的执行计划中会出现”Using filesort”,这里需要注意的是filesort并不意味着就是文件排序,其实也有可能是内存排序    </p>
+<p>这个主要由<code>sort_buffer_size</code>参数与结果集大小确定。  </p>
+<p>MySQL内部实现排序主要有3种方式:常规排序,优化排序和优先队列排序,主要涉及3种排序算法:快速排序、归并排序和堆排序。  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> t1(<span class="keyword">id</span> <span class="built_in">int</span>, col1 <span class="built_in">varchar</span>(<span class="number">64</span>), col2 <span class="built_in">varchar</span>(<span class="number">64</span>), </span><br><span class="line">col3 <span class="built_in">varchar</span>(<span class="number">64</span>), PRIMARY <span class="keyword">KEY</span>(<span class="keyword">id</span>),<span class="keyword">key</span>(col1,col2));</span><br><span class="line"><span class="keyword">SELECT</span> col1,col2,col3 <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> col1&gt;<span class="number">100</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> col2;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>常规排序,双路排序<ul>
+<li>(1).从表t1中获取满足WHERE条件的记录  </li>
+<li>(2).对于每条记录,将记录的主键+排序键(id,col2)取出放入sort buffer  </li>
+<li>(3).如果sort buffer可以存放所有满足条件的(id,col2)对,则进行排序；否则sort buffer满后,进行排序并写到临时文件中。(排序算法采用的是快速排序算法)  </li>
+<li>(4).若排序中产生了临时文件,需要利用归并排序算法,保证临时文件中记录是有序的  </li>
+<li>(5).循环执行上述过程,直到所有满足条件的记录全部参与排序</li>
+<li>(6).扫描排好序的(id,col2)队,即sort   buffer,并利用主键id去取SELECT需要返回的其他列(col1,col2,col3)  </li>
+<li>(7).将获取的结果集返回给用户。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">从上述流程来看,是否使用文件排序主要看sort buffer是否能容下需要排序的(id,col2)的结果集</span><br><span class="line">这个buffer的大小由sort_buffer_size参数控制。</span><br><span class="line">此外一次排序还需要两次IO,一次是取排序字段(id,col2)到sort buffer中</span><br><span class="line">第二次是通过上面取出的主键id再来取其他所需要返回列(col1,col2,col3)</span><br><span class="line"></span><br><span class="line">由于返回的结果集是按col2排序,因此id是乱序的</span><br><span class="line">通过乱序的id取(col1,col2,col3)时会产生大量的随机IO。</span><br><span class="line">对于第二次IO取MySQL本身会优化,即在取之前先将主键id排序,并放入缓冲区</span><br><span class="line">这个缓存区大小由参数read_rnd_buffer_size控制</span><br><span class="line">然后有序去取记录,将随机IO转为顺序IO</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>优化排序,单路排序</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">常规排序方式除了排序本身,还需要额外两次IO。</span><br><span class="line">优化排序方式相对于常规排序,减少了第二次IO。</span><br><span class="line">主要区别在于,一次性取出sql中出现的所有字段放入sort buffer中而不是只取排序需要的字段(id,col2)。</span><br><span class="line">由于sort buffer中包含了查询需要的所有字段,因此排序完成后可以直接返回,无需二次取数据。</span><br><span class="line">这种方式的代价在于,同样大小的sort buffer,能存放的(col1,col2,col3)数目要小于(id,col2)</span><br><span class="line">如果sort buffer不够大,可能导致需要写临时文件,造成额外的IO。</span><br><span class="line">当然MySQL提供了参数max_length_for_sort_data,</span><br><span class="line">只有当排序sql里出现的所有字段小于max_length_for_sort_data时,</span><br><span class="line">才能利用优化排序方式,否则只能用常规排序方式。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>优先队列排序  </p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">为了得到最终的排序结果,我们都需要将所有满足条件的记录进行排序才能返回。</span><br><span class="line">那么相对于优化排序方式,是否还有优化空间呢？</span><br><span class="line">5.6版本针对Order by limit M,N语句,在空间层面做了优化,加入了一种新的排序方式--优先队列</span><br><span class="line">这种方式采用堆排序实现。堆排序算法特征正好可以解limit M,N 这类排序的问题</span><br><span class="line">虽然仍然需要所有字段参与排序,但是只需要M+N个元组的sort buffer空间即可</span><br><span class="line">对于M,N很小的场景,基本不会因为sort buffer不够而导致需要临时文件进行归并排序的问题。</span><br><span class="line">对于升序,采用大顶堆,最终堆中的元素组成了最小的N个元素,对于降序,采用小顶堆,最终堆中的元素组成了最大的N的元素。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="索引使用注意事项"><a href="#索引使用注意事项" class="headerlink" title="索引使用注意事项"></a>索引使用注意事项</h3><ul>
+<li><p>1:最左前缀匹配原则。这是非常重要、非常重要、非常重要(重要的事情说三遍)的原则,MySQL会一直向右匹配直到遇到范围查询(&gt;,&lt;,BETWEEN,LIKE)就停止匹配</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">比如: a = 1 AND b = 2 AND c &gt; 3 AND d = 4,如果建立 (a,b,c,d)顺序的索引,d是用不到索引的,如果建立(a,b,d,c)的索引,则都可以用到a,b,d的顺序可以任意调整。</span><br><span class="line"></span><br><span class="line">等于（=）和in 可以乱序。比如,a = 1 AND b = 2 AND c = 3 建立（a,b,c）索引可以任意顺序,MySQL的查询优化器会帮你优化成索引可以识别的模式。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2:使用短索引<br>  对串列进行索引,如果可能应该指定一个前缀长度。    </p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">例如,如果有一个CHAR(255)的列,如果在前10个或20个字符内,多数值是惟一的,那么就不要对整个列进行索引。</span><br><span class="line">短索引不仅可以提高查询速度而且可以节省磁盘空间和I/O操作。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3:禁止使用相关检索操作      </p>
+<ul>
+<li>like<br>  一般情况下不鼓励使用like操作,如果非使用不可,如何使用也是一个问题。like”%aaa%”不会使用索引而like”aaa%”可以使用索引。</li>
+<li>in<br>  in走全表是分情况的,这个不是个数而应该是个比例,大概25%-35%左右</li>
+<li><p>between<br>  如果是连续数值,between在找到第一个匹配值后,则直接从该地址往后搜索,直到最后一个元素为止。这样就不会对后续值进行索引扫描</p>
+</li>
+<li><p>or<br>  应尽量避免在 where 子句中使用 or 来连接条件,否则将导致引擎放弃使用索引而进行全表扫描</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> t <span class="keyword">where</span> <span class="keyword">num</span>=<span class="number">10</span> <span class="keyword">or</span> <span class="keyword">num</span>=<span class="number">20</span> </span><br><span class="line">可以这样查询:</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> t <span class="keyword">where</span> <span class="keyword">num</span>=<span class="number">10</span> </span><br><span class="line"><span class="keyword">union</span> all </span><br><span class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> t <span class="keyword">where</span> <span class="keyword">num</span>=<span class="number">20</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>@参数<br>  如果在 where 子句中使用参数,也会导致全表扫描。     </p>
+<blockquote>
+<p>因为SQL只有在运行时才会解析局部变量,但优化程序不能将访问计划的选择推迟到运行时;它必须在编译时进行选择。<br>然而,如果在编译时建立访问计划,变量的值还是未知的,因而无法作为索引选择的输入项。如下面语句将进行全表扫描：   </p>
+</blockquote>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> t <span class="keyword">where</span> <span class="keyword">num</span>=@<span class="keyword">num</span> </span><br><span class="line">可以改为强制查询使用索引： </span><br><span class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> t <span class="keyword">use</span>(<span class="keyword">index</span>(索引名)) <span class="keyword">where</span> <span class="keyword">num</span>=@<span class="keyword">num</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>IS NULL或者IS NOT NULL</p>
+<blockquote>
+<p>IS NULL或者IS NOT NULL等条件语句的话,如果被索引的列中有很多null,就不会使用这个索引    </p>
+</blockquote>
+</li>
+<li><p>NOT IN 、&lt;&gt;、!=操作</p>
+<p>  不使用NOT IN 、&lt;&gt;、！=操作,但&lt;,&lt;=,=,&gt;,&gt;=,BETWEEN,IN是可以用到索引的  </p>
+</li>
+<li><p>比较不匹配的数据类型  </p>
+<blockquote>
+<p>虽然有这个说法,但是在5.6版本我没重现  </p>
+</blockquote>
+<p>  dept_id是一个varchar型的字段</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> dept <span class="keyword">where</span> dept_id = <span class="number">900198</span>;  </span><br><span class="line">会自动把where子句转换成to_number(dept_id)=900198,这样就限制了索引的使用。  </span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> dept <span class="keyword">where</span> dept_id = <span class="string">'900198'</span>;   // 这样才合适</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>索引排序  </p>
+<blockquote>
+<p>为了优化SQL语句的排序性能,最好的情况是避免排序,合理利用索引是一个不错的方法。<br>因为索引本身也是有序的,如果在需要排序的字段上面建立了合适的索引,那么就可以跳过排序的过程,提高SQL的查询速度    </p>
+</blockquote>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">假设t1表存在索引key1(key_part1,key_part2),key2(key2)</span><br><span class="line">//排序字段在多个索引中,无法使用索引排序</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part1,key_part2, key2;</span><br><span class="line"></span><br><span class="line">//排序键顺序与索引中列顺序不一致,无法使用索引排序</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part2, key_part1;</span><br><span class="line"></span><br><span class="line">//升降序不一致,无法使用索引排序</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part1 <span class="keyword">DESC</span>, key_part2 <span class="keyword">ASC</span>;</span><br><span class="line"></span><br><span class="line">//key_part1是范围查询,key_part2无法使用索引排序</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> key_part1&gt; <span class="keyword">constant</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part2;</span><br><span class="line"></span><br><span class="line">//以下是优化语句</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part1,key_part2;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> key_part1 = <span class="keyword">constant</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part2;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> key_part1 &gt; <span class="keyword">constant</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part1 <span class="keyword">ASC</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> key_part1 = constant1 <span class="keyword">AND</span> key_part2 &gt; constant2 <span class="keyword">ORDER</span> <span class="keyword">BY</span> key_part2;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>4:尽可能的扩展索引  </li>
+</ul>
+<blockquote>
+<p>不要新建立索引。比如表中已经有了a的索引,现在要加（a,b）的索引,那么只需要修改原来的索引即可。</p>
+</blockquote>
+<ul>
+<li>5:索引选择  </li>
+</ul>
+<blockquote>
+<p>单个多列组合索引和多个单列索引的检索查询效果不同,因为在执行SQL时,MySQL一个表只能使用一个索引,会从多个单列索引中选择一个限制最为严格的索引。只使用其中一个最优的索引。</p>
+</blockquote>
+<ul>
+<li>6:不要在列上进行运算</li>
+</ul>
+<blockquote>
+<p>B+树中存储的都是数据表中的字段值,但是进行检索时,需要把所有元素都应用函数才能比较,显然这样的代价太大  </p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">YEAR</span>(adddate)&lt;<span class="number">2007</span>; 将在每个行上进行运算,这将导致索引失效而进行全表扫描,因此我们可以改成</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> adddate&lt;‘<span class="number">2007</span><span class="number">-01</span><span class="number">-01</span>’;</span><br></pre></td></tr></table></figure>
+<h2 id="explain"><a href="#explain" class="headerlink" title="explain"></a>explain</h2><h3 id="type"><a href="#type" class="headerlink" title="type"></a>type</h3><ul>
+<li><p>all :一般没匹配组合索引以及没有普通索引利用       </p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#all</span><br><span class="line"><span class="keyword">explain</span></span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> vmobel.vmb_account</span><br><span class="line"><span class="keyword">where</span> mail=<span class="string">"1"</span> <span class="keyword">and</span> address=<span class="string">"3"</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>index: 扫描索引全部按次序扫描,先读到索引,再读实际的行,结果还是类似全表扫描,主要优点是避免了排序。因为索引是排好的。      </p>
+</li>
+<li><p>range:在索引基础上以范围的形式扫描。       </p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#range</span><br><span class="line"><span class="keyword">explain</span> </span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> vmobel.vmb_account</span><br><span class="line"><span class="keyword">where</span> accountid &gt; <span class="number">10</span> ;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ref :一般是用到了普通索引或者组合索引(不涉及组合唯一索引)        </p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#ref</span><br><span class="line"><span class="keyword">explain</span></span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> vmobel.vmb_account</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">name</span>=<span class="string">"yangfan@vmobel.com"</span></span><br><span class="line"><span class="keyword">and</span> fullname = <span class="string">"杨帆"</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>eq-ref :有关联表并且关联的是主键或者唯一索引     </p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># eq_ref</span><br><span class="line"><span class="keyword">explain</span> </span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> vmobel.vmb_account <span class="keyword">as</span> <span class="string">`account`</span></span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> vmobel.vmb_enterpriseaccount <span class="keyword">as</span> <span class="string">`ent_account`</span> <span class="keyword">on</span> <span class="string">`ent_account`</span>.<span class="string">`accountid`</span>=<span class="string">`account`</span>.<span class="string">`accountid`</span></span><br><span class="line"><span class="keyword">where</span> <span class="string">`ent_account`</span>.<span class="string">`enterpriseid`</span>=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>const :利用到了主键索引或者唯一索引     </p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#const</span><br><span class="line"><span class="keyword">explain</span> </span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> vmobel.vmb_account</span><br><span class="line"><span class="keyword">where</span> accountid=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="extra"><a href="#extra" class="headerlink" title="extra"></a>extra</h3><ul>
+<li>using index：出现这个说明mysql使用了覆盖索引,避免访问了表的数据行,效率不错！</li>
+<li><p>using where：这说明服务器在存储引擎收到行后将进行过滤。有些where中的条件会有属于索引的列</p>
+<blockquote>
+<p>当它读取使用索引的时候,就会被过滤,所以会出现有些where语句并没有在extra列中出现using where这么一个说明。    </p>
+</blockquote>
+</li>
+<li><p>using temporary：这意味着mysql对查询结果进行排序的时候使用了一张临时表。</p>
+</li>
+<li>using filesort：这个说明mysql会对数据使用一个外部的索引排序,而不是按照表内的索引顺序进行读取。</li>
+</ul>
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>一、Redis应用</strong></p>
+<ul>
+<li>分布式锁、延时队列、位图、HyperLogLog、布隆过滤器、限流、GeoHash、Scan</li>
+</ul>
+<p><strong>二、Redis原理</strong></p>
+<ul>
+<li>IO现场模型、通信协议、持久化、管道、事务、PubSub、对象压缩、主从同步</li>
+</ul>
+<p><strong>三、Redis集群</strong></p>
+<ul>
+<li>Sentinel、Codis、Cluster</li>
+</ul>
+<p><strong>四、Reids拓展知识</strong></p>
+<ul>
+<li>Stream、Info命令、分布式锁、过期策略、LRU、懒删除、Jedis</li>
+</ul>
+<p><strong>五、Redis源码剖析</strong></p>
+<ul>
+<li>字符串、字典、压缩列表、快速列表、跳跃列表、紧凑列表、基数树</li>
+</ul>
+<h2 id="数据结构与对象"><a href="#数据结构与对象" class="headerlink" title="数据结构与对象"></a>数据结构与对象</h2><h3 id="SDS"><a href="#SDS" class="headerlink" title="SDS"></a>SDS</h3><p><img src="/2018/07/26/storage/image-14.png" width="350px">  </p>
+<ul>
+<li>free属性值为0,表示sds没有分配任何未使用空间   </li>
+<li>len属性值为5,表示这个sds保存了一个五字节长的字符串  </li>
+<li>buf属性是一个char类型的数组,数组的前五个字节分别保存了’R’,’e’,’d’,’i’,’s’五个字符,而最后一个字符为’\0’  </li>
+</ul>
+<h4 id="C字符串与SDS字符串的区别"><a href="#C字符串与SDS字符串的区别" class="headerlink" title="C字符串与SDS字符串的区别"></a>C字符串与SDS字符串的区别</h4><p><img src="/2018/07/26/storage/image-15.png" width="350px">  </p>
+<h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><blockquote>
+<p>链表提供高效的节点重排能力,以及顺序性的节点访问方式,并且可以通过增删节点来灵活地调整链表的长度  </p>
+</blockquote>
+<p><img src="/2018/07/26/storage/image-16.png" width="400px">  </p>
+<p>使用多个listNode结构就可以组成链表</p>
+<p><img src="/2018/07/26/storage/image-17.png" width="200px"></p>
+<p>list结构为链表提供了表头指针head、表尾指针tail、以及链表长度计数器len,而dup、free和match成员则是用于实现多态链表所需的类型特定函数  </p>
+<ul>
+<li>dup 函数赋值链表节点锁保存的值  </li>
+<li>free 函数用于释放链表节点所保存的值  </li>
+<li>match 函数则用于对比链表节点所保存的值和另一个输入值是否相等   </li>
+</ul>
+<h4 id="Redis链表特点"><a href="#Redis链表特点" class="headerlink" title="Redis链表特点"></a>Redis链表特点</h4><ul>
+<li>双端:链表节点带有prev和next指针、获取某个节点的前置节点和后置节点的复杂度为O(1)  </li>
+<li>无环:表头节点的prev指针和表尾节点的next指针都指向NULL,对链表的访问以NULL为终点   </li>
+<li>带表头指针和表尾指针:通过list结构的head指针和tail指针,程序获取链表的表头节点和表尾节点的复杂度为O(1)  </li>
+<li>带链表长度计数器:程序使用list结构的len属性来对list持有的链表节点进行计数,程序获取链表节点数量的复杂度为O(1)  </li>
+</ul>
+<p><br><br><br></p>
+<h3 id="Dict"><a href="#Dict" class="headerlink" title="Dict"></a>Dict</h3><blockquote>
+<p>字典又称为符号表、关联数组或映射是一个用于保存键值对的抽象数据结构  </p>
+</blockquote>
+<p>例如:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET msg &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
+<p>创建一个键为”msg”,值为”hello world”的键值对,这个键值对就是保存在代表数据库的字典里  </p>
+<p><img src="/2018/07/26/storage/image-22.png" width="250px">  </p>
+<p><img src="/2018/07/26/storage/image-23.png" width="350px"></p>
+<ul>
+<li>type与privdata针对不同类型的键值对   </li>
+<li>ht属性是一个包含两个项的数组,数组中的每个项都是一个dictht哈希表,一般情况下，字典只使用ht[0],ht[1]哈希表只会在对ht[0]哈希表进行rehash时候使用  </li>
+</ul>
+<p>除了ht[1]之外,另一个和rehash有关的属性就是rehashidx,它记录了rehash目前的进度,如果没有进行rehash则值为-1  </p>
+<h4 id="DictHt"><a href="#DictHt" class="headerlink" title="DictHt"></a>DictHt</h4><p><img src="/2018/07/26/storage/image-18.png" width="200px"></p>
+<p>table属性是一个数组,数组中每个元素都指向<code>dictEntry</code>结构的指针  </p>
+<p>每个<code>dictEntry</code>结构保存着一个键值对,size熟悉记录了哈希表的大小,即table数组的大小   </p>
+<ul>
+<li><p>used属性则记录哈希表目前已有节点的数量  </p>
+</li>
+<li><p>sizemask属性的值总是等于size-1,这个属性和哈希值一起决定一个键应该被放到table数组的哪个索引上面  </p>
+</li>
+</ul>
+<h4 id="DictEntry"><a href="#DictEntry" class="headerlink" title="DictEntry"></a>DictEntry</h4><p>哈希表节点使用dictEntry结构表示,每个dictEntry结构都保存着一个键值对  </p>
+<p><img src="/2018/07/26/storage/image-19.png" width="250px"></p>
+<ul>
+<li>key属性为键   </li>
+<li><p>v属性为键值对中的值  </p>
+<ul>
+<li>其中键值对的值可以是一个指针  </li>
+<li>是一个uint64_t的整数  </li>
+<li>是一个int64_t的整数    </li>
+</ul>
+</li>
+<li><p>next属性是指向另一个哈希表节点的指针  </p>
+</li>
+</ul>
+<p>这个指针可以将更多哈希值相同的键值对连接在一起,解决键冲突的问题  </p>
+<p><img src="/2018/07/26/storage/image-20.png" width="350px">  </p>
+<h4 id="哈希算法"><a href="#哈希算法" class="headerlink" title="哈希算法"></a>哈希算法</h4><p><img src="/2018/07/26/storage/image-24.png" width="250px">  </p>
+<p>先算哈希,再通过hash&amp;ht[0].sizemask与运算得到位置下标   </p>
+<h4 id="解决哈希冲突"><a href="#解决哈希冲突" class="headerlink" title="解决哈希冲突"></a>解决哈希冲突</h4><p>以链表法来解决键冲突,每个哈希表节点都有一个next指针,多个哈希表节点可以用next指针构成一个单向链表  </p>
+<p>被分配到同一个索引位置上的多个节点可以用这个单向链表连接起来,解决了冲突问题  </p>
+<h4 id="rehash"><a href="#rehash" class="headerlink" title="rehash"></a>rehash</h4><p>随操作不断执行,哈希表保存的键值对会主键地增多或减少,为了让哈希表负载因子(load factor)维持一个合理范围  </p>
+<p>当哈希表保存的键值对数量太多或太少,需要对哈希表大小进行相应的扩展和收缩  </p>
+<ul>
+<li>1:为字典ht[1]哈希表分配空间,这个哈希表空间大小取决于扩展还是收缩  </li>
+</ul>
+<p>若是扩展操作，那么ht[1]的大小为&gt;=ht[0].used*2的2^n<br>若是收缩操作，那么ht[1]的大小为&gt;=ht[0].used的2^n</p>
+<ul>
+<li><p>2:将保存在ht[0]中的所有键值对rehash到ht[1]中,rehash指重新计算键的哈希值和索引值,然后将键值对放置到ht[1]哈希表的指定位置上。</p>
+</li>
+<li><p>3:当ht[0]的所有键值对都迁移到了ht[1]之后(ht[0]变为空表),释放ht[0],将ht[1]设置为ht[0],新建空白的哈希表ht[1],以备下次rehash使用。</p>
+</li>
+</ul>
+<blockquote>
+<p> 扩展与收缩的条件</p>
+</blockquote>
+<p>当以下条件满足任意一个时，程序就会对哈希表进行扩展操作</p>
+<p>服务器目前没有执行bgsave或bgrewriteaof命令，并且哈希表的负载因子&gt;=1<br>服务器目前正在执行bgsave或bgrewriteaof命令，并且哈希表的负载因子&gt;=5</p>
+<p>负载因子的计算<br>load_factor=ht[0].used/ht[0].size</p>
+<p>当负载因子的值小于0.1时，程序就会对哈希表进行收缩操作</p>
+<blockquote>
+<p>渐进式rehash</p>
+</blockquote>
+<ul>
+<li>1.渐进式rehash的原因  </li>
+</ul>
+<p>整个rehash过程并不是一步完成的，而是分多次、渐进式的完成。如果哈希表中保存着数量巨大的键值对时，若一次进行rehash，很有可能会导致服务器宕机。</p>
+<ul>
+<li>2.渐进式rehash的步骤  </li>
+</ul>
+<p>为ht[1]分配空间，让字典同时持有ht[0]和ht[1]两个哈希表<br>维持索引计数器变量rehashidx，并将它的值设置为0，表示rehash开始<br>每次对字典执行增删改查时，将ht[0]的rehashidx索引上的所有键值对rehash到ht[1]，将rehashidx值+1。<br>当ht[0]的所有键值对都被rehash到ht[1]中，程序将rehashidx的值设置为-1，表示rehash操作完成<br>注：渐进式rehash的好处在于它采取分为而治的方式，将rehash键值对的计算均摊到每个字典增删改查操作，避免了集中式rehash的庞大计算量。</p>
+<p><br><br><br></p>
+<h3 id="SkipList"><a href="#SkipList" class="headerlink" title="SkipList"></a>SkipList</h3><p>跳跃表,在原链表结构上提取关键节点作为第二层链表结构,通过第二层或其他层的关键节点进行操作   </p>
+<p><img src="/2018/07/26/storage/image-25.png" width="400px">  </p>
+<ul>
+<li>header:指向跳跃表的表头节点  </li>
+<li>tail:指向跳跃表的表尾节点  </li>
+<li>level:记录跳跃表内层数最大的那个节点的层数  </li>
+<li>length: 记录跳跃表的长度(包含节点的数量)  </li>
+</ul>
+<h4 id="跳跃表节点"><a href="#跳跃表节点" class="headerlink" title="跳跃表节点"></a>跳跃表节点</h4><p><img src="/2018/07/26/storage/image-26.png" width="250px">  </p>
+<h4 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h4><p><img src="/2018/07/26/storage/image-27.png" width="250px"></p>
+<p><img src="/2018/07/26/storage/image-28.png" width="250px"></p>
+<p><br><br><br></p>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>Redis并没有直接使用SDS、双端链表、字典、压缩列表、整数集合等  </p>
+<p>而是基于这些数据结构创建了一个对象系统</p>
+<p>这个系统包含了字符串对象、列表对象、哈希对象、集合对象和有序集合对象五种类型的对象  </p>
+<p><img src="/2018/07/26/storage/image-29.png" width="200px">  </p>
+<h5 id="编码和底层实现"><a href="#编码和底层实现" class="headerlink" title="编码和底层实现"></a>编码和底层实现</h5><p><img src="/2018/07/26/storage/image-30.png" width="500px"></p>
+<p><img src="/2018/07/26/storage/image-31.png" width="500px"></p>
+<h5 id="字符串对象"><a href="#字符串对象" class="headerlink" title="字符串对象"></a>字符串对象</h5><p>字符串对象可以是int、raw或embstr  </p>
+<blockquote>
+<p>int编码的字符串对象</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set number 10086</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/07/26/storage/image-32.png" width="200px">  </p>
+<blockquote>
+<p>raw编码的字符串对象</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set story &quot;Long, long age there lived a king ...&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/07/26/storage/image-33.png" width="500px">  </p>
+<blockquote>
+<p>embstr编码是专门用于保存短字符串的优化编码方式  </p>
+</blockquote>
+<p>这编码和raw一样,都使用redisObject结构和sdshdr结构来表示字符串对象<br>raw会调用两次内存分配函数来创建redisObject和sdshdr结构<br>embstr则调用一次内存分配来分配一块连续空间  </p>
+<p><img src="/2018/07/26/storage/image-34.png" width="400px">  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set msg &quot;hello&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/07/26/storage/image-35.png" width="450px">  </p>
+<h6 id="字符串命令的实现"><a href="#字符串命令的实现" class="headerlink" title="字符串命令的实现"></a>字符串命令的实现</h6><p><img src="/2018/07/26/storage/image-36.png" width="500px"></p>
+<h5 id="列表对象"><a href="#列表对象" class="headerlink" title="列表对象"></a>列表对象</h5><p>列表对象可以是ziplist或linkedlist  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RPUSH numbers 1 &quot;three&quot; 5</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果使用的是ziplist编码,那展示的样子如下  </p>
+</blockquote>
+<p><img src="/2018/07/26/storage/image-37.png" width="500px"></p>
+<blockquote>
+<p>如果使用的是linkedList编码,那展示的样子如下  </p>
+</blockquote>
+<p><img src="/2018/07/26/storage/image-38.png" width="500px"></p>
+<blockquote>
+<p>编码转换  </p>
+</blockquote>
+<p>当列表满足以下两个条件,那么会使用ziplist编码  </p>
+<ul>
+<li>列表对象保存的所有字符串元素的长度都小于64字节  </li>
+<li>列表对象保存的元素数量小于512个;</li>
+</ul>
+<p>不能满足这两个条件的列表对象需要使用linkedlist编码</p>
+<h6 id="列表命令的实现"><a href="#列表命令的实现" class="headerlink" title="列表命令的实现"></a>列表命令的实现</h6><p><img src="/2018/07/26/storage/image-39.png" width="500px"></p>
+<h5 id="hash对象"><a href="#hash对象" class="headerlink" title="hash对象"></a>hash对象</h5><p>哈希对象的编码可以是ziplist或者hashtable  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HSET profile name &quot;tom&quot;</span><br><span class="line">HSET profile age 25</span><br><span class="line">HSET profile career &quot;Programmer&quot;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果profile键的值对象使用ziplist,那将如下结构  </p>
+</blockquote>
+<p><img src="/2018/07/26/storage/image-40.png" width="500px">  </p>
+<blockquote>
+<p>如果是hashtable编码的哈希对象使用字典作为底层实现  </p>
+</blockquote>
+<ul>
+<li>字典的每个键都是一个字符串对象,对象中保存了键值对的键   </li>
+<li>字典的每个值都是一个字符串对象,对象中保存了键值对的值  </li>
+</ul>
+<p><img src="/2018/07/26/storage/image-41.png" width="400px"></p>
+<blockquote>
+<p>编码转换  </p>
+</blockquote>
+<p>当哈希对象满足以下两个条件,将使用ziplist编码  </p>
+<ul>
+<li>哈希对象保存的所有键值对的键和值的字符串长度都小于64个字节  </li>
+<li>哈希对象保存的键值对数量小于512个  </li>
+</ul>
+<p>不能满足这两个条件的哈希对象需要使用hashtable编码  </p>
+<h6 id="哈希命令的实现"><a href="#哈希命令的实现" class="headerlink" title="哈希命令的实现"></a>哈希命令的实现</h6><p><img src="/2018/07/26/storage/image-42.png" width="500px">  </p>
+<h5 id="集合对象"><a href="#集合对象" class="headerlink" title="集合对象"></a>集合对象</h5><p>集合对象的编码可以是intset或hashtable  </p>
+<p>intSet编码的集合对象使用整数集合作为底层实现  </p>
+<p>集合对象包含的所有元素都被保存在整数集合里面  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SADD numbers 1 3 5</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/07/26/storage/image-43.png" width="350px"></p>
+<p>另一方面,hashtable编码的集合对象使用字典作为底层实现  </p>
+<p>字典的每个键都是一个字符串对象,每个字符串对象包含了一个集合元素,而字典的值则全部被设置为NULL  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SAD Dfruits &quot;apple&quot; &quot;banana&quot; &quot;cherry&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/07/26/storage/image-44.png" width="350px">  </p>
+<blockquote>
+<p>编码转换  </p>
+</blockquote>
+<p>当集合对象可以满足以下两个条件,对象使用intSet编码  </p>
+<ul>
+<li>集合对象保存的所有元素都是整数值  </li>
+<li>集合对象保存的元素数量不超过512个   </li>
+</ul>
+<p>不能满足这两个条件的及核对下需要使用hashTable编码  </p>
+<h6 id="集合命令的实现"><a href="#集合命令的实现" class="headerlink" title="集合命令的实现"></a>集合命令的实现</h6><p><img src="/2018/07/26/storage/image-45.png" width="400px"></p>
+<p><img src="/2018/07/26/storage/image-46.png" width="400px"></p>
+<h5 id="有序集合对象"><a href="#有序集合对象" class="headerlink" title="有序集合对象"></a>有序集合对象</h5><p>有序集合对象的编码可以是zipList或skipList</p>
+<blockquote>
+<p>zipList编码的压缩列表对象使用压缩列表作为底层实现   </p>
+</blockquote>
+<ul>
+<li>每个集合元素使用两个紧挨在一起的压缩列表节点来保存  </li>
+<li>第一个节点保存元素的成员,而第二个元素则保存元素的分值   </li>
+<li>集合元素按分值从小到大排序,分值较小的元素被放置在靠近表头方向,而分支较大的元素则被放置在靠近表尾的方向   </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZADD price 8.5 apple 5.0 banana 6.0 cherry</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/07/26/storage/image-47.png" width="250px"><br><img src="/2018/07/26/storage/image-48.png" width="350px"></p>
+<blockquote>
+<p>skipList编码的有序集合对象  </p>
+</blockquote>
+<p><img src="/2018/07/26/storage/image-49.png" width="300px"></p>
+<p>zset结构中的zsl跳跃表按分值从小到大保存了所有集合元素,每个跳跃表节点都保存了一个集合元素  </p>
+<p>跳跃表节点的object熟悉保存了元素的成员,而跳跃表节点的score属性则保存了元素的分值  </p>
+<p>通过这个跳跃表,程序可以对有序集合进行范围型操作,比如ZRANK,ZRANGE等命令就是基于跳跃表API来实现的  </p>
+<p><img src="/2018/07/26/storage/image-50.png" width="400px"></p>
+<p>zset结构同时使用跳跃表和字典来保存有序集合元素,但这两种数据集合都会通过指针来共享相同元素的成员和分值   </p>
+<blockquote>
+<p>编码转换  </p>
+</blockquote>
+<p>当有序集合对象可以同时满足以下两个条件时,对象使用ziplist编码  </p>
+<ul>
+<li>有序集合保存的元素数量小于128个    </li>
+<li>有序集合保存的所有元素成员的长度都小于64字节  </li>
+</ul>
+<p>不能满足以上两个条件有序集合对象则使用skiplist编码  </p>
+<h6 id="有序集合命令的实现"><a href="#有序集合命令的实现" class="headerlink" title="有序集合命令的实现"></a>有序集合命令的实现</h6><p><img src="/2018/07/26/storage/image-51.png" width="400px"></p>
+<h5 id="命令类型"><a href="#命令类型" class="headerlink" title="命令类型"></a>命令类型</h5><p><img src="/2018/07/26/storage/image-52.png" width="400px">  </p>
+<h5 id="内存回收"><a href="#内存回收" class="headerlink" title="内存回收"></a>内存回收</h5><p>C语言并不具备自动内存回收能力,所有Redis在自己的对象系统构建了<code>引用计数</code>技术实现的内存回收机制  </p>
+<p>通过这一机制,程序可以通过跟踪对象的引用计数信息,在适当的时候自动释放对象并进行内存回收  </p>
+<p>每个对象的引用计数信息由redisObject结构的refCount属性记录  </p>
+<p><img src="/2018/07/26/storage/image-53.png" width="400px">  </p>
+<h5 id="对象共享"><a href="#对象共享" class="headerlink" title="对象共享"></a>对象共享</h5><p>对象的引用计数属性还带有对象共享的作用  </p>
+<p>键A创建了一个包含数值100的字符串对象作为值对象,这是键B也要创建一个同样保存了整数值100的字符串对象作为值对象,那么服务器有以下两种做法  </p>
+<ul>
+<li>为键B新创建一个包含整数值100的字符串对象  </li>
+<li>让键A和键B共享同一个字符串对象  </li>
+</ul>
+<p><img src="/2018/07/26/storage/image-54.png" width="400px">  </p>
+<p><br><br><br></p>
+<h3 id="RDB持久化"><a href="#RDB持久化" class="headerlink" title="RDB持久化"></a>RDB持久化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">save 60 1000</span><br><span class="line">stop-writes-on-bgsave-error no</span><br><span class="line">rdbcompression yes</span><br><span class="line">dbfilename dump.rdb</span><br></pre></td></tr></table></figure>
+<h4 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h4><p>快照持久化(SnapShotting)</p>
+<p>执行SAVE命令或者BGSAVE命令创建一个新的RDB文件时,程序会对数据库中的键进行检查,已过期的键不会被保存到新创建的RDB文件中  </p>
+<blockquote>
+<p>SAVE 命令会阻塞Redis服务器进程,直到RDB文件创建完毕为止,在服务器进程阻塞期间,服务器不能处理任何命令请求   </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SAVE //等待直到RDB文件创建完毕</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>BGSAVE 命令会派生出一个子进程,然后由子进程负责创建RDB文件,服务器进程(父进程)继续处理命令请求  </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BGSAVE //派生子进程,并由子进程创建RDB文件</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/07/26/storage/image-55.png" width="350px"><br><img src="/2018/07/26/storage/image-56.png" width="350px">  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BGSAVE命令执行期间、客户端发送的BGSAVE命令以及SAVE命令会被服务器拒绝</span><br><span class="line">服务器禁止产生竞争条件</span><br></pre></td></tr></table></figure>
+<p>BGREWRITEAOF和BGSAVE两个命令不能同时执行  </p>
+<ul>
+<li><p>如果BGSAVE命令正在执行,name客户端发送的BGREWRITEAOF命令会被延迟到BGSAVE命令执行完毕之后执行  </p>
+</li>
+<li><p>如果BGREWRITEAOF命令正在执行,那么客户端发送的BGSAVE命令会被服务器拒绝  </p>
+</li>
+</ul>
+<p><br></p>
+<p>服务器接收到SHUTDOWN命令,或接收到TERM信号,会执行一个SAVE命令,阻塞所有客户端,并SAVE执行完毕后关闭服务器<br>当Redis 连接另一个Redis,并向对方发送SYNC开始复制操作,主服务器就执行BGSAVE命令</p>
+<blockquote>
+<p>缺点?</p>
+</blockquote>
+<p>Redis占用20g内存,BGSAVE创建子进程会导致Redis停顿200~400毫秒</p>
+<p>SAVE虽然不用创建子进程,而导致Redis停顿(因为没子进程争抢资源)</p>
+<p>所以Save创建快照比BGSave快,但是会一直阻塞Redis直到快照生成完毕</p>
+<h4 id="载入"><a href="#载入" class="headerlink" title="载入"></a>载入</h4><p>RDB文件的载入工作是服务器启动时自动执行的,所以Redis并没有专门用于载入RDB文件的命令<br>只要Redis服务器在启动时检测到RDB文件存在,它就会自动载入RDB文件  </p>
+<p><img src="/2018/07/26/storage/image-57.png" width="400px">  </p>
+<ul>
+<li>如果开启AOF持久化功能,服务器优先使用AOF文件来还原数据库状态    </li>
+<li>只有在AOF持久化功能处于关闭时,服务器才会使用AOF文件来还原数据库状态  </li>
+</ul>
+<h4 id="自动间隔性保存"><a href="#自动间隔性保存" class="headerlink" title="自动间隔性保存"></a>自动间隔性保存</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 50 10000</span><br></pre></td></tr></table></figure>
+<ul>
+<li>900秒之内,对数据库进行了至少1次修改   </li>
+<li>300秒之内,对数据库进行了至少10次修改  </li>
+<li>60秒之内,对数据库进行了至少10000次修改</li>
+</ul>
+<h4 id="RDB文件结构"><a href="#RDB文件结构" class="headerlink" title="RDB文件结构"></a>RDB文件结构</h4><p><img src="/2018/07/26/storage/image-58.png" width="250px">  </p>
+<p>db_version长度为4个字节,它的值是一个字符串表示的证书,这个证书记录了RDB文件的版本号  </p>
+<p>databases部分包含0个或任意多个数据库,以及各个数据库中的键值对数据  </p>
+<ul>
+<li><p>如果服务器的数据库状态为空(所有数据库都是空的),那么这个部分也为空,长度为0字节  </p>
+</li>
+<li><p>如果服务器的数据库状态为非空(有至少一个数据库非空),那么这个部分也为非空,根据数据库锁保存键值对的数量、类型和内容不同,这个部分长度也有所不同  </p>
+</li>
+</ul>
+<p>EOF常量的长度为1个字节,标志RDB文件正文内容的结束\当读入程序遇到这个值就知道所有数据库的所有键值对是否载入完毕  </p>
+<p>check_sum是8字节长的无符号整数,保存检验和,检查RDB文件是否有出错或损坏的情况出现  </p>
+<h5 id="databases部分"><a href="#databases部分" class="headerlink" title="databases部分"></a>databases部分</h5><p>database 0代表0号数据库中的键值对数据, database 3代表3号数据库中的所有键值对数据  </p>
+<p><img src="/2018/07/26/storage/image-59.png" width="400px">  </p>
+<p>每个非空数据库在RDB文件中都为以下格式  </p>
+<p><img src="/2018/07/26/storage/image-60.png" width="300px"></p>
+<ul>
+<li>SELECTDB:数据库号码   </li>
+<li>db_number:保存数据库号码,调用SELECT命令,根据读入的数据库号码进行数据库切换  </li>
+<li>key_value_pairs保存数据库中的所有键值对数据  </li>
+</ul>
+<h6 id="key-value-pairs"><a href="#key-value-pairs" class="headerlink" title="key_value_pairs"></a>key_value_pairs</h6><p>TYPE记录了value的类型,长度1字节  </p>
+<p><img src="/2018/07/26/storage/image-61.png" width="450px"></p>
+<p>key和value保存键值对的键对象和值对象  </p>
+<p><img src="/2018/07/26/storage/image-62.png" width="300px"></p>
+<p><br></p>
+<h3 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h3><p><img src="/2018/07/26/storage/image-63.png" width="350px"></p>
+<ul>
+<li>AOF追加命令文件(Append -only File)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">appendonly no</span><br><span class="line">appendfsync everysec</span><br><span class="line">no-appendfsync-no-rewirte no</span><br><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dir ./  #共享选项,保存位置</span><br></pre></td></tr></table></figure>
+<h4 id="AOF持久化实现"><a href="#AOF持久化实现" class="headerlink" title="AOF持久化实现"></a>AOF持久化实现</h4><p>AOF持久化分:追加、文件写入、文件同步三个步骤  </p>
+<h5 id="命令追加"><a href="#命令追加" class="headerlink" title="命令追加"></a>命令追加</h5><p><img src="/2018/07/26/storage/image-64.png" width="150px"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET key value</span><br></pre></td></tr></table></figure>
+<p>在执行这个set命令之后,将以下协议内容追加到aof_buf缓冲区末尾  </p>
+<h5 id="AOF文件的写入和同步"><a href="#AOF文件的写入和同步" class="headerlink" title="AOF文件的写入和同步"></a>AOF文件的写入和同步</h5><p>Redis服务器进程就是事件循环(loop)</p>
+<ul>
+<li><p>此循环中的<code>文件事件</code>负责接收客户端的命令请求,以及向客户端发送命令回复  </p>
+</li>
+<li><p><code>时间事件</code>负责执行像serverCron函数这样需要定时运行的函数  </p>
+</li>
+</ul>
+<p>服务器处理文本事件可能会执行写命令,使得内容追加到aof_buf缓冲器,每次结束一个事件循环之前,都调用flushAppendOnlyFile函数  </p>
+<p><img src="/2018/07/26/storage/image-65.png" width="350px">  </p>
+<p>根据不同的appendfsync值产生不同的持久化行为  </p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>always</td>
+<td>每个写命令都同步写入硬盘</td>
+</tr>
+<tr>
+<td>everysec</td>
+<td>每秒执行一次同步,显式地将多个写命令同步到硬盘</td>
+</tr>
+<tr>
+<td>no</td>
+<td>让操作系统来决定何时进行同步    </td>
+</tr>
+</tbody>
+</table>
+<h5 id="AOF文件的载入与数据还原"><a href="#AOF文件的载入与数据还原" class="headerlink" title="AOF文件的载入与数据还原"></a>AOF文件的载入与数据还原</h5><ul>
+<li><p>1:载入AOF文件所使用命令来源AOF文件而不是网络连接,所以服务器使用了一个没有网络连接的伪客户端执行AOF文件保存的写命令  </p>
+</li>
+<li><p>2:AOF文件中分析并读取出一条写命令  </p>
+</li>
+<li><p>3:使用为客户端执行被读出的写命令  </p>
+</li>
+<li><p>4:一直执行步骤2和步骤3,直到AOF文件中所有写命令都被处理完毕为止  </p>
+</li>
+</ul>
+<p><img src="/2018/07/26/storage/image-67.png" width="300px">  </p>
+<h4 id="AOF文件重写"><a href="#AOF文件重写" class="headerlink" title="AOF文件重写"></a>AOF文件重写</h4><p>为解决AOF文件体积不断增大问题,如下命令可选</p>
+<blockquote>
+<p>发送BGREWRITEAOF命令   //移除AOF文件中冗余命令重写AOF文件<br>可通过auto-aof-rewrite-percentage选项和auto-aof-rewrite-min-size选项来自动执行BGREWRITEAOF</p>
+</blockquote>
+<p><img src="/2018/07/26/storage/image-68.png" width="400px"></p>
+<p><img src="/2018/07/26/storage/image-69.png" width="400px">  </p>
+<p>为了保存当前list键的状态,必须在AOF写入6条命令   </p>
+<p>随着时间流逝,体积会越来越大  </p>
+<p>于是重写最高效的办法不是去读取和分析现有AOF文件的内容,而是直接从数据库中读取键list的值,然后用一条  </p>
+<blockquote>
+<p><code>读取现在键值对,一条命令去记录键值对</code></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpush list &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot;</span><br></pre></td></tr></table></figure>
+<p>命令代替保存在AOF文件中的六条命令  </p>
+<p>这样将从6条命令减少至1条命令  </p>
+<blockquote>
+<p>后台重写  </p>
+</blockquote>
+<p>aof_rewrite函数会进行大量的写入操作,所以将被长时间阻塞,name在重写AOF文件期间,服务器将无法处理客户端的命令请求  </p>
+<p>所以Redis决定将AOF重写程序放到子进程里执行,达到以下目的  </p>
+<ul>
+<li>AOF重写期间,父进程继续处理命令请求  </li>
+<li>子进程带有服务器进程的数据副本,使用子进程而不是线程,可以避免使用锁的情况,保证数据的安全性  </li>
+</ul>
+<p><img src="/2018/07/26/storage/image-70.png" width="500px"></p>
+<p>为解决数据不一致问题,Redis服务器设置了一个AOF重写缓冲区,在创建子进程后开始使用  </p>
+<p>当Redis服务器执行完一个写命令之后,同事发送给AOF缓冲区和AOF重写缓冲区  </p>
+<p><img src="/2018/07/26/storage/image-71.png" width="350px"></p>
+<p><img src="/2018/07/26/storage/image-72.png" width="400px"></p>
+<p><br><br><br></p>
+<h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><ul>
+<li><p>文本事件(file event): Redis服务器通过套接字与客户端进行连接,文本时间就是服务器对套接字操作的抽象   </p>
+</li>
+<li><p>时间事件(time event): Redis服务器中的一些操作(比如serverCron函数),需要在给定时间点执行,而时间事件就是服务器对这类定时操作的抽象  </p>
+</li>
+</ul>
+<h4 id="文本事件"><a href="#文本事件" class="headerlink" title="文本事件"></a>文本事件</h4><p><img src="/2018/07/26/storage/image-73.png" width="350px">  </p>
+<p>文件事件是对套接字操作的抽象， 每当一个套接字准备好执行连接应答（accept）、写入、读取、关闭等操作时， 就会产生一个文件事件。 因为一个服务器通常会连接多个套接字， 所以多个文件事件有可能会并发地出现。</p>
+<p>I/O 多路复用程序负责监听多个套接字,并向文件事件分派器传送那些产生了事件的套接字。</p>
+<p>尽管多个文件事件可能会并发地出现,但 I/O 多路复用程序总是会将所有产生事件的套接字都入队到一个队列里面</p>
+<p>然后通过这个队列以有序(sequentially)、同步(synchronously)地处理 </p>
+<p>每次一个套接字的方式向文件事件分派器传送套接字:当上一个套接字产生的事件被处理完毕之后(该套接字为事件所关联的事件处理器执行完毕)</p>
+<p> I/O 多路复用程序才会继续向文件事件分派器传送下一个套接字</p>
+<p>如图 IMAGE_DISPATCH_EVENT_VIA_QUEUE 。</p>
+<p><img src="/2018/07/26/storage/image-74.png" width="450px">  </p>
+<h5 id="连接应答处理器"><a href="#连接应答处理器" class="headerlink" title="连接应答处理器"></a>连接应答处理器</h5><p>服务器监听套接字的时候,套接字就会产生<code>AE_READABLE</code>事件  </p>
+<p>引发连接应答处理器执行并执行相应的套接字应答操作  </p>
+<h5 id="命令请求处理器"><a href="#命令请求处理器" class="headerlink" title="命令请求处理器"></a>命令请求处理器</h5><p>此处理器负责从套接字读入客户端发送的命令请求内容   </p>
+<p>当客户端通过<code>连接应答处理器</code>成功连接到服务器之后  </p>
+<p>服务器将客户端的套接字的AE_READABLE事件和<code>命令请求处理器</code>关联起来  </p>
+<p>当客户端向服务器发送命令请求的时候,套接字就会产生<code>AE_READABLE</code>事件,引发命令处理器执行,并执行响应的套接字读入操作  </p>
+<p><img src="/2018/07/26/storage/image-75.png" width="300px"></p>
+<h5 id="命令回复处理器"><a href="#命令回复处理器" class="headerlink" title="命令回复处理器"></a>命令回复处理器</h5><p>此处理器负责将服务器执行命令后得到的回复通过套接字返回给客户端  </p>
+<p>当服务器有命令回复需要传送给客户端,服务器会将客户端套接字的<code>AE_WRITEABLE</code>事件和命令回复处理器关联起来  </p>
+<p><img src="/2018/07/26/storage/image-76.png" width="300px"></p>
+<h4 id="时间事件"><a href="#时间事件" class="headerlink" title="时间事件"></a>时间事件</h4><ul>
+<li><p>定时事件:让一段程序在指定时间之后执行一次  </p>
+</li>
+<li><p>周期事件:让一段程序每隔指定时间就执行一次   </p>
+</li>
+</ul>
+<blockquote>
+<p>组成</p>
+</blockquote>
+<ul>
+<li>id:全局唯一ID,从小到大递增  </li>
+<li>when:时间事件到达时间,UNIX时间戳  </li>
+<li>timeProc:时间事件处理器,一个函数,时间到达调用相应处理器来处理事件   </li>
+</ul>
+<p>所有时间事件放在一个无序链表中,每当时间事件执行器运行时,它就遍历整个链表,查找所有已到达的时间事件,并调用相应的事件处理器  </p>
+<p><img src="/2018/07/26/storage/image-77.png" width="400px"></p>
+<h5 id="serverCron函数"><a href="#serverCron函数" class="headerlink" title="serverCron函数"></a>serverCron函数</h5><p>serverCron:定期检查自身资源和状态进行调整,从而确保服务器长期稳定运行  </p>
+<blockquote>
+<p>主要工作  </p>
+</blockquote>
+<ul>
+<li>更新服务器时间、内存占用、数据库占用等统计信息   </li>
+<li>清理过期键值对  </li>
+<li>关闭和清理失效连接客户端  </li>
+<li>尝试进行AOF和RDB持久化操作  </li>
+<li>集群模式,对集群进行定期同步和连接测试   </li>
+<li>主服务器则对从服务器进行定期同步  </li>
+</ul>
+<h4 id="事件调度与执行"><a href="#事件调度与执行" class="headerlink" title="事件调度与执行"></a>事件调度与执行</h4><p><img src="/2018/07/26/storage/image-78.png" width="350px"></p>
+<p><br><br><br></p>
+<h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><p>SLAVEOF命令或选项,可以让一个服务器去复制另一个服务器   </p>
+<p>被复制服务器为主服务器,对主服务器进行复制的服务器为从服务器  </p>
+<h4 id="旧版复制功能实现"><a href="#旧版复制功能实现" class="headerlink" title="旧版复制功能实现"></a>旧版复制功能实现</h4><p>Redis复制为同步和命令传播两个操作  </p>
+<ul>
+<li>同步操作将从服务器数据库状态更新至主服务器当前所处的数据库状态   </li>
+<li>命令传播则在主服务器的数据库状态被修改,让从服务器跟随主服务器一起执行同命令  </li>
+</ul>
+<h5 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h5><p><img src="/2018/07/26/storage/image-79.png" width="300px">  </p>
+<p><img src="/2018/07/26/storage/image-80.png" width="400px"></p>
+<h5 id="命令传播"><a href="#命令传播" class="headerlink" title="命令传播"></a>命令传播</h5><p>在同步操作执行完毕,主从达到一致性状态,每当主服务器执行客户端发送的写命令时,主服务器则需要对从服务器执行命令传播操作  </p>
+<p><img src="/2018/07/26/storage/image-81.png" width="400px"></p>
+<p><img src="/2018/07/26/storage/image-82.png" width="180px"></p>
+<h5 id="旧版复制的缺陷"><a href="#旧版复制的缺陷" class="headerlink" title="旧版复制的缺陷"></a>旧版复制的缺陷</h5><ul>
+<li><p>初次复制,从服务器以前没有复制过任何主服务器,或者从服务器当前要复制的和上一次复制主服务器不同 </p>
+</li>
+<li><p>断线后复制,命令传播阶段断线后连接成功了,继续复制主服务器  </p>
+</li>
+</ul>
+<p><img src="/2018/07/26/storage/image-83.png" width="500px"></p>
+<p><br></p>
+<h4 id="新版复制功能实现"><a href="#新版复制功能实现" class="headerlink" title="新版复制功能实现"></a>新版复制功能实现</h4><p>从2.8版本开始使用PSYNC命令代替SYNC命令来执行复制时的同步操作  </p>
+<p>PSYNC具有完整重同步和部分重同步两种模式  </p>
+<ul>
+<li><p>完成重同步用于处理初次复制和SYNC执行一样  </p>
+</li>
+<li><p>部分重同步用于处理断线后重复制情况</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">当从服务器在断线后重新连接主服务</span><br><span class="line">如果条件允许,主服务器可以将主从服务器连接断开期间执行的写明了发送给从服务器</span><br><span class="line">从服务器只要接受并执行这些写命令,就可以继续更新状态</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/07/26/storage/image-84.png" width="500px">  </p>
+<h5 id="部分重复制实现"><a href="#部分重复制实现" class="headerlink" title="部分重复制实现"></a>部分重复制实现</h5><p>此功能主要以下三个部分构成  </p>
+<ul>
+<li>主服务器复制偏移量和从服务器的复制偏移量  </li>
+<li>主服务器的复制积压缓冲期  </li>
+<li>服务器的允许id  </li>
+</ul>
+<p><img src="/2018/07/26/storage/image-85.png" width="300px"><br><img src="/2018/07/26/storage/image-86.png" width="300px"><br><img src="/2018/07/26/storage/image-87.png" width="300px"><br><img src="/2018/07/26/storage/image-88.png" width="400px"><br><img src="/2018/07/26/storage/image-89.png" width="300px">  </p>
+<blockquote>
+<p>PSYNC命令实现  </p>
+</blockquote>
+<p><img src="/2018/07/26/storage/image-90.png" width="400px"></p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2018/07/26/storage/';
+        this.page.title = '数据存储篇';
+        this.page.identifier = '2018/07/26/storage/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

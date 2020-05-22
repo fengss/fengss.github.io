@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Go 微服务组件解析 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Golang 后端微服务体系架构  
+解析组件
+Rpcx(解析中……)
+Appdash(待解析)
+NSQ(待解析)
+Hystrix-go(待解析)
+
+Rpcx[RPC通信]服务端ServerPlugin
+服务插件,用以很多服务启动的时候赋予额外的功能      
+
+123456789101112131415161718192021//PluginContainer represents a plugin container that defines all methods to manage p">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#解析组件"><span class="toc-number">1.</span> <span class="toc-text">解析组件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Rpcx-RPC通信"><span class="toc-number">2.</span> <span class="toc-text">Rpcx[RPC通信]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端"><span class="toc-number">2.1.</span> <span class="toc-text">服务端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ServerPlugin"><span class="toc-number">2.1.1.</span> <span class="toc-text">ServerPlugin</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ZooKeeperRegisterPlugin"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">ZooKeeperRegisterPlugin</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Server-Serve-服务监听"><span class="toc-number">2.1.2.</span> <span class="toc-text">Server#Serve[服务监听]</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Http路由"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">Http路由</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tcp路由"><span class="toc-number">2.1.3.</span> <span class="toc-text">Tcp路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端"><span class="toc-number">2.2.</span> <span class="toc-text">客户端</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#资料"><span class="toc-number">3.</span> <span class="toc-text">资料</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Go 微服务组件解析
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2018/05/13/go-micro-service/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-05-13T15:30:31.000Z" itemprop="datePublished">2018-05-13</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/go/">go</a>, <a class="article-tag-link" href="/tags/microservice/">microservice</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Golang 后端微服务体系架构<br><a id="more"></a>  </p>
+<h1 id="解析组件"><a href="#解析组件" class="headerlink" title="解析组件"></a>解析组件</h1><ul>
+<li>Rpcx(解析中……)</li>
+<li>Appdash(待解析)</li>
+<li>NSQ(待解析)</li>
+<li>Hystrix-go(待解析)</li>
+</ul>
+<h1 id="Rpcx-RPC通信"><a href="#Rpcx-RPC通信" class="headerlink" title="Rpcx[RPC通信]"></a>Rpcx[RPC通信]</h1><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><h3 id="ServerPlugin"><a href="#ServerPlugin" class="headerlink" title="ServerPlugin"></a>ServerPlugin</h3><blockquote>
+<p>服务插件,用以很多服务启动的时候赋予额外的功能      </p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//PluginContainer represents a plugin container that defines all methods to manage plugins.</span></span><br><span class="line"><span class="comment">//And it also defines all extension points.</span></span><br><span class="line"><span class="keyword">type</span> PluginContainer <span class="keyword">interface</span> &#123;</span><br><span class="line">    Add(plugin Plugin)</span><br><span class="line">    Remove(plugin Plugin)</span><br><span class="line">    All() []Plugin</span><br><span class="line"></span><br><span class="line">    DoRegister(name <span class="keyword">string</span>, rcvr <span class="keyword">interface</span>&#123;&#125;, metadata <span class="keyword">string</span>) error</span><br><span class="line">    DoRegisterFunction(name <span class="keyword">string</span>, fn <span class="keyword">interface</span>&#123;&#125;, metadata <span class="keyword">string</span>) error</span><br><span class="line"></span><br><span class="line">    DoPostConnAccept(net.Conn) (net.Conn, <span class="keyword">bool</span>)</span><br><span class="line"></span><br><span class="line">    DoPreReadRequest(ctx context.Context) error</span><br><span class="line">    DoPostReadRequest(ctx context.Context, r *protocol.Message, e error) error</span><br><span class="line"></span><br><span class="line">    DoPreWriteResponse(context.Context, *protocol.Message) error</span><br><span class="line">    DoPostWriteResponse(context.Context, *protocol.Message, *protocol.Message, error) error</span><br><span class="line"></span><br><span class="line">    DoPreWriteRequest(ctx context.Context) error</span><br><span class="line">    DoPostWriteRequest(ctx context.Context, r *protocol.Message, e error) error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Server#RegisterName</code> -&gt; <code>Plugins.DoRegister</code></li>
+<li><code>Server#Plugins.Add</code>用户自己调用</li>
+<li><code>Server#SendMessage</code> -&gt; <code>Plugins.DoPreWriteRequest,DoPostWriteRequest</code></li>
+<li><code>Server#serveListener</code> -&gt; <code>Plugins.DoPostConnAccept</code></li>
+<li><code>Server#serveConn</code> -&gt; <code>Plugins.DoPreWriteResponse,DoPostWriteResponse</code></li>
+<li><code>Server#readRequest</code> -&gt; <code>Plugins.DoPreReadRequest,DoPostReadRequest</code></li>
+</ul>
+<blockquote>
+<p>官方提供示例组件如下   </p>
+</blockquote>
+<ul>
+<li>ZookeeperRegisterPlugin</li>
+<li>EtcdRegisterPlugin</li>
+<li>ConsulRegisterPlugin</li>
+<li>MetricsPlugin</li>
+<li>TracePlugin</li>
+</ul>
+<h4 id="ZooKeeperRegisterPlugin"><a href="#ZooKeeperRegisterPlugin" class="headerlink" title="ZooKeeperRegisterPlugin"></a>ZooKeeperRegisterPlugin</h4><blockquote>
+<p>主要运用于Zk上的注册工作</p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Zookeeper Register Plugin 实现了Zookeeper注册  </span></span><br><span class="line"><span class="keyword">type</span> ZooKeeperRegisterPlugin <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// 服务地址例如:tcp@127.0.0.1:8972, quic@127.0.0.1:1234</span></span><br><span class="line">    ServiceAddress <span class="keyword">string</span></span><br><span class="line">    <span class="comment">// zk地址</span></span><br><span class="line">    ZooKeeperServers []<span class="keyword">string</span></span><br><span class="line">    <span class="comment">// Prcx Server 基础路径, 例如 com/example/rpcx</span></span><br><span class="line">    BasePath <span class="keyword">string</span></span><br><span class="line">    Metrics  metrics.Registry</span><br><span class="line">    <span class="comment">// 注册的服务</span></span><br><span class="line">    Services       []<span class="keyword">string</span></span><br><span class="line">    metasLock      sync.RWMutex</span><br><span class="line">    metas          <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span></span><br><span class="line">    UpdateInterval time.Duration</span><br><span class="line"></span><br><span class="line">    Options *store.Config</span><br><span class="line">    kv      store.Store</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Start:设置当前server服务情况并set到zk上相关server_basepath</li>
+<li>Register:直接将相关server服务set到zk的server_basepath下的znode</li>
+<li>HandleConnAccept:每次服务调用则调整相关Metrics   </li>
+</ul>
+<h3 id="Server-Serve-服务监听"><a href="#Server-Serve-服务监听" class="headerlink" title="Server#Serve[服务监听]"></a>Server#Serve[服务监听]</h3><blockquote>
+<p>监听主函数入口     </p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Server)</span> <span class="title">Serve</span><span class="params">(network, address <span class="keyword">string</span>)</span> <span class="params">(err error)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> ln net.Listener</span><br><span class="line">    ln, err = s.makeListener(network, address)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> network == <span class="string">"http"</span> &#123;</span><br><span class="line">        s.serveByHTTP(ln, <span class="string">""</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// try to start gateway</span></span><br><span class="line">    ln = s.startGateway(network, ln)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> s.serveListener(ln)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此处startGateWay引出http相关服务以及tcp服务的路由功能   </p>
+</blockquote>
+<h4 id="Http路由"><a href="#Http路由" class="headerlink" title="Http路由"></a>Http路由</h4><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Server)</span> <span class="title">startHTTP1APIGateway</span><span class="params">(ln net.Listener)</span></span> &#123;</span><br><span class="line">    router := httprouter.New()</span><br><span class="line">    router.POST(<span class="string">"/*servicePath"</span>, s.handleGatewayRequest)</span><br><span class="line">    router.GET(<span class="string">"/*servicePath"</span>, s.handleGatewayRequest)</span><br><span class="line">    router.PUT(<span class="string">"/*servicePath"</span>, s.handleGatewayRequest)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err := http.Serve(ln, router); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Errorf(<span class="string">"error in gateway Serve: %s"</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Tcp路由"><a href="#Tcp路由" class="headerlink" title="Tcp路由"></a>Tcp路由</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m *cMux)</span> <span class="title">Serve</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="built_in">close</span>(m.donec)</span><br><span class="line">        wg.Wait()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> _, sl := <span class="keyword">range</span> m.sls &#123;</span><br><span class="line">            <span class="built_in">close</span>(sl.l.connc)</span><br><span class="line">            <span class="comment">// Drain the connections enqueued for the listener.</span></span><br><span class="line">            <span class="keyword">for</span> c := <span class="keyword">range</span> sl.l.connc &#123;</span><br><span class="line">                _ = c.Close()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        c, err := m.root.Accept()</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> !m.handleErr(err) &#123;</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        wg.Add(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">go</span> m.serve(c, m.donec, &amp;wg)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m *cMux)</span> <span class="title">serve</span><span class="params">(c net.Conn, donec &lt;-<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;, wg *sync.WaitGroup)</span></span> &#123;</span><br><span class="line">    <span class="keyword">defer</span> wg.Done()</span><br><span class="line"></span><br><span class="line">    muc := newMuxConn(c)</span><br><span class="line">    <span class="keyword">if</span> m.readTimeout &gt; noTimeout &#123;</span><br><span class="line">        _ = c.SetReadDeadline(time.Now().Add(m.readTimeout))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> _, sl := <span class="keyword">range</span> m.sls &#123;</span><br><span class="line">        <span class="keyword">for</span> _, s := <span class="keyword">range</span> sl.ss &#123;</span><br><span class="line">            matched := s(muc.Conn, muc.startSniffing())</span><br><span class="line">            <span class="keyword">if</span> matched &#123;</span><br><span class="line">                muc.doneSniffing()</span><br><span class="line">                <span class="keyword">if</span> m.readTimeout &gt; noTimeout &#123;</span><br><span class="line">                    _ = c.SetReadDeadline(time.Time&#123;&#125;)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">select</span> &#123;</span><br><span class="line">                <span class="keyword">case</span> sl.l.connc &lt;- muc:</span><br><span class="line">                <span class="keyword">case</span> &lt;-donec:</span><br><span class="line">                    _ = c.Close()</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _ = c.Close()</span><br><span class="line">    err := ErrNotMatched&#123;c: c&#125;</span><br><span class="line">    <span class="keyword">if</span> !m.handleErr(err) &#123;</span><br><span class="line">        _ = m.root.Close()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><p>……</p>
+<h1 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h1><blockquote>
+<p>国内经验</p>
+</blockquote>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/26695984" target="_blank" rel="noopener">今日头条Go建千亿级微服务的实践</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/26777189" target="_blank" rel="noopener">华尔街见闻基于Golang的微服务实践</a></li>
+<li><a href="http://ylzheng.com/2017/10/19/microservice-with-grpc/" target="_blank" rel="noopener">使用gRPC-Gateway快速构建微服务</a></li>
+<li><a href="https://mp.weixin.qq.com/s/44Rd2VCsRt9goddDlsIQlg" target="_blank" rel="noopener">Go使用grpc+http打造高性能微服务</a></li>
+<li><a href="https://mp.weixin.qq.com/s/Ftd8pFVCrhtppvFjBNSF5Q" target="_blank" rel="noopener">阿里云基于 Go 的微服务架构分享</a></li>
+<li><a href="http://www.infoq.com/cn/presentations/exploration-practice-of-golang-micro-service-in-the-tencent-game-users" target="_blank" rel="noopener">Golang 微服务在腾讯游戏用户运营领域的探索及实践</a></li>
+<li><a href="https://www.slideshare.net/appleboy/go-78757166" target="_blank" rel="noopener">用 Go 語言打造微服務架構</a></li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2018/05/13/go-micro-service/';
+        this.page.title = 'Go 微服务组件解析';
+        this.page.identifier = '2018/05/13/go-micro-service/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

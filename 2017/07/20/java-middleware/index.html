@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>注册中心-Apollo | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="java 中间件介绍: Apollo 
+Apollo简介Apollo中的几个核心概念：
+
+application (应用)
+这个很好理解，就是实际使用配置的应用，Apollo客户端在运行时需要知道当前应用是谁，从而可以去获取对应的配置
+每个应用都需要有唯一的身份标识 – appId，我们认为应用身份是跟着代码走的，所以需要在代码中配置，具体信息请参见Java客户端使用指南。
+
+
+environment (环境)
+配置对应的环境，Apollo客户端在运行时需要知道当前应用处于哪个环境，从而可以去获">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Apollo"><span class="toc-number">1.</span> <span class="toc-text">Apollo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础"><span class="toc-number">1.2.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何工作"><span class="toc-number">1.2.1.</span> <span class="toc-text">如何工作?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关配置"><span class="toc-number">1.2.2.</span> <span class="toc-text">相关配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码相关-客户端"><span class="toc-number">1.3.</span> <span class="toc-text">源码相关-客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端模块-结构图"><span class="toc-number">1.3.1.</span> <span class="toc-text">客户端模块-结构图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端-流程时序图"><span class="toc-number">1.3.2.</span> <span class="toc-text">客户端-流程时序图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApolloConfigRegistrar"><span class="toc-number">1.3.3.</span> <span class="toc-text">ApolloConfigRegistrar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConfigService"><span class="toc-number">1.3.4.</span> <span class="toc-text">ConfigService</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConfigManager"><span class="toc-number">1.3.5.</span> <span class="toc-text">ConfigManager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConfigFactoryManager-amp-amp-DefaultConfigFactory"><span class="toc-number">1.3.6.</span> <span class="toc-text">ConfigFactoryManager&amp;&amp;DefaultConfigFactory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RemoteConfigRepository"><span class="toc-number">1.3.7.</span> <span class="toc-text">RemoteConfigRepository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RemoteConfigLongPollService"><span class="toc-number">1.3.8.</span> <span class="toc-text">RemoteConfigLongPollService</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            注册中心-Apollo
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2017/07/20/java-middleware/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2017-07-20T00:57:48.000Z" itemprop="datePublished">2017-07-20</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/java/">java</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>java 中间件介绍: Apollo<br><a id="more"></a> </p>
+<h1 id="Apollo"><a href="#Apollo" class="headerlink" title="Apollo"></a>Apollo</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Apollo中的几个核心概念：</p>
+<ol>
+<li><strong>application (应用)</strong><ul>
+<li>这个很好理解，就是实际使用配置的应用，Apollo客户端在运行时需要知道当前应用是谁，从而可以去获取对应的配置</li>
+<li>每个应用都需要有唯一的身份标识 – appId，我们认为应用身份是跟着代码走的，所以需要在代码中配置，具体信息请参见<a href="https://github.com/ctripcorp/apollo/wiki/Java%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">Java客户端使用指南</a>。</li>
+</ul>
+</li>
+<li><strong>environment (环境)</strong><ul>
+<li>配置对应的环境，Apollo客户端在运行时需要知道当前应用处于哪个环境，从而可以去获取应用的配置</li>
+<li>我们认为环境和代码无关，同一份代码部署在不同的环境就应该能够获取到不同环境的配置</li>
+<li>所以环境默认是通过读取机器上的配置（server.properties中的env属性）指定的，不过为了开发方便，我们也支持运行时通过System Property等指定，具体信息请参见<a href="https://github.com/ctripcorp/apollo/wiki/Java%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">Java客户端使用指南</a>。</li>
+</ul>
+</li>
+<li><strong>cluster (集群)</strong><ul>
+<li>一个应用下不同实例的分组，比如典型的可以按照数据中心分，把上海机房的应用实例分为一个集群，把北京机房的应用实例分为另一个集群。</li>
+<li>对不同的cluster，同一个配置可以有不一样的值，如zookeeper地址。</li>
+<li>集群默认是通过读取机器上的配置（server.properties中的idc属性）指定的，不过也支持运行时通过System Property指定，具体信息请参见<a href="https://github.com/ctripcorp/apollo/wiki/Java%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">Java客户端使用指南</a>。</li>
+</ul>
+</li>
+<li><strong>namespace (命名空间)</strong><ul>
+<li>一个应用下不同配置的分组，可以简单地把namespace类比为文件，不同类型的配置存放在不同的文件中，如数据库配置文件，RPC配置文件，应用自身的配置文件等</li>
+<li>应用可以直接读取到公共组件的配置namespace，如DAL，RPC等</li>
+<li>应用也可以通过继承公共组件的配置namespace来对公共组件的配置做调整，如DAL的初始数据库连接数</li>
+</ul>
+</li>
+</ol>
+<p><img src="/2017/07/20/java-middleware/overall-architecture.png" width="500px"></p>
+<p>上图简要描述了Apollo的总体设计，我们可以从下往上看：</p>
+<ul>
+<li>Config Service提供配置的读取、推送等功能，服务对象是Apollo客户端</li>
+<li>Admin Service提供配置的修改、发布等功能，服务对象是Apollo Portal（管理界面）</li>
+<li>Config Service和Admin Service都是多实例、无状态部署，所以需要将自己注册到Eureka中并保持心跳</li>
+<li>在Eureka之上我们架了一层Meta Server用于封装Eureka的服务发现接口</li>
+<li>Client通过域名访问Meta Server获取Config </li>
+<li>Service服务列表（IP+Port），而后直接通过IP+Port访问服务，同时在Client侧会做load balance、错误重试</li>
+<li>Portal通过域名访问Meta Server获取Admin </li>
+<li>Service服务列表（IP+Port），而后直接通过IP+Port访问服务，同时在Portal侧会做load balance、错误重试</li>
+</ul>
+<p>为了简化部署，我们实际上会把Config Service、Eureka和Meta Server三个逻辑角色部署在同一个JVM进程中</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作?"></a>如何工作?</h3><p><code>@EnableApolloConfig</code>引出<code>ApolloConfigRegistrar</code>注册类    </p>
+<ul>
+<li>因为继承了<code>ImportBeanDefinitionRegistrar</code>  </li>
+<li>从而调用了<code>registerBeanDefinitions</code>  </li>
+<li>从而注册了<code>PropertySourcesProcessor</code>   </li>
+</ul>
+<p><br></p>
+<p>由<code>PropertySourcesProcessor</code>引出<code>ConfigService</code><br>由<code>ConfigService</code>引出<code>ConfigManager</code>并且是<code>guice</code>框架<br>首先Spi找出<code>DefaultInjector</code><br>然后利用<code>DefaultInjector</code>找出相关的guice框架的关联类<br>利用<code>guice</code>找到<code>ConfigManager</code>—-&gt;<code>DefaultConfigManager</code>    </p>
+<p><br></p>
+<p>在<code>DefaultConfigManager</code>又可以看到<code>getConfig</code>方法主要来找配置<br>如果不存在则利用<code>ConfigFactoryManager</code>去寻找工厂并通过工厂创建相关的config<br>然后通过<code>DefaultConfigFactory</code>去create相关的配置<br>先看本地如果本地没有则加载网络上的       </p>
+<p><br></p>
+<p><code>RemoteConfigRepository</code>,主要获取本地的appid和cluster以及dataCenter<br>然后带有重试机制的去拿服务器的相关配置<br>然后还引出了<code>RemoteConfigRepository</code>线程池定时刷新远程一旦<code>previous!=current</code>就获取<br>并激发<code>RepositoryChangeListener</code>的观察者<br>因为<code>LocalFileConfigRepository</code>实现了<code>RepositoryChangeListener</code>所以会做更新本地缓存</p>
+<h3 id="相关配置"><a href="#相关配置" class="headerlink" title="相关配置"></a>相关配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">开发环境名和集群名</span><br><span class="line">/opt/settings/server.properties</span><br></pre></td></tr></table></figure>
+<h2 id="源码相关-客户端"><a href="#源码相关-客户端" class="headerlink" title="源码相关-客户端"></a>源码相关-客户端</h2><h3 id="客户端模块-结构图"><a href="#客户端模块-结构图" class="headerlink" title="客户端模块-结构图"></a>客户端模块-结构图</h3><p><img src="/2017/07/20/java-middleware/image-02.png" width="500px"></p>
+<h3 id="客户端-流程时序图"><a href="#客户端-流程时序图" class="headerlink" title="客户端-流程时序图"></a>客户端-流程时序图</h3><p><img src="/2017/07/20/java-middleware/image-01.png" alt="Apollo Bean配置获取流程 "></p>
+<h3 id="ApolloConfigRegistrar"><a href="#ApolloConfigRegistrar" class="headerlink" title="ApolloConfigRegistrar"></a>ApolloConfigRegistrar</h3><p><code>@EnableApolloConfig</code>引出<code>ApolloConfigRegistrar</code>注册类<br>因为继承了<code>ImportBeanDefinitionRegistrar</code><br>从而调用了<code>registerBeanDefinitions</code><br>从而注册了<code>PropertySourcesProcessor</code>   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在AbstractApplicationContext#invokeBeanFactoryPostProcessors里的过程</span><br></pre></td></tr></table></figure>
+<h3 id="ConfigService"><a href="#ConfigService" class="headerlink" title="ConfigService"></a>ConfigService</h3><p>由<code>PropertySourcesProcessor</code>引出<code>ConfigService</code>      </p>
+<blockquote>
+<p><code>AbstractApplicationContext#invokeBeanFactoryPostProcessors</code>方法体系中</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">PropertySourcesProcessor#postProcessBeanFactory</span><br><span class="line">PropertySourcesProcessor#initializePropertySources</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initializePropertySources</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">.... </span><br><span class="line"></span><br><span class="line">ImmutableSortedSet&lt;Integer&gt; orders = ImmutableSortedSet.copyOf(NAMESPACE_NAMES.keySet());</span><br><span class="line">Iterator&lt;Integer&gt; iterator = orders.iterator();</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">  <span class="keyword">int</span> order = iterator.next();</span><br><span class="line">  <span class="keyword">for</span> (String namespace : NAMESPACE_NAMES.get(order)) &#123;</span><br><span class="line">    Config config = ConfigService.getConfig(namespace);</span><br><span class="line"></span><br><span class="line">    composite.addPropertySource(<span class="keyword">new</span> ConfigPropertySource(namespace, config));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">environment.getPropertySources().addFirst(composite);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ConfigManager"><a href="#ConfigManager" class="headerlink" title="ConfigManager"></a>ConfigManager</h3><p>由ConfigService引出ConfigManager并且是guice框架     </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ConfigService#getConfig</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Config <span class="title">getConfig</span><span class="params">(String namespace)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s_instance.getManager().getConfig(namespace);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> ConfigManager <span class="title">getManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (m_configManager == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (m_configManager == <span class="keyword">null</span>) &#123;</span><br><span class="line">          m_configManager = ApolloInjector.getInstance(ConfigManager.class);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> m_configManager;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>首先Spi找出DefaultInjector,然后利用DefaultInjector找出相关的guice框架的关联类   </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">ServiceBootstrap.loadFirst(Injector.class);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">DefaultInjector</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      m_injector = Guice.createInjector(<span class="keyword">new</span> ApolloModule());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">      ApolloConfigException exception = <span class="keyword">new</span> ApolloConfigException(<span class="string">"Unable to initialize Guice Injector!"</span>, ex);</span><br><span class="line">      Tracer.logError(exception);</span><br><span class="line">      <span class="keyword">throw</span> exception;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ApolloModule</span> <span class="keyword">extends</span> <span class="title">AbstractModule</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      bind(ConfigManager.class).to(DefaultConfigManager.class).in(Singleton.class);</span><br><span class="line">      bind(ConfigFactoryManager.class).to(DefaultConfigFactoryManager.class).in(Singleton.class);</span><br><span class="line">      bind(ConfigRegistry.class).to(DefaultConfigRegistry.class).in(Singleton.class);</span><br><span class="line">      bind(ConfigFactory.class).to(DefaultConfigFactory.class).in(Singleton.class);</span><br><span class="line">      bind(ConfigUtil.class).in(Singleton.class);</span><br><span class="line">      bind(HttpUtil.class).in(Singleton.class);</span><br><span class="line">      bind(ConfigServiceLocator.class).in(Singleton.class);</span><br><span class="line">      bind(RemoteConfigLongPollService.class).in(Singleton.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>看完guice的绑定就知道如何利用guice找到ConfigManager—-&gt;DefaultConfigManager   </p>
+</blockquote>
+<h3 id="ConfigFactoryManager-amp-amp-DefaultConfigFactory"><a href="#ConfigFactoryManager-amp-amp-DefaultConfigFactory" class="headerlink" title="ConfigFactoryManager&amp;&amp;DefaultConfigFactory"></a>ConfigFactoryManager&amp;&amp;DefaultConfigFactory</h3><p>在DefaultConfigManager又可以看到getConfig方法主要来找配置,如果不存在则利用ConfigFactoryManager去寻找工厂并通过工厂创建相关的config     </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Config <span class="title">getConfig</span><span class="params">(String namespace)</span> </span>&#123;</span><br><span class="line">    Config config = m_configs.get(namespace);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (config == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">        config = m_configs.get(namespace);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (config == <span class="keyword">null</span>) &#123;</span><br><span class="line">          ConfigFactory factory = m_factoryManager.getFactory(namespace);</span><br><span class="line"></span><br><span class="line">          config = factory.create(namespace);</span><br><span class="line">          m_configs.put(namespace, config);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> config;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//又通过guice寻找ConfigFactoryManager</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">DefaultConfigManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    m_factoryManager = ApolloInjector.getInstance(ConfigFactoryManager.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从ConfigFactoryManager找到了相关的DefaultConfigFactory   </p>
+</blockquote>
+<p>然后通过DefaultConfigFactory去create相关的配置,先看本地如果本地没有则加载网络上的    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Config <span class="title">create</span><span class="params">(String namespace)</span> </span>&#123;</span><br><span class="line">    DefaultConfig defaultConfig = <span class="keyword">new</span> DefaultConfig(namespace, createLocalConfigRepository(namespace));</span><br><span class="line">    <span class="keyword">return</span> defaultConfig;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">LocalFileConfigRepository <span class="title">createLocalConfigRepository</span><span class="params">(String namespace)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (m_configUtil.isInLocalMode()) &#123;</span><br><span class="line">      logger.warn(<span class="string">"==== Apollo is in local mode! Won't pull configs from remote server for namespace &#123;&#125; ! ===="</span>,namespace);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> LocalFileConfigRepository(namespace);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> LocalFileConfigRepository(namespace, createRemoteConfigRepository(namespace));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">RemoteConfigRepository <span class="title">createRemoteConfigRepository</span><span class="params">(String namespace)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> RemoteConfigRepository(namespace);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="RemoteConfigRepository"><a href="#RemoteConfigRepository" class="headerlink" title="RemoteConfigRepository"></a>RemoteConfigRepository</h3><blockquote>
+<p>主要获取本地的appid和cluster以及dataCenter,然后带有重试机制的去拿服务器的相关配置<br>然后还引出了RemoteConfigRepository线程池定时刷新远程一旦previous!=current就获取<br>并激发RepositoryChangeListener的观察者<br>因为LocalFileConfigRepository实现了RepositoryChangeListener所以会做更新本地缓存</p>
+</blockquote>
+<p>这个类主要加载远程apollo服务器上的配置文件的     </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> ApolloConfig <span class="title">loadApolloConfig</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    .....</span><br><span class="line">    </span><br><span class="line">    String appId = m_configUtil.getAppId();</span><br><span class="line">    String cluster = m_configUtil.getCluster();</span><br><span class="line">    String dataCenter = m_configUtil.getDataCenter();</span><br><span class="line">    </span><br><span class="line">    ......</span><br><span class="line">    </span><br><span class="line">    List&lt;ServiceDTO&gt; configServices = getConfigServices();</span><br><span class="line">    String url = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; maxRetries; i++) &#123;</span><br><span class="line">      .....</span><br><span class="line">      </span><br><span class="line">      <span class="keyword">for</span> (ServiceDTO configService : randomConfigServices) &#123;</span><br><span class="line">        </span><br><span class="line">        url = assembleQueryConfigUrl(configService.getHomepageUrl(), appId, cluster, m_namespace,</span><br><span class="line">                dataCenter, m_remoteMessages.get(), m_configCache.get());</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        HttpRequest request = <span class="keyword">new</span> HttpRequest(url);</span><br><span class="line"></span><br><span class="line">        Transaction transaction = Tracer.newTransaction(<span class="string">"Apollo.ConfigService"</span>, <span class="string">"queryConfig"</span>);</span><br><span class="line">        transaction.addData(<span class="string">"Url"</span>, url);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">          HttpResponse&lt;ApolloConfig&gt; response = m_httpUtil.doGet(request, ApolloConfig.class);</span><br><span class="line">          </span><br><span class="line">          ...</span><br><span class="line">          </span><br><span class="line">          </span><br><span class="line">          ApolloConfig result = response.getBody();</span><br><span class="line"></span><br><span class="line">          <span class="keyword">return</span> result;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ApolloConfigStatusCodeException ex) &#123;</span><br><span class="line">          .....</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">          ......</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">          transaction.complete();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if force refresh, do normal sleep, if normal config load, do exponential sleep</span></span><br><span class="line">        onErrorSleepTime = m_configNeedForceRefresh.get() ? m_configUtil.getOnErrorRetryInterval() :</span><br><span class="line">            m_loadConfigFailSchedulePolicy.fail();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    String message = String.format(</span><br><span class="line">        <span class="string">"Load Apollo Config failed - appId: %s, cluster: %s, namespace: %s, url: %s"</span>,</span><br><span class="line">        appId, cluster, m_namespace, url);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> ApolloConfigException(message, exception);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="RemoteConfigLongPollService"><a href="#RemoteConfigLongPollService" class="headerlink" title="RemoteConfigLongPollService"></a>RemoteConfigLongPollService</h3><blockquote>
+<p>后期主要以此Service进行长轮训为主</p>
+</blockquote>
+<p>由<code>RemoteConfigRepository</code>构造函数中含有的<code>scheduleLongPollingRefresh</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">scheduleLongPollingRefresh</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	remoteConfigLongPollService.submit(m_namespace, <span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>开启了远程配置长轮训服务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">submit</span><span class="params">(String namespace, RemoteConfigRepository remoteConfigRepository)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> added = m_longPollNamespaces.put(namespace, remoteConfigRepository);</span><br><span class="line">    m_notifications.putIfAbsent(namespace, INIT_NOTIFICATION_ID);</span><br><span class="line">    <span class="keyword">if</span> (!m_longPollStarted.get()) &#123;</span><br><span class="line">        startLongPolling();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> added;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startLongPolling</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!m_longPollStarted.compareAndSet(<span class="keyword">false</span>, <span class="keyword">true</span>)) &#123;</span><br><span class="line">        <span class="comment">//already started</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> String appId = m_configUtil.getAppId();</span><br><span class="line">        <span class="keyword">final</span> String cluster = m_configUtil.getCluster();</span><br><span class="line">        <span class="keyword">final</span> String dataCenter = m_configUtil.getDataCenter();</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">long</span> longPollingInitialDelayInMills = m_configUtil.getLongPollingInitialDelayInMills();</span><br><span class="line">        m_longPollingService.submit(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (longPollingInitialDelayInMills &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        logger.debug(<span class="string">"Long polling will start in &#123;&#125; ms."</span>, longPollingInitialDelayInMills);</span><br><span class="line">                        TimeUnit.MILLISECONDS.sleep(longPollingInitialDelayInMills);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        <span class="comment">//ignore</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                doLongPollingRefresh(appId, cluster, dataCenter);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">        m_longPollStarted.set(<span class="keyword">false</span>);</span><br><span class="line">        ApolloConfigException exception =</span><br><span class="line">            <span class="keyword">new</span> ApolloConfigException(<span class="string">"Schedule long polling refresh failed"</span>, ex);</span><br><span class="line">        Tracer.logError(exception);</span><br><span class="line">        logger.warn(ExceptionUtil.getDetailMessage(exception));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>长轮训一旦接收到notification变更通知,则将监听器通知变更,RemoteConfigRepository得到通知进行变更,然后通知LocalFileConfigRepository去变更,再通知到DefaultConfig去变更相关数据</p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2017/07/20/java-middleware/';
+        this.page.title = '注册中心-Apollo';
+        this.page.identifier = '2017/07/20/java-middleware/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

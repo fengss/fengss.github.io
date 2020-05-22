@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Mesos架构分析 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Mesos相关笔记 
+简介Mesos是Apache下的开源分布式资源管理框架,它被称为是分布式系统的内核。
+Mesos最初是由加州大学伯克利分校的AMPLab开发的,后在Twitter得到广泛使用。
+组件Mesos-masterMesos master,主要负责管理各个framework和slave,并将slave上的资源分配给各个framework
+Mesos-master是整个系统的核心,负责管理接入mesos的各个framework(由frameworks_manager管理)和slave">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件"><span class="toc-number">1.1.</span> <span class="toc-text">组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mesos-master"><span class="toc-number">1.1.1.</span> <span class="toc-text">Mesos-master</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mesos-slave"><span class="toc-number">1.1.2.</span> <span class="toc-text">Mesos-slave</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Framework"><span class="toc-number">1.1.3.</span> <span class="toc-text">Framework</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Executor"><span class="toc-number">1.1.4.</span> <span class="toc-text">Executor</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mesos流程"><span class="toc-number">2.</span> <span class="toc-text">Mesos流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#流程简介"><span class="toc-number">2.1.</span> <span class="toc-text">流程简介</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#资源隔离与分配"><span class="toc-number">3.</span> <span class="toc-text">资源隔离与分配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#资源隔离"><span class="toc-number">3.1.</span> <span class="toc-text">资源隔离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#资源分配"><span class="toc-number">3.2.</span> <span class="toc-text">资源分配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分配细节"><span class="toc-number">3.3.</span> <span class="toc-text">分配细节</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#持久化"><span class="toc-number">4.</span> <span class="toc-text">持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#存储"><span class="toc-number">4.1.</span> <span class="toc-text">存储</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#容错"><span class="toc-number">5.</span> <span class="toc-text">容错</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录"><span class="toc-number">6.</span> <span class="toc-text">附录</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Mesos架构分析
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2018/04/17/mesos/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-04-17T02:31:58.000Z" itemprop="datePublished">2018-04-17</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/Mesos/">Mesos</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Mesos相关笔记<br><a id="more"></a> </p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Mesos是Apache下的开源分布式资源管理框架,它被称为是分布式系统的内核。</p>
+<p>Mesos最初是由加州大学伯克利分校的AMPLab开发的,后在Twitter得到广泛使用。</p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><h3 id="Mesos-master"><a href="#Mesos-master" class="headerlink" title="Mesos-master"></a>Mesos-master</h3><p>Mesos master,主要负责管理各个framework和slave,并将slave上的资源分配给各个framework</p>
+<p>Mesos-master是整个系统的核心,负责管理接入mesos的各个framework(由frameworks_manager管理)和slave(由slaves_manager管理),并将slave上的资源按照某种策略分配给framework(由独立插拔模块Allocator管理)。</p>
+<h3 id="Mesos-slave"><a href="#Mesos-slave" class="headerlink" title="Mesos-slave"></a>Mesos-slave</h3><p>Mesos slave,负责管理本节点上的各个mesos-task,比如:为各个executor分配资源</p>
+<p>Mesos-slave负责接收并执行来自mesos-master的命令、管理节点上的mesos-task,并为各个task分配资源。</p>
+<p>mesos-slave将自己的资源量发送给mesos-master,由mesos-master中的Allocator模块决定将资源分配给哪个framework</p>
+<p>当前考虑的资源有CPU和内存两种,也就是说,mesos-slave会将CPU个数和内存量发送给mesos-master</p>
+<p>而用户提交作业时,需要指定每个任务需要的CPU个数和内存量,这样,当任务运行时,mesos-slave会将任务放到包含固定资源的linux container中运行,以达到资源隔离的效果。</p>
+<p>很明显,master存在单点故障问题,为此,mesos采用了zookeeper解决该问题。</p>
+<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p>计算框架,如:Hadoop,Spark等,通过MesosSchedulerDiver接入Mesos</p>
+<p>Framework是指外部的计算框架,如Hadoop,Mesos等,这些计算框架可通过注册的方式接入Mesos,以便mesos进行统一管理和资源分配。</p>
+<p>Mesos要求可接入的框架必须有一个调度器模块,该调度器负责框架内部的任务调度。</p>
+<p>当一个Framework想要接入Mesos时,需要修改自己的调度器,以便向mesos注册,并获取Mesos分配给自己的资源。</p>
+<p>这样再由自己的调度器将这些资源分配给框架中的任务,也就是说,整个mesos系统采用了双层调度框架:第一层,由mesos将资源分配给框架；第二层,框架自己的调度器将资源分配给自己内部的任务。</p>
+<p>当前Mesos支持三种语言编写的调度器,分别是C++,java和python,为了向各种调度器提供统一的接入方式,Mesos内部采用C++实现了一个MesosSchedulerDriver(调度器驱动器)</p>
+<p>Framework的调度器可调用该driver中的接口与Mesos-master交互,完成一系列功能(如注册,资源分配等)。</p>
+<h3 id="Executor"><a href="#Executor" class="headerlink" title="Executor"></a>Executor</h3><p>执行器,安装到mesos-slave上,用于启动计算框架中的task。</p>
+<p>Executor主要用于启动框架内部的task。</p>
+<p>由于不同的框架,启动task的接口或者方式不同,当一个新的框架要接入mesos时,需要编写一个executor,告诉mesos如何启动该框架中的task。</p>
+<p>为了向各种框架提供统一的执行器编写方式,Mesos内部采用C++实现了一个MesosExecutorDiver(执行器驱动器),framework可通过该驱动器的相关接口告诉mesos启动task的方法。</p>
+<blockquote>
+<p>当用户试图添加一种新的计算框架到Mesos中时,需要实现一个<code>Framework scheduler</code>和<code>executor</code>以接入Mesos。</p>
+</blockquote>
+<p><img src="/2018/04/17/mesos/image-02.png" width="600px">  </p>
+<p><br><br><br></p>
+<h1 id="Mesos流程"><a href="#Mesos流程" class="headerlink" title="Mesos流程"></a>Mesos流程</h1><h2 id="流程简介"><a href="#流程简介" class="headerlink" title="流程简介"></a>流程简介</h2><p><img src="/2018/04/17/mesos/image-01.png" width="600px">  </p>
+<p>Slave是运行在物理或虚拟服务器上的Mesos守护进程,是Mesos集群的一部分。</p>
+<p>Framework由调度器(Scheduler)应用程序和任务执行器(Executor)组成,被注册到Mesos以使用Mesos集群中的资源。</p>
+<ul>
+<li>Slave 1向Master汇报其空闲资源：4个CPU、4GB内存。然后,Master触发分配策略模块,得到的反馈是Framework 1要请求全部可用资源。</li>
+<li>Master向Framework 1发送资源邀约,描述了Slave 1上的可用资源。</li>
+<li>Framework的调度器(Scheduler)响应Master,需要在Slave上运行两个任务,第一个任务分配&lt;2CPUs,1GB-RAM&gt;资源,第二个任务分配&lt;1CPUs,2GB-RAM&gt;资源。</li>
+<li>最后,Master向Slave下发任务,分配适当的资源给Framework的任务执行器(Executor),接下来由执行器启动这两个任务(如图中虚线框所示)。此时,还有1个CPU和1GB的RAM尚未分配,因此分配模块可以将这些资源供给Framework 2。</li>
+</ul>
+<p><br><br><br></p>
+<h1 id="资源隔离与分配"><a href="#资源隔离与分配" class="headerlink" title="资源隔离与分配"></a>资源隔离与分配</h1><p><img src="/2018/04/17/mesos/image-03.png" width="600px"></p>
+<h2 id="资源隔离"><a href="#资源隔离" class="headerlink" title="资源隔离"></a>资源隔离</h2><p>为了实现在同一组Slave节点集合上运行多任务这一目标,Mesos使用了隔离模块</p>
+<p>Mesos早在2009年就用上了Linux的容器技术,如cgroups和Solaris Zone,时至今日这些仍然是默认的。 </p>
+<p>然而,Mesos社区增加了Docker作为运行任务的隔离机制。 </p>
+<p>不管使用哪种隔离模块,为运行特定应用程序的任务,都需要将执行器全部打包,并在已经为该任务分配资源的Slave服务器上启动。 </p>
+<p>当任务执行完毕后,容器会被“销毁”,资源会被释放,以便可以执行其他任务。</p>
+<p><br></p>
+<h2 id="资源分配"><a href="#资源分配" class="headerlink" title="资源分配"></a>资源分配</h2><p>因为这对Mesos管理跨多个Framework和应用的资源,是不可或缺的。 </p>
+<p>我们前面提到资源邀约的概念,即由Master向注册其上的Framework发送资源邀约。 </p>
+<p>每次资源邀约包含一份Slave节点上可用的CPU、RAM等资源的列表。 Master提供这些资源给它的Framework,是基于分配策略的。</p>
+<p>分配策略对所有的Framework普遍适用,同时适用于特定的Framework。 </p>
+<p>Framework可以拒绝资源邀约,如果它不满足要求,若此,资源邀约随即可以发给其他Framework。 </p>
+<p>由Mesos管理的应用程序通常运行短周期的任务,因此这样可以快速释放资源,缓解Framework的资源饥饿;  </p>
+<p>Slave定期向Master报告其可用资源,以便Master能够不断产生新的资源邀约。 </p>
+<p>另外,还可以使用诸如此类的技术, 每个Fraamework过滤不满足要求的资源邀约、Master主动废除给定周期内一直没有被接受的邀约。</p>
+<p>分配策略有助于Mesos Master判断是否应该把当前可用资源提供给特定的Framework,以及应该提供多少资源。 </p>
+<p>Mesos实现了公平共享和严格优先级(这两个概念我会在资源分配那篇讲)分配模块, 确保大部分用例的最佳资源共享。已经实现的新分配模块可以处理大部分之外的用例。</p>
+<h2 id="分配细节"><a href="#分配细节" class="headerlink" title="分配细节"></a>分配细节</h2><blockquote>
+<p>对<code>Mesos Master代理任务的调度首先从Slave节点收集有关可用资源的信息,然后以资源邀约的形式,将这些资源提供给注册其上的Framework</code>做细节化描述   </p>
+</blockquote>
+<p>Framework可以根据是否符合任务对资源的约束,选择接受或拒绝资源邀约。一旦资源邀约被接受,Framework将与Master协作调度任务,并在数据中心的相应Slave节点上运行任务。</p>
+<p>如何作出资源邀约的决定是由资源分配模块实现的,该模块存在于Master之中。资源分配模块确定Framework接受资源邀约的顺序,与此同时,确保在本性贪婪的Framework之间公平地共享资源。</p>
+<p>在同质环境中,比如Hadoop集群,使用最多的公平份额分配算法之一是最大最小公平算法(max-min fairness)。最大最小公平算法算法将最小的资源分配最大化,并将其提供给用户,确保每个用户都能获得公平的资源份额,以满足其需求所需的资源；</p>
+<p>一个简单的例子能够说明其工作原理</p>
+<p>如前所述,在同质环境下,这通常能够很好地运行。同质环境下的资源需求几乎没有波动,所涉及的资源类型包括CPU、内存、网络带宽和I/O。</p>
+<p>然而,在跨数据中心调度资源并且是异构的资源需求时,资源分配将会更加困难。</p>
+<p>例如,当用户A的每个任务需要1核CPU、4GB内存,而用户B的每个任务需要3核CPU、1GB内存时,如何提供合适的公平份额分配策略？</p>
+<p>当用户A的任务是内存密集型,而用户B的任务是CPU密集型时,如何公平地为其分配一揽子资源？</p>
+<p>因为Mesos是专门管理异构环境中的资源,所以它实现了一个可插拔的资源分配模块架构,将特定部署最适合的分配策略和算法交给用户去实现。</p>
+<p>例如,用户可以实现加权的最大最小公平性算法,让指定的Framework相对于其它的Framework获得更多的资源。</p>
+<p>默认情况下,Mesos包括一个严格优先级的资源分配模块和一个改良的公平份额资源分配模块。</p>
+<p>严格优先级模块实现的算法给定Framework的优先级,使其总是接收并接受足以满足其任务要求的资源邀约。</p>
+<p>这保证了关键应用在Mesos中限制动态资源份额上的开销,但是会潜在其他Framework饥饿的情况。</p>
+<p>由于这些原因,大多数用户默认使用<code>DRF(主导资源公平算法 Dominant Resource Fairness)</code>,这是Mesos中更适合异质环境的改良公平份额算法。</p>
+<p>DRF和Mesos一样出自Berkeley AMPLab团队,并且作为Mesos的默认资源分配策略实现编码。</p>
+<hr>
+
+<p>DRF的目标是确保每一个用户,即Mesos中的Framework,在异质环境中能够接收到其最需资源的公平份额。</p>
+<p>为了掌握DRF,我们需要了解主导资源(dominant resource)和主导份额(dominant share)的概念。</p>
+<p>Framework的主导资源是其最需的资源类型(CPU、内存等),在资源邀约中以可用资源百分比的形式展示。</p>
+<p>例如,对于计算密集型的任务,它的Framework的主导资源是CPU,而依赖于在内存中计算的任务,它的Framework的主导资源是内存。</p>
+<p>因为资源是分配给Framework的,所以DRF会跟踪每个Framework拥有的资源类型的份额百分比；</p>
+<p>Framework拥有的全部资源类型份额中占最高百分比的就是Framework的主导份额。DRF算法会使用所有已注册的Framework来计算主导份额,以确保每个Framework能接收到其主导资源的公平份额。</p>
+<hr>
+
+<p>概念过于抽象了吧？让我们用一个例子来说明。</p>
+<p>假设我们有一个资源邀约,包含9核CPU和18GB的内存。Framework 1运行任务需要(1核CPU、4GB内存),Framework 2运行任务需要(3核CPU、1GB内存)</p>
+<p>Framework 1的每个任务会消耗CPU总数的1/9、内存总数的2/9,因此Framework 1的主导资源是内存。同样,Framework 2的每个任务会CPU总数的1/3、内存总数的1/18,因此Framework 2的主导资源是CPU。</p>
+<p>DRF会尝试为每个Framework提供等量的主导资源,作为他们的主导份额。</p>
+<p>在这个例子中,DRF将协同Framework做如下分配:Framework 1有三个任务,总分配为(3核CPU、12GB内存),Framework 2有两个任务,总分配为(6核CPU、2GB内存)。</p>
+<p>此时,每个Framework的主导资源(Framework 1的内存和Framework 2的CPU)最终得到相同的主导份额(2/3或67％)</p>
+<p>这样提供给两个Framework后,将没有足够的可用资源运行其他任务。</p>
+<p>需要注意的是,如果Framework 1中仅有两个任务需要被运行,那么Framework 2以及其他已注册的Framework将收到的所有剩余的资源。</p>
+<p><img src="/2018/04/17/mesos/image-04.png" width="300px"></p>
+<p>那么DRF是怎样计算而产生上述结果的呢？</p>
+<p>如前所述DRF分配模块跟踪分配给每个Framework的资源和每个框架的主导份额。</p>
+<p>每次DRF以所有Framework中运行的任务中最低的主导份额作为资源邀约发送给Framework。</p>
+<p>如果有足够的可用资源来运行它的任务,Framework将接受这个邀约。</p>
+<p>通过前面引述的DRF论文中的示例,我们来贯穿DRF算法的每个步骤。</p>
+<p>为了简单起见,示例将不考虑短任务完成后,资源被释放回资源池中这一因素,我们假设每个Framework会有无限数量的任务要运行,并认为每个资源邀约都会被接受。</p>
+<p>回顾上述示例,假设有一个资源邀约包含9核CPU和18GB内存。</p>
+<p>Framework 1运行的任务需要(1核CPU、4GB内存),Framework 2运行的任务需要(3核CPU、2GB内存)。</p>
+<p>Framework 1的任务会消耗CPU总数的1/9、内存总数的2/9,Framework 1的主导资源是内存。同样,Framework 2的每个任务会CPU总数的1/3、内存总数的1/18,Framework 2的主导资源是CPU。</p>
+<p><img src="/2018/04/17/mesos/image-05.png" width="450px"></p>
+<p>上面表中的每一行提供了以下信息：</p>
+<ul>
+<li>Framework chosen——收到最新资源邀约的Framework。</li>
+<li>Resource Shares——给定时间内Framework接受的资源总数,包括CPU和内存,以占资源总量的比例表示。</li>
+<li>Dominant Share(主导份额)——给定时间内Framework主导资源占总份额的比例,以占资源总量的比例表示。</li>
+<li>Dominant Share %(主导份额百分比)——给定时间内Framework主导资源占总份额的百分比,以占资源总量的百分比表示。</li>
+<li>CPU Total Allocation——给定时间内接受的所有Framework的总CPU资源。</li>
+<li>RAM Total Allocation——给定时间内接受的所有Framework的总内存资源。</li>
+</ul>
+<p>注意,每个行中的最低主导份额以粗体字显示,以便查找。</p>
+<p>最初,两个Framework的主导份额是0％,我们假设DRF首先选择的是Framework 2,当然我们也可以假设Framework 1,但是最终的结果是一样的。</p>
+<p>Framework 2接收份额并运行任务,使其主导资源成为CPU,主导份额增加至33％。<br>由于Framework 1的主导份额维持在0％,它接收共享并运行任务,主导份额的主导资源(内存)增加至22％。<br>由于Framework 1仍具有较低的主导份额,它接收下一个共享并运行任务,增加其主导份额至44％。<br>然后DRF将资源邀约发送给Framework 2,因为它现在拥有更低的主导份额。<br>该过程继续进行,直到由于缺乏可用资源,不能运行新的任务。在这种情况下,CPU资源已经饱和。<br>然后该过程将使用一组新的资源邀约重复进行。<br>需要注意的是,可以创建一个资源分配模块,使用加权的DRF使其偏向某个Framework或某组Framework。</p>
+<p>如前面所提到的,也可以创建一些自定义模块来提供组织特定的分配策略。</p>
+<p>一般情况下,现在大多数的任务是短暂的,Mesos能够等待任务完成并重新分配资源。然而,集群上也可以跑长时间运行的任务,这些任务用于处理挂起作业或行为不当的Framework。</p>
+<p>值得注意的是,在当资源释放的速度不够快的情况下,资源分配模块具有撤销任务的能力。</p>
+<p>Mesos尝试如此撤销任务：向执行器发送请求结束指定的任务,并给出一个宽限期让执行器清理该任务。如果执行器不响应请求,分配模块就结束该执行器及其上的所有任务。</p>
+<p>分配策略可以实现为,通过提供与Framework相关的保证配置,来阻止对指定任务的撤销。如果Framework低于保证配置,Mesos将不能结束该Framework的任务。</p>
+<p><br></p>
+<h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>Mesos的主要好处是可以在同一组计算节点集合上运行多种类型的应用程序(调度以及通过Framework初始化任务)。</p>
+<p>这些任务使用隔离模块(目前是某些类型的容器技术)从实际节点中抽象出来,以便它们可以根据需要在不同的节点上移动和重新启动  </p>
+<p>如果我在运行一个数据库作业,Mesos如何确保当任务被调度时,分配的节点可以访问其所需的数据？如图所示,在Hindman的示例中,使用Hadoop文件系统(HDFS)作为Mesos的持久层</p>
+<p>这是HDFS常见的使用方式,也是Mesos的执行器传递分配指定任务的配置数据给Slave经常使用的方式。</p>
+<p>实际上,Mesos的持久化存储可以使用多种类型的文件系统,HDFS只是其中之一,但也是Mesos最经常使用的,它使得Mesos具备了与高性能计算的亲缘关系。其实Mesos可以有多种选择来处理持久化存储的问题：</p>
+<ul>
+<li><p>分布式文件系统。如上所述,Mesos可以使用DFS(比如HDFS或者Lustre)来保证数据可以被Mesos集群中的每个节点访问。这种方式的缺点是会有网络延迟,对于某些应用程序来说,这样的网络文件系统或许并不适合。</p>
+</li>
+<li><p>使用数据存储复制的本地文件系统。另一种方法是利用应用程序级别的复制来确保数据可被多个节点访问。</p>
+<p>  提供数据存储复制的应用程序可以是NoSQL数据库,比如Cassandra和MongoDB。</p>
+<p>  这种方式的优点是不再需要考虑网络延迟问题。缺点是必须配置Mesos,使特定的任务只运行在持有复制数据的节点上,因为你不会希望数据中心的所有节点都复制相同的数据。为此,可以使用一个Framework,静态地为其预留特定的节点作为复制数据的存储。</p>
+</li>
+</ul>
+<ul>
+<li>不使用复制的本地文件系统。也可以将持久化数据存储在指定节点的文件系统上,并且将该节点预留给指定的应用程序。和前面的选择一样,可以静态地为指定应用程序预留节点,但此时只能预留给单个节点而不是节点集合。后面两种显然不是理想的选择,因为实质上都需要创建静态分区。然而,在不允许延时或者应用程序不能复制它的数据存储等特殊情况下,我们需要这样的选择。</li>
+</ul>
+<p>Mesos项目还在发展中,它会定期增加新功能。现在我已经发现了两个可以帮助解决持久化存储问题的新特性：</p>
+<ul>
+<li><p>动态预留。Framework可以使用这个功能框架保留指定的资源,比如持久化存储,以便在需要启动另一个任务时,资源邀约只会发送给那个Framework。这可以在单节点和节点集合中结合使用Framework配置,访问永久化数据存储。关于这个建议的功能的更多信息可以从此处获得。</p>
+</li>
+<li><p>持久化卷。该功能可以创建一个卷,作为Slave节点上任务的一部分被启动,即使在任务完成后其持久化依然存在。Mesos为需要访问相同的数据后续任务,提供在可以访问该持久化卷的节点集合上相同的Framework来初始化。关于这个建议的功能的更多信息可以从此处获得。</p>
+</li>
+</ul>
+<h1 id="容错"><a href="#容错" class="headerlink" title="容错"></a>容错</h1><p>Mesos的优势之一便是将容错设计到架构之中,并以可扩展的分布式系统的方式来实现。</p>
+<ul>
+<li><p>Master。</p>
+<p>  故障处理机制和特定的架构设计实现了Master的容错。</p>
+<p>  首先,Mesos决定使用热备份(hot-standby)设计来实现Master节点集合。</p>
+<p>  正如Tomas Barton对上图的说明,一个Master节点与多个备用(standby)节点运行在同一集群中,并由开源软件Zookeeper来监控。</p>
+<p>  Zookeeper会监控Master集群中所有的节点,并在Master节点发生故障时管理新Master的选举。</p>
+<p>  建议的节点总数是5个,实际上,生产环境至少需要3个Master节点。 </p>
+<p>  Mesos决定将Master设计为持有软件状态,这意味着当Master节点发生故障时,其状态可以很快地在新选举的Master节点上重建。 </p>
+<p>  Mesos的状态信息实际上驻留在Framework调度器和Slave节点集合之中。</p>
+<p>  当一个新的Master当选后,Zookeeper会通知Framework和选举后的Slave节点集合,以便使其在新的Master上注册。</p>
+<p>  彼时新的 Master可以根据Framework和Slave节点集合发送过来的信息,重建内部状态。</p>
+</li>
+</ul>
+<ul>
+<li><p>Framework调度器。</p>
+<p>  Framework调度器的容错是通过Framework将调度器注册2份或者更多份到Master来实现。</p>
+<p>  当一个调度器发生故障时,Master会通知另一个调度来接管。需要注意的是Framework自身负责实现调度器之间共享状态的机制。</p>
+</li>
+<li><p>Slave。</p>
+<p>  Mesos实现了Slave的恢复功能,当Slave节点上的进程失败时,可以让执行器/任务继续运行,并为那个Slave进程重新连接那台Slave节点上运行的执行器/任务。</p>
+<p>  当任务执行时,Slave会将任务的监测点元数据存入本地磁盘。如果Slave进程失败,任务会继续运行</p>
+<p>  当Master重新启动Slave进程后,因为此时没有可以响应的消息,所以重新启动的Slave进程会使用检查点数据来恢复状态,并重新与执行器/任务连接。</p>
+</li>
+</ul>
+<p>如下情况则截然不同,计算节点上Slave正常运行而任务执行失败。在此,Master负责监控所有Slave节点的状态。</p>
+<p>当计算节点/Slave节点无法响应多个连续的消息后,Master会从可用资源的列表中删除该节点,并会尝试关闭该节点。</p>
+<p>然后,Master会向分配任务的Framework调度器汇报执行器/任务失败,并允许调度器根据其配置策略做任务失败处理。通常情况下,Framework会重新启动任务到新的Slave节点,假设它接收并接受来自Master的相应的资源邀约。</p>
+<p>执行器/任务。与计算节点/Slave节点故障类似,Master会向分配任务的Framework调度器汇报执行器/任务失败,并允许调度器根据其配置策略在任务失败时做出相应的处理。通常情况下,Framework在接收并接受来自Master的相应的资源邀约后,会在新的Slave节点上重新启动任务。</p>
+<p><br></p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><ul>
+<li><a href="https://www.cnblogs.com/PigeonNoir/articles/9099050.html" target="_blank" rel="noopener">https://www.cnblogs.com/PigeonNoir/articles/9099050.html</a></li>
+<li><a href="http://dongxicheng.org/apache-mesos/meso-architecture/" target="_blank" rel="noopener">http://dongxicheng.org/apache-mesos/meso-architecture/</a></li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2018/04/17/mesos/';
+        this.page.title = 'Mesos架构分析';
+        this.page.identifier = '2018/04/17/mesos/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

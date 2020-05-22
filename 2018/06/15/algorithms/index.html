@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>数据结构与算法 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="部分数据结构与算法分析
+链表所谓链表(Linked list),就是按线性次序排列的一组数据节点。      
+单链表每个节点的 next 引用都相当于一个链接或指针，指向另一节点。借助于这些 next 引用，我们 可以从一个节点移动至其它节点。链表的第一个和最后一个节点，分别称作链表的首节点(Head) 和末节点(Tail)  
+双向链表每个节点除了next引用又多一个prev引用  
+栈栈是存放对象的一种特殊容器，在插入与删除对象时，这种结构遵循后进先出(Last-in-first-out，">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#链表"><span class="toc-number">1.</span> <span class="toc-text">链表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单链表"><span class="toc-number">1.1.</span> <span class="toc-text">单链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双向链表"><span class="toc-number">1.2.</span> <span class="toc-text">双向链表</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#栈"><span class="toc-number">2.</span> <span class="toc-text">栈</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#支持操作"><span class="toc-number">2.1.</span> <span class="toc-text">支持操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#队列"><span class="toc-number">3.</span> <span class="toc-text">队列</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#普通队列"><span class="toc-number">3.1.</span> <span class="toc-text">普通队列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#支持操作-1"><span class="toc-number">3.1.1.</span> <span class="toc-text">支持操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双端队列"><span class="toc-number">3.2.</span> <span class="toc-text">双端队列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#支持操作-2"><span class="toc-number">3.2.1.</span> <span class="toc-text">支持操作</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#树"><span class="toc-number">4.</span> <span class="toc-text">树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础"><span class="toc-number">4.1.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#深度"><span class="toc-number">4.1.1.</span> <span class="toc-text">深度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高度"><span class="toc-number">4.1.2.</span> <span class="toc-text">高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#节点数与边"><span class="toc-number">4.1.3.</span> <span class="toc-text">节点数与边</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#度"><span class="toc-number">4.1.4.</span> <span class="toc-text">度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内外节点"><span class="toc-number">4.1.5.</span> <span class="toc-text">内外节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#路径"><span class="toc-number">4.1.6.</span> <span class="toc-text">路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#祖先、后代、子树"><span class="toc-number">4.1.7.</span> <span class="toc-text">祖先、后代、子树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#共同祖先及最低共同祖先"><span class="toc-number">4.1.8.</span> <span class="toc-text">共同祖先及最低共同祖先</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树"><span class="toc-number">4.2.</span> <span class="toc-text">二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础-1"><span class="toc-number">4.2.1.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#真二叉树-amp-amp-完满二叉树"><span class="toc-number">4.2.1.1.</span> <span class="toc-text">真二叉树 &amp;&amp; 完满二叉树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#满二叉树-amp-amp-完美二叉树"><span class="toc-number">4.2.1.2.</span> <span class="toc-text">满二叉树 &amp;&amp; 完美二叉树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#完全二叉树"><span class="toc-number">4.2.1.3.</span> <span class="toc-text">完全二叉树</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查找树-搜索树"><span class="toc-number">4.2.2.</span> <span class="toc-text">查找树(搜索树)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二分查找树-搜索树"><span class="toc-number">4.2.2.1.</span> <span class="toc-text">二分查找树(搜索树)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#算法"><span class="toc-number">4.2.2.1.1.</span> <span class="toc-text">算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#平衡查找树-搜索"><span class="toc-number">4.2.3.</span> <span class="toc-text">平衡查找树(搜索)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#红黑树"><span class="toc-number">4.2.3.1.</span> <span class="toc-text">红黑树</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#左右旋转"><span class="toc-number">4.2.3.1.1.</span> <span class="toc-text">左右旋转</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#平衡插入"><span class="toc-number">4.2.3.1.2.</span> <span class="toc-text">平衡插入</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图"><span class="toc-number">5.</span> <span class="toc-text">图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础概念"><span class="toc-number">5.1.</span> <span class="toc-text">基础概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相邻顶点"><span class="toc-number">5.1.1.</span> <span class="toc-text">相邻顶点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#顶点的度"><span class="toc-number">5.1.2.</span> <span class="toc-text">顶点的度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#路径-1"><span class="toc-number">5.1.3.</span> <span class="toc-text">路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#环路"><span class="toc-number">5.1.4.</span> <span class="toc-text">环路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图的表示"><span class="toc-number">5.2.</span> <span class="toc-text">图的表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#邻接矩阵"><span class="toc-number">5.2.1.</span> <span class="toc-text">邻接矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#邻接表"><span class="toc-number">5.2.2.</span> <span class="toc-text">邻接表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图的遍历"><span class="toc-number">5.3.</span> <span class="toc-text">图的遍历</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#广度优先"><span class="toc-number">5.3.1.</span> <span class="toc-text">广度优先</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深度优先"><span class="toc-number">5.3.2.</span> <span class="toc-text">深度优先</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            数据结构与算法
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2018/06/15/algorithms/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-15T01:13:26.000Z" itemprop="datePublished">2018-06-15</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>部分数据结构与算法分析<br><a id="more"></a></p>
+<h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><p>所谓链表(Linked list),就是按线性次序排列的一组数据节点。      </p>
+<h2 id="单链表"><a href="#单链表" class="headerlink" title="单链表"></a>单链表</h2><p>每个节点的 next 引用都相当于一个链接或指针，指向另一节点。借助于这些 next 引用，我们 可以从一个节点移动至其它节点。链表的第一个和最后一个节点，分别称作链表的首节点(Head) 和末节点(Tail)  </p>
+<h2 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h2><p>每个节点除了next引用又多一个prev引用  </p>
+<h1 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h1><p>栈是存放对象的一种特殊容器，在插入与删除对象时，这种结构遵循后进先出(Last-in-first-out， LIFO)的原则<br>作为一种抽象数据类型，栈必须支持以下方法:</p>
+<h2 id="支持操作"><a href="#支持操作" class="headerlink" title="支持操作"></a>支持操作</h2><table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>push(x):</td>
+<td>将对象 x 压至栈顶 输入:一个对象 输出:无  </td>
+</tr>
+<tr>
+<td>pop():</td>
+<td>若栈非空，则将栈顶对象移除，并将其返回否则，报错   </td>
+</tr>
+<tr>
+<td>getSize():</td>
+<td>返回栈内当前对象的数目  </td>
+</tr>
+<tr>
+<td>isEmpty():</td>
+<td>检查栈是否为空  </td>
+</tr>
+<tr>
+<td>top():</td>
+<td>若栈非空，则返回栈顶对象(但并不移除)  </td>
+</tr>
+</tbody>
+</table>
+<h1 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h1><h2 id="普通队列"><a href="#普通队列" class="headerlink" title="普通队列"></a>普通队列</h2><p>队列的抽象数据类型就是一个容器，其中的对象排成一个序列，我们只能访问和取出排在最前 端(Front)的对象，只能在队列的尾部(Rear)插入新对象。正是按照这一规则，才能保证最先被 插入的对象首先被删除(FIFO)。  </p>
+<h3 id="支持操作-1"><a href="#支持操作-1" class="headerlink" title="支持操作"></a>支持操作</h3><table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>功能描述 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enqueue(x):</td>
+<td>将元素 x 加到队列末端 输入:一个对象 输出:无  </td>
+</tr>
+<tr>
+<td>dequeue():</td>
+<td>若队列非空，则将队首元素移除，并将其返回否则，报错 输入:无 输出:对象  </td>
+</tr>
+</tbody>
+</table>
+<h2 id="双端队列"><a href="#双端队列" class="headerlink" title="双端队列"></a>双端队列</h2><p>相比于栈和队列，双端队列的抽象数据类型要复杂很多<br>双端队列和普通队列都有支持数组或链表结构  </p>
+<p>基于双向链表中我们需要花费O(n)的时间才能从单链表中删除末节点。双端队列都能够在O(1)的时间内完成<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Object element;<span class="comment">//数据对象 </span></span><br><span class="line">    <span class="keyword">private</span> Node prev;<span class="comment">//指向前驱节点 </span></span><br><span class="line">    <span class="keyword">private</span> Node next;<span class="comment">//指向后继节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="支持操作-2"><a href="#支持操作-2" class="headerlink" title="支持操作"></a>支持操作</h3><table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>功能描述  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>insertFirst(x):</td>
+<td>将对象 x 作为首元素插入 输入:一个对象 输出:无   </td>
+</tr>
+<tr>
+<td>insertLast(x):</td>
+<td>将对象 x 作为末元素插入 输入:一个对象 输出:无   </td>
+</tr>
+<tr>
+<td>removeFirst():</td>
+<td>若队列非空，则将首元素删除，并将其内容返回  </td>
+</tr>
+<tr>
+<td>removeLast():</td>
+<td>若队列非空，则将末元素删除，并将其内容返回</td>
+</tr>
+<tr>
+<td>first():</td>
+<td>若队列非空，则返回首元素的内容  </td>
+</tr>
+<tr>
+<td>last():</td>
+<td>若队列非空，则返回末元素的内容   </td>
+</tr>
+</tbody>
+</table>
+<h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="深度"><a href="#深度" class="headerlink" title="深度"></a>深度</h3><ul>
+<li>每个节点的深度都为非负整数  </li>
+<li>深度为0且仅有一个称谓树根</li>
+<li>深度k&gt;=1的节点u,都有且仅有一个深度k-1的节点v与u对应,称作u的父节点  </li>
+<li>树中所有节点的最大深度,称作树的深度  </li>
+</ul>
+<h3 id="高度"><a href="#高度" class="headerlink" title="高度"></a>高度</h3><p>高度的定义为:从结点x向下到某个叶结点最长简单路径中边的条数<br>高度和深度的区别为,深度从根往下数,<br>高度则由当前节点到当前节点下某个叶节点最长的路径边的条数<br>叶子节点的高度为1  </p>
+<h3 id="节点数与边"><a href="#节点数与边" class="headerlink" title="节点数与边"></a>节点数与边</h3><ul>
+<li>父节点v与子节点u为父子关系,两者之间建立一条树边(edge)</li>
+<li>树中节点的数目总是边数+1  </li>
+</ul>
+<h3 id="度"><a href="#度" class="headerlink" title="度"></a>度</h3><ul>
+<li>任意节点的”孩子”(子树)数目为该节点的”度”</li>
+<li>树的度为所有节点的度中最大的度  </li>
+</ul>
+<h3 id="内外节点"><a href="#内外节点" class="headerlink" title="内外节点"></a>内外节点</h3><ul>
+<li>至少拥有一个孩子节点为”内部节点”</li>
+<li>没有任何孩子的节点被称作”外部节点”,或”叶子节点”,”终端节点”  </li>
+</ul>
+<h3 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h3><p>指节点与节点之前首尾的边衔接的序列<br>{(a节点,b节点),{b节点,c节点}}这个路径就是a到c的路径<br>树中任何两个节点之间都存在唯一的一条路径。  </p>
+<h3 id="祖先、后代、子树"><a href="#祖先、后代、子树" class="headerlink" title="祖先、后代、子树"></a>祖先、后代、子树</h3><ul>
+<li>每个节点都是自己的“祖先”(Ancestor)，也是自己的“后代”(Descendent);    </li>
+<li>除节点本身以外的祖先(后代),称作真祖先(后代)。   </li>
+<li>任一节点v的深度,等于其真祖先的数目  </li>
+</ul>
+<h3 id="共同祖先及最低共同祖先"><a href="#共同祖先及最低共同祖先" class="headerlink" title="共同祖先及最低共同祖先"></a>共同祖先及最低共同祖先</h3><ul>
+<li>若节点 u 和 v 都是节点 a 的后代,则称节点 a 为节点 u 和 v 的共同祖先(Common ancestor)。  </li>
+<li>在一对节点 u 和 v 的所有共同祖先中,深度最大者称为它们的最低共同祖先(Lowerest common ancestor),记作 lca(u, v)。  </li>
+</ul>
+<p><br><br><br><br><br></p>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><ul>
+<li>每个节点均不超过 2 度的有序树，称作二叉树    </li>
+<li>每个节点的孩子可以用左、右区分，分别称作左孩子和右孩子。  </li>
+<li>如果左、右孩子同时存在，则左孩子的次序优先于右孩子。</li>
+</ul>
+<p><br><br><br></p>
+<h3 id="基础-1"><a href="#基础-1" class="headerlink" title="基础"></a>基础</h3><h4 id="真二叉树-amp-amp-完满二叉树"><a href="#真二叉树-amp-amp-完满二叉树" class="headerlink" title="真二叉树 &amp;&amp; 完满二叉树"></a>真二叉树 &amp;&amp; 完满二叉树</h4><ul>
+<li>不含 1 度节点的二叉树,所有非叶子结点的度都是2,称作真二叉树</li>
+</ul>
+<h4 id="满二叉树-amp-amp-完美二叉树"><a href="#满二叉树-amp-amp-完美二叉树" class="headerlink" title="满二叉树 &amp;&amp; 完美二叉树"></a>满二叉树 &amp;&amp; 完美二叉树</h4><ul>
+<li>若二叉树 T 中所有叶子的深度完全相同，则称之为满二叉树</li>
+<li>满二叉树有2(h) 匹叶子、2(h+1-1) 个节点,h为深度,根深度为0</li>
+</ul>
+<p><img src="/2018/06/15/algorithms/image-01.png" alt="img"></p>
+<h4 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h4><p>堆是一种完全二叉树或者近似完全二叉树,所以效率极高,像十分常用的排序算法、Dijkstra算法、Prim算法等都要用堆才能优化  </p>
+<ul>
+<li>完全二叉树从根结点到倒数第二层满足完美(满)二叉树,最后一层可以不完全填充，其叶子结点都靠左对齐。  </li>
+</ul>
+<p><br><br><br></p>
+<h3 id="查找树-搜索树"><a href="#查找树-搜索树" class="headerlink" title="查找树(搜索树)"></a>查找树(搜索树)</h3><h4 id="二分查找树-搜索树"><a href="#二分查找树-搜索树" class="headerlink" title="二分查找树(搜索树)"></a>二分查找树(搜索树)</h4><p>r = (key, value) 为根节点的二叉树，而且其左、右子树都是二分查找树<br>在 r 的左子树中，所有节点(如果存在的话)的关键码均不大于 key;<br>在 r 的右子树中，所有节点(如果存在的话)的关键码均不小于 key。  </p>
+<h5 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">算法:findAllNodes(v, key, list) </span><br><span class="line">输入:关键码key</span><br><span class="line">输出:由关键码为key的所有节点组成的一个迭代器 </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (v为空) <span class="keyword">return</span>;<span class="comment">//递归基:空树情况</span></span><br><span class="line">    BSTNode e = binSearch(v, key);<span class="comment">//在以v为根节点的子树中，查找Sv(key)的最低共同祖先 if (null != e) &#123;//若找到了一个这样的节点，则</span></span><br><span class="line">        findAllNodes(e.getLChild, key, list);<span class="comment">//递归查找其左子树 list.insertLast(e);//将节点e插入列表 findAllNodes(e.getRChild, key, list);//递归查找其右子树</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">算法:binSearch(v, key)</span><br><span class="line">输入:二叉树中的节点v，一个关键码key</span><br><span class="line">输出:在以v为根节点的(子)树中，找出关键码为key的节点;若不存在这样的节点，则返回最后被访问的节点</span><br><span class="line">要求:首次调用时，v为树根节点</span><br><span class="line">&#123;</span><br><span class="line">    置当前节点u = v;</span><br><span class="line">    不断地迭代 &#123; </span><br><span class="line">        将当前节点u与目标关键码key做比较; </span><br><span class="line">        若目标关键码更小，则</span><br><span class="line">            若u有左孩子，则令u = u.lChild;</span><br><span class="line">            否则(查找失败)，直接返回u; </span><br><span class="line">        否则，若若目标关键码更大，则</span><br><span class="line">            若u有右孩子，则令u = u.rChild;</span><br><span class="line">            否则(查找失败)，直接返回u; </span><br><span class="line">        否则(查找命中)，直接返回u;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">算法:insert(v, key, value) 输入:以v为根节点的子树，关键码key以及数据value</span><br><span class="line">输出:将条目(key, value)插入二分查找树中，并返回该条目 </span><br><span class="line">&#123;</span><br><span class="line">    若当前的树为空，则生成并返回一棵包含单节点(key, value)的二分查找树;</span><br><span class="line">    p = 树根v; </span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        调用binSearch(p, key), 在以p为根节点的子树中查找关键码为key的最高节点</span><br><span class="line">        若key ≠ p.key，则根据二者的大小关系将新节点作为p的右或左孩子插入，并返回新节点 </span><br><span class="line">        若key = p.key，则有两种可能:</span><br><span class="line">            <span class="number">1</span>:若p没有左或右孩子，则将新节点作为p的左或右孩子插入，并返回新节点;</span><br><span class="line">            <span class="number">2</span>:若p已有两个孩子，则取p = p.lChild;</span><br><span class="line"></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">算法:remove(r, key) </span><br><span class="line">输入:子树r，关键码key</span><br><span class="line">输出:若在以r为根节点的子树中存在关键码为key的节点，则删除它，并返回其中存放的条目 </span><br><span class="line">&#123;</span><br><span class="line">    调用binSearch(r, key), 在子树r中查找关键码为key的最高节点 </span><br><span class="line">    若key ≠ v.key，则说明目标节不存在，故返回<span class="keyword">null</span>;</span><br><span class="line">    </span><br><span class="line">    若v没有左孩子，则 </span><br><span class="line">        摘除v，代之以v的右孩子;</span><br><span class="line">    否则 &#123;</span><br><span class="line">        在v的左子树中找出其直接前驱w; <span class="comment">//请注意，w必然没有右孩子 </span></span><br><span class="line">        将v与w交换位置;</span><br><span class="line">        摘除v，代之以v的左孩子;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<h3 id="平衡查找树-搜索"><a href="#平衡查找树-搜索" class="headerlink" title="平衡查找树(搜索)"></a>平衡查找树(搜索)</h3><p>在最坏情况下,二分查找树将退化为链表,此时的查找效率会降至O(n)<br>如果将高度不超过 O(nlogn)的二分查找树称作”平衡的”<br>其期望高度（即为一棵平衡树时）为log2n    </p>
+<p>平衡二叉树的常用实现方法有红黑树、AVL、替罪羊树、Treap、伸展树等    </p>
+<ul>
+<li>AVL  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AVL是最先发明的自平衡二叉查找树算法。</span><br><span class="line">在AVL中任何节点的两个儿子子树的高度最大差别为1所以它也被称为高度平衡树</span><br><span class="line"></span><br><span class="line">n个结点的AVL树最大深度约1.44log2n。查找、插入和删除在平均和最坏情况下都是O（log n）。所以增加和删除可能需要通过一次或多次树旋转来重新平衡这个树。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>红黑树  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">红黑树,一种二叉查找树,但在每个结点上增加一个存储位表示结点的颜色，可以是Red或Black。</span><br><span class="line">通过对任何一条从根到叶子的路径上各个结点着色方式的限制,红黑树确保没有一条路径会比其他路径长出俩倍,因而是接近平衡的。从而保证了红黑树的查找、插入、删除的时间复杂度最坏为O(log n)。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h4><p><img src="/2018/06/15/algorithms/image-02.png" alt="image"></p>
+<ul>
+<li>每个节点要么是红色，要么是黑色；</li>
+<li>根节点永远是黑色的；</li>
+<li>每个红色节点的两个子节点一定都是黑色；</li>
+<li>从任一节点到其子树中每个叶子节点的路径都包含相同数量的黑色节点；</li>
+</ul>
+<p>性质 5 是成为红黑树最主要的条件，后序的插入、删除操作都是为了遵守这个规定。</p>
+<h5 id="左右旋转"><a href="#左右旋转" class="headerlink" title="左右旋转"></a>左右旋转</h5><p><img src="/2018/06/15/algorithms/image-03.png" alt="image"></p>
+<p><img src="/2018/06/15/algorithms/image-04.png" alt="image"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//指定节点 x 的左旋 (右图转成左图)</span></span><br><span class="line"><span class="comment">//这里 p 代表 x  </span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rotateLeft</span><span class="params">(Entry p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Entry r = p.right; <span class="comment">// p 是上图中的 x，r 就是 y</span></span><br><span class="line">        p.right = r.left;       <span class="comment">// 左旋后，x 的右子树变成了 y 的左子树 β </span></span><br><span class="line">        <span class="keyword">if</span> (r.left != <span class="keyword">null</span>)         </span><br><span class="line">            r.left.parent = p;  <span class="comment">//β 确认父亲为 x</span></span><br><span class="line">        r.parent = p.parent;        <span class="comment">//y 取代 x 的第一步：认 x 的父亲为爹</span></span><br><span class="line">        <span class="keyword">if</span> (p.parent == <span class="keyword">null</span>)       <span class="comment">//要是 x 没有父亲，那 y 就是最老的根节点</span></span><br><span class="line">            root = r;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (p.parent.left == p) <span class="comment">//如果 x 有父亲并且是它父亲的左孩子，x 的父亲现在认 y 为左孩子，不要 x 了</span></span><br><span class="line">            p.parent.left = r;</span><br><span class="line">        <span class="keyword">else</span>                            <span class="comment">//如果 x 是父亲的右孩子，父亲就认 y 为右孩子，抛弃 x</span></span><br><span class="line">            p.parent.right = r;</span><br><span class="line">        r.left = p;     <span class="comment">//y 逆袭成功，以前的爸爸 x 现在成了它的左孩子</span></span><br><span class="line">        p.parent = r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//指定节点 y 的右旋（左图转成右图）</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rotateRight</span><span class="params">(Entry p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Entry l = p.left;</span><br><span class="line">        p.left = l.right;</span><br><span class="line">        <span class="keyword">if</span> (l.right != <span class="keyword">null</span>) l.right.parent = p;</span><br><span class="line">        l.parent = p.parent;</span><br><span class="line">        <span class="keyword">if</span> (p.parent == <span class="keyword">null</span>)</span><br><span class="line">            root = l;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (p.parent.right == p)</span><br><span class="line">            p.parent.right = l;</span><br><span class="line">        <span class="keyword">else</span> p.parent.left = l;</span><br><span class="line">        l.right = p;</span><br><span class="line">        p.parent = l;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="平衡插入"><a href="#平衡插入" class="headerlink" title="平衡插入"></a>平衡插入</h5><ul>
+<li>首先和二叉查找树的插入一样，查找、插入</li>
+<li>然后调整结构，保证满足红黑树状态 <ul>
+<li>对结点进行重新着色</li>
+<li>以及对树进行相关的旋转操作</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">具体做法是</span><br><span class="line">将新结点的 color 赋为红色,然后以二叉排序树的插入方法插入到红黑树中去。</span><br><span class="line">之所以将新插入的结点的颜色赋为红色,是因为:如果设为黑色,就会导致根到叶子的路径上有一条路上,多一个额外的黑结点,这个是很难调整的。</span><br><span class="line">但是设为红色结点后,可能会导致出现两个连续红色结点的冲突</span><br><span class="line"></span><br><span class="line">那么接下来可以通过父亲节点和叔叔节点颜色红-&gt;黑调换和树旋转来调整,这样简单多了。</span><br></pre></td></tr></table></figure>
+<p>N为新插入的单元  </p>
+<blockquote>
+<p>第一种情况:父亲是红色,插入节点是红色且在左子树上,叔叔是红色  </p>
+</blockquote>
+<blockquote>
+<p>第二种情况:父亲是红色,插入节点是红色且在左子树上,叔叔是黑色  </p>
+</blockquote>
+<blockquote>
+<p>第三种情况:父亲是红色,插入节点是红色且在右子树上,叔叔是黑色  </p>
+</blockquote>
+<ul>
+<li><a href="https://juejin.im/entry/58371f13a22b9d006882902d" target="_blank" rel="noopener">参考</a></li>
+</ul>
+<p><br></p>
+<h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><p><img src="/2018/06/15/algorithms/image-05.png" alt="img"></p>
+<p>G=(V,E),其中V为顶点集合E为边集合     </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">G1=(V1,E1)</span><br><span class="line">V1=(<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)  </span><br><span class="line">E1=(&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">2</span>&#125;,&#123;<span class="number">2</span>,<span class="number">3</span>&#125;,&#123;<span class="number">3</span>,<span class="number">4</span>&#125;,&#123;<span class="number">2</span>,<span class="number">4</span>&#125;,&#123;<span class="number">0</span>,<span class="number">3</span>&#125;)   </span><br><span class="line"><span class="comment">//G1为无向图</span></span><br><span class="line"></span><br><span class="line">G2=(V2,E2)</span><br><span class="line">V2=(<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">E2=&#123;&lt;<span class="number">0</span>,<span class="number">1</span>&gt;,&lt;<span class="number">1</span>,<span class="number">2</span>&gt;,&lt;<span class="number">1</span>,<span class="number">3</span>&gt;,&lt;<span class="number">2</span>,<span class="number">4</span>&gt;,&lt;<span class="number">0</span>,<span class="number">4</span>&gt;,&lt;<span class="number">4</span>,<span class="number">3</span>&gt;,&lt;<span class="number">3</span>,<span class="number">2</span>&gt;&#125;  </span><br><span class="line"><span class="comment">//G2为有向图</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//两者都有为混合图</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>图的分类</p>
+<blockquote>
+<p>有向图和无向图:按照边是否有方向。</p>
+</blockquote>
+</li>
+<li><p>加权图</p>
+<blockquote>
+<p>图的边赋予权值。</p>
+</blockquote>
+</li>
+<li><p>有环图和无环图<br>按照图中是否存在环进行的分类。</p>
+</li>
+</ul>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><h3 id="相邻顶点"><a href="#相邻顶点" class="headerlink" title="相邻顶点"></a>相邻顶点</h3><p>由一条边连接在一起的顶点叫做相邻顶点。</p>
+<h3 id="顶点的度"><a href="#顶点的度" class="headerlink" title="顶点的度"></a>顶点的度</h3><p>一个顶点的度是其相邻顶点的数量。比如，A的度是3。</p>
+<h3 id="路径-1"><a href="#路径-1" class="headerlink" title="路径"></a>路径</h3><p>路径是顶点v1,v2,…,vk的一个连续序列，其中vi和vi+1是相邻的。比如，ABEI就是一条路径。<br>简单路径要求不包含重复的顶点。  </p>
+<h3 id="环路"><a href="#环路" class="headerlink" title="环路"></a>环路</h3><p>若第一个顶点与最后一个顶点相同，则称之为环路  </p>
+<h2 id="图的表示"><a href="#图的表示" class="headerlink" title="图的表示"></a>图的表示</h2><h3 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h3><p><img src="/2018/06/15/algorithms/image-07.png" alt="img"></p>
+<h3 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h3><p><img src="/2018/06/15/algorithms/image-06.png" alt="img"></p>
+<h2 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h2><h3 id="广度优先"><a href="#广度优先" class="headerlink" title="广度优先"></a>广度优先</h3><p><img src="/2018/06/15/algorithms/image-09.png" alt="img"></p>
+<ul>
+<li>创建一个队列Q</li>
+<li>将v标注为被发现，并将v入队列Q</li>
+<li>如果Q非空，则:<ul>
+<li>将u从Q从出队列；</li>
+<li>标注u为被发现；</li>
+<li>将u所有未被访问过的邻点入队列；</li>
+<li>u标注为已被探索。</li>
+</ul>
+</li>
+</ul>
+<p><a href="http://www.cs.usfca.edu/~galles/visualization/BFS.html" target="_blank" rel="noopener">参考动画</a></p>
+<h3 id="深度优先"><a href="#深度优先" class="headerlink" title="深度优先"></a>深度优先</h3><p><img src="/2018/06/15/algorithms/image-08.png" alt="img"></p>
+<p>深度优先搜索算法将会从第一个指定的顶点开始遍历图<br>沿着路径直到这条路径最后一个顶点被访问了，接着原路回退并探索下一条路径。  </p>
+<p>要访问顶点v，步骤如下:</p>
+<ul>
+<li>标注v为被发现</li>
+<li>对于v的所有未访问的邻点w<ul>
+<li>访问顶点w(递归)</li>
+</ul>
+</li>
+<li>标注v已被探索</li>
+</ul>
+<p>可以看见，深度优先搜索的步骤是递归的。<br>深度优先搜索的应用：拓扑排序</p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2018/06/15/algorithms/';
+        this.page.title = '数据结构与算法';
+        this.page.identifier = '2018/06/15/algorithms/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>AI-Python计算库 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Python计算库相关见解资料摘录
+PythonPython教程
+
+
+Python 教程
+Python 简介
+Python 环境搭建
+Python 中文编码
+Python 基础语法
+Python 变量类型
+
+
+
+
+Python 运算符
+Python 条件语句
+Python 循环语句
+Python 数字
+Python 列表(List)
+Python 字符串
+
+
+Python 元组
+Python 字典(Dictionary)
+Python 日期和时间
+Python 函数
+Python 模块
+Pyth">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python"><span class="toc-number">1.</span> <span class="toc-text">Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Python教程"><span class="toc-number">1.1.</span> <span class="toc-text">Python教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python文本处理"><span class="toc-number">1.2.</span> <span class="toc-text">Python文本处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy教程"><span class="toc-number">1.3.</span> <span class="toc-text">Numpy教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scipy教程"><span class="toc-number">1.4.</span> <span class="toc-text">Scipy教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas教程"><span class="toc-number">1.5.</span> <span class="toc-text">Pandas教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Matplotlib-教程"><span class="toc-number">1.6.</span> <span class="toc-text">Matplotlib 教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Seaborn-教程"><span class="toc-number">1.7.</span> <span class="toc-text">Seaborn 教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python数据科学教程"><span class="toc-number">1.8.</span> <span class="toc-text">Python数据科学教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI与Python"><span class="toc-number">1.9.</span> <span class="toc-text">AI与Python</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python深度学习教程"><span class="toc-number">1.10.</span> <span class="toc-text">Python深度学习教程</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            AI-Python计算库
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2019/03/29/ai-python-notes/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-03-29T03:26:08.000Z" itemprop="datePublished">2019-03-29</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/Python计算库/">Python计算库</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Python计算库相关见解资料摘录<br><a id="more"></a></p>
+<h1 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h1><h2 id="Python教程"><a href="#Python教程" class="headerlink" title="Python教程"></a>Python教程</h2><table>
+<thead>
+<tr>
+<th><a href="http://www.codingdict.com/article/6322" target="_blank" rel="noopener">Python 教程</a></th>
+<th><a href="http://www.codingdict.com/article/6323" target="_blank" rel="noopener">Python 简介</a></th>
+<th><a href="http://www.codingdict.com/article/6324" target="_blank" rel="noopener">Python 环境搭建</a></th>
+<th><a href="http://www.codingdict.com/article/6325" target="_blank" rel="noopener">Python 中文编码</a></th>
+<th><a href="http://www.codingdict.com/article/6326" target="_blank" rel="noopener">Python 基础语法</a></th>
+<th><a href="http://www.codingdict.com/article/6327" target="_blank" rel="noopener">Python 变量类型</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.codingdict.com/article/6328" target="_blank" rel="noopener">Python 运算符</a></td>
+<td><a href="http://www.codingdict.com/article/6329" target="_blank" rel="noopener">Python 条件语句</a></td>
+<td><a href="http://www.codingdict.com/article/6330" target="_blank" rel="noopener">Python 循环语句</a></td>
+<td><a href="http://www.codingdict.com/article/6335" target="_blank" rel="noopener">Python 数字</a></td>
+<td><a href="http://www.codingdict.com/article/6336" target="_blank" rel="noopener">Python 列表(List)</a></td>
+<td><a href="http://www.codingdict.com/article/6338" target="_blank" rel="noopener">Python 字符串</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/6339" target="_blank" rel="noopener">Python 元组</a></td>
+<td><a href="http://www.codingdict.com/article/6340" target="_blank" rel="noopener">Python 字典(Dictionary)</a></td>
+<td><a href="http://www.codingdict.com/article/6341" target="_blank" rel="noopener">Python 日期和时间</a></td>
+<td><a href="http://www.codingdict.com/article/6342" target="_blank" rel="noopener">Python 函数</a></td>
+<td><a href="http://www.codingdict.com/article/6343" target="_blank" rel="noopener">Python 模块</a></td>
+<td><a href="http://www.codingdict.com/article/6344" target="_blank" rel="noopener">Python File及os模块</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/6345" target="_blank" rel="noopener">Python文件IO</a></td>
+<td><a href="http://www.codingdict.com/article/6346" target="_blank" rel="noopener">Python 异常处理</a></td>
+<td><a href="http://www.codingdict.com/article/6348" target="_blank" rel="noopener">Python 面向对象</a></td>
+<td><a href="http://www.codingdict.com/article/6349" target="_blank" rel="noopener">Python正则表达式</a></td>
+<td><a href="http://www.codingdict.com/article/6350" target="_blank" rel="noopener">Python CGI编程</a></td>
+<td><a href="http://www.codingdict.com/article/6351" target="_blank" rel="noopener">python操作mysql数据库</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/6352" target="_blank" rel="noopener">Python 网络编程</a></td>
+<td><a href="http://www.codingdict.com/article/6353" target="_blank" rel="noopener">Python使用SMTP发送邮件</a></td>
+<td><a href="http://www.codingdict.com/article/6354" target="_blank" rel="noopener">Python 多线程</a></td>
+<td><a href="http://www.codingdict.com/article/6355" target="_blank" rel="noopener">Python XML解析</a></td>
+<td><a href="http://www.codingdict.com/article/6356" target="_blank" rel="noopener">python GUI编程(Tkinter)</a></td>
+<td><a href="http://www.codingdict.com/article/6357" target="_blank" rel="noopener">Python2.x与3.x版本区别</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/6358" target="_blank" rel="noopener">Python IDE</a></td>
+<td><a href="http://www.codingdict.com/article/6359" target="_blank" rel="noopener">Python JSON</a></td>
+<td><a href="http://www.codingdict.com/article/19635" target="_blank" rel="noopener">Python 100例</a></td>
+<td><a href="http://www.codingdict.com/article/19636" target="_blank" rel="noopener">Python实例教程</a></td>
+<td><a href="http://www.codingdict.com/article/19637" target="_blank" rel="noopener">Python3 实例教程</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Python文本处理"><a href="#Python文本处理" class="headerlink" title="Python文本处理"></a>Python文本处理</h2><table>
+<thead>
+<tr>
+<th><a href="http://www.codingdict.com/article/8907" target="_blank" rel="noopener">01 Python - 文本处理</a></th>
+<th><a href="http://www.codingdict.com/article/8908" target="_blank" rel="noopener">02 Python - 文本处理简介</a></th>
+<th><a href="http://www.codingdict.com/article/8909" target="_blank" rel="noopener">03 Python - 文本处理环境</a></th>
+<th><a href="http://www.codingdict.com/article/8910" target="_blank" rel="noopener">04 Python - 字符串不变性</a></th>
+<th><a href="http://www.codingdict.com/article/8911" target="_blank" rel="noopener">05 Python - 排序线</a></th>
+<th><a href="http://www.codingdict.com/article/8912" target="_blank" rel="noopener">06 Python - 重新格式化段落</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.codingdict.com/article/8913" target="_blank" rel="noopener">07 Python - 在段落中计算令牌</a></td>
+<td><a href="http://www.codingdict.com/article/8914" target="_blank" rel="noopener">08 Python - 转换二进制为ASCII码</a></td>
+<td><a href="http://www.codingdict.com/article/8915" target="_blank" rel="noopener">09 Python - 字符串作为文件</a></td>
+<td><a href="http://www.codingdict.com/article/8916" target="_blank" rel="noopener">10 Python - 向后文件阅读</a></td>
+<td><a href="http://www.codingdict.com/article/8917" target="_blank" rel="noopener">11 Python - 过滤重复的单词</a></td>
+<td><a href="http://www.codingdict.com/article/8918" target="_blank" rel="noopener">12 Python - 从文本中提取电子邮件</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8919" target="_blank" rel="noopener">13 Python - 从文本提取URL</a></td>
+<td><a href="http://www.codingdict.com/article/8920" target="_blank" rel="noopener">14 Python - 格式化打印数字</a></td>
+<td><a href="http://www.codingdict.com/article/8921" target="_blank" rel="noopener">15 Python - 文本处理状态机</a></td>
+<td><a href="http://www.codingdict.com/article/8922" target="_blank" rel="noopener">16 Python - 资本化和翻译</a></td>
+<td><a href="http://www.codingdict.com/article/8923" target="_blank" rel="noopener">17 Python - 标记化</a></td>
+<td><a href="http://www.codingdict.com/article/8924" target="_blank" rel="noopener">18 Python - 删除停用词</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8925" target="_blank" rel="noopener">19 Python - 同义词和反义词</a></td>
+<td><a href="http://www.codingdict.com/article/8926" target="_blank" rel="noopener">20 Python - 文本翻译</a></td>
+<td><a href="http://www.codingdict.com/article/8927" target="_blank" rel="noopener">21 Python - 单词替换</a></td>
+<td><a href="http://www.codingdict.com/article/8928" target="_blank" rel="noopener">22 Python - 拼写检查</a></td>
+<td><a href="http://www.codingdict.com/article/8929" target="_blank" rel="noopener">23 Python - WordNet界面</a></td>
+<td><a href="http://www.codingdict.com/article/8930" target="_blank" rel="noopener">24 Python - Corpora Access</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8931" target="_blank" rel="noopener">25 Python - 标记单词</a></td>
+<td><a href="http://www.codingdict.com/article/8932" target="_blank" rel="noopener">26 Python - Chunks和Chinks</a></td>
+<td><a href="http://www.codingdict.com/article/8933" target="_blank" rel="noopener">27 Python - 块分类</a></td>
+<td><a href="http://www.codingdict.com/article/8934" target="_blank" rel="noopener">28 Python - 文本分类</a></td>
+<td><a href="http://www.codingdict.com/article/8935" target="_blank" rel="noopener">29 Python - Bigrams</a></td>
+<td><a href="http://www.codingdict.com/article/8936" target="_blank" rel="noopener">30 Python - 处理PDF</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8937" target="_blank" rel="noopener">31 Python - 处理Word文档</a></td>
+<td><a href="http://www.codingdict.com/article/8938" target="_blank" rel="noopener">32 Python - 阅读RSS提要</a></td>
+<td><a href="http://www.codingdict.com/article/8939" target="_blank" rel="noopener">33 Python - 情感分析</a></td>
+<td><a href="http://www.codingdict.com/article/8940" target="_blank" rel="noopener">34 Python - 搜索和匹配</a></td>
+<td><a href="http://www.codingdict.com/article/8941" target="_blank" rel="noopener">35 Python - 文本Munging</a></td>
+<td><a href="http://www.codingdict.com/article/8942" target="_blank" rel="noopener">36 Python - 文本包装</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8943" target="_blank" rel="noopener">37 Python - 频率分布</a></td>
+<td><a href="http://www.codingdict.com/article/8944" target="_blank" rel="noopener">38 Python - 文本摘要</a></td>
+<td><a href="http://www.codingdict.com/article/8945" target="_blank" rel="noopener">39 Python - 词干算法</a></td>
+<td><a href="http://www.codingdict.com/article/8946" target="_blank" rel="noopener">40 Python - 约束搜索</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Numpy教程"><a href="#Numpy教程" class="headerlink" title="Numpy教程"></a>Numpy教程</h2><table>
+<thead>
+<tr>
+<th><a href="http://www.codingdict.com/article/8213" target="_blank" rel="noopener">NumPy教程</a></th>
+<th><a href="http://www.codingdict.com/article/8214" target="_blank" rel="noopener">NumPy介绍</a></th>
+<th><a href="http://www.codingdict.com/article/8215" target="_blank" rel="noopener">NumPy环境</a></th>
+<th><a href="http://www.codingdict.com/article/8216" target="_blank" rel="noopener">NumPy ndarray对象</a></th>
+<th><a href="http://www.codingdict.com/article/8217" target="_blank" rel="noopener">NumPy数据类型</a></th>
+<th><a href="http://www.codingdict.com/article/8218" target="_blank" rel="noopener">NumPy数组属性</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.codingdict.com/article/8219" target="_blank" rel="noopener">NumPy数组创建例程</a></td>
+<td><a href="http://www.codingdict.com/article/8220" target="_blank" rel="noopener">来自现有数据的NumPy数组</a></td>
+<td><a href="http://www.codingdict.com/article/8221" target="_blank" rel="noopener">数值范围的NumPy数组</a></td>
+<td><a href="http://www.codingdict.com/article/8222" target="_blank" rel="noopener">NumPy索引和切片</a></td>
+<td><a href="http://www.codingdict.com/article/8223" target="_blank" rel="noopener">NumPy高级索引</a></td>
+<td><a href="http://www.codingdict.com/article/8224" target="_blank" rel="noopener">NumPy广播</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8225" target="_blank" rel="noopener">NumPy遍历数组</a></td>
+<td><a href="http://www.codingdict.com/article/8226" target="_blank" rel="noopener">NumPy数组操作</a></td>
+<td><a href="http://www.codingdict.com/article/8227" target="_blank" rel="noopener">NumPy二元运算符</a></td>
+<td><a href="http://www.codingdict.com/article/8228" target="_blank" rel="noopener">NumPy字符串函数</a></td>
+<td><a href="http://www.codingdict.com/article/8229" target="_blank" rel="noopener">NumPy数学函数</a></td>
+<td><a href="http://www.codingdict.com/article/8230" target="_blank" rel="noopener">NumPy算术运算</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8231" target="_blank" rel="noopener">NumPy统计函数</a></td>
+<td><a href="http://www.codingdict.com/article/8232" target="_blank" rel="noopener">NumPy排序，搜索和计数功能</a></td>
+<td><a href="http://www.codingdict.com/article/8233" target="_blank" rel="noopener">NumPy字节交换</a></td>
+<td><a href="http://www.codingdict.com/article/8234" target="_blank" rel="noopener">NumPy副本和视图</a></td>
+<td><a href="http://www.codingdict.com/article/8235" target="_blank" rel="noopener">NumPy 矩阵库</a></td>
+<td><a href="http://www.codingdict.com/article/8236" target="_blank" rel="noopener">NumPy线性代数</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8237" target="_blank" rel="noopener">NumPy Matplotlib</a></td>
+<td><a href="http://www.codingdict.com/article/8238" target="_blank" rel="noopener">使用Matplotlib的NumPy直方图</a></td>
+<td><a href="http://www.codingdict.com/article/8239" target="_blank" rel="noopener">IO与NumPy</a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Scipy教程"><a href="#Scipy教程" class="headerlink" title="Scipy教程"></a>Scipy教程</h2><table>
+<thead>
+<tr>
+<th><a href="http://www.codingdict.com/article/8251" target="_blank" rel="noopener">SciPy教程</a></th>
+<th><a href="http://www.codingdict.com/article/8252" target="_blank" rel="noopener">SciPy简介</a></th>
+<th><a href="http://www.codingdict.com/article/8253" target="_blank" rel="noopener">SciPy环境设置</a></th>
+<th><a href="http://www.codingdict.com/article/8254" target="_blank" rel="noopener">SciPy的基本功能</a></th>
+<th><a href="http://www.codingdict.com/article/8255" target="_blank" rel="noopener">SciPy Cluster</a></th>
+<th><a href="http://www.codingdict.com/article/8256" target="_blank" rel="noopener">SciPy常量</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.codingdict.com/article/8257" target="_blank" rel="noopener">SciPy FFTpack</a></td>
+<td><a href="http://www.codingdict.com/article/8258" target="_blank" rel="noopener">SciPy集成</a></td>
+<td><a href="http://www.codingdict.com/article/8259" target="_blank" rel="noopener">SciPy插值</a></td>
+<td><a href="http://www.codingdict.com/article/8260" target="_blank" rel="noopener">SciPy输入和输出</a></td>
+<td><a href="http://www.codingdict.com/article/8261" target="_blank" rel="noopener">SciPy Linalg</a></td>
+<td><a href="http://www.codingdict.com/article/8262" target="_blank" rel="noopener">SciPy Ndimage</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8263" target="_blank" rel="noopener">SciPy优化</a></td>
+<td><a href="http://www.codingdict.com/article/8264" target="_blank" rel="noopener">SciPy Stats</a></td>
+<td><a href="http://www.codingdict.com/article/8265" target="_blank" rel="noopener">SciPy CSGraph</a></td>
+<td><a href="http://www.codingdict.com/article/8266" target="_blank" rel="noopener">SciPy空间</a></td>
+<td><a href="http://www.codingdict.com/article/8267" target="_blank" rel="noopener">SciPy ODR</a></td>
+<td><a href="http://www.codingdict.com/article/8268" target="_blank" rel="noopener">SciPy特殊包装</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Pandas教程"><a href="#Pandas教程" class="headerlink" title="Pandas教程"></a>Pandas教程</h2><table>
+<thead>
+<tr>
+<th><a href="http://www.codingdict.com/article/8270" target="_blank" rel="noopener">Pandas教程</a></th>
+<th><a href="http://www.codingdict.com/article/8271" target="_blank" rel="noopener">Pandas简介</a></th>
+<th><a href="http://www.codingdict.com/article/8272" target="_blank" rel="noopener">Pandas环境设置</a></th>
+<th><a href="http://www.codingdict.com/article/8273" target="_blank" rel="noopener">Pandas数据结构简介</a></th>
+<th><a href="http://www.codingdict.com/article/8274" target="_blank" rel="noopener">Pandas序列</a></th>
+<th><a href="http://www.codingdict.com/article/8275" target="_blank" rel="noopener">Pandas DataFrame</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.codingdict.com/article/8276" target="_blank" rel="noopener">Pandas面板</a></td>
+<td><a href="http://www.codingdict.com/article/8277" target="_blank" rel="noopener">Pandas基本功能</a></td>
+<td><a href="http://www.codingdict.com/article/8278" target="_blank" rel="noopener">Pandas描述性统计</a></td>
+<td><a href="http://www.codingdict.com/article/8279" target="_blank" rel="noopener">Pandas函数应用程序</a></td>
+<td><a href="http://www.codingdict.com/article/8280" target="_blank" rel="noopener">Pandas 重建索引</a></td>
+<td><a href="http://www.codingdict.com/article/8281" target="_blank" rel="noopener">Pandas迭代</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8282" target="_blank" rel="noopener">Pandas排序</a></td>
+<td><a href="http://www.codingdict.com/article/8283" target="_blank" rel="noopener">Pandas处理文本数据</a></td>
+<td><a href="http://www.codingdict.com/article/8284" target="_blank" rel="noopener">Pandas选项和自定义</a></td>
+<td><a href="http://www.codingdict.com/article/8285" target="_blank" rel="noopener">Pandas索引和选择数据</a></td>
+<td><a href="http://www.codingdict.com/article/8286" target="_blank" rel="noopener">Pandas统计函数</a></td>
+<td><a href="http://www.codingdict.com/article/8287" target="_blank" rel="noopener">Pandas窗口函数</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8288" target="_blank" rel="noopener">Pandas Aggregations</a></td>
+<td><a href="http://www.codingdict.com/article/8289" target="_blank" rel="noopener">Pandas缺少数据</a></td>
+<td><a href="http://www.codingdict.com/article/8290" target="_blank" rel="noopener">Pandas GroupBy</a></td>
+<td><a href="http://www.codingdict.com/article/8291" target="_blank" rel="noopener">Pandas合并_加入</a></td>
+<td><a href="http://www.codingdict.com/article/8292" target="_blank" rel="noopener">Pandas串联</a></td>
+<td><a href="http://www.codingdict.com/article/8293" target="_blank" rel="noopener">Pandas日期功能</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8294" target="_blank" rel="noopener">Pandas Timedelta</a></td>
+<td><a href="http://www.codingdict.com/article/8295" target="_blank" rel="noopener">Pandas分类数据</a></td>
+<td><a href="http://www.codingdict.com/article/8296" target="_blank" rel="noopener">Pandas可视化</a></td>
+<td><a href="http://www.codingdict.com/article/8297" target="_blank" rel="noopener">PandasIO工具</a></td>
+<td><a href="http://www.codingdict.com/article/8298" target="_blank" rel="noopener">Pandas稀疏数据</a></td>
+<td><a href="http://www.codingdict.com/article/8299" target="_blank" rel="noopener">Pandas Caveats &amp; Gotchas</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8300" target="_blank" rel="noopener">Pandas与SQL比较</a></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Matplotlib-教程"><a href="#Matplotlib-教程" class="headerlink" title="Matplotlib 教程"></a>Matplotlib 教程</h2><table>
+<thead>
+<tr>
+<th><a href="http://www.codingdict.com/article/8241" target="_blank" rel="noopener">入门</a></th>
+<th><a href="http://www.codingdict.com/article/8242" target="_blank" rel="noopener">图例、标题和标签</a></th>
+<th><a href="http://www.codingdict.com/article/8243" target="_blank" rel="noopener">条形图</a></th>
+<th><a href="http://www.codingdict.com/article/8244" target="_blank" rel="noopener">直方图</a></th>
+<th><a href="http://www.codingdict.com/article/8245" target="_blank" rel="noopener">散点图</a></th>
+<th><a href="http://www.codingdict.com/article/8246" target="_blank" rel="noopener">堆叠图</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.codingdict.com/article/8247" target="_blank" rel="noopener">饼图</a></td>
+<td><a href="http://www.codingdict.com/article/8248" target="_blank" rel="noopener">从文件加载数据</a></td>
+<td><a href="http://www.codingdict.com/article/8249" target="_blank" rel="noopener">使用numpy从文件加载数据</a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Seaborn-教程"><a href="#Seaborn-教程" class="headerlink" title="Seaborn 教程"></a>Seaborn 教程</h2><table>
+<thead>
+<tr>
+<th><a href="http://www.codingdict.com/article/8890" target="_blank" rel="noopener">Seaborn介绍</a></th>
+<th><a href="http://www.codingdict.com/article/8891" target="_blank" rel="noopener">Seaborn环境设置</a></th>
+<th><a href="http://www.codingdict.com/article/8892" target="_blank" rel="noopener">Seaborn导入数据集和库</a></th>
+<th><a href="http://www.codingdict.com/article/8893" target="_blank" rel="noopener">Seaborn Figure Aesthetic</a></th>
+<th><a href="http://www.codingdict.com/article/8894" target="_blank" rel="noopener">Seaborn调色板</a></th>
+<th><a href="http://www.codingdict.com/article/8895" target="_blank" rel="noopener">Seaborn直方图</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.codingdict.com/article/8896" target="_blank" rel="noopener">Seaborn核密度估计</a></td>
+<td><a href="http://www.codingdict.com/article/8897" target="_blank" rel="noopener">Seaborn可视化成对关系</a></td>
+<td><a href="http://www.codingdict.com/article/8898" target="_blank" rel="noopener">Seaborn绘制分类数据</a></td>
+<td><a href="http://www.codingdict.com/article/8899" target="_blank" rel="noopener">Seaborn观测分布</a></td>
+<td><a href="http://www.codingdict.com/article/8900" target="_blank" rel="noopener">Seaborn统计估计</a></td>
+<td><a href="http://www.codingdict.com/article/8901" target="_blank" rel="noopener">Seaborn绘制宽幅数据</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8902" target="_blank" rel="noopener">Seaborn多面板分类图</a></td>
+<td><a href="http://www.codingdict.com/article/8903" target="_blank" rel="noopener">Seaborn线性关系</a></td>
+<td><a href="http://www.codingdict.com/article/8904" target="_blank" rel="noopener">Seaborn Facet Grid</a></td>
+<td><a href="http://www.codingdict.com/article/8905" target="_blank" rel="noopener">Seaborn Pair Grid</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Python数据科学教程"><a href="#Python数据科学教程" class="headerlink" title="Python数据科学教程"></a>Python数据科学教程</h2><table>
+<thead>
+<tr>
+<th><a href="http://www.codingdict.com/article/8302" target="_blank" rel="noopener">Python数据科学教程</a></th>
+<th><a href="http://www.codingdict.com/article/8303" target="_blank" rel="noopener">Python数据科学介绍</a></th>
+<th><a href="http://www.codingdict.com/article/8304" target="_blank" rel="noopener">Python数据科学环境设置</a></th>
+<th><a href="http://www.codingdict.com/article/8305" target="_blank" rel="noopener">Python Pandas</a></th>
+<th><a href="http://www.codingdict.com/article/8306" target="_blank" rel="noopener">Python Numpy</a></th>
+<th><a href="http://www.codingdict.com/article/8307" target="_blank" rel="noopener">Python SciPy</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.codingdict.com/article/8308" target="_blank" rel="noopener">Python Matplotlib</a></td>
+<td><a href="http://www.codingdict.com/article/8309" target="_blank" rel="noopener">Python - 数据清理</a></td>
+<td><a href="http://www.codingdict.com/article/8310" target="_blank" rel="noopener">Python数据操作</a></td>
+<td><a href="http://www.codingdict.com/article/8311" target="_blank" rel="noopener">Python数据清理</a></td>
+<td><a href="http://www.codingdict.com/article/8312" target="_blank" rel="noopener">处理CSV数据的Python</a></td>
+<td><a href="http://www.codingdict.com/article/8313" target="_blank" rel="noopener">Python处理JSON数据</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8314" target="_blank" rel="noopener">Python处理XLS数据</a></td>
+<td><a href="http://www.codingdict.com/article/8315" target="_blank" rel="noopener">Python关系数据库</a></td>
+<td><a href="http://www.codingdict.com/article/8316" target="_blank" rel="noopener">Python NoSQL数据库</a></td>
+<td><a href="http://www.codingdict.com/article/8317" target="_blank" rel="noopener">Python日期和时间</a></td>
+<td><a href="http://www.codingdict.com/article/8318" target="_blank" rel="noopener">Python 数据调整</a></td>
+<td><a href="http://www.codingdict.com/article/8319" target="_blank" rel="noopener">Python数据聚合</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8320" target="_blank" rel="noopener">Python阅读HTML页面</a></td>
+<td><a href="http://www.codingdict.com/article/8321" target="_blank" rel="noopener">Python处理非结构化数据</a></td>
+<td><a href="http://www.codingdict.com/article/8322" target="_blank" rel="noopener">Python Word Tokenization</a></td>
+<td><a href="http://www.codingdict.com/article/8323" target="_blank" rel="noopener">Python的词干化和词形化</a></td>
+<td><a href="http://www.codingdict.com/article/8324" target="_blank" rel="noopener">Python图表属性</a></td>
+<td><a href="http://www.codingdict.com/article/8325" target="_blank" rel="noopener">Python图表样式</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8326" target="_blank" rel="noopener">Python Box Plots</a></td>
+<td><a href="http://www.codingdict.com/article/8327" target="_blank" rel="noopener">Python热图</a></td>
+<td><a href="http://www.codingdict.com/article/8328" target="_blank" rel="noopener">Python散点图</a></td>
+<td><a href="http://www.codingdict.com/article/8329" target="_blank" rel="noopener">Python泡泡图</a></td>
+<td><a href="http://www.codingdict.com/article/8330" target="_blank" rel="noopener">Python 3D图表</a></td>
+<td><a href="http://www.codingdict.com/article/8331" target="_blank" rel="noopener">Python时间序列</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8332" target="_blank" rel="noopener">Python地理数据</a></td>
+<td><a href="http://www.codingdict.com/article/8333" target="_blank" rel="noopener">Python图形数据</a></td>
+<td><a href="http://www.codingdict.com/article/8334" target="_blank" rel="noopener">Python测量中心趋势</a></td>
+<td><a href="http://www.codingdict.com/article/8335" target="_blank" rel="noopener">Python 测量差异</a></td>
+<td><a href="http://www.codingdict.com/article/8336" target="_blank" rel="noopener">Python正态分布</a></td>
+<td><a href="http://www.codingdict.com/article/8337" target="_blank" rel="noopener">Python二项分布</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8338" target="_blank" rel="noopener">Python泊松分布</a></td>
+<td><a href="http://www.codingdict.com/article/8339" target="_blank" rel="noopener">Python伯努利分布</a></td>
+<td><a href="http://www.codingdict.com/article/8340" target="_blank" rel="noopener">Python的P值</a></td>
+<td><a href="http://www.codingdict.com/article/8341" target="_blank" rel="noopener">Python关联</a></td>
+<td><a href="http://www.codingdict.com/article/8342" target="_blank" rel="noopener">Python卡方检验</a></td>
+<td><a href="http://www.codingdict.com/article/8343" target="_blank" rel="noopener">Python线性回归</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="AI与Python"><a href="#AI与Python" class="headerlink" title="AI与Python"></a>AI与Python</h2><table>
+<thead>
+<tr>
+<th><a href="http://www.codingdict.com/article/8841" target="_blank" rel="noopener">人工智能的基本概念</a></th>
+<th><a href="http://www.codingdict.com/article/8842" target="_blank" rel="noopener">Python的人工智能入门</a></th>
+<th><a href="http://www.codingdict.com/article/8843" target="_blank" rel="noopener">Python机器学习</a></th>
+<th><a href="http://www.codingdict.com/article/8844" target="_blank" rel="noopener">Python数据准备</a></th>
+<th><a href="http://www.codingdict.com/article/8845" target="_blank" rel="noopener">Python监督学习：分类</a></th>
+<th><a href="http://www.codingdict.com/article/8846" target="_blank" rel="noopener">Python监督学习：回归</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.codingdict.com/article/8847" target="_blank" rel="noopener">Python逻辑编程</a></td>
+<td><a href="http://www.codingdict.com/article/8848" target="_blank" rel="noopener">Python无人监督学习：聚类</a></td>
+<td><a href="http://www.codingdict.com/article/8849" target="_blank" rel="noopener">Python自然语言处理</a></td>
+<td><a href="http://www.codingdict.com/article/8850" target="_blank" rel="noopener">自然语言工具包 NLTK</a></td>
+<td><a href="http://www.codingdict.com/article/8851" target="_blank" rel="noopener">Python分析时间序列数据</a></td>
+<td><a href="http://www.codingdict.com/article/8852" target="_blank" rel="noopener">Python语音识别</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8853" target="_blank" rel="noopener">Python启发式搜索</a></td>
+<td><a href="http://www.codingdict.com/article/8859" target="_blank" rel="noopener">Python游戏</a></td>
+<td><a href="http://www.codingdict.com/article/8860" target="_blank" rel="noopener">基于Python神经网络</a></td>
+<td><a href="http://www.codingdict.com/article/8861" target="_blank" rel="noopener">Python强化学习</a></td>
+<td><a href="http://www.codingdict.com/article/8862" target="_blank" rel="noopener">Python遗传算法</a></td>
+<td><a href="http://www.codingdict.com/article/8863" target="_blank" rel="noopener">Python计算机视觉</a></td>
+</tr>
+<tr>
+<td><a href="http://www.codingdict.com/article/8906" target="_blank" rel="noopener">Python深度学习</a></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Python深度学习教程"><a href="#Python深度学习教程" class="headerlink" title="Python深度学习教程"></a>Python深度学习教程</h2><table>
+<thead>
+<tr>
+<th><a href="http://www.codingdict.com/article/8345" target="_blank" rel="noopener">Python深度学习教程</a></th>
+<th><a href="http://www.codingdict.com/article/8346" target="_blank" rel="noopener">Python深度学习介绍</a></th>
+<th><a href="http://www.codingdict.com/article/8347" target="_blank" rel="noopener">Python深度学习环境</a></th>
+<th><a href="http://www.codingdict.com/article/8348" target="_blank" rel="noopener">Python深度基础机器学习</a></th>
+<th><a href="http://www.codingdict.com/article/8349" target="_blank" rel="noopener">Python深度学习人工神经网络</a></th>
+<th><a href="http://www.codingdict.com/article/8350" target="_blank" rel="noopener">Python深度学习深度神经网络</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.codingdict.com/article/8351" target="_blank" rel="noopener">Python深度学习基础</a></td>
+<td><a href="http://www.codingdict.com/article/8352" target="_blank" rel="noopener">Python深度学习训练神经网络</a></td>
+<td><a href="http://www.codingdict.com/article/8353" target="_blank" rel="noopener">Python深度学习计算图</a></td>
+<td><a href="http://www.codingdict.com/article/8354" target="_blank" rel="noopener">Python深度学习应用程序</a></td>
+<td><a href="http://www.codingdict.com/article/8355" target="_blank" rel="noopener">Python深度学习库和框架</a></td>
+<td><a href="http://www.codingdict.com/article/8356" target="_blank" rel="noopener">Python深度学习实现</a></td>
+</tr>
+</tbody>
+</table>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2019/03/29/ai-python-notes/';
+        this.page.title = 'AI-Python计算库';
+        this.page.identifier = '2019/03/29/ai-python-notes/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

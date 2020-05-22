@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>探针运行时Debug | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="探针运行时调试相关详解笔记 
+
+BTrace简介
+BtraceClient:为我们使用的btrace的本地api,一般我们使用的bin/btrace会在本地启动一个btrace jvm,其内部使用了Java Complier Api,JVMTI技术,以及创建了一个socket。   
+
+12345678Java Complier Api：动态的将我们传递的监控的java源文件动态编译成.class文件 JVMTI:主要是利用了java 1.6之后的VirtaulMachine技术，动态的atta">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#BTrace"><span class="toc-number">1.</span> <span class="toc-text">BTrace</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#核心"><span class="toc-number">1.2.</span> <span class="toc-text">核心</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动com-sun-btrace-client-Main"><span class="toc-number">1.2.1.</span> <span class="toc-text">启动com.sun.btrace.client.Main</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#btrace-Client"><span class="toc-number">1.2.2.</span> <span class="toc-text">btrace-Client</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#btrace-agent"><span class="toc-number">1.2.3.</span> <span class="toc-text">btrace-agent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.3.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监控方式"><span class="toc-number">1.4.</span> <span class="toc-text">监控方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#btrace的支持的script方式有多种"><span class="toc-number">1.4.1.</span> <span class="toc-text">btrace的支持的script方式有多种</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#btrace的使用对java进程造成影响？"><span class="toc-number">1.4.2.</span> <span class="toc-text">btrace的使用对java进程造成影响？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#greys-anatomy"><span class="toc-number">2.</span> <span class="toc-text">greys-anatomy</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#目标群体"><span class="toc-number">2.1.</span> <span class="toc-text">目标群体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交互方式"><span class="toc-number">2.2.</span> <span class="toc-text">交互方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置功能"><span class="toc-number">2.3.</span> <span class="toc-text">内置功能</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            探针运行时Debug
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2018/12/26/bistoury/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-12-26T09:39:37.000Z" itemprop="datePublished">2018-12-26</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/debug/">debug</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>探针运行时调试相关详解笔记<br><a id="more"></a> </p>
+<p><br></p>
+<h1 id="BTrace"><a href="#BTrace" class="headerlink" title="BTrace"></a>BTrace</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>BtraceClient:为我们使用的btrace的本地api,一般我们使用的bin/btrace会在本地启动一个<code>btrace jvm</code>,其内部使用了<code>Java Complier Api</code>,<code>JVMTI</code>技术,以及创建了一个socket。   </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Java Complier Api：动态的将我们传递的监控的java源文件动态编译成.class文件 </span><br><span class="line"></span><br><span class="line">JVMTI:主要是利用了java 1.6之后的VirtaulMachine技术，动态的attach到一个已启动的jvm上为他去启动一个BtraceAgent。</span><br><span class="line"></span><br><span class="line">该Agent会为BtraceClient启动一个server socket进行通讯。(多进程之间的通讯) </span><br><span class="line">本地socket:BtraceClient和BtraceAgent之间的数据通讯，比如生成的.class发送到BtraceAgent,还有一些Event事件等等。</span><br><span class="line"></span><br><span class="line">BtraceAgent同样可以将服务端print()的数据通过socket的方式回传给BtraceClient进行打印</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BtraceAgent:为我们在目标jvm上植入的<code>btrace agent</code>实现。主要是<code>Instrumentation</code>技术,<code>asm</code>字节码处理技术。    </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BtraceAgent的启动可以有两种方式:BtaceClient动态attach后进行启动,另一种就是在目标jvm启动之前添加agent参数进行启动。</span><br><span class="line"></span><br><span class="line">BtraceAgent会启动一个server socket,与BtraceClient客户端进行交互,客户端可以将监控的.class文件通过socket发送,同样也可以在jvm启动时直接指定对应本地的.class做为监控脚本。 </span><br><span class="line"></span><br><span class="line">BtraceAgent在接受到监控指令后，会遍历当前所有已经加载的class类，挨个进行匹配检查，并生成相应的监控字节码(监控方法)。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>btrace的包结构   </p>
+</blockquote>
+<ul>
+<li>btrace-client.jar   </li>
+<li>btrace-boot.jar   </li>
+<li>btrace-agent.jar  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/btrace $pid Btrace.java</span><br></pre></td></tr></table></figure>
+<h2 id="核心"><a href="#核心" class="headerlink" title="核心"></a>核心</h2><h3 id="启动com-sun-btrace-client-Main"><a href="#启动com-sun-btrace-client-Main" class="headerlink" title="启动com.sun.btrace.client.Main"></a>启动<code>com.sun.btrace.client.Main</code></h3><p>调用Client进行complier(Java Compiler Api)和attach(JVM TI)处理</p>
+<p><br></p>
+<h3 id="btrace-Client"><a href="#btrace-Client" class="headerlink" title="btrace-Client"></a>btrace-Client</h3><ul>
+<li>compiler方法:调用了Java Complier Api进行动态编译你的Btrace.java文件      </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Verifier btraceVerifier = <span class="keyword">new</span> Verifier(<span class="keyword">this</span>.unsafe); <span class="comment">//指定了btrace特定的语法校验器 </span></span><br><span class="line"></span><br><span class="line">###com.sun.btrace.compiler.VerifierVisitor (具体的一些检查规则) </span><br><span class="line">visitBinary String字符串的+限制 </span><br><span class="line">visitClass <span class="class"><span class="keyword">class</span>的检查，不允许有父类，不允许有接口类，不允许非<span class="title">static</span>变量，必须有<span class="title">Btrace</span> @标签 </span></span><br><span class="line"><span class="class"><span class="title">visitDoWhileLoop</span> 不允许<span class="title">do</span> <span class="title">while</span>循环 </span></span><br><span class="line"><span class="class"><span class="title">visitForLoop</span> 不允许<span class="title">for</span>循环 </span></span><br><span class="line"><span class="class"><span class="title">visitMethod</span> 必须为<span class="title">static</span> <span class="title">public</span> ，不允许出现<span class="title">synchronized</span>标记 </span></span><br><span class="line"><span class="class"><span class="title">visitNewArray</span> 不允许出现<span class="title">new</span> <span class="title">Array</span> </span></span><br><span class="line"><span class="class"><span class="title">visitNewClass</span> 不允许出现<span class="title">new</span> 对象 </span></span><br><span class="line"><span class="class"><span class="title">visitReturn</span> 不允许有返回值 </span></span><br><span class="line"><span class="class"><span class="title">visitSynchronized</span> 不允许有同步快 </span></span><br><span class="line"><span class="class"><span class="title">visitThrow</span> <span class="title">visitTry</span> 不允许有<span class="title">try</span> <span class="title">catch</span>的动作 </span></span><br><span class="line"><span class="class"><span class="title">visitOther</span> 除上面允许之外的，不允许有其他的</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>attach方法:调用VirtualMachine.attach(pid); vm.loadAgent(agentPath, agentArgs);动态加载btrace-agent.jar包  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">动态加载agent可传递给agent程序的几个参数: </span><br><span class="line">debug=true </span><br><span class="line">unsafe=true </span><br><span class="line">dumpClass=true </span><br><span class="line">dumpDir=xx </span><br><span class="line">trackRetransforms=true ##是否记录instrument行为 </span><br><span class="line">bootClassPath= xx ##agent.jar使用 </span><br><span class="line">systemClassPath =xx ##agent.jar使用 </span><br><span class="line">probeDescPath=xx</span><br></pre></td></tr></table></figure>
+<p>在调用了attach方法后，会通过btrace-agent.jar中的com.sun.btrace.agent.Main启动一个ServerSocket</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> port = <span class="number">2020</span>;    </span><br><span class="line">String p = (String)argMap.get(<span class="string">"port"</span>);    </span><br><span class="line">ServerSocket ss;    </span><br><span class="line">  <span class="keyword">try</span> &#123;    </span><br><span class="line">     (isDebug()) debugPrint(<span class="keyword">new</span> StringBuilder().append(<span class="string">"starting server at "</span>).append(port).toString());    </span><br><span class="line">     System.setProperty(<span class="string">"btrace.port"</span>, String.valueOf(port));    </span><br><span class="line">     <span class="keyword">if</span> ((scriptOutputFile != <span class="keyword">null</span>) &amp;&amp; (scriptOutputFile.length() &gt; <span class="number">0</span>)) &#123;    </span><br><span class="line">          System.setProperty(<span class="string">"btrace.output"</span>, scriptOutputFile);    </span><br><span class="line">     &#125;    </span><br><span class="line">     ss = <span class="keyword">new</span> ServerSocket(port);    </span><br><span class="line">   &#125; <span class="keyword">catch</span>(Exception e) ....    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">true</span>)    </span><br><span class="line">&#123;    </span><br><span class="line">   <span class="keyword">if</span> (!isDebug()) <span class="keyword">continue</span>; debugPrint(<span class="string">"waiting for clients"</span>);    </span><br><span class="line">   Socket sock = ss.accept();    </span><br><span class="line">   <span class="keyword">if</span> (!isDebug()) <span class="keyword">continue</span>; debugPrint(<span class="keyword">new</span> StringBuilder().append(<span class="string">"client accepted "</span>).append(sock).toString());    </span><br><span class="line">   Client client = <span class="keyword">new</span> RemoteClient(inst, sock);    </span><br><span class="line">   handleNewClient(client);    </span><br><span class="line">   <span class="keyword">continue</span>;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以在submit中,会通过一个本地socket进行连接server,并提交相应的Btrace.java中的监控代码(这时应该是编译后的字节码).    </p>
+<ul>
+<li>submit方法:调用提交对应的instrument指令,并传递对应code的byte[]  </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.sock = <span class="keyword">new</span> Socket(<span class="string">"localhost"</span>, <span class="keyword">this</span>.port);    </span><br><span class="line"><span class="keyword">this</span>.oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">this</span>.sock.getOutputStream());    </span><br><span class="line">WireIO.write(<span class="keyword">this</span>.oos, <span class="keyword">new</span> InstrumentCommand(code, args));</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h3 id="btrace-agent"><a href="#btrace-agent" class="headerlink" title="btrace-agent"></a>btrace-agent</h3><p>大致了解了Client类中的attach和submit方法后，相信也能猜到对应agent的一些设计。    </p>
+<p>简单的看一下： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.sun.btrace.agent.Main 为attach上之后agent的总入口,会调用agentmain()方法</span><br></pre></td></tr></table></figure>
+<ul>
+<li>main方法:首先解析参数,然后会启动一个agentThread(Daemon线程)   </li>
+<li>parseArgs:对应的参数解析,客户端在attach时,提交给agent后的一些参数    </li>
+</ul>
+<ul>
+<li><p>loadBTraceScript:装载指定的script(注意是script和scriptDir中指定的script),必须是.class文件，会调用FileClient进行处理,最后调用handleNewClient进行统一处理,最后调用handleNewClient进行统一instrument处理。    </p>
+</li>
+<li><p>startServer:main启动的agentThread会调用该方法，这里会启动一个serversocket，和btrace-client的客户端socket进行通讯，使用RemoteClient,最后调用handleNewClient进行统一instrument处理。    </p>
+</li>
+<li>handleNewClient:启动一个异步线程进行class Transformer，根据提交的byte[] code进行类文件重写   </li>
+</ul>
+<p><br></p>
+<p><br></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h2 id="监控方式"><a href="#监控方式" class="headerlink" title="监控方式"></a>监控方式</h2><p>本地jvm监控：目前大多数都是用的是btrace和监控的目标java是在同一机器上<br>远程jvm监控：需要在远程服务器启动时添加btrace-agent.jar，需要重写btrace客户端，完成和serversocket建立通讯，完成btrace script发送监控。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. VirtualMachine动态attach不支持远程操作，所以无法动态的进行agent添加。 </span><br><span class="line">2. btrace支持的jdk版本 </span><br><span class="line">java 1.4以及之前 ： 不支持，Instrument在jdk 1.5之后才出现。 </span><br><span class="line">java 1.5 ： 必须手动在jvm启动时添加btrace-agent.jar，因为VirtualMachine是在jdk 1.6之后才出现。 </span><br><span class="line">java 1.6 ： 推荐使用</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h3 id="btrace的支持的script方式有多种"><a href="#btrace的支持的script方式有多种" class="headerlink" title="btrace的支持的script方式有多种"></a>btrace的支持的script方式有多种</h3><ul>
+<li><p>1.client上的.java文件<br>  会进行动态编译，会有比较多的语法限制，btrace一堆的你不能做的事 </p>
+</li>
+<li><p>2.client上的.class文件<br>  没什么好讲的，自己写Btrace script时导入btrace-client.jar，写好后生成一个.class文件，再通过btrace pid Btrace.class进行启动。 </p>
+</li>
+<li><p>3.remote上的.class文件<br>  修改btrace-client中的Client类，支持script和scriptDir的一些参数提交。<br>  在remote机器上放置对应的btrace.class文件</p>
+</li>
+</ul>
+<p><br></p>
+<h3 id="btrace的使用对java进程造成影响？"><a href="#btrace的使用对java进程造成影响？" class="headerlink" title="btrace的使用对java进程造成影响？"></a>btrace的使用对java进程造成影响？</h3><ul>
+<li>1.装载时的影响： </li>
+</ul>
+<p>btrace每次使用，都会重新load所有的class。当然如果OnMethod不匹配，是不会被重新装载。所以跟你的OnMethod的匹配规则很有关系，如果使用<strong>+</strong>java.lang.Object。那就死定了。 </p>
+<ul>
+<li>2.退出后的影响： </li>
+</ul>
+<p>btrace监控每次退出后，原先所有的class都不会被恢复，你的所有的监控代码依然一直在运行 。</p>
+<p>但每次执行你的监控代码之前会先进行一个判断，判断当前是否处于监控中。</p>
+<p>你的客户端发起了exit指令后，该方法判断false，直接return。</p>
+<p>所以btrace使用退出后会让你的代码多走了一个方法调用+一个对象属性判断，所以说影响还是非常的少。</p>
+<p><br></p>
+<h1 id="greys-anatomy"><a href="#greys-anatomy" class="headerlink" title="greys-anatomy"></a>greys-anatomy</h1><p>Greys是一个JVM进程执行过程中的异常诊断工具，可以在不中断程序执行的情况下轻松完成问题排查工作。</p>
+<h2 id="目标群体"><a href="#目标群体" class="headerlink" title="目标群体"></a>目标群体</h2><ul>
+<li><p>有时候突然一个问题反馈上来需要入参才能完成定位,但恰恰没有任何日志。回去加上重新部署,一杯咖啡时间过去了是不是很崩溃？</p>
+</li>
+<li><p>当你经过反复这样几次折腾之后变得聪明了,在自己的代码的所有入参和出参地方都加上debug日志,但这次问题似乎暴露在别人的代码中了…是不是很无奈？</p>
+</li>
+<li><p>突然遇到线上一个性能问题无法确定到底是哪个环节的耗时，只能反复抓jstack猜，还有没有办法可以好好的过日子啦？</p>
+</li>
+</ul>
+<p>遇到以上问题时你就是我们这类工具的目标客户,此类工具能利用Java6的<code>Instrumentation</code>特性,动态增强你所指定的类,获取你想要到的信息。  </p>
+<h2 id="交互方式"><a href="#交互方式" class="headerlink" title="交互方式"></a>交互方式</h2><ul>
+<li>命令行交互</li>
+</ul>
+<h2 id="内置功能"><a href="#内置功能" class="headerlink" title="内置功能"></a>内置功能</h2><ul>
+<li><p>查看加载类,方法信息</p>
+</li>
+<li><p>查看JVM当前基础信息</p>
+</li>
+<li><p>方法执行监控(调用量,失败率,响应时间等)</p>
+</li>
+<li><p>方法执行数据观测、记录与回放(参数,返回结果,异常信息等)</p>
+</li>
+<li><p>方法调用追踪渲染</p>
+</li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2018/12/26/bistoury/';
+        this.page.title = '探针运行时Debug';
+        this.page.identifier = '2018/12/26/bistoury/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Qt编程笔记 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Qt客户端编程相关核心内容解析  
+简介QT 91年由奇趣公司开发的跨平台C++图形界面应用程序开发框架,96年发布第一版   
+既可以开发GUI程序,也可以开发非GUI程序,比如控制台和服务器   
+2008年奇趣科技被诺基亚收购,qt成为了诺基亚旗下的编程语言工具   
+QT,MFC都计算机图形框架的C++的解决方案    
+Qt应用范围视频电话/家庭影院/航空航天/汽车信息娱乐/医疗/视觉效果   
+Qt类图  
+Widget-&amp;gt;(Windows-get缩写)  
+1234QColo">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Qt应用范围"><span class="toc-number">1.1.</span> <span class="toc-text">Qt应用范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Qt类图"><span class="toc-number">1.2.</span> <span class="toc-text">Qt类图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Qt支持的平台"><span class="toc-number">1.3.</span> <span class="toc-text">Qt支持的平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Qt开发的软件"><span class="toc-number">1.4.</span> <span class="toc-text">Qt开发的软件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Qt基础"><span class="toc-number">2.</span> <span class="toc-text">Qt基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#设置固定大小"><span class="toc-number">2.1.</span> <span class="toc-text">设置固定大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统信号与槽"><span class="toc-number">2.2.</span> <span class="toc-text">系统信号与槽</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义信号与槽"><span class="toc-number">2.3.</span> <span class="toc-text">自定义信号与槽</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程"><span class="toc-number">2.4.</span> <span class="toc-text">线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程的基础"><span class="toc-number">2.4.1.</span> <span class="toc-text">线程的基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程的同步"><span class="toc-number">2.4.2.</span> <span class="toc-text">线程的同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#读写锁QReadWirterLock"><span class="toc-number">2.4.3.</span> <span class="toc-text">读写锁QReadWirterLock</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件读写操作"><span class="toc-number">2.5.</span> <span class="toc-text">文件读写操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读文件Read"><span class="toc-number">2.5.1.</span> <span class="toc-text">读文件Read</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写文件Wirte"><span class="toc-number">2.5.2.</span> <span class="toc-text">写文件Wirte</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#各编码转换"><span class="toc-number">2.5.3.</span> <span class="toc-text">各编码转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用静态函数"><span class="toc-number">2.5.4.</span> <span class="toc-text">常用静态函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文本流与数据流"><span class="toc-number">2.5.5.</span> <span class="toc-text">文本流与数据流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#辅助配合使用的类"><span class="toc-number">2.5.6.</span> <span class="toc-text">辅助配合使用的类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#QFileInfo-class"><span class="toc-number">2.5.6.1.</span> <span class="toc-text">QFileInfo class</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#QDataStream-Class"><span class="toc-number">2.5.6.2.</span> <span class="toc-text">QDataStream Class</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#QTextStream-Class"><span class="toc-number">2.5.6.3.</span> <span class="toc-text">QTextStream Class</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#QBuffer"><span class="toc-number">2.5.6.4.</span> <span class="toc-text">QBuffer</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库"><span class="toc-number">2.6.</span> <span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连接数据库"><span class="toc-number">2.6.1.</span> <span class="toc-text">连接数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入数据"><span class="toc-number">2.6.2.</span> <span class="toc-text">插入数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改数据"><span class="toc-number">2.6.3.</span> <span class="toc-text">修改数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除数据"><span class="toc-number">2.6.4.</span> <span class="toc-text">删除数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询数据"><span class="toc-number">2.6.5.</span> <span class="toc-text">查询数据</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Qt编程笔记
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2016/08/03/qt/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2016-08-03T03:18:08.000Z" itemprop="datePublished">2016-08-03</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/qt/">qt</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Qt客户端编程相关核心内容解析<br><a id="more"></a>  </p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>QT 91年由奇趣公司开发的跨平台C++图形界面应用程序开发框架,96年发布第一版   </p>
+<p>既可以开发GUI程序,也可以开发非GUI程序,比如控制台和服务器   </p>
+<p>2008年奇趣科技被诺基亚收购,qt成为了诺基亚旗下的编程语言工具   </p>
+<p>QT,MFC都计算机图形框架的C++的解决方案    </p>
+<h2 id="Qt应用范围"><a href="#Qt应用范围" class="headerlink" title="Qt应用范围"></a>Qt应用范围</h2><p>视频电话/家庭影院/航空航天/汽车信息娱乐/医疗/视觉效果   </p>
+<h2 id="Qt类图"><a href="#Qt类图" class="headerlink" title="Qt类图"></a>Qt类图</h2><p><img src="/2016/08/03/qt/image-01.png" width="900px">  </p>
+<p>Widget-&gt;(Windows-get缩写)  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QColorDialog  </span><br><span class="line">QFrontDialog  </span><br><span class="line">QTcpSocket  </span><br><span class="line">QUdpSocket</span><br></pre></td></tr></table></figure>
+<p>这么多类,Qt的20%的类会被80%的使用到<br>帕累托改进,基于2/8原则建立在帕累托最优理论基础上     </p>
+<blockquote>
+<p>2/8原则   </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">世界上的财富80%掌握在20%人的手中</span><br><span class="line">氢弹的能力80%源于中子的动能,20%源于其他粒子的势能</span><br><span class="line">女孩子第一次和男友见面80%第一次印象决定是否下一次见面甚至嫁给他</span><br><span class="line">处理器80%的指令会被20%几率使用到</span><br><span class="line">打盹的学生20%的时候接受了80%的内容</span><br></pre></td></tr></table></figure>
+<h2 id="Qt支持的平台"><a href="#Qt支持的平台" class="headerlink" title="Qt支持的平台"></a>Qt支持的平台</h2><ul>
+<li>Unix: AIX, HP-UX   </li>
+<li>BSD: FreeBSD, NetBSD  </li>
+<li>Mac: OSX10.5.6以上版本  </li>
+<li>Windows: Windows2000以上版本  </li>
+<li>Linux: redHat, suse, ubuntu, fedora  </li>
+</ul>
+<h2 id="Qt开发的软件"><a href="#Qt开发的软件" class="headerlink" title="Qt开发的软件"></a>Qt开发的软件</h2><ul>
+<li>KDE核心库  </li>
+<li>Maya动画渲染模块  </li>
+<li>Google Earth   </li>
+<li>Opera浏览器 </li>
+<li>SkyPe  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Qt部件Widget  </span><br><span class="line"></span><br><span class="line">信号与槽  </span><br><span class="line"></span><br><span class="line">对象树关系  </span><br><span class="line"></span><br><span class="line">布局管理    </span><br><span class="line"></span><br><span class="line">标准对话框    </span><br><span class="line"></span><br><span class="line">自定义对话框    </span><br><span class="line"></span><br><span class="line">文件与目录  </span><br><span class="line"></span><br><span class="line">数据库编程  </span><br><span class="line"></span><br><span class="line">网络  </span><br><span class="line"></span><br><span class="line">桌面服务与系统操作环境       </span><br><span class="line"></span><br><span class="line">进程/线程   </span><br><span class="line"></span><br><span class="line">逆向工程   </span><br><span class="line"></span><br><span class="line">音频/多媒体</span><br></pre></td></tr></table></figure>
+<h1 id="Qt基础"><a href="#Qt基础" class="headerlink" title="Qt基础"></a>Qt基础</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QLable&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> ** argv)</span></span>&#123;</span><br><span class="line">	<span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line">	QLable *lable = <span class="keyword">new</span> QLable;</span><br><span class="line">	lable-&gt;setText(<span class="string">"Hello World"</span>);</span><br><span class="line">	lable-&gt;show();</span><br><span class="line">	<span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>qmake -project:生成main.pro  </li>
+<li>qmake:生成MakeFile  </li>
+<li>make  </li>
+</ul>
+<h2 id="设置固定大小"><a href="#设置固定大小" class="headerlink" title="设置固定大小"></a>设置固定大小</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mainwindow.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ui_mainwindow.h"</span></span></span><br><span class="line"></span><br><span class="line">MainWindow::MainWindow(QWidget *parent) :</span><br><span class="line">    QMainWindow(parent),</span><br><span class="line">    ui(<span class="keyword">new</span> Ui::MainWindow)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>-&gt;setMaximumSize(<span class="number">290</span>,<span class="number">170</span>);</span><br><span class="line">    <span class="keyword">this</span>-&gt;setMinimumSize(<span class="number">290</span>, <span class="number">170</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MainWindow::~MainWindow()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">delete</span> ui;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="系统信号与槽"><a href="#系统信号与槽" class="headerlink" title="系统信号与槽"></a>系统信号与槽</h2><ul>
+<li><p>能携带任意数量和任意类型的参数,取代原始的回调和消息映射机制   </p>
+</li>
+<li><p>面对对象,独立与标准C/C++,必须借助Qt工具moc(Meta Object Compiler)<br>C++预处理程序,为高层次的事件处理自动生成所需要的附加代码  </p>
+</li>
+<li><p>必须把事件和相关的代码联系起来,才能对事件做出响应,才能使不同类型的对象之间能够通信   </p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">xxx.h</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="keyword">private</span> slots:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">chageTitleSlots</span><span class="params">()</span></span>;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">xxx.cpp</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="keyword">void</span> MainWindows::changeTitleSlot()&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;setWindowTitle(<span class="string">"Hi"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//最后在构造函数声明连接</span></span><br><span class="line">QObject::connect(ui-&gt;changeTitleButton, SIGNAL(clicked()),<span class="keyword">this</span>, SLOT(changeTitleSlot()));</span><br></pre></td></tr></table></figure>
+<p>声明一个槽,后实现,再连接   </p>
+<p>也可以在ui组件上直接<code>go to slot</code>  </p>
+<h2 id="自定义信号与槽"><a href="#自定义信号与槽" class="headerlink" title="自定义信号与槽"></a>自定义信号与槽</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">xxx.h</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> signals:</span><br><span class="line">	<span class="function"><span class="keyword">void</span>  <span class="title">custSignals</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">MainWindows::MainWindows(QWidget *parent):QMainWindow(parent),</span><br><span class="line">	ui:(<span class="keyword">new</span> Ui::MainWindow)&#123;</span><br><span class="line">		QObject::connect(<span class="keyword">this</span>, SIGNAL(custSignal()), qApp, SLOT(quit()));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> MainWindows::on_custButton_clicked()&#123;</span><br><span class="line">	<span class="comment">//发射这样的信号</span></span><br><span class="line">	emit <span class="keyword">this</span>-&gt;custSignals();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>1) 支持多对多的信号与槽函数的关联关系,QObject的connect静态函数实现信号与槽的关联(connect有多个重载函数);</p>
+</li>
+<li><p>2) 当某个信号关联到不同的槽函数时,不同槽执行的顺序是按照建立某信号时的顺序；</p>
+</li>
+<li><p>3) 信号只能声明且无返回值,此外由关键字signals指定,也不可有其他修饰限定符如public、static等；</p>
+</li>
+<li><p>4) 发射信号用emit关键字以及信号函数或可能的参数值,注意信号的参数应与槽的参数对应，并且信号的参数个数可以比槽的参数个数少，反之不可;</p>
+</li>
+<li><p>5) 槽函数slots关键字作为修饰限定符,可以有其他的修饰限定符如public、static等,也可以为虚函数;</p>
+</li>
+<li><p>6) connect函数最后一个参数为关联关系，默认为AutoConnection即槽执行完成后才返回执行emit后的代码;<br>  若为其他的如QueuedConnection则会继续执行emit后的代码而无论槽是否执行或执行完成;<br>  具体效果还需要信号与槽所在线程是否为同一线程与否有不同的表现，disconnect可断开关联关系;</p>
+</li>
+<li><p>7) 支持信号与槽机制时,需要继承自QObject类或其子类并且在类声明开始时添加Q_OBJECT宏;</p>
+</li>
+<li><p>8) 自动关联信号与槽,一般声明槽格式如:on_pushButton_clicked()<br>  其以on、部件对象名、信号加下划线组成;不再需要connect建立关联；<br>  另外一定要在setupUI调用之前设置部件的对象名(因setupUI内部调用了connectSlotsByName,若setupUI之后设置组件对象名自动关联可能会失效)<br>  此外自动关联只能支持已预先定义好的信号,不支持自定义信号；</p>
+</li>
+<li><p>9) 信号与槽机制使得发送者和接收者为松耦合的,参数类型、参数个数任意比较灵活,但是性能较差于回调函数机制的方式。</p>
+</li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>Qt中包含的线程类：</p>
+<ul>
+<li><p>QThread 所有线程的基类，提供了创建一个线程的方法</p>
+</li>
+<li><p>QThreadStorge 提供一逐线程数据存储</p>
+</li>
+<li><p>QMutex 提供相互排斥的锁，或互斥量</p>
+</li>
+<li><p>QMutexLocker 可以自动对QMutex加锁与解锁</p>
+</li>
+<li><p>QReadWirterLock 提供了一个可以同时读操作的锁</p>
+</li>
+<li><p>QreadLocker与QwriteLocker可以自动对QReadWriteLock加锁与解锁 </p>
+</li>
+<li><p>QSempHore提供了一个整形信号量，是互斥的泛化</p>
+</li>
+<li><p>QWaitCondition提供了一种方法，使线程可以在被另外线程唤醒之前一直休眠</p>
+</li>
+</ul>
+<h3 id="线程的基础"><a href="#线程的基础" class="headerlink" title="线程的基础"></a>线程的基础</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> MYTHREAD_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MYTHREAD_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QThread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> :</span> <span class="keyword">public</span> QThread</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">bool</span> stop ;</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">MyThread</span><span class="params">(QObject *parent = <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line">signals:</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// MYTHREAD_H</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//=======================================================</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mythread.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line">MyThread::MyThread(QObject *parent) :</span><br><span class="line">    QThread(parent)</span><br><span class="line">&#123;</span><br><span class="line">    stop = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> MyThread::run()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1000</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(stop)<span class="keyword">break</span>;</span><br><span class="line">        qDebug()&lt;&lt;i;</span><br><span class="line">        QThread::sleep(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//=======================================================</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QCoreApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"myobject.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QThread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mythread.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QCoreApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line">    MyThread myThread;</span><br><span class="line">    myThread.start();</span><br><span class="line">    QThread::sleep(<span class="number">10</span>);</span><br><span class="line">    myThread.stop=<span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> a.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="线程的同步"><a href="#线程的同步" class="headerlink" title="线程的同步"></a>线程的同步</h3><p>QMutex 提供相互排斥的锁，或互斥量</p>
+<p>QMetex提供了lock和Unlock函数，如果 一个已经锁定 这个互斥量，只有这个线程unlock后其它线程才可以访问   </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> MYTHREAD_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MYTHREAD_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QThread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QMutex</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> :</span> <span class="keyword">public</span> QThread</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    QMutex qm;</span><br><span class="line">    <span class="keyword">bool</span> stop;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">MyThread</span><span class="params">(QObject *parent = <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetFlg</span><span class="params">(<span class="keyword">bool</span> flg)</span></span>;</span><br><span class="line">signals:</span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// MYTHREAD_H</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//=======================================================</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mythread.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;QMutex&gt;</span></span></span><br><span class="line">MyThread::MyThread(QObject *parent) :</span><br><span class="line">    QThread(parent)</span><br><span class="line">&#123;</span><br><span class="line">    stop = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> MyThread::SetFlg(<span class="keyword">bool</span> flg)</span><br><span class="line">&#123;</span><br><span class="line">    qm.lock();</span><br><span class="line">    stop=flg;</span><br><span class="line">    qm.unlock();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> MyThread::run()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1000</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        qm.lock();</span><br><span class="line">        <span class="keyword">if</span>(stop)</span><br><span class="line">        &#123;</span><br><span class="line">            qm.unlock();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        qDebug()&lt;&lt;i;</span><br><span class="line">        QThread::sleep(<span class="number">1</span>);</span><br><span class="line">        qm.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//=======================================================</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QCoreApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"myobject.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QThread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mythread.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QCoreApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line">    MyThread myThread;</span><br><span class="line">    myThread.start();</span><br><span class="line">    QThread::sleep(<span class="number">10</span>);</span><br><span class="line">    myThread.SetFlg(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">return</span> a.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="读写锁QReadWirterLock"><a href="#读写锁QReadWirterLock" class="headerlink" title="读写锁QReadWirterLock"></a>读写锁<code>QReadWirterLock</code></h3><p>用mutext进行线程同步有一个问题某个时刻只许一个线程访问资源如果同时有多个线程对共享资源进行访问，</p>
+<p>同时有写操作线程那么这种情况下采用mutex就会成为程序的瓶颈。使用QReadWriteLock来实现多线程</p>
+<p>读操作，一个线程写操作，写线程执行时会阻塞所有的读线程，而读线程运行不需要进行同步</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">QReadWriteLock lock;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> ReaderThread::run()</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    lock.lockForRead();</span><br><span class="line">    read_file();</span><br><span class="line">    lock.unlock();</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> WriterThread::run()</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    lock.lockForWrite();</span><br><span class="line">    write_file();</span><br><span class="line">    lock.unlock();</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>QreadLocker和QWriteLocker类是对QReadWirterLock 的简化</p>
+</blockquote>
+<p>它们会自动unluck();</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">QReadWriteLock lock;</span><br><span class="line"></span><br><span class="line"><span class="function">QByteArray <span class="title">readData</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QReadLocker <span class="title">locker</span><span class="params">(&amp;lock)</span></span>;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相当于QReadWirterLock 的写法如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">QReadWriteLock lock;</span><br><span class="line"></span><br><span class="line"><span class="function">QByteArray <span class="title">readData</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    lock.lockForRead();</span><br><span class="line">    ...</span><br><span class="line">    lock.unlock();</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="文件读写操作"><a href="#文件读写操作" class="headerlink" title="文件读写操作"></a>文件读写操作</h2><h3 id="读文件Read"><a href="#读文件Read" class="headerlink" title="读文件Read"></a>读文件Read</h3><ul>
+<li>加载文件对象<code>QFile file(&quot;文件地址&quot;);</code></li>
+<li>打开加载的文件file.open(打开方式);</li>
+<li>操作文件</li>
+<li>关闭打开的文件file.colse();  </li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Widget::on_pushButton_clicked()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function">QFile <span class="title">file</span><span class="params">(<span class="string">"L:/qtpro/_qtApp/text/t.txt"</span>)</span></span>;</span><br><span class="line">    file.open(QIODevice::ReadOnly | QIODevice::Text);</span><br><span class="line">    QByteArray t = file.readAll();</span><br><span class="line">    ui-&gt;text_r-&gt;setText(QString(t));</span><br><span class="line">    file.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="写文件Wirte"><a href="#写文件Wirte" class="headerlink" title="写文件Wirte"></a>写文件Wirte</h3><ul>
+<li>以纯文本的形式读取要保存文件到QString对象<code>ui-&gt;text_e-&gt;toPlainText();</code></li>
+<li>创建QFile 对象保存文件</li>
+<li>打开QFile对象</li>
+<li>写入文件操作</li>
+<li>关闭打开的文件;  </li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Widget::on_pushButton_2_clicked()</span><br><span class="line">&#123;</span><br><span class="line">    QString e = ui-&gt;text_e-&gt;toPlainText();</span><br><span class="line">    <span class="function">QFile <span class="title">file</span><span class="params">(<span class="string">"/var/text/e.txt"</span>)</span></span>;</span><br><span class="line">    file.open(QIODevice::WriteOnly | QIODevice::Text);</span><br><span class="line">    file.write(e.toUtf8());</span><br><span class="line">    file.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>细节优化处理  </p>
+</blockquote>
+<ul>
+<li>read文件添加读取文件选择项<code>QFileDialog::getOpenFileName();</code>   </li>
+<li>打开文件是否成功的判断;  </li>
+<li>按行读取文件,可控制读取行数与每行字符数;  </li>
+<li>write文件创建保存路径<code>QFileDialog::getSaveFileName();</code>    </li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Widget::on_pushButton_clicked()</span><br><span class="line">&#123;</span><br><span class="line">    QFile file;</span><br><span class="line">    QString f = QFileDialog::getOpenFileName(<span class="keyword">this</span>, QString(<span class="string">"选择文件"</span>), QString(<span class="string">"/"</span>),QString(<span class="string">"TEXT(*.txt)"</span>));</span><br><span class="line">    file.setFileName(f);</span><br><span class="line">    <span class="keyword">if</span>(file.open(QIODevice::ReadOnly | QIODevice::Text))</span><br><span class="line">    &#123;</span><br><span class="line">        QByteArray t ;</span><br><span class="line">        <span class="keyword">while</span>(!file.atEnd())</span><br><span class="line">        &#123;</span><br><span class="line">            t += file.readLine();</span><br><span class="line">        &#125;</span><br><span class="line">        ui-&gt;text_r-&gt;setText(QString(t));</span><br><span class="line">        file.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Widget::on_pushButton_2_clicked()</span><br><span class="line">&#123;</span><br><span class="line">    QString e = ui-&gt;text_e-&gt;toPlainText();</span><br><span class="line">    QFile file;</span><br><span class="line">    file.setFileName(QFileDialog::getSaveFileName(<span class="keyword">this</span>, QString(<span class="string">"保存路径"</span>), QString(<span class="string">"/"</span>),QString(<span class="string">"TEXT(*.txt)"</span>)));</span><br><span class="line">    file.open(QIODevice::WriteOnly | QIODevice::Text);</span><br><span class="line">    file.write(e.toUtf8());</span><br><span class="line">    file.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="各编码转换"><a href="#各编码转换" class="headerlink" title="各编码转换"></a>各编码转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QString -&gt; QByteArray      QString.toUtf8();</span><br><span class="line"></span><br><span class="line">QByteArray -&gt; std::string  QByteArray.toStdString();</span><br><span class="line"></span><br><span class="line">std::string -&gt; char *        string.date();</span><br></pre></td></tr></table></figure>
+<h3 id="常用静态函数"><a href="#常用静态函数" class="headerlink" title="常用静态函数"></a>常用静态函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QFileDialog::getOpenFileName()    //获取指定文件路径名返回QString</span><br><span class="line">QFileDialog::getExistingDirectory()  //获取指定路径返回QString</span><br><span class="line">QFileDialog::getSaveFileName()    //获取指定保存路径名返回QString</span><br></pre></td></tr></table></figure>
+<h3 id="文本流与数据流"><a href="#文本流与数据流" class="headerlink" title="文本流与数据流"></a>文本流与数据流</h3><p>QT中将文件分为文本文件和数据文件,文本文件内容是可读的文本字符,数据文件的内容是二进制数据。</p>
+<p>QFile直接支持文本文件和数据文件的操作,主要函数接口如下:   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">qint64 read( char * data, qint64 maxSize) //数据流读取</span><br><span class="line">QByteArray read( qint64 maxSize) //文本流方式读取</span><br><span class="line">QByteArray readAll() //文本流方式读取</span><br><span class="line">QByteArray readLine()//文本流方式读取</span><br><span class="line">qint64 write(const char * data, qint64 maxSize)</span><br><span class="line">qint64 write(const QByteArray &amp; byteArray)</span><br></pre></td></tr></table></figure>
+<p>为了简化文本文件和数据文件的读写操作,QT提供了QTextStream和QDataStream辅助类。  </p>
+<p>QTextStream可将写入的数据全部转换为可读文本，QDataStream可将写入的数据根据类型转换为二进制数据。</p>
+<p>QTemporaryFile是QT中的临时文件操作类,用来安全创建全局唯一的临时文件,QTemporaryFile对象销毁时对应的临时文件将被删除,临时文件的打开方式为QIODevice::ReadWrite,临时文件常用于大数据传递或者进程间通信场合。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QTemporaryFile tempFile;</span><br><span class="line"><span class="keyword">if</span>( tempFile.open() )</span><br><span class="line">&#123;  </span><br><span class="line">    tempFile.write(<span class="string">"D.T.Software"</span>);</span><br><span class="line">    tempFile.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="辅助配合使用的类"><a href="#辅助配合使用的类" class="headerlink" title="辅助配合使用的类"></a>辅助配合使用的类</h3><h4 id="QFileInfo-class"><a href="#QFileInfo-class" class="headerlink" title="QFileInfo class"></a>QFileInfo class</h4><p>获取文件信息   </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">QFileInfo类用于读取文件的属性信息</span><br><span class="line"></span><br><span class="line"><span class="function">QFile <span class="title">file</span><span class="params">(f)</span></span>;</span><br><span class="line"><span class="function">QFileInfo <span class="title">info</span><span class="params">(file)</span></span>;</span><br><span class="line"></span><br><span class="line">qDebug() &lt;&lt; info.exists();</span><br><span class="line">qDebug() &lt;&lt; info.isFile();</span><br><span class="line">qDebug() &lt;&lt; info.isReadable();</span><br><span class="line">qDebug() &lt;&lt; info.isWritable();</span><br><span class="line">qDebug() &lt;&lt; info.created();</span><br><span class="line">qDebug() &lt;&lt; info.lastRead();</span><br><span class="line">qDebug() &lt;&lt; info.lastModified();</span><br><span class="line">qDebug() &lt;&lt; info.path();</span><br><span class="line">qDebug() &lt;&lt; info.fileName();</span><br><span class="line">qDebug() &lt;&lt; info.suffix();</span><br><span class="line">qDebug() &lt;&lt; info.size();</span><br></pre></td></tr></table></figure>
+<h4 id="QDataStream-Class"><a href="#QDataStream-Class" class="headerlink" title="QDataStream Class"></a>QDataStream Class</h4><p>数据流操作文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">创建流对象 QDataStream date;</span><br><span class="line"></span><br><span class="line">int a= xxxx;</span><br><span class="line"></span><br><span class="line">string b = &quot;xxxxxxxxx&quot; ;</span><br><span class="line"></span><br><span class="line">将数据存在流中 date &gt;&gt; a &gt;&gt; b;</span><br><span class="line"></span><br><span class="line">int aa;</span><br><span class="line"></span><br><span class="line">string bb;</span><br><span class="line"></span><br><span class="line">从流中取出数据 date &lt;&lt; aa &lt;&lt; bb;</span><br></pre></td></tr></table></figure>
+<p>QDataStream在不同的QT版本中数据流文件格式可能是不同的，如果数据流文件需要在不同版本的QT程序间传递时需要考虑版本问题。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setVersion</span><span class="params">(<span class="keyword">int</span> v)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">version</span><span class="params">()</span> <span class="keyword">const</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="QTextStream-Class"><a href="#QTextStream-Class" class="headerlink" title="QTextStream Class"></a>QTextStream Class</h4><p>文本方式操作文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">创建流对象 QTextStream date;</span><br><span class="line"></span><br><span class="line">date.setCodec();</span><br></pre></td></tr></table></figure>
+<p>支持对文件读取编码设置(有效解决乱码问题)</p>
+<h4 id="QBuffer"><a href="#QBuffer" class="headerlink" title="QBuffer"></a>QBuffer</h4><p> QBuffer类为QByteArray提供QIODevice接口。</p>
+<p>目前先理解为一个创建一个缓存文件;</p>
+<p>QT中预定义了缓冲区的类QBuffer，可以将缓冲区看成一种特殊的IO设备，文件流辅助类可以直接用于操作缓冲区。QBuffer缓冲区写入和读取的数据必须是同一种数据类型，不能混合多种数据类型。</p>
+<p>QBuffer的使用场合：</p>
+<p>A、线程间不同类型的数据传递</p>
+<p>B、缓存外部设备中的数据返回</p>
+<p>C、数据读取速度小于写入速度</p>
+<p>总结:</p>
+<p>读写操作主要方法有</p>
+<ul>
+<li>read();</li>
+<li>readAll();</li>
+<li>readline();</li>
+<li>write();</li>
+</ul>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><blockquote>
+<p>注意要在项目中加入数据库的应用要先在.pro中加入sql保存。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QT       += core gui sql</span><br></pre></td></tr></table></figure>
+<h3 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h3><p>在构造函数中加入这段代码;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用mySQL写入”QMYSQL”,如果是使用sqlite数据库写入”QSQLITE”,使用Oracle数据库写入”QOICQ” </span></span><br><span class="line">QSqlDatabase dataBase=QSqlDatabase::addDatabase(<span class="string">"QMYSQL"</span>);</span><br><span class="line">dataBase.setHostName(<span class="string">"localhost"</span>);</span><br><span class="line">dataBase.setUserName(<span class="string">"root"</span>);</span><br><span class="line">dataBase.setPassword(<span class="string">"777777"</span>);</span><br><span class="line">dataBase.setDatabaseName(<span class="string">"picturedata"</span>);</span><br><span class="line">dataBase.open();</span><br></pre></td></tr></table></figure>
+<p>如果没有问题连接成功以后open会返回一个bool型的变量true,我们可以接收一下这个变量qDebug显示成功或输出错误信息。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> ok=dataBase.open();</span><br><span class="line"><span class="keyword">if</span>(ok)</span><br><span class="line">&#123;</span><br><span class="line">  qDebug()&lt;&lt;<span class="string">"open database success"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  qDebug()&lt;&lt;<span class="string">"error open database because"</span>&lt;&lt;<span class="keyword">this</span>-&gt;dataBase.lastError().text();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function">QSqlQuery <span class="title">query</span><span class="params">(dataBase)</span></span>;</span><br><span class="line">QString datestr = ui-&gt;dateEdit-&gt;dateTime().toString(<span class="string">"dd-MM-yyyy"</span>);</span><br><span class="line">QString timestr = ui-&gt;dateEdit-&gt;time().toString(<span class="string">"hh:mm:ss"</span>);</span><br><span class="line">QString sql=QString(<span class="string">"select *from information"</span>);</span><br><span class="line">query.exec(sql);</span><br><span class="line"><span class="keyword">if</span>(query.numRowsAffected() == <span class="number">0</span>)&#123;</span><br><span class="line">	QString savesql = QString(<span class="string">"INSERT INTO information(userName,IP,storagePath,productName,date)"</span>);</span><br><span class="line">	savesql += QString(<span class="string">" VALUES('%1','%2','%3','%4','%5')"</span>).arg(ui-&gt;userNameEdit-&gt;text())</span><br><span class="line">	    .arg(ui-&gt;ipAddressEdit-&gt;text())</span><br><span class="line">	    .arg(ui-&gt;storagePathEdit-&gt;text())</span><br><span class="line">	    .arg(ui-&gt;productNameEdit-&gt;text())</span><br><span class="line">	    .arg(datestr+<span class="string">' '</span>+timestr);</span><br><span class="line">	<span class="keyword">bool</span> ok=query.exec(savesql);</span><br><span class="line">	<span class="keyword">if</span>(ok)&#123;</span><br><span class="line">	  QMessageBox::about(<span class="literal">NULL</span>, <span class="string">"Save"</span>, <span class="string">"save new database success"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">	   QMessageBox::about(<span class="literal">NULL</span>, <span class="string">"Save"</span>, <span class="string">"error save new database"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然sql语句也可以这样写<code>QString(&quot;INSERT INTO information(userName,IP,storagePath,productName,date)
+VALUES(&#39;%1&#39;,&#39;%2&#39;,&#39;%3&#39;,&#39;%4&#39;,&#39;%5&#39;)&quot;)；</code></p>
+<h3 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">QString updatesql = QString(<span class="string">"UPDATE information SET userName='%1',IP='%2',storagePath='%3',productName='%4',date='%5' WHERE IP=%6"</span>)</span><br><span class="line">                      .arg(ui-&gt;userNameEdit-&gt;text())</span><br><span class="line">                      .arg(ui-&gt;ipAddressEdit-&gt;text())</span><br><span class="line">                      .arg(ui-&gt;storagePathEdit-&gt;text())</span><br><span class="line">                      .arg(ui-&gt;productNameEdit-&gt;text())</span><br><span class="line">                      .arg(datestr+<span class="string">' '</span>+timestr)</span><br><span class="line">                      .arg(oldIP);</span><br><span class="line">    <span class="keyword">bool</span> ok=query.exec(updatesql);</span><br><span class="line">    <span class="keyword">if</span>(ok)&#123;</span><br><span class="line">        QMessageBox::about(<span class="literal">NULL</span>, <span class="string">"Save"</span>, <span class="string">"save database success"</span>);&#125;</span><br><span class="line">      <span class="keyword">else</span>&#123;</span><br><span class="line">        QMessageBox::about(<span class="literal">NULL</span>, <span class="string">"Save"</span>, <span class="string">"error save database"</span>);&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">QSqlQuery <span class="title">deletequery</span><span class="params">(dataBase)</span></span>;</span><br><span class="line">QString deletesql = QString(<span class="string">"DELETE FROM information WHERE IP='%1'"</span>).arg(oldIP);</span><br><span class="line"><span class="keyword">bool</span> ok=deletequery.exec(deletesql);</span><br><span class="line"><span class="keyword">if</span>(ok)</span><br><span class="line">&#123;</span><br><span class="line">  QMessageBox::about(<span class="literal">NULL</span>, <span class="string">"Reset"</span>, <span class="string">"Reset database success"</span>);</span><br><span class="line">  ui-&gt;userNameEdit-&gt;clear();</span><br><span class="line">  ui-&gt;ipAddressEdit-&gt;clear();</span><br><span class="line">  ui-&gt;storagePathEdit-&gt;clear();</span><br><span class="line">  ui-&gt;productNameEdit-&gt;clear();</span><br><span class="line">  ui-&gt;dateEdit-&gt;clear();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">   QMessageBox::about(<span class="literal">NULL</span>, <span class="string">"Reset"</span>, <span class="string">"error reset database"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">QSqlQuery <span class="title">showquery</span><span class="params">(dataBase)</span></span>;</span><br><span class="line">QString showsql=QString(<span class="string">"select *from information"</span>);</span><br><span class="line">showquery.exec(showsql);</span><br><span class="line"><span class="keyword">if</span>(showquery.numRowsAffected() != <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    showquery.next();  </span><br><span class="line">    ui-&gt;userNameEdit-&gt;setText(showquery.value(<span class="number">0</span>).toString());</span><br><span class="line">    ui-&gt;ipAddressEdit-&gt;setText(showquery.value(<span class="number">1</span>).toString());</span><br><span class="line">    ui-&gt;storagePathEdit-&gt;setText(showquery.value(<span class="number">2</span>).toString());</span><br><span class="line">    ui-&gt;productNameEdit-&gt;setText(showquery.value(<span class="number">3</span>).toString());</span><br><span class="line">    ui-&gt;dateEdit-&gt;setDateTime(QDateTime::fromString(showquery.value(<span class="number">4</span>).toString(),<span class="string">"dd-MM-yyyy hh:mm:ss"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2016/08/03/qt/';
+        this.page.title = 'Qt编程笔记';
+        this.page.identifier = '2016/08/03/qt/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

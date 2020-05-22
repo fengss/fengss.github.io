@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>AI-机器学习 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="机器学习相关见解资料摘录
+
+机器学习主要分三个领域:监督学习,非监督学习,强化学习  
+监督学习:细分为分类和回归,它需要样本标注,样本的质量和规模决定了模型的复杂度和效果(也说明了机器学习的监督学习需要大数据作为支撑的重要原因)  
+
+监督学习目前应用最广泛的一种机器学习, 比如常见的广告点击率预估、商品推荐、搜索排序等  
+
+
+非监督学习:可以细分为聚类、降维等方向, 它可以发掘大量未标注数据中的规律   
+
+
+ 强化学习:智能系统从环境到行为映射的学习,以使奖励函数值最大,被认为最接近人类">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#机器学习"><span class="toc-number">1.</span> <span class="toc-text">机器学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本术语"><span class="toc-number">1.1.1.</span> <span class="toc-text">基本术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#假设空间"><span class="toc-number">1.1.2.</span> <span class="toc-text">假设空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#归纳偏好"><span class="toc-number">1.1.3.</span> <span class="toc-text">归纳偏好</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型评估与选择"><span class="toc-number">1.2.</span> <span class="toc-text">模型评估与选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#经验误差与过拟合"><span class="toc-number">1.2.1.</span> <span class="toc-text">经验误差与过拟合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#评估方法"><span class="toc-number">1.2.2.</span> <span class="toc-text">评估方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#留出法"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">留出法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#交叉验证法"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">交叉验证法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自助法"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">自助法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#调参与最终模型"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">调参与最终模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能度量"><span class="toc-number">1.2.3.</span> <span class="toc-text">性能度量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#错误率与精度"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">错误率与精度</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Turi"><span class="toc-number">2.</span> <span class="toc-text">Turi</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#应用"><span class="toc-number">2.1.1.</span> <span class="toc-text">应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#要点"><span class="toc-number">2.1.2.</span> <span class="toc-text">要点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公用事业"><span class="toc-number">2.1.3.</span> <span class="toc-text">公用事业</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            AI-机器学习
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2018/01/06/ai/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-01-06T01:50:37.000Z" itemprop="datePublished">2018-01-06</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/Turi/">Turi</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>机器学习相关见解资料摘录<br><a id="more"></a></p>
+<p><img src="/2018/01/06/ai/image-19.png" width="800px"></p>
+<h1 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h1><p>主要分三个领域:监督学习,非监督学习,强化学习  </p>
+<p>监督学习:细分为分类和回归,它需要样本标注,样本的质量和规模决定了模型的复杂度和效果(也说明了机器学习的监督学习需要大数据作为支撑的重要原因)  </p>
+<blockquote>
+<p>监督学习目前应用最广泛的一种机器学习, 比如常见的广告点击率预估、商品推荐、搜索排序等  </p>
+</blockquote>
+<blockquote>
+<p>非监督学习:可以细分为聚类、降维等方向, 它可以发掘大量未标注数据中的规律   </p>
+</blockquote>
+<blockquote>
+<p> 强化学习:智能系统从环境到行为映射的学习,以使奖励函数值最大,被认为最接近人类的学习行为,在工业控制、机器人行为决策等领域得到广泛的应用  </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">深度学习是目前人工智能领域发展最活跃领域 </span><br><span class="line">大量的模型和理论不断涌现  </span><br><span class="line">机器作诗,机器写新闻都是基于深度学习的RNN模型  </span><br><span class="line">深度学习已经完全统治了图形和语音识别的机器学习领域  </span><br><span class="line">采用深度网络来改造强化学习中的函数值拟合  </span><br><span class="line">大名鼎鼎的Aplpha Go都是深度强化学习应用</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对于某给定的任务T，在合理的性能度量方案P的前提下<br>某计算机程序可以自主学习任务T的经验E;<br>随着提供合适、优质、大量的经验E，该程序对于任务T的性能逐步提高。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">机器学习是人工智能的一个分支。我们使用计算机设计一个系统</span><br><span class="line">使它能够根据提供的训练数据按照一定的方式来学习;</span><br><span class="line">随着训练次数的增加,该系统可以在性能上不断学习和改进;</span><br><span class="line">通过参数优化的学习模型,能够用于预测相关问题的输出。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>机器学习可以解决什么 </p>
+</blockquote>
+<ul>
+<li>给定数据的预测问题</li>
+<li>数据清洗/特征选择</li>
+<li>确定算法模型/参数优化 </li>
+<li>结果预测 </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">经验通常以数据的形式存在  </span><br><span class="line">因此机器学习在计算机上从数据中产生&quot;模型&quot;的算法即&quot;学习算法&quot;</span><br><span class="line">有了学习算法,我们把“经验”数据提供给它,它就能基于这些数据产生模型;</span><br><span class="line">这样在面对新的情况时,模型会给我们提供相应的判断</span><br></pre></td></tr></table></figure>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h3><p>西瓜的数据,例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(色泽=青绿;根蒂=蜷缩;敲声=浊响),(色泽=乌黑,根蒂=稍蜷,敲声=沉闷),</span><br><span class="line">(色泽=浅白;根蒂=蜷缩;敲声=浊响)</span><br></pre></td></tr></table></figure>
+<p>这组数据为一个”数据集”  </p>
+<p>每条记录是关于一个事件或对象的描述,称之为<code>示例</code>或<code>样本</code>  </p>
+<p>色泽,根蒂,敲声称为<code>属性</code>,<code>特征</code>   </p>
+<p>属性上的取值,例如青绿,乌黑称为<code>属性值</code>   </p>
+<p>熟悉张成的空间称为<code>属性空间</code>,<code>样本空间</code>,<code>输入空间</code>   </p>
+<p>例如我们把色泽,根蒂,敲声作为三个坐标轴,则他们张成一个用于描述西瓜的三维空间   </p>
+<p>每个西瓜都可在这个空间中找到自己的坐标位置,由于空间中的每个点对应一个坐标向量,因此称为<code>特征向量</code>  </p>
+<p>D = {x1, x2, x3…., xm}包含了m个示例的数据集,每个示例由d个属性描述(例如西瓜用了3个属性描述)    </p>
+<p>则每个示例xi = {x1, x2, x3…., xm},是d维度样本空间X中的一个向量   </p>
+<p>其中xij,是xi在第j个属性上的取值(第3个西瓜在第2个属性上的值是<code>硬挺</code>)  </p>
+<p>d称为样本xi的<code>维度</code>   </p>
+<p>从数据中执行某个学习算法学得模型的过程称为<code>学习</code>或<code>训练</code>    </p>
+<p>其中每个样本为<code>训练样本</code>  </p>
+<p>训练样本组成的集合为<code>训练集</code>  </p>
+<p>学得模型对应关于数据的某种潜在规律,称为<code>假设</code>  </p>
+<p>这种潜在规律自身则称为<code>真相</code>或<code>真实</code>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">希望学得一个帮助我们判断没剖开的是不是好瓜的模型</span><br><span class="line">仅仅有签名的示例数据显然不够,要简历这样的`预测`的模型</span><br><span class="line">我们需要获得训练样本的`结果`信息,例如((色泽=青绿;根蒂=蜷缩;敲声=浊响),好瓜)</span><br><span class="line">拥有这样标记信息的示例,则称为`样本`</span><br></pre></td></tr></table></figure>
+<p>(xi, yi)表示第i个样本, y为标记集合,也称为标记空间或输出空间</p>
+<p>若预测的是离散值,例如<code>好瓜</code>,<code>坏瓜</code>,此类学习任务称为<code>分类</code>   </p>
+<p>若预测的是连续值,例如西瓜成熟度0.95,0.37此类学习任务称为<code>回归</code>  </p>
+<p>对只涉及两个类别的<code>二分类</code>任务,通常称其中一个类的<code>正类</code>,另一个为<code>反类</code>  </p>
+<p>学习模型后,使用其进行预测的过程称为<code>测试</code>   </p>
+<p>被预测的样本称为<code>测试样本</code>  </p>
+<p>还可以对西瓜做<code>聚类</code>:即将训练集中的西瓜分成若干组,每组称为一个<code>簇</code>  </p>
+<p>这些自动形成的簇可能对应潜在的问题,例如浅色瓜、深色瓜、甚至本地瓜、外地瓜这样的学习有助于了解数据内尊的规律,能为更深入地分析数据内在规律,更深入地分析数据建立基础,<code>聚类学习</code>中浅色瓜、本地瓜这样的概念事先不知道,而且学习过程中训练样本通常不拥有标记信息  </p>
+<p>根据训练数据是否拥有标记信息,学习任务大致划分为两大类:<code>监督学习</code>和<code>无监督学习</code></p>
+<p><code>分类</code>和<code>回归</code>是前者的代表而<code>聚类</code>则是后者的代表  </p>
+<p>学得模型适用于新样本的能力,称为<code>泛化</code>能力,具有<code>强泛化</code>能力的模型很好适用于整个样本空间  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">于是尽管训练集只是样本空间一个很小的采样,我们仍希望很好地反映出样本空间的特性</span><br><span class="line">否则很难期望在训练集上学得模型能在整个样本空间上工作得很好</span><br></pre></td></tr></table></figure>
+<h3 id="假设空间"><a href="#假设空间" class="headerlink" title="假设空间"></a>假设空间</h3><p><code>归纳</code>与<code>演绎</code>是科学推理的两大基本手段,前者是从特殊到到一般<code>泛化</code>过程,即从具体的事实归结出一般性规律  </p>
+<p>后者是从一般到特殊化的<code>特化</code>过程,即从基础原理推演出具体状况  </p>
+<p>基于一组公理和推理规则推导出与之相恰的定理,称之为<code>演绎</code>  </p>
+<p>从样例中学习显然是<code>归纳</code>的过程,也称为<code>归纳学习</code>   </p>
+<p>归纳学习有狭义和广义之分,广义的归纳学习大体相当于从案例中学习   </p>
+<p>而狭义的归纳学习则要求从训练数据中学的概念,因此也称为<code>概念学习</code>或<code>概念形成</code>  </p>
+<p>概念学习最基本的是布尔概念学习,即对<code>是</code>或<code>不是</code>这样的可表示为0/1布尔值的模板概念学习  </p>
+<p><img src="/2018/01/06/ai/image-06.png" width="250px">  </p>
+<p>这主要学习的目标是<code>好瓜</code>,暂且假设<code>好瓜</code>由<code>色泽</code>,<code>根蒂</code>,<code>敲声</code>这三个因素完全确定   </p>
+<p>于是学得将是<code>好瓜是某种色泽、某种根蒂、某种敲声</code>的概念  </p>
+<p>布尔表达式则写出来是<code>好瓜-&gt;(色泽=? ^ 根蒂=? ^ 敲声=?)</code>  </p>
+<p>这里的?尚未确定值,而我们的任务就是通过对数据集训练把?确定下来   </p>
+<p>从上面表第一行<code>色泽=青绿 ^ 根蒂=蜷缩 ^ 敲声=浊响</code>,不就下定论这样的是好瓜吗?  </p>
+<p>但是学习目的是<code>泛化</code>,即通过训练集中的瓜学习以获得没有见过的瓜判断的能力  </p>
+<p>从色泽,根蒂,敲声分别有3、2、2种可能取值,则我们面临的假设空间规模大小为 4 <em> 3 </em> 3 + 1 = 37  </p>
+<p><img src="/2018/01/06/ai/image-07.png" width="250px">  </p>
+<p>许多策略对这个假设空间进行搜索,自顶向下、从一般到特殊或自底向上、从特殊到一般  </p>
+<p>搜索过程中不断删除与正例不一致的假设、或与反例一致的假设、最终会获得与训练集一致(即对所有训练样本能够进行正确判断)的假设,这就是我们学得的结果  </p>
+<h3 id="归纳偏好"><a href="#归纳偏好" class="headerlink" title="归纳偏好"></a>归纳偏好</h3><blockquote>
+<p>通俗的讲就是<code>什么模型更好</code>这么一个问题        </p>
+</blockquote>
+<p>归纳偏好对应了学习算法本身锁做出的关于<code>什么样的模型更好</code>的假设    </p>
+<p>这个假设是否成立,即算法的归纳偏好是否与问题本身匹配,大多数时候直接决定了算法能否取得更好的性能  </p>
+<p><br><br><br></p>
+<h2 id="模型评估与选择"><a href="#模型评估与选择" class="headerlink" title="模型评估与选择"></a>模型评估与选择</h2><h3 id="经验误差与过拟合"><a href="#经验误差与过拟合" class="headerlink" title="经验误差与过拟合"></a>经验误差与过拟合</h3><p>通常把分类错误的样本数占样本总数的比例称为<code>错误率</code>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m个样本中有a个样本分类错误,则错误率E=a/m</span><br></pre></td></tr></table></figure>
+<p>相应的<code>1-a/m</code>称为<code>精度</code>,即<code>精度=1-错误率</code>  </p>
+<p>学习器的实际预测输出与样本的真实输出之间的差异称为<code>误差</code>  </p>
+<p>学习器在训练集上的误差称为<code>训练误差</code>或<code>经验误差</code>,在新样本上的误差称为<code>泛化误差</code>  </p>
+<p>显然我们希望泛化误差小的学习器,然而并不知道新样本是什么样,实际能做的就是努力使经验误差最小化  </p>
+<p>为达目的,在训练样本中尽可能学出适用于所有潜在样本的<code>普遍规律</code>,这样才能在遇到新样本时做出正确的类别   </p>
+<p>但如果太好的时候,有可能把训练样本自身的特点作为所有潜在样本都会出具有的一般性质</p>
+<p>这样导致泛化性能下降,机器学习称为<code>过拟合</code>  </p>
+<p>与<code>过拟合</code>相对的是<code>欠拟合</code>,这是指对训练样本的一般性质尚未学好  </p>
+<p><img src="/2018/01/06/ai/image-08.png" width="350px">  </p>
+<p><code>过拟合</code>常见情况是学习能力太过于强大,以至于把训练样本所包含的不太一般的特性都学到了  </p>
+<p>而<code>欠拟合</code>则由于学习能力低下而造成,欠拟合比较容易克服,例如在决策树学习中扩展分支,在神经网络增加训练轮数等  </p>
+<p>而<code>过拟合</code>则很麻烦  </p>
+<p><code>过拟合</code>是机器学习的关键障碍,各类学习算法都必然带有一些针对过拟合的措施   </p>
+<p>然而必须认识到<code>过拟合是无法避免的</code>,我们所能做的只是<code>缓解</code>,或者减小其风险  </p>
+<p>若可彻底避免过拟合,则通过经验误差最小化就能获得最优解,这就意味着我们构造性地证明了<code>p等于np</code>,因此只要相信<code>p不等np</code>,过拟合就不可避免   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">现实任务,往往有多种学习算法可供选择</span><br><span class="line">甚至对同一个学习算法,当使用不同的参数配置,也会产生不同的模型</span><br></pre></td></tr></table></figure>
+<p>那么如何选用哪个学习算法、使用哪一种参数配置?  </p>
+<p>涉及到了机器学习中的<code>模型选择</code>问题   </p>
+<p>理想的解决方案是对候选模型的泛化误差进行评估,然后选择泛化误差最小的那个模型   </p>
+<p>经过上面的讨论,无法直接获得泛化误差,而训练误差又过拟合现象而不适合作为标准  </p>
+<h3 id="评估方法"><a href="#评估方法" class="headerlink" title="评估方法"></a>评估方法</h3><p>那么在现实中如何进行模型评估与选择?   </p>
+<p>可通过实验测试对学习器的泛化误差进行评估并进而做出选择  </p>
+<p>为此使用一个<code>测试集</code>来测试学习器对新样本的辨别能力   </p>
+<p>然后以测试集上的<code>测试误差</code>作为泛化误差的近似  </p>
+<p>测试集尽可能与训练集互斥,即测试样本尽量不在训练集中出现、未在训练过程中使用过  </p>
+<p>如果希望得到泛化性能强的模型,若测试样本被用做训练,得到的结果过于<code>乐观</code>的估计结果  </p>
+<h4 id="留出法"><a href="#留出法" class="headerlink" title="留出法"></a>留出法</h4><p>将数据集D划分两个互斥集合,其中一个集合作为训练集S,另一个作为测试集T  </p>
+<p>然后用T来评估其测试误差,作为对泛化误差的估计  </p>
+<p>以二分类任务为例,假定D包含1000个样本,将其划分为S包含700个样本,T包含300个样本  </p>
+<p>用S进行训练后,如果模型在T上有90个样本分类错误,那么其错误率为(90/300) * 100% = 30%, 相应的,精度为1-30%=70%</p>
+<p>训练集/测试集的划分尽可能要保持数据分布的一致性,避免因数据划分过程引入额外的偏差而对最终结果产生影响,例如在分类任务中至少要保持样本的类别比例相似   </p>
+<p>例如通过D进行分层采样而获得含70%样本的训练集S和含30%样本的测试集T</p>
+<p>若D包含500个正例、500个反例,则分层采样得到的S应包含350个正例、350个反例</p>
+<p>则分层采样得到的S应包含350个正例、350个反例  </p>
+<p>而T则包含150个正例和150个反例  </p>
+<p>若S、T中样本类别比例差别很大,则误差估计将由于训练/测试数据分布的差异而产生偏差 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">另一个注意的问题是,即便在给定训练、测试集的样本比例后</span><br><span class="line">仍存在多种划分方式对初始数据集D进行分割  </span><br><span class="line">例如上面的例子可以把D中的样本排序,然后把签名350个正例放训练集中 </span><br><span class="line">也可以把最后350个正例放到训练集中</span><br><span class="line">这些不同的划分将导致不同的训练集/测试</span><br><span class="line">相应的模型评估的结果也会有差别</span><br><span class="line">因此单次使用留出法得到的估计结果往往不够稳定可靠</span><br><span class="line">在使用留出法时,一般要采用若干次随机划分、重复进行实验评估取平均值作为留出法的评估结果</span><br><span class="line">例如进行100次随机划分,每次产生一个训练、测试集用于实验评估</span><br><span class="line">100次后得到100个结果而留出法返回的则是这个100个结果的平均</span><br></pre></td></tr></table></figure>
+<h4 id="交叉验证法"><a href="#交叉验证法" class="headerlink" title="交叉验证法"></a>交叉验证法</h4><p>将数据D划分为k个大小相似的互斥子集  </p>
+<p>每个子集Di都尽可能保持数据分布的一致性,即从D中通过分层采样得到  </p>
+<p><img src="/2018/01/06/ai/image-09.png" width="350px"></p>
+<h4 id="自助法"><a href="#自助法" class="headerlink" title="自助法"></a>自助法</h4><p>自助法以自助采样法为基础,给定包含m个样本的数据集D,我们对它进行采样产生数据集E  </p>
+<p>每次随机从D中挑选一个样本,将其拷贝放入E,然后再将样本返回初始数据集D中   </p>
+<p>使得该样本在下次采样时仍有可能被采到  </p>
+<p>这个过程重复执行m次后,就得到了包含m个数据集E,这就是自助采样结果  </p>
+<p><img src="/2018/01/06/ai/image-10.png" width="150px"></p>
+<p>即通过自助采样,初始数据集D中约有36.8%未出现在采样数据集E中  </p>
+<h4 id="调参与最终模型"><a href="#调参与最终模型" class="headerlink" title="调参与最终模型"></a>调参与最终模型</h4><p>大多数学习算法都有参数需要设定   </p>
+<p>参数配置不同,学的模型的性能往往有显著差别,因此进行模型评估与选择  </p>
+<p>除了要对适用学习算法进行选择,还需对算法参数进行设定,这就是通常所说的<code>参数调节</code>,简称<code>调参</code>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">假设算法有3个参数,每个参数仅考虑5个候选值</span><br><span class="line">这样对每一组训练/测试集就有5的3次方=125个模型需考察</span><br><span class="line"></span><br><span class="line">强大的学习算法有大量参数设定,这将导致极大的调参工程量</span><br><span class="line">以至于不少应用任务中,参数调的好好不往往对最终模型性能又关键性影响</span><br></pre></td></tr></table></figure>
+<p>给定包含m个样本的数据集D,在模型评估与选择过程中由于需要留出一部分数据进行评估测试  </p>
+<p>事实上我们只是用了一部分数据训练模型,因此采用数据集D重新训练模型,这个模型在训练过程中使用了所有m个样本,这才是最终提交给用户的模型  </p>
+<p><br><br><br></p>
+<h3 id="性能度量"><a href="#性能度量" class="headerlink" title="性能度量"></a>性能度量</h3><p>对学习器的泛化性能进行评估,不仅需要有效可行的实验估计方法,还需要有衡量模型泛化能力的评价标准,这就是性能度量  </p>
+<p>性能度量反映了任务需求,在对比不同模型的能力时,使用不同的性能度量往往会导致不同的评判结果  </p>
+<p>这意味着模型的<code>好坏</code>是相对的,什么样的模型是好的,不仅取决于算法和数据,还决定于任务需求  </p>
+<p>在预测任务中给定样例集, D={(x1,y1), (x2, y2),……,(xm,ym)}  </p>
+<p>其中yi是示例xi的真实标记,要评估学习器f的性能,则学习器预测结果f(x)与真实标记y进行比较  </p>
+<p><img src="/2018/01/06/ai/image-11.png" width="350px"></p>
+<h4 id="错误率与精度"><a href="#错误率与精度" class="headerlink" title="错误率与精度"></a>错误率与精度</h4><p>分类任务中最常用的两种性能度量,既适用于二分类任务,也适用于多分类任务  </p>
+<p>错误率是分类错误的样本数占样本总数的比例  </p>
+<p>精度则是分类正确的样本数占样本总数的比例  </p>
+<p><img src="/2018/01/06/ai/image-12.png" width="300px"></p>
+<p>错误率和精度虽常用,但并不能满足所有任务需求  </p>
+<p>例如西瓜中分别好坏瓜,错误率就是多少比例瓜被判断错误  </p>
+<p>但如果关心有多少比例是好瓜,所有好瓜多少比例被挑出来了,那错误率明显不够用  </p>
+<blockquote>
+<p>检索的信息有多少比例是用户感兴趣的  </p>
+</blockquote>
+<blockquote>
+<p>用户感兴趣的信息有多少被检索出来了  </p>
+</blockquote>
+<p><code>查准率</code>与<code>查全率</code>更为适用此类需求的性能度量  </p>
+<p>对于二分类问题,真实类别与学习器预测类别的组合划分为<code>真正例</code>,<code>假正例</code>,<code>真反例</code>,<code>假反例</code>四种情形  </p>
+<p>分别以TP,FP,TN,FN表示对其对应的样例数,则显然<code>TP</code>+<code>FP</code>+<code>TN</code>+<code>FN</code>=样例总数  </p>
+<p>分类结果的<code>混淆矩阵</code>  </p>
+<p><img src="/2018/01/06/ai/image-13.png" width="350px">  </p>
+<blockquote>
+<p>查准率 P与查全率 R分别定义为  </p>
+</blockquote>
+<p><img src="/2018/01/06/ai/image-14.png" width="150px">  </p>
+<p>查全率与查准率一对矛盾度量</p>
+<ul>
+<li><p>查准率高时,查全率往往偏低  </p>
+</li>
+<li><p>查全率高,查准率往往偏低  </p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">希望好瓜尽可能地选出来,则可能通过增加选瓜的数量来实现  </span><br><span class="line"></span><br><span class="line">如果将所有西瓜都选上,那么所有好瓜也必然都被选上,这样查准率就会较低  </span><br><span class="line"></span><br><span class="line">若希望选出的瓜中好瓜比例尽可能高,则可只挑选最有把握的瓜,但这样就难免会漏掉不少好瓜,使得查全率较低  </span><br><span class="line"></span><br><span class="line">所以很多情况对学习器的预测结果对样例进行排序  </span><br><span class="line"></span><br><span class="line">排在前面的是学习器认为最可能是正例的样本  </span><br><span class="line"></span><br><span class="line">排在最后的则是学习器认为最不可能是正例的样本</span><br><span class="line"></span><br><span class="line">按此顺序逐个把样本作为正例进行预测,则每次可以计算出当前的查全率、查准率</span><br><span class="line"></span><br><span class="line">以查准率为纵轴,查全率为横轴作图  </span><br><span class="line"></span><br><span class="line">就得到了查准率-查全率曲线,简称P-R曲线</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/01/06/ai/image-15.png" width="300px"></p>
+<p>P-R图直观地显示出学习器在样本总体上的查全率、查准率</p>
+<p>在进行比较时,若一个学习器的P-R曲线被另一个学习器的曲线完全<code>包住</code>  </p>
+<p>则可断言后者性能优于前者  </p>
+<p>如上图展示,学习器A的性能优于学习器C   </p>
+<p>如果两个学习器P-R曲线发送了交叉,则难以一般性地断言两者孰优孰劣,只能在具体的查准率或查全率条件下进行比较  </p>
+<p>一般合理的判断P-R曲线下面积的大小,但这个具体值不容易估算,所以人们设计了一些查准率、查全率的性能度量  </p>
+<p><code>平衡点</code>(BEP)就是这样一个度量,它是<code>查准率=查全率</code>时的取值  </p>
+<p><img src="/2018/01/06/ai/image-16.png" width="350px"></p>
+<p>在一些应用中,对查准率和查全率的重视程度有所不同,例如在商品推荐系统中,为了尽可能少打扰用户,希望推荐内容确是用户感兴趣的,此时查准率更重要  </p>
+<p>而在逃犯信息检索系统中,更希望尽可能少漏掉逃犯,此时查全率更重要 </p>
+<p>F1度量的一般形式如下  </p>
+<p><img src="/2018/01/06/ai/image-17.png" width="350px"></p>
+<p>很多时候我们有多个二分类混淆矩阵,例如进行多次训练/测试,每次得到一个混淆矩阵  </p>
+<p>或是多个数据集上进行训练/测试,希望估计算法的全局性能  </p>
+<p>甚或是执行多分类任务,每两两类别的组合都对应一个混淆矩阵…….</p>
+<p>总之希望在n个二分类混淆矩阵上综合考察查准率和查全率  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">先在各混淆矩阵上分别计算出查准率和查全率</span><br><span class="line">记为(P1,R1),(P2,R2),.......(Pn,Rn)再计算平均值</span><br><span class="line">这样就得到了宏查准率,宏查询率,以及相应的宏F1</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/01/06/ai/image-18.png" width="250px"></p>
+<h1 id="Turi"><a href="#Turi" class="headerlink" title="Turi"></a>Turi</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><ul>
+<li><code>activity_classifier</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.activity_classifier.html#id1" target="_blank" rel="noopener">活动分类器</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.activity_classifier.html#utilities" target="_blank" rel="noopener">公用事业</a></li>
+</ul>
+</li>
+<li><code>image_classifier</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.image_classifier.html#id1" target="_blank" rel="noopener">图像分类器</a></li>
+</ul>
+</li>
+<li><code>image_similarity</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.image_similarity.html#id1" target="_blank" rel="noopener">图像相似度</a></li>
+</ul>
+</li>
+<li><code>object_detector</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.object_detector.html#id1" target="_blank" rel="noopener">物体探测器</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.object_detector.html#utilities" target="_blank" rel="noopener">公用事业</a></li>
+</ul>
+</li>
+<li><code>recommender</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.recommender.html#creating-a-recommender" target="_blank" rel="noopener">创建推荐人</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.recommender.html#item-similarity-models" target="_blank" rel="noopener">项目相似度模型</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.recommender.html#item-content-recommenders" target="_blank" rel="noopener">项目内容推荐人</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.recommender.html#factorization-recommenders" target="_blank" rel="noopener">分解推荐者</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.recommender.html#factorization-recommenders-for-ranking" target="_blank" rel="noopener">用于排名的分解推荐器</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.recommender.html#popularity-based-recommenders" target="_blank" rel="noopener">基于人气的推荐人</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.recommender.html#utilities" target="_blank" rel="noopener">公用事业</a></li>
+</ul>
+</li>
+<li><code>text_classifier</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.text_classifier.html#sentence-classifier" target="_blank" rel="noopener">句子分类器</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h3><ul>
+<li><code>classifier</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.classifier.html#creating-a-classifier" target="_blank" rel="noopener">创建分类器</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.classifier.html#random-forest" target="_blank" rel="noopener">随机森林</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.classifier.html#decision-tree" target="_blank" rel="noopener">决策树</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.classifier.html#boosted-trees" target="_blank" rel="noopener">提升了树木</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.classifier.html#logistic-regression" target="_blank" rel="noopener">逻辑回归</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.classifier.html#support-vector-machines" target="_blank" rel="noopener">支持向量机</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.classifier.html#nearest-neighbor" target="_blank" rel="noopener">最近的邻居</a></li>
+</ul>
+</li>
+<li><code>clustering</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.clustering.html#dbscan" target="_blank" rel="noopener">DBSCAN</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.clustering.html#kmeans" target="_blank" rel="noopener">k均值</a></li>
+</ul>
+</li>
+<li><code>graph_analytics</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.graph_analytics.html#connected-components" target="_blank" rel="noopener">连通组件</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.graph_analytics.html#degree-counting" target="_blank" rel="noopener">学位计数</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.graph_analytics.html#graph-coloring" target="_blank" rel="noopener">图着色</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.graph_analytics.html#k-core" target="_blank" rel="noopener">k-核</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.graph_analytics.html#label-propagation" target="_blank" rel="noopener">标签传播</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.graph_analytics.html#pagerank" target="_blank" rel="noopener">网页排名</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.graph_analytics.html#shortest-path" target="_blank" rel="noopener">最短的路径</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.graph_analytics.html#triangle-counting" target="_blank" rel="noopener">三角计数</a></li>
+</ul>
+</li>
+<li><code>image_analysis</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/generated/turicreate.image_analysis.load_images.html" target="_blank" rel="noopener">turicreate.image_analysis.load_images</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/generated/turicreate.image_analysis.resize.html" target="_blank" rel="noopener">turicreate.image_analysis.resize</a></li>
+</ul>
+</li>
+<li><code>nearest_neighbors</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.nearest_neighbors.html#id1" target="_blank" rel="noopener">最近的邻居</a></li>
+</ul>
+</li>
+<li><code>regression</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.regression.html#creating-a-regression-model" target="_blank" rel="noopener">创建回归模型</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.regression.html#random-forest" target="_blank" rel="noopener">随机森林</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.regression.html#decision-tree" target="_blank" rel="noopener">决策树</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.regression.html#boosted-trees" target="_blank" rel="noopener">提升了树木</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.regression.html#linear-regression" target="_blank" rel="noopener">线性回归</a></li>
+</ul>
+</li>
+<li><code>text_analytics</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.text_analytics.html#term-frequency-transformations" target="_blank" rel="noopener">术语频率变换</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.text_analytics.html#topic-models" target="_blank" rel="noopener">主题模型</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.text_analytics.html#utilities" target="_blank" rel="noopener">公用事业</a></li>
+</ul>
+</li>
+<li><code>topic_model</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.topic_model.html#id1" target="_blank" rel="noopener">主题模型</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="公用事业"><a href="#公用事业" class="headerlink" title="公用事业"></a>公用事业</h3><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.load_model.html" target="_blank" rel="noopener"><code>load_model</code></a></li>
+<li><code>distances</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.distances.html#id1" target="_blank" rel="noopener">距离</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.distances.html#utilities" target="_blank" rel="noopener">公用事业</a></li>
+</ul>
+</li>
+<li><code>evaluation</code><ul>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.evaluation.html#classifier-metrics" target="_blank" rel="noopener">分类器指标</a></li>
+<li><a href="https://apple.github.io/turicreate/docs/api/turicreate.toolkits.evaluation.html#regression-metrics" target="_blank" rel="noopener">回归指标</a></li>
+</ul>
+</li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2018/01/06/ai/';
+        this.page.title = 'AI-机器学习';
+        this.page.identifier = '2018/01/06/ai/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>日程 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="技术笔记">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2019年"><span class="toc-number">1.</span> <span class="toc-text">2019年</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2019年-一月"><span class="toc-number">1.1.</span> <span class="toc-text">2019年#一月</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第二周"><span class="toc-number">1.1.1.</span> <span class="toc-text">第二周</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-07"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">2019#01#07</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-08"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">2019#01#08</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-09"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">2019#01#09</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-10"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">2019#01#10</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-11"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">2019#01#11</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三周"><span class="toc-number">1.1.2.</span> <span class="toc-text">第三周</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-14"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">2019#01#14</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-15"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">2019#01#15</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-16"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">2019#01#16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-17"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">2019#01#17</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-18"><span class="toc-number">1.1.2.5.</span> <span class="toc-text">2019#01#18</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四周"><span class="toc-number">1.1.3.</span> <span class="toc-text">第四周</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-21"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">2019#01#21</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-22"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">2019#01#22</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-23"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">2019#01#23</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-24"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">2019#01#24</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-01-25"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">2019#01#25</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间线"><span class="toc-number">1.2.</span> <span class="toc-text">======时间线======</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2019年-八月"><span class="toc-number">1.3.</span> <span class="toc-text">2019年#八月</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第三周-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">第三周</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-08-19"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">2019#08#19</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-08-20"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">2019#08#20</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-08-21"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">2019#08#21</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-08-22"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">2019#08#22</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-08-25"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">2019#08#25</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任务线"><span class="toc-number">1.4.</span> <span class="toc-text">======任务线======</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第四周-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">第四周</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-08-26"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">2019#08#26</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-08-27"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">2019#08#27</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-08-28"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">2019#08#28</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-08-29"><span class="toc-number">1.4.1.4.</span> <span class="toc-text">2019#08#29</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2019年-十月"><span class="toc-number">1.5.</span> <span class="toc-text">2019年#十月</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第四周-2"><span class="toc-number">1.5.1.</span> <span class="toc-text">第四周</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-10-21"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">2019#10#21</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2019-十二月"><span class="toc-number">1.6.</span> <span class="toc-text">2019#十二月</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-12-11"><span class="toc-number">1.6.0.1.</span> <span class="toc-text">2019#12#11</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#快捷发货Mq内容确定"><span class="toc-number">1.6.0.1.1.</span> <span class="toc-text">快捷发货Mq内容确定</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#签收Mq内容确定"><span class="toc-number">1.6.0.1.2.</span> <span class="toc-text">签收Mq内容确定</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定时签收主要逻辑确定"><span class="toc-number">1.6.0.1.3.</span> <span class="toc-text">定时签收主要逻辑确定</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#原签收整改逻辑确定"><span class="toc-number">1.6.0.1.4.</span> <span class="toc-text">原签收整改逻辑确定</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#主动签收主要逻辑确定"><span class="toc-number">1.6.0.1.5.</span> <span class="toc-text">主动签收主要逻辑确定</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#物流信息回查内容确定"><span class="toc-number">1.6.0.1.6.</span> <span class="toc-text">物流信息回查内容确定</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#需求子单号查询批次信息"><span class="toc-number">1.6.0.1.7.</span> <span class="toc-text">需求子单号查询批次信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#确定wms交互内容"><span class="toc-number">1.6.0.1.8.</span> <span class="toc-text">确定wms交互内容</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#校对周四要上的tms1-0逻辑"><span class="toc-number">1.6.0.1.9.</span> <span class="toc-text">校对周四要上的tms1.0逻辑</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2019-十二月-1"><span class="toc-number">1.7.</span> <span class="toc-text">2019#十二月</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-12-12"><span class="toc-number">1.7.0.1.</span> <span class="toc-text">2019#12#12</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#物流团队"><span class="toc-number">1.7.0.1.1.</span> <span class="toc-text">物流团队</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#交易团队"><span class="toc-number">1.7.0.1.2.</span> <span class="toc-text">交易团队</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#交易-amp-物流交互"><span class="toc-number">1.7.0.1.3.</span> <span class="toc-text">交易&amp;物流交互</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#仓配组需求单-amp-交易组订单"><span class="toc-number">1.7.0.1.3.1.</span> <span class="toc-text">仓配组需求单&amp;交易组订单</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#库存"><span class="toc-number">1.7.0.1.3.2.</span> <span class="toc-text">库存</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2019-12-24"><span class="toc-number">1.7.0.2.</span> <span class="toc-text">2019#12#24</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#2020-一月"><span class="toc-number">1.8.</span> <span class="toc-text">2020#一月</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第三周-2"><span class="toc-number">1.8.1.</span> <span class="toc-text">第三周</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2020-01-20"><span class="toc-number">1.8.1.1.</span> <span class="toc-text">2020#01#20</span></a></li></ol></li></ol></li>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            日程
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/schedule/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-01-08T03:47:19.000Z" itemprop="datePublished">2019-01-08</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h1 id="2019年"><a href="#2019年" class="headerlink" title="2019年"></a>2019年</h1><h2 id="2019年-一月"><a href="#2019年-一月" class="headerlink" title="2019年#一月"></a>2019年#一月</h2><h3 id="第二周"><a href="#第二周" class="headerlink" title="第二周"></a>第二周</h3><ul>
+<li>工作任务:SkyWalking部署文档,Flume日志搜集器了解,KibanaUI查询了解,Grafana作为Metric查看器了解   </li>
+<li>学习任务:<code>IDA pro</code>掌握,吾爱破解[脱壳系列]基础知识掌握,<code>vim c/c++</code>掌握,Qt基础掌握      </li>
+</ul>
+<h4 id="2019-01-07"><a href="#2019-01-07" class="headerlink" title="2019#01#07"></a>2019#01#07</h4><ul>
+<li><p>SkyWalking Deploy编写[完结]         </p>
+<ul>
+<li>编写ElasticSearch部署说明   </li>
+<li>编写SkyWalking Collector的<code>config/Application.yml</code>配置说明    </li>
+<li>编写SkyWalking UI的部署说明</li>
+</ul>
+</li>
+<li><p>IDA pro 书单阅读[完结]   </p>
+<ul>
+<li>第四章IDA入门   </li>
+<li>第五章IDA数据显示窗口    </li>
+</ul>
+</li>
+</ul>
+<h4 id="2019-01-08"><a href="#2019-01-08" class="headerlink" title="2019#01#08"></a>2019#01#08</h4><ul>
+<li>Flume,Kibana了解以及笔记[完结]     <ul>
+<li>Kibana搭建<code>192.168.4.218</code>服务器   </li>
+<li>Flume基础掌握</li>
+</ul>
+</li>
+<li>Qt编程 视频学习及笔记[完结]    <ul>
+<li>自定义槽与信号</li>
+<li>文件操作   </li>
+<li>线程操作   </li>
+</ul>
+</li>
+<li>IDA pro 书单阅读[完结]    <ul>
+<li>反汇编导航   </li>
+</ul>
+</li>
+</ul>
+<h4 id="2019-01-09"><a href="#2019-01-09" class="headerlink" title="2019#01#09"></a>2019#01#09</h4><ul>
+<li>Flume,Kibana了解以及笔记[完结]     <ul>
+<li>Flume 组件Sink,Source源码,以及Channel源码   </li>
+<li>Kibana基本操作   </li>
+</ul>
+</li>
+<li>IDA pro 书单阅读[完结]</li>
+<li>Vim c/c++编程 视频学习及笔记[完结]          </li>
+</ul>
+<h4 id="2019-01-10"><a href="#2019-01-10" class="headerlink" title="2019#01#10"></a>2019#01#10</h4><ul>
+<li>Flume修改源码[完结]     <ul>
+<li>Flume Source源码修改 </li>
+</ul>
+</li>
+<li>Grafana了解[完结]    </li>
+<li>IDA pro 书单阅读[完结]  </li>
+</ul>
+<h4 id="2019-01-11"><a href="#2019-01-11" class="headerlink" title="2019#01#11"></a>2019#01#11</h4><ul>
+<li>Flume Source源码修改[完结]   <ul>
+<li>修正多行异常合并   </li>
+<li>修正只判断inode,反正改名后出现重复读入</li>
+<li>读入格式解析</li>
+</ul>
+</li>
+<li>IDA pro 书单阅读[完结]     </li>
+</ul>
+<h3 id="第三周"><a href="#第三周" class="headerlink" title="第三周"></a>第三周</h3><h4 id="2019-01-14"><a href="#2019-01-14" class="headerlink" title="2019#01#14"></a>2019#01#14</h4><ul>
+<li>吾爱破解系列视频观看[完结]      <ul>
+<li>第一章观看完毕 </li>
+</ul>
+</li>
+<li>郁金香视频观看[完结]   </li>
+</ul>
+<h4 id="2019-01-15"><a href="#2019-01-15" class="headerlink" title="2019#01#15"></a>2019#01#15</h4><ul>
+<li>Grafana了解[完结]     <ul>
+<li>了解相关操作 </li>
+</ul>
+</li>
+<li>Spark了解[完结] <ul>
+<li>了解Stage,Job,Task,宽窄依赖,Partition等概念    </li>
+</ul>
+</li>
+</ul>
+<h4 id="2019-01-16"><a href="#2019-01-16" class="headerlink" title="2019#01#16"></a>2019#01#16</h4><ul>
+<li>Yarn了解[完结]      <ul>
+<li>了解Yarn基本的ResourceManager/NodeManager/Container/ApplicationMaster交互流程  </li>
+</ul>
+</li>
+<li>HBase&amp;Hdfs了解[完结]    <ul>
+<li>了解Root-MemStore/StoreFile以及读写流程等  </li>
+</ul>
+</li>
+</ul>
+<h4 id="2019-01-17"><a href="#2019-01-17" class="headerlink" title="2019#01#17"></a>2019#01#17</h4><ul>
+<li>Mesos了解[完结]      <ul>
+<li>了解Master/Salve,Framework,Executor以及分配细节</li>
+</ul>
+</li>
+<li>Loki了解[完结]    </li>
+</ul>
+<h4 id="2019-01-18"><a href="#2019-01-18" class="headerlink" title="2019#01#18"></a>2019#01#18</h4><ul>
+<li>Android反编译了解[完结]</li>
+</ul>
+<h3 id="第四周"><a href="#第四周" class="headerlink" title="第四周"></a>第四周</h3><h4 id="2019-01-21"><a href="#2019-01-21" class="headerlink" title="2019#01#21"></a>2019#01#21</h4><ul>
+<li>Netty了解[进行中]       <ul>
+<li>编写Tcp Server端传输文件数据流</li>
+</ul>
+</li>
+<li>Tcp/ip了解[进行中]<ul>
+<li>总结一下Server Tcp网络</li>
+</ul>
+</li>
+<li>郁金香[进行中]  </li>
+</ul>
+<h4 id="2019-01-22"><a href="#2019-01-22" class="headerlink" title="2019#01#22"></a>2019#01#22</h4><ul>
+<li>GolangServer了解[进行中]       <ul>
+<li>编写Http Server端取文件数据流</li>
+</ul>
+</li>
+<li>C++/Asio了解[进行中]    </li>
+</ul>
+<h4 id="2019-01-23"><a href="#2019-01-23" class="headerlink" title="2019#01#23"></a>2019#01#23</h4><ul>
+<li>GolangServer了解[进行中]       <ul>
+<li>编写Tcp Server端传输文件数据流  </li>
+</ul>
+</li>
+<li>Tcp/ip了解[进行中]    </li>
+<li>郁金香[进行中]  </li>
+</ul>
+<h4 id="2019-01-24"><a href="#2019-01-24" class="headerlink" title="2019#01#24"></a>2019#01#24</h4><ul>
+<li>优化性能[进行中]  </li>
+<li>郁金香[进行中]  </li>
+</ul>
+<h4 id="2019-01-25"><a href="#2019-01-25" class="headerlink" title="2019#01#25"></a>2019#01#25</h4><ul>
+<li>搭建Seaweedfs[进行中]  </li>
+</ul>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<hr>
+
+<h2 id="时间线"><a href="#时间线" class="headerlink" title="======时间线======"></a>======时间线======</h2><p>这段时间发生了很多事情,得了抑郁症</p>
+<p>从8月份开始重新规划自己的成长提升路线</p>
+<p>时时记录自己所作所为,规划任务不浪费时间</p>
+<hr>
+
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<h2 id="2019年-八月"><a href="#2019年-八月" class="headerlink" title="2019年#八月"></a>2019年#八月</h2><h3 id="第三周-1"><a href="#第三周-1" class="headerlink" title="第三周"></a>第三周</h3><h4 id="2019-08-19"><a href="#2019-08-19" class="headerlink" title="2019#08#19"></a>2019#08#19</h4><p>进入新公司,熟悉公司规章制度</p>
+<p>可能要维持半个月的业务学习</p>
+<p><img src="/schedule/index/image-02.jpg" width="500px"></p>
+<p><img src="/schedule/index/image-01.png" width="500px"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">公司规章制度</span><br><span class="line"></span><br><span class="line">高压线 </span><br><span class="line"></span><br><span class="line">- 不诚信</span><br><span class="line">	假大空、言而无信。</span><br><span class="line">- 不作为</span><br><span class="line">	在其位,不谋其政 </span><br><span class="line">- 拿回扣 </span><br><span class="line">- 谋私利 </span><br><span class="line">- 一言堂 </span><br><span class="line">- 小金库 </span><br><span class="line">- 报假账</span><br><span class="line">- 作风问题 </span><br><span class="line"></span><br><span class="line">保密制度 </span><br><span class="line">- 不允许泄露给司外部人员或内部人员 </span><br><span class="line">- 不主动打探有关保密信息 </span><br><span class="line">客户供应商资料、公司业务信息、薪资绩效数据、账号密码  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">福利制度 </span><br><span class="line"></span><br><span class="line">- 养老保险医保  </span><br><span class="line">- 入职体检、年度体检  </span><br><span class="line">- 生日福利  </span><br><span class="line">- 团队outing  </span><br><span class="line">- 节假日慰问 </span><br><span class="line">- 意外商业保险  </span><br><span class="line">- 培训提升  </span><br><span class="line">- 团队建设  </span><br><span class="line"></span><br><span class="line">考勤制度  </span><br><span class="line"></span><br><span class="line">- 钉钉打卡  </span><br><span class="line"></span><br><span class="line">请假流程 </span><br><span class="line"></span><br><span class="line">- 钉钉发起申请</span><br><span class="line">- 相应主管批准 </span><br><span class="line">- 休假 </span><br><span class="line">- 考勤工资折算 </span><br><span class="line"></span><br><span class="line">提前性、有理有据、一致性</span><br><span class="line">带薪假期:年假、婚嫁、产假、国定节假日</span><br><span class="line">扣薪假期:病假、事假 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">矿工:未经提前申请并审核通过的缺勤都属于矿工</span><br><span class="line">违纪结果 </span><br><span class="line">- 半天</span><br><span class="line">扣除日薪当日绩效日补贴。</span><br><span class="line">- 一天以上 </span><br><span class="line">日薪日补贴当月绩效。</span><br><span class="line">- 连续三天或12个月累计5天 </span><br><span class="line">严重违反制度,解除劳工合同 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">宋小菜分公司办公点8家</span><br><span class="line">- 武汉</span><br><span class="line">- 浙江</span><br><span class="line">- 北京</span><br><span class="line">- 上海</span><br><span class="line">- 苏州</span><br><span class="line">- 合肥 </span><br><span class="line"></span><br><span class="line">基地办公点: 山东 </span><br><span class="line">西南办公点: 广州、深圳</span><br></pre></td></tr></table></figure>
+<p>安装常用软件</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Python 3.4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">钉钉、微信、QQ</td>
+</tr>
+<tr>
+<td style="text-align:center">Goland</td>
+</tr>
+<tr>
+<td style="text-align:center">Golang1.11</td>
+</tr>
+<tr>
+<td style="text-align:center">IDEA</td>
+</tr>
+<tr>
+<td style="text-align:center">Java1.8</td>
+</tr>
+<tr>
+<td style="text-align:center">Pycharm</td>
+</tr>
+<tr>
+<td style="text-align:center">Boost        Clion</td>
+</tr>
+<tr>
+<td style="text-align:center">Maven</td>
+</tr>
+<tr>
+<td style="text-align:center">MysqlWorkbench</td>
+</tr>
+</tbody>
+</table>
+<p>接触公司各类平台</p>
+<ul>
+<li><p>文档管理平台:<a href="https://songxiaocai.yuque.com/prod-tech" target="_blank" rel="noopener">https://songxiaocai.yuque.com/prod-tech</a></p>
+</li>
+<li><p>App发布平台:<a href="http://192.168.0.181:7600/application" target="_blank" rel="noopener">http://192.168.0.181:7600/application</a></p>
+</li>
+<li>大表哥 报表平台<a href="https://reports.songxiaocai.com" target="_blank" rel="noopener">https://reports.songxiaocai.com</a></li>
+<li><p>Diamond配置中心 <a href="http://diamond.songxiaocai.com/index.htm" target="_blank" rel="noopener">http://diamond.songxiaocai.com/index.htm</a></p>
+</li>
+<li><p><a href="/2019/08/18/domain-driven-design/">了解公司DDD工程骨架&amp;了解DDD领域驱动设计</a></p>
+</li>
+</ul>
+<p><br></p>
+<h4 id="2019-08-20"><a href="#2019-08-20" class="headerlink" title="2019#08#20"></a>2019#08#20</h4><ul>
+<li><p>了解相关的数据结构 <a href="https://songxiaocai.yuque.com/prod-tech/589913/sy646l" target="_blank" rel="noopener">https://songxiaocai.yuque.com/prod-tech/589913/sy646l</a></p>
+</li>
+<li><p>了解基本的公司运营业务,客户级订单 上游供应商采购单 物流调度单 需求单 装卸货单  入库出库单。</p>
+</li>
+<li><p>了解各类名词:档口,服务站,中心仓</p>
+</li>
+<li><p>了解各单据:采购单 物流调度单 需求单 装卸货单  入库出库单。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>平台名</th>
+<th>平台链接 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 网关+登录平台</td>
+<td><a href="http://gitlab.songxiaocai.org/web-service/bifrost" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/web-service/bifrost</a> </td>
+</tr>
+<tr>
+<td>调度中心+新库存中心</td>
+<td><a href="http://gitlab.songxiaocai.org/jotunheim/logistics-center" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/jotunheim/logistics-center</a></td>
+</tr>
+<tr>
+<td>交易中心</td>
+<td><a href="http://gitlab.songxiaocai.org/jotunheim/trade-center" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/jotunheim/trade-center</a></td>
+</tr>
+<tr>
+<td>商品中心</td>
+<td><a href="http://gitlab.songxiaocai.org/jotunheim/item-center" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/jotunheim/item-center</a></td>
+</tr>
+<tr>
+<td>用户中心</td>
+<td><a href="http://gitlab.songxiaocai.org/jotunheim/userservice" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/jotunheim/userservice</a></td>
+</tr>
+<tr>
+<td>供应链相关</td>
+<td><a href="http://gitlab.songxiaocai.org/midgard/supplychain" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/midgard/supplychain</a></td>
+</tr>
+<tr>
+<td>营销相关</td>
+<td><a href="http://gitlab.songxiaocai.org/midgard/activity-service" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/midgard/activity-service</a></td>
+</tr>
+<tr>
+<td>erp后台管理</td>
+<td><a href="http://gitlab.songxiaocai.org/web-service/sxc" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/web-service/sxc</a></td>
+</tr>
+<tr>
+<td>支付模块</td>
+<td><a href="http://gitlab.songxiaocai.org/web-service/charge/commits/master" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/web-service/charge/commits/master</a></td>
+</tr>
+<tr>
+<td>商品+库存模块（旧jar包）</td>
+<td><a href="http://gitlab.songxiaocai.org/base-service/hulk" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/base-service/hulk</a></td>
+</tr>
+<tr>
+<td>调度模块（旧jar包）</td>
+<td><a href="http://gitlab.songxiaocai.org/upper-service/magneto" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/upper-service/magneto</a></td>
+</tr>
+<tr>
+<td>库存中心（旧 sc服务）</td>
+<td><a href="http://gitlab.songxiaocai.org/jotunheim/stock-service" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/jotunheim/stock-service</a></td>
+</tr>
+<tr>
+<td>销售服务中心</td>
+<td><a href="http://gitlab.songxiaocai.org/midgard/sales-service-platform" target="_blank" rel="noopener">http://gitlab.songxiaocai.org/midgard/sales-service-platform</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>了解公司各类规范</li>
+<li>了解公司的部门协作模式</li>
+</ul>
+<p><br></p>
+<h4 id="2019-08-21"><a href="#2019-08-21" class="headerlink" title="2019#08#21"></a>2019#08#21</h4><p>需求</p>
+<ul>
+<li>一: SKU排序</li>
+</ul>
+<p>应配量。配送量 </p>
+<ul>
+<li>二: 配送量 </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">订单配送,不支持超配(配送量应小于应配量)。</span><br><span class="line">因为部分订单走钉钉订单 -&gt; 宋小福,所以应配量会超配</span><br><span class="line">结果:后期服务站或档口不走钉钉需求单</span><br></pre></td></tr></table></figure>
+<ul>
+<li>三:档口包App增加调度单细节的路线情况</li>
+</ul>
+<p>增加签收单相关功能<br>档口和服务站的调度单区分</p>
+<ul>
+<li>路线中的回退是什么操作？</li>
+</ul>
+<p>针对司机的到达回退操作</p>
+<ul>
+<li>拆单和清洗路线费用？          </li>
+</ul>
+<p>同车同司机在一辆车运送可以清洗路线拼单</p>
+<ul>
+<li>调度单(城配调度单、骨干调度单| 骨干物流、城配)   老权限规则？</li>
+</ul>
+<p>App骨干。供应商到中心仓<br>城配 erp操作。 中心仓到服务站、档口</p>
+<ul>
+<li>订单配送和入仓的操作区别？</li>
+</ul>
+<p>看有无需求量</p>
+<p><code>听取讲解的登录平台相关工程代码结构,以及登录的细节化流程</code></p>
+<p><br></p>
+<h4 id="2019-08-22"><a href="#2019-08-22" class="headerlink" title="2019#08#22"></a>2019#08#22</h4><p>体验公司各类App,以各类身份体验整个公司运作流程</p>
+<p>档口宝:档口新增配送点:(服务站+档口)模式,之前只有服务站配送<br>线路调整的无线化</p>
+<p>影响点，用例(某接口改,如何改), 数据库表结构变更, 状态时许图,<br>案例模仿:商品组合销售技术方案</p>
+<p>周报模板: 团队成员个人周报</p>
+<p>细化公司物流调度平台的新版改革(服务站+档口)以配送单形式呈现<br>根据体验的各类App和Erp调度平台,分析相关代码逻辑,以主要熟悉物流仓储为主的业务逻辑</p>
+<p>公司内部的基建不传source包,导致我的idea每次打开.class都要逆向反编译非常消耗cpu</p>
+<p><br></p>
+<h4 id="2019-08-25"><a href="#2019-08-25" class="headerlink" title="2019#08#25"></a>2019#08#25</h4><blockquote>
+<p>23，24号外出outing,暂未学习,可耻</p>
+</blockquote>
+<p>学习阿里中台思想的变迁。</p>
+<p>继续预习公司仓储物流相关业务并了解代码情况</p>
+<ul>
+<li>杭东服务站1 站点下需求量是28,但是物流调度线 应配量是11？？</li>
+<li>仓库的档口和服务站只是name的不同？？</li>
+<li>之前无线调度技术方案设计是为了什么？？</li>
+<li>sxc_sc和sxc_pc的sxc_wms_warehouse一个档口服务站另一个冷库是做什么？ </li>
+<li>物流调度已经有相关的档口站点？</li>
+</ul>
+<p><br></p>
+<h2 id="任务线"><a href="#任务线" class="headerlink" title="======任务线======"></a>======任务线======</h2><p>上周总结</p>
+<ul>
+<li>工作日常任务   <ul>
+<li>了解公司正常的开发流程</li>
+<li>了解公司技术栈要求</li>
+<li>了解公司组织架构</li>
+<li>了解公司相关业务线</li>
+<li>了解公司规章制度</li>
+</ul>
+</li>
+</ul>
+<p>下周完成</p>
+<ul>
+<li>工作日常任务<ul>
+<li>了解增加档口模式涉及的一些细节功能 </li>
+<li>完成调度增加档口模式的技术方案  </li>
+<li>开发完成调度增加档口模式部分功能  </li>
+</ul>
+</li>
+<li>复习完<code>IDA-pro</code>,<code>Cheat Engine</code>两项软件  </li>
+<li>进一步加深<code>windows kernel memory management</code>相关的概念以及<code>Windows PE</code>相关的结构</li>
+</ul>
+<p><br></p>
+<h3 id="第四周-1"><a href="#第四周-1" class="headerlink" title="第四周"></a>第四周</h3><h4 id="2019-08-26"><a href="#2019-08-26" class="headerlink" title="2019#08#26"></a>2019#08#26</h4><p>询问上周日找到的问题,了解一些业务细节。<br>了解此次需求的大体内容,开始制作技术方案。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">简称</th>
+<th style="text-align:center">服务全名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">sc</td>
+<td style="text-align:center">stock-center</td>
+</tr>
+<tr>
+<td style="text-align:center">oc</td>
+<td style="text-align:center">order-center</td>
+</tr>
+<tr>
+<td style="text-align:center">lp</td>
+<td style="text-align:center">logistics-platform</td>
+</tr>
+<tr>
+<td style="text-align:center">ic</td>
+<td style="text-align:center">item-center</td>
+</tr>
+</tbody>
+</table>
+<p>物流单调度的时候,小费计算<br><code>lp.logistics_delivery_fee</code>。小费计算</p>
+<p>建立物流单,清洗路线,档口签收,宋小福签收  </p>
+<p>服务站签收的时候,如果<code>sxc.stall_property</code>有档口的关联,就被认为是档口模式的服务站<br>所以在这种服务站签收的时候会将签收的sku同步到档口旗下相关数据</p>
+<p><br></p>
+<p>云丰:蒜、生姜等<br>云鲜:带绿色叶子的蔬菜。<br>云果:南瓜、西红柿等</p>
+<blockquote>
+<p>了解相关的功能及功能描述,为第二天技术方案的制作做准备</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>接口功能</th>
+<th>接口描述 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>测试</td>
+<td>拿起点  <code>initCreateSchedulingByLocationId</code><br> 拿途径点的sku应配量   <code>initStockByLocationIdAndSkuIds</code></td>
+</tr>
+</tbody>
+</table>
+<p>完成相关方案:</p>
+<p><a style="color: #0366d6;text-decoration: none;font-size: 18px;border: 3px;border-color: blue;border-style: solid;" href="/stall-design/">档口模式第一版设计方案</a></p>
+<p><br></p>
+<h4 id="2019-08-27"><a href="#2019-08-27" class="headerlink" title="2019#08#27"></a>2019#08#27</h4><ul>
+<li>查阅<code>delivery_order</code>数据结构与之相关的逻辑,询问相关<code>orderCenter</code>的职责  </li>
+<li>新的接口功能已经移到Dubbo服务集群,为何线上生产环境还在用老的sxc接口 </li>
+<li><code>logistics_distribution_list</code>配送单和<code>logistics_sorting_list</code>分拣单以及<code>logistics_shipping_list</code>备货单  </li>
+</ul>
+<blockquote>
+<p>========================  </p>
+</blockquote>
+<p><span style="color:green;font-size: 30px">开发自测完成+交付时间:9月6号</span><br><span style="color:green;font-size: 30px">发布时间:9月12号</span></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1、技术方案 8-27~8-28</span><br><span class="line">2、接口定义+mock 8-28</span><br><span class="line">3、后端开发</span><br><span class="line">配送点 CRUD @沈伟</span><br><span class="line">需求单列表查询接口 @沈伟</span><br><span class="line">配送点新增接口（创建服务站、创建档口）数据清洗 @沈伟</span><br><span class="line">调度订单配送查询接口兼容配送点逻辑(新增档口) @沈伟 @徐进凯</span><br><span class="line">调度单创建兼容配送点逻辑  @沈伟</span><br><span class="line">调度单调整线路兼容配送点逻辑 @沈伟</span><br><span class="line">调度单签收兼容配送点逻辑 @沈伟</span><br><span class="line">调度单列表查询兼容配送单逻辑 @孙锦平</span><br><span class="line">调度单详情查询兼容配送点逻辑 @孙锦平</span><br><span class="line">草稿调度单清洗兼容配送点逻辑 @孙锦平</span><br><span class="line">配送点逻辑改造-数据仓库兼容 @纪文翔</span><br><span class="line">配送点逻辑改造-大表哥数据兼容 @孙锦平</span><br></pre></td></tr></table></figure>
+<p>由于<code>stall</code>配送点所以昨天做的技术方案肯定有问题  </p>
+<p>重新做一版技术方案</p>
+<p><a style="color: #0366d6;text-decoration: none;font-size: 18px;border: 3px;border-color: blue;border-style: solid;" href="/distribution-site/">档口模式新版设计方案</a></p>
+<blockquote>
+<p>晚上休息时间,开始整理<code>TroubleShoot路线</code></p>
+</blockquote>
+<p><a style="color: #0366d6;text-decoration: none;font-size: 18px;border: 3px;border-color: blue;border-style: solid;" href="/2019/08/27/troubleshoot/">TroubleShoot路线</a></p>
+<p><br></p>
+<h4 id="2019-08-28"><a href="#2019-08-28" class="headerlink" title="2019#08#28"></a>2019#08#28</h4><p>过完结技术方案  </p>
+<ul>
+<li>接口规范 </li>
+<li>开发分支 </li>
+<li>功能迁移确认<a href="https://songxiaocai.yuque.com/prod-tech/589913/sy646l" target="_blank" rel="noopener">https://songxiaocai.yuque.com/prod-tech/589913/sy646l</a></li>
+</ul>
+<p>相关接口整理得到:</p>
+<ul>
+<li><p>配送点创建</p>
+<ul>
+<li>mehtod:DistributionSiteProvider.createDistributionSite</li>
+<li>入参:DistributionSiteItemCreateDTO,Integer operatorId</li>
+<li>出参:Boolean</li>
+</ul>
+</li>
+<li><p>配送点修改</p>
+<ul>
+<li>method:DistributionSiteProvider.updateDistributionSite</li>
+<li>入参:DistributionSiteItemUpdateDTO,Integer operatorId</li>
+<li>出参:Boolean</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>配送点停用</p>
+<ul>
+<li>method:DistributionSiteProvider.deleteDistributionSite</li>
+<li>入参:Long distributionSiteId, Long distributionSiteType, Integer operatorId</li>
+<li>出参:Boolean</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>配送点查询</p>
+<ul>
+<li>method:DistributionSiteQueryProvider.queryDistributionSiteItem</li>
+<li>入参:DistributionSiteItemQueryDTO</li>
+<li>出参:DistributionSiteItemDTO</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>签收SKU(待定并拆包入库操作:<em>入库数量</em> =<em> 提货数量</em>  \  <em>转换比例</em> -&gt; <code>OrderPickConsumerProcess</code>)</p>
+<ul>
+<li>method:LogisticsProvider.unloadScheduling</li>
+<li>入参:SignUnloadDTO,Integer operatorId</li>
+<li>出参:Boolean</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>创建需求单<ul>
+<li>method:RequirementProvider.createRequirement</li>
+<li>入参:RequirementCreateDTO,Integer operatorId</li>
+<li>出参:Boolean</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>修改需求单</p>
+</li>
+<li><ul>
+<li>method:RequirementProvider.updateRequirement</li>
+<li>入参:RequirementDetailUpdateDTO,Integer operatorId</li>
+<li>出参:Boolean</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>需求单明细查询</p>
+<ul>
+<li>method:RequirementQueryProvider.queryRequirementDetailInfo</li>
+<li>入参:LogisticsRequirementQueryDTO</li>
+<li>出参:RequirementDistributionSiteInfoDTO</li>
+</ul>
+</li>
+</ul>
+<p>调度中信任交接与不信任交接区别:</p>
+<ul>
+<li>不信任交接:司机到货后必须找相关人员扫码才算正式卸货成功</li>
+<li>信任交接:司机到后直接卸货,不需要进行扫码认证操作</li>
+</ul>
+<blockquote>
+<p>晚上休息时间,开始整理<code>Linux_Tool</code></p>
+</blockquote>
+<p><a style="color: #0366d6;text-decoration: none;font-size: 18px;border: 3px;border-color: blue;border-style: solid;" href="/2019/08/28/linux-tool/">Linux_Tool工具箱</a></p>
+<p><br></p>
+<h4 id="2019-08-29"><a href="#2019-08-29" class="headerlink" title="2019#08#29"></a>2019#08#29</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">需求单在调度阶段是无法取消的</span><br><span class="line">需求单可以修改,但是只能修改其数量,不能修改其品种,例如新增或者删减一些调度单的品种</span><br></pre></td></tr></table></figure>
+<ul>
+<li>过相关的技术接口  </li>
+<li>开始逐步兼容配送点概念<ul>
+<li>外部<ul>
+<li>创建需求单-配送点概念</li>
+<li>修改需求单-配送点概念 </li>
+<li>需求单明细-配送点概念</li>
+<li>调度单签收SKU待定(拆包逻辑)</li>
+<li>创建配送点</li>
+<li>修改配送点</li>
+<li>关停配送点</li>
+</ul>
+</li>
+<li>内部<ul>
+<li>调度订单配送查询接口逻辑</li>
+<li>调度单创建逻辑 </li>
+<li>调度单调整线路逻辑</li>
+<li>调度单列表查询逻辑</li>
+<li>调度单详情查询逻辑</li>
+<li>草稿调度单合并清洗</li>
+<li>取消草稿调度单合并</li>
+<li>司机(司机在曹天笑司机改版后去除,无需各个调度单-仓名)</li>
+<li>数据仓库&amp;数据报表</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>晚上计划把Linux tools继续完善</p>
+<p>周六周日查阅所有公司的相关逻辑以及整理思维导图</p>
+<p><br></p>
+<h2 id="2019年-十月"><a href="#2019年-十月" class="headerlink" title="2019年#十月"></a>2019年#十月</h2><h3 id="第四周-2"><a href="#第四周-2" class="headerlink" title="第四周"></a>第四周</h3><h4 id="2019-10-21"><a href="#2019-10-21" class="headerlink" title="2019#10#21"></a>2019#10#21</h4><ul>
+<li>与小师妹了解费用的单位转换  </li>
+<li>与方安了解费用相关的数据需求</li>
+<li>与小美确定做事方案 </li>
+<li>开Provider写Sql </li>
+</ul>
+<p><br></p>
+<h2 id="2019-十二月"><a href="#2019-十二月" class="headerlink" title="2019#十二月"></a>2019#十二月</h2><h4 id="2019-12-11"><a href="#2019-12-11" class="headerlink" title="2019#12#11"></a>2019#12#11</h4><h5 id="快捷发货Mq内容确定"><a href="#快捷发货Mq内容确定" class="headerlink" title="快捷发货Mq内容确定"></a>快捷发货Mq内容确定</h5><blockquote>
+<p>原先只有档口发送Mq,用来修改档口需求单的状态<br>现在要维护交易改造,用以维护需求子单的发货情况和承运数量</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SchedulingCreateEvent</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">26532044446909589L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 草稿物流单id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    Long schedulingId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 操作用户id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer operatorId;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 订单提货信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;RequirementDetailInfo&gt; orderBatchInfos;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RequirementDetailInfo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 需求单子单id</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer detailId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 子单状态</span></span><br><span class="line"><span class="comment">         * CANCELLED(0, "取消配送"),</span></span><br><span class="line"><span class="comment">         * WAIT_DISTRIBUT(10, "待配送"),</span></span><br><span class="line"><span class="comment">         * PART_DISTRIBUT(20,"部分发货"),</span></span><br><span class="line"><span class="comment">         * FINSHED(80, "发货完成"),</span></span><br><span class="line"><span class="comment">         * SIGNED(90, "签收完成"),</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com.sxc.jotunheim.logistic.client.constant.requirement.DetailStatusEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer detailStatus;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 来源子单id</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * SXC_ORDER(0, "宋小菜订单"),</span></span><br><span class="line"><span class="comment">         * SITE_PURCHASE(1, "场内采购单"),</span></span><br><span class="line"><span class="comment">         * BASE_PURCHASE(2, "基地采购单"),</span></span><br><span class="line"><span class="comment">         * STALL_PURCHASE(3, "档口需求单");</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com.sxc.jotunheim.logistic.client.constant.requirement.SourceTypeEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * skuId</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer skuId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 批次号</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> String batchNo;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 本次承运数量</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> BigDecimal thisTimeAmount;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 承运数量</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> BigDecimal totalAmount;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>影响点:</p>
+</blockquote>
+<ul>
+<li>开放服务站客户维度的订单Mq通知</li>
+<li>与曾成确定是否有过滤只有档口的sourceType需求单</li>
+</ul>
+<h5 id="签收Mq内容确定"><a href="#签收Mq内容确定" class="headerlink" title="签收Mq内容确定"></a>签收Mq内容确定</h5><p>此Mq内容通知到档口、服务站、采购</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SchedulingSignEvent</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 草稿物流单id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Long schedulingId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 路线节点id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer routeId;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 卸货服务站id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer locationId;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 卸货点类型</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer storehouseType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配送状态(1:待接单(暂时无用);2:装车中;3:待发车;4:待出发;5:配送中;6:配送完成)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer deliveryStatus;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 操作用户id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer operatorId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 签收sku信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;SignSkuInfo&gt; signSkuInfos;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SignSkuInfo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * skuId</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer skuId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 批次号</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> String batchNo;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 需求单子单id</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer detailId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 来源子单id</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com.sxc.jotunheim.logistic.client.constant.SourceTypeEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 本次签收数量</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> BigDecimal signAmount;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="定时签收主要逻辑确定"><a href="#定时签收主要逻辑确定" class="headerlink" title="定时签收主要逻辑确定"></a>定时签收主要逻辑确定</h5><ul>
+<li>确定定时任务载体</li>
+</ul>
+<blockquote>
+<p>主要逻辑</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1:调度单创建时间到3个小时进行签收操作</span><br><span class="line">2:根据调度单的节点信息查询配送点信息</span><br><span class="line">3:查询草稿物流单信息</span><br><span class="line">4:查询Route节点信息(排除掉档口的站点,档口还是走签收列表老逻辑签收)</span><br><span class="line">5:判断Route路线状态是否完成签收</span><br><span class="line">6:查询卸货单信息</span><br><span class="line">7:构建更新Route节点信息并构建RouteRecord操作流水信息</span><br><span class="line">8:更新Route节点信息及操作流水</span><br><span class="line">9:构建更新卸货单信息</span><br><span class="line">10:更新卸货单信息</span><br><span class="line">11:构建更新草稿物流单信息及草稿物流单操作流水信息</span><br><span class="line">12:更新草稿物流单及插入草稿物流单流水</span><br><span class="line">13:更新节点node_distribution配送信息</span><br><span class="line">14:回写批次号卸货单实际签收量</span><br><span class="line">15:查询商品冗余信息构建Wms入库操作DTO</span><br><span class="line">16:Wms入库</span><br><span class="line">17:Mq回馈相关的Wms小仓入库批次号给服务站客户</span><br></pre></td></tr></table></figure>
+<h5 id="原签收整改逻辑确定"><a href="#原签收整改逻辑确定" class="headerlink" title="原签收整改逻辑确定"></a>原签收整改逻辑确定</h5><p>待定</p>
+<h5 id="主动签收主要逻辑确定"><a href="#主动签收主要逻辑确定" class="headerlink" title="主动签收主要逻辑确定"></a>主动签收主要逻辑确定</h5><blockquote>
+<p>入参 </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerRequirementInfoDTO</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">172754217867969664L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源子单id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String sourceId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源类型</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> com.sxc.jotunheim.logistic.client.constant.requirement.SourceTypeEnum</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * skuId</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer skuId;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主要逻辑 </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1:查询跟此需求单相关的承运调度单(delivery_source数据),如有未完结进行签收操作</span><br><span class="line">2:根据deliveru_source,查询各个草稿物流单信息</span><br><span class="line">3:查询各个Route节点信息</span><br><span class="line">4:判断Route路线状态是否完成签收</span><br><span class="line">5:查询各个卸货单信息</span><br><span class="line">6:构建更新各个Route节点信息并构建RouteRecord操作流水信息(只更新此需求子单相关承运调度签收信息)</span><br><span class="line">7:更新各个Route节点信息及操作流水</span><br><span class="line">8:构建更新各个卸货单信息(只更新此需求子单相关承运调度签收信息)</span><br><span class="line">9:更新各个卸货单信息</span><br><span class="line">10:构建更新草稿物流单信息及草稿物流单操作流水信息(判定所有节点全部签收完毕,则进行草稿调度单状态更新)</span><br><span class="line">11:更新草稿物流单及插入草稿物流单流水</span><br><span class="line">12:更新各个节点node_distribution配送信息(如果此站点下所有需求子单全部签收完毕)</span><br><span class="line">13:回写批次号卸货单实际签收量(只回写此需求子单的承运实际签收量)</span><br><span class="line">14:查询商品冗余信息构建Wms入库操作DTO(只构建此需求子单调度承运的实际量)</span><br><span class="line">15:Wms入库</span><br><span class="line">16:查询所有的需求子单小仓入库批次号</span><br></pre></td></tr></table></figure>
+<h5 id="物流信息回查内容确定"><a href="#物流信息回查内容确定" class="headerlink" title="物流信息回查内容确定"></a>物流信息回查内容确定</h5><blockquote>
+<p>入参</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerRequirementInfoDTO</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">172754217867969664L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源子单id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String sourceId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源类型</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> com.sxc.jotunheim.logistic.client.constant.requirement.SourceTypeEnum</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * skuId</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer skuId;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>出参</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequirementSchedulingDTO</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">5874263751869794117L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 此调度的司机名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String driverName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 此调度的司机手机号</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String driverPhone;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 车牌号</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String carId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求子单号</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求子单类型</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> com.sxc.jotunheim.logistic.client.constant.requirement.SourceTypeEnum</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 经历的各个站点信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;RequirementSchedulingNodeDTO&gt; schedulingNodeDTOList;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequirementSchedulingNodeDTO</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">5859175506778777155L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 到站时间点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Date locationTime;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 站点ID</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer locationId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 站点名</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String locationName;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 装卸货类型</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> com.sxc.jotunheim.logistic.client.constant.CargoChangeTypeEnum</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer cargoChangeType;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="需求子单号查询批次信息"><a href="#需求子单号查询批次信息" class="headerlink" title="需求子单号查询批次信息"></a>需求子单号查询批次信息</h5><blockquote>
+<p>入参 </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerRequirementInfoDTO</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">172754217867969664L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源子单id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String sourceId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源类型</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> com.sxc.jotunheim.logistic.client.constant.requirement.SourceTypeEnum</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * skuId</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer skuId;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>出参</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerRequirementInfoDTO</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">6510161540161858535L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源子单id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来源id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String sourceId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求子单状态</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> com.sxc.jotunheim.logistic.client.constant.requirement.DetailStatusEnum</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer detailStatus;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * SkuId</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer skuId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 总承运数量</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer totalAmount;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="确定wms交互内容"><a href="#确定wms交互内容" class="headerlink" title="确定wms交互内容"></a>确定wms交互内容</h5><h5 id="校对周四要上的tms1-0逻辑"><a href="#校对周四要上的tms1-0逻辑" class="headerlink" title="校对周四要上的tms1.0逻辑"></a>校对周四要上的tms1.0逻辑</h5><p><br></p>
+<h2 id="2019-十二月-1"><a href="#2019-十二月-1" class="headerlink" title="2019#十二月"></a>2019#十二月</h2><h4 id="2019-12-12"><a href="#2019-12-12" class="headerlink" title="2019#12#12"></a>2019#12#12</h4><h5 id="物流团队"><a href="#物流团队" class="headerlink" title="物流团队"></a>物流团队</h5><blockquote>
+<p>进度: </p>
+</blockquote>
+<p>目前[前端编码+mock调试完成 2019-12-11 ~ 2019-12-16]</p>
+<ul>
+<li>1:接口已评审,Mock数据已准备,前后端正在开发,前端下周一可进入联调</li>
+</ul>
+<blockquote>
+<p>问题:</p>
+</blockquote>
+<p style="color:red">1:前端对创建物流单提交所有数据有顾虑,下午将对一下具体情况</p>
+
+
+<h5 id="交易团队"><a href="#交易团队" class="headerlink" title="交易团队"></a>交易团队</h5><blockquote>
+<p>进度</p>
+</blockquote>
+<p>目前[接口评审+mock定义 今日完成]</p>
+<ul>
+<li>1:下午找刘芳对相关接口和mock数据</li>
+</ul>
+<blockquote>
+<p>问题</p>
+</blockquote>
+<p style="color:red">1: 王志琼周三介入,科迪周一退出,负责快捷发货&amp;签收两个Mq的消费+交易订单详情中各个操作的透出逻辑+客户优先级打标</p>
+
+
+<h5 id="交易-amp-物流交互"><a href="#交易-amp-物流交互" class="headerlink" title="交易&amp;物流交互"></a>交易&amp;物流交互</h5><blockquote>
+<p>历史数据处理</p>
+</blockquote>
+<h6 id="仓配组需求单-amp-交易组订单"><a href="#仓配组需求单-amp-交易组订单" class="headerlink" title="仓配组需求单&amp;交易组订单"></a>仓配组需求单&amp;交易组订单</h6><ul>
+<li>仓配组在上线前已创线未发货的订单催促快捷发货掉,不然将进行关单处理、通知许伟杰+杜金海</li>
+<li>仓配组在上线前清洗数据:未配送需求单将洗成带有客户信息的需求单</li>
+<li>交易组根据物流清洗的需求单,反向清洗delivery_order增加状态,这批订单将会走新的提货逻辑</li>
+</ul>
+<h6 id="库存"><a href="#库存" class="headerlink" title="库存"></a>库存</h6><ul>
+<li>仓配组老签收列表与签收详情排除【试点城市+带客户信息需求单】签收信息(混杂的档口单)<ul>
+<li>服务站应该要么全是客户信息维度的需求单、要么全不是。没有混着的</li>
+<li>主要捞试点城市的档口相关需求单走老逻辑签收</li>
+</ul>
+</li>
+<li>仓配组新建立定时签收【排除调度单内不带客户信息的需求单(混杂的档口单)】+ 主动签收需求单维度的订单(推送需求单承运信息)</li>
+<li>交易组根据之前清洗的订单+之后试点城市创建的订单都走新的提货逻辑以及新的小仓、老的小仓库存不再打扰, 新老库存出库批次号隔离</li>
+<li>仓配新小仓入库之前业务ID和类型都是schedulingId现在以需求单维度ID,交易组也通过需求单维度ID出库<ul>
+<li>调度流程只通知当前需求单是否满足承运数量配送完成(签收+入库量是否满足需求单量)</li>
+<li>交易组如果拿到配送完成Mq消息则进行提货、或者拿到发货配送完成Mq中途可主动来调度签收进行提货</li>
+</ul>
+</li>
+</ul>
+<h4 id="2019-12-24"><a href="#2019-12-24" class="headerlink" title="2019#12#24"></a>2019#12#24</h4><ul>
+<li>云掌柜-商品管理-创建商品</li>
+<li>审核商品<br>  <code>https://erp.songxiaocai.net/sku/waitCheckSkuList.htm</code></li>
+<li>上架商品<br>  <code>http://erp.songxiaocai.net/putawaySKU/showIndex.htm</code></li>
+<li>销售库存<br>  <code>http://erp.songxiaocai.net/automaticPricing/index.htm</code><br>  设置库存</li>
+<li>设置价格<br>  <code>http://erp.songxiaocai.net/automaticPricing/index.htm</code></li>
+<li>后续售卖编辑<br>  <code>http://erp.songxiaocai.net/icItem/itemSKUList.htm</code></li>
+<li>订单管理缺货<br>  <code>https://op.songxiaocai.net/#/order/lists</code></li>
+</ul>
+<p><code>songxiaocai.logisticsservice.wms.operateStockInByOBSKeys</code></p>
+<h2 id="2020-一月"><a href="#2020-一月" class="headerlink" title="2020#一月"></a>2020#一月</h2><h3 id="第三周-2"><a href="#第三周-2" class="headerlink" title="第三周"></a>第三周</h3><h4 id="2020-01-20"><a href="#2020-01-20" class="headerlink" title="2020#01#20"></a>2020#01#20</h4><ul>
+<li><p>App/宋小福盘点</p>
+</li>
+<li><p>App/档口盘点</p>
+</li>
+<li><p>销售库存盘点:<a href="http://erp.songxiaocai.net/stockTaking/saleStockTakingList.htm" target="_blank" rel="noopener">http://erp.songxiaocai.net/stockTaking/saleStockTakingList.htm</a></p>
+</li>
+</ul>
+<blockquote>
+<p>leads关系,以固定人审批流,暂不修改</p>
+</blockquote>
+<ul>
+<li>盘点审批列表:<a href="http://erp.songxiaocai.net/stockTaking/stockTakingList.htm" target="_blank" rel="noopener">http://erp.songxiaocai.net/stockTaking/stockTakingList.htm</a></li>
+</ul>
+<blockquote>
+<p>中心仓盘点,并以角色关联<br>此次修改点,以名单进行审批</p>
+</blockquote>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/schedule/index.html';
+        this.page.title = '日程';
+        this.page.identifier = 'schedule/index.html';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+        });
+    </script>
+
+</body>
+</html>

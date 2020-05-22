@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Linux_[lxc笔记] | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Linux-lxc笔记知识详解笔记
+基本概论docker是lxc的管理器，lxc是cgroup的管理工具，cgroup是namespace的用户空间的管理接口。namespace是linux内核在task_struct中对进程组管理的基础机制。
+再详细点说：
+123456789docker是用go来实现的,自动化了对lxc的管理过程,能够自动在线下载相应的发行版本的rootfs。lxc可以直接chroot到任意的系统的rootfs上并通过cgroup的限制机制来控制容器内系统的资源占有率。cgr">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概论"><span class="toc-number">1.</span> <span class="toc-text">基本概论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#namespace"><span class="toc-number">1.1.</span> <span class="toc-text">namespace</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pid-namespace"><span class="toc-number">1.1.1.</span> <span class="toc-text">pid namespace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mnt-namespace"><span class="toc-number">1.1.2.</span> <span class="toc-text">mnt namespace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#net-namespace"><span class="toc-number">1.1.3.</span> <span class="toc-text">net namespace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uts-namespace"><span class="toc-number">1.1.4.</span> <span class="toc-text">uts namespace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ipc-namespace"><span class="toc-number">1.1.5.</span> <span class="toc-text">ipc namespace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#user-namespace"><span class="toc-number">1.1.6.</span> <span class="toc-text">user namespace</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cgroup"><span class="toc-number">1.2.</span> <span class="toc-text">cgroup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#memory"><span class="toc-number">1.2.1.</span> <span class="toc-text">memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cpu"><span class="toc-number">1.2.2.</span> <span class="toc-text">cpu</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#blkio"><span class="toc-number">1.2.3.</span> <span class="toc-text">blkio</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#devices"><span class="toc-number">1.2.4.</span> <span class="toc-text">devices</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lxc"><span class="toc-number">1.3.</span> <span class="toc-text">lxc</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cgroup"><span class="toc-number">2.</span> <span class="toc-text">Cgroup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cgroup作用"><span class="toc-number">2.1.</span> <span class="toc-text">Cgroup作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cgroup模型"><span class="toc-number">2.2.</span> <span class="toc-text">Cgroup模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cgroup概念"><span class="toc-number">2.3.</span> <span class="toc-text">Cgroup概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Subsystems"><span class="toc-number">2.3.1.</span> <span class="toc-text">Subsystems</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子系统、层次结构、控制组和任务之间的关系"><span class="toc-number">2.3.2.</span> <span class="toc-text">子系统、层次结构、控制组和任务之间的关系</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Linux_[lxc笔记]
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2018/12/04/linux-lxc/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-12-04T01:23:06.000Z" itemprop="datePublished">2018-12-04</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/Linux/">Linux</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Linux-lxc笔记知识详解笔记<br><a id="more"></a></p>
+<h1 id="基本概论"><a href="#基本概论" class="headerlink" title="基本概论"></a>基本概论</h1><p>docker是lxc的管理器，lxc是cgroup的管理工具，cgroup是namespace的用户空间的管理接口。namespace是linux内核在task_struct中对进程组管理的基础机制。</p>
+<p>再详细点说：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker是用go来实现的,自动化了对lxc的管理过程,能够自动在线下载相应的发行版本的rootfs。</span><br><span class="line"></span><br><span class="line">lxc可以直接chroot到任意的系统的rootfs上并通过cgroup的限制机制来控制容器内系统的资源占有率。</span><br><span class="line"></span><br><span class="line">cgroup通过配置文件或者命令配置后,限制相应进程或一组进程使用的系统资源。</span><br><span class="line"></span><br><span class="line">很明显在lxc以上已经借助于chroot机制在一个限制的容器中运行一个完整的系统了</span><br><span class="line"></span><br><span class="line">这样多个不通过虚拟化技术的新系统就在特定的占有物理资源的限制上运行起来。</span><br></pre></td></tr></table></figure>
+<h2 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h2><h3 id="pid-namespace"><a href="#pid-namespace" class="headerlink" title="pid namespace"></a>pid namespace</h3><p>不同用户的进程就是通过pid namespace隔离开的,且不同 namespace 中可以有相同 PID。</p>
+<p>具有以下特征:</p>
+<ul>
+<li>每个 namespace 中的 pid 是有自己的 pid=1 的进程(类似 /sbin/init 进程)</li>
+<li>每个 namespace 中的进程只能影响自己的同一个 namespace 或子 namespace 中的进程</li>
+</ul>
+<p>因为 /proc 包含正在运行的进程,因此在 container 中的 pseudo-filesystem 的 /proc 目录只能看到自己 namespace 中的进程</p>
+<p>因为 namespace 允许嵌套,父 namespace 可以影响子 namespace 的进程  </p>
+<p>所以子 namespace 的进程可以在父 namespace 中看到但是具有不同的 pid</p>
+<h3 id="mnt-namespace"><a href="#mnt-namespace" class="headerlink" title="mnt namespace"></a>mnt namespace</h3><p>类似 chroot,将一个进程放到一个特定的目录执行。</p>
+<p>mnt namespace 允许不同 namespace 的进程看到的文件结构不同<br>这样每个 namespace 中的进程所看到的文件目录就被隔离开了。</p>
+<p>同chroot不同,每个namespace中的container在 /proc/mounts 的信息只包含所在 namespace的mount point。</p>
+<h3 id="net-namespace"><a href="#net-namespace" class="headerlink" title="net namespace"></a>net namespace</h3><p>网络隔离是通过 net namespace 实现的</p>
+<p>每个 net namespace 有独立的 network devices,IP addresses,IP routing tables, /proc/net 目录。</p>
+<p>这样每个 container 的网络就能隔离开来。 </p>
+<p>docker 默认采用 veth 的方式将 container 中的虚拟网卡同 host 上的一个 docker bridge 连接在一起。</p>
+<h3 id="uts-namespace"><a href="#uts-namespace" class="headerlink" title="uts namespace"></a>uts namespace</h3><p>UTS (“UNIX Time-sharing System”) namespace 允许每个 container 拥有独立的 hostname 和 domain name  </p>
+<p>使其在网络上可以被视作一个独立的节点而非 Host 上的一个进程。</p>
+<h3 id="ipc-namespace"><a href="#ipc-namespace" class="headerlink" title="ipc namespace"></a>ipc namespace</h3><p>container 中进程交互还是采用 Linux 常见的进程间交互方法<br>(interprocess communication - IPC), 包括常见的信号量、消息队列和共享内存。</p>
+<p>然而同 VM 不同，container 的进程间交互实际上还是 host 上具有相同 pid namespace 中的进程间交互  </p>
+<p>因此需要在IPC资源申请时加入 namespace 信息 - 每个 IPC 资源有一个唯一的 32bit ID。</p>
+<h3 id="user-namespace"><a href="#user-namespace" class="headerlink" title="user namespace"></a>user namespace</h3><p>每个 container 可以有不同的 user 和 group id</p>
+<p>也就是说可以以 container 内部的用户在 container 内部执行程序而非 Host 上的用户。</p>
+<p>有了以上 6 种 namespace 从进程、网络、IPC、文件系统、UTS 和用户角度的隔离</p>
+<p>一个 container 就可以对外展现出一个独立计算机的能力,并且不同 container 从 OS 层面实现了隔离。 </p>
+<p>然而不同 namespace 之间资源还是相互竞争的,仍然需要类似 ulimit 来管理每个 container 所能使用的资源 - cgroup。</p>
+<p><img src="/2018/12/04/linux-lxc/image-02.png" width="400px"></p>
+<h2 id="cgroup"><a href="#cgroup" class="headerlink" title="cgroup"></a>cgroup</h2><p>cgroups 实现了对资源的配额和度量。</p>
+<p>cgroups 的使用非常简单，提供类似文件的接口,在 <code>/sys/fs/cgroup/</code> 目录下新建一个文件夹即可新建一个 <code>group</code>,在此文件夹中新建<code>task</code>文件<br>并将<code>pid</code>写入该文件,即可实现对该进程的资源控制。</p>
+<p>具体的资源配置选项可以在该文件夹中新建子<code>subsystem,{子系统前缀}.{资源项}</code>是典型的配置方法</p>
+<p>如<code>memory.usageinbytes</code>就定义了该<code>group</code>在<code>subsystem memory</code>中的一个内存限制选项。 </p>
+<p>另外<code>cgroups</code>中的<code>subsystem</code>可以随意组合,一个<code>subsystem</code>可以在不同的<code>group</code>中，也可以一个<code>group</code>包含多个<code>subsystem</code>- 也就是说一个<code>subsystem</code></p>
+<h3 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h3><p>内存相关的限制</p>
+<h3 id="cpu"><a href="#cpu" class="headerlink" title="cpu"></a>cpu</h3><p>在 cgroup 中,并不能像硬件虚拟化方案一样能够定义 CPU 能力,但是能够定义 CPU 轮转的优先级,因此具有较高 CPU 优先级的进程会更可能得到 CPU 运算。 </p>
+<p>通过将参数写入 cpu.shares ,即可定义改 cgroup 的 CPU 优先级 - 这里是一个相对权重，而非绝对值</p>
+<h3 id="blkio"><a href="#blkio" class="headerlink" title="blkio"></a>blkio</h3><p>block IO 相关的统计和限制，byte/operation 统计和限制 (IOPS 等),读写速度限制等,但是这里主要统计的都是同步 IO</p>
+<h3 id="devices"><a href="#devices" class="headerlink" title="devices"></a>devices</h3><p>设备权限限制</p>
+<blockquote>
+<p>步骤   </p>
+</blockquote>
+<ul>
+<li>在文件系统上建立层次结构  </li>
+<li>挂载文件系统并关联子系统  </li>
+<li>建立控制组  </li>
+<li>设置控制参数  </li>
+<li>将进程加入到控制组  </li>
+</ul>
+<h2 id="lxc"><a href="#lxc" class="headerlink" title="lxc"></a>lxc</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">可以为容器绑定特定的cpu和memory</span><br><span class="line">分配特定比例的cpu时间、IO时间,限制可以使用的内存大小(包括内存和swap空间)</span><br><span class="line">提供device访问控制,提供独立的namespace(网络、pid、ipc、mnt、uts)</span><br><span class="line"></span><br><span class="line">LXC在资源管理方面依赖与Linux内核的cgroups子系统</span><br><span class="line">cgroups子系统是Linux内核提供的一个基于进程组的资源管理的框架</span><br><span class="line">可以为特定的进程组限定可以使用的资源。</span><br><span class="line"></span><br><span class="line">LXC在隔离控制方面依赖于Linux内核的namespace特性,</span><br><span class="line">具体而言就是在clone时加入相应的flag（NEWNS NEWPID等等）。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>建立新容器 lxc-create -n name -t type  </p>
+</li>
+<li><p>删除容器 lxc-destory -n name  </p>
+</li>
+<li><p>运行容器lxc-start -n name  </p>
+</li>
+<li><p>运行容器中的指令 lxc-execute -n name command  </p>
+</li>
+<li><p>停止运行容器 lxc-stop -n name  </p>
+</li>
+<li><p>连接运行容器 lxc-attach -n name  </p>
+</li>
+<li><p>配置cgroup lxc-cgroup -n name  </p>
+</li>
+</ul>
+<p>Docker 从 0.9 版本开始使用<code>libcontainer</code>替代<code>lxc</code>,<code>libcontainer</code>和<code>Linux</code>系统的交互图如下：</p>
+<p><img src="/2018/12/04/linux-lxc/image-01.png" width="500px">  </p>
+<h1 id="Cgroup"><a href="#Cgroup" class="headerlink" title="Cgroup"></a>Cgroup</h1><p>Cgroups 是 control groups 的缩写，是 Linux 内核提供的一种可以限制、记录、隔离进程组（process groups）所使用的物理资源（如：cpu,memory,IO 等等）的机制。</p>
+<p>最初由 google 的工程师提出,后来被整合进 Linux 内核。<br>Cgroups 也是 LXC 为实现虚拟化所使用的资源管理手段,可以说没有 cgroups 就没有 LXC。  </p>
+<h2 id="Cgroup作用"><a href="#Cgroup作用" class="headerlink" title="Cgroup作用"></a>Cgroup作用</h2><ul>
+<li>1.限制进程组可以使用的资源数量，限制进程最大使用的内存等  </li>
+<li>2.进程组的优先级控制，比如为某个进程组分配特定的cpu share  </li>
+<li>3.记录进程组使用的资源数量，比如记录某个进程CPU的使用时间  </li>
+<li>4.进程组隔离，比如通过namespace以达到隔离的目的  </li>
+<li>5.进程组控制，比如可以将进程组挂起或恢复  </li>
+</ul>
+<h2 id="Cgroup模型"><a href="#Cgroup模型" class="headerlink" title="Cgroup模型"></a>Cgroup模型</h2><p>先论进程模型,所有linux进程都拥有一个共同的父进程,叫做init进程    </p>
+<p>这个进程在内核启动的时候开始执行,然后通过init进程启动其他的进程,这些进程都是init的子进程。  </p>
+<p>因为所有的进程都有一个共同的父进程。  </p>
+<p>那么linux的进程模型就是一个单继承层次的模型或者称之为树状模型。  </p>
+<p>除此之外每一个linux进程但是除了init进程,都继承了一些环境变量(例如PATH环境变量)  </p>
+<p>Cgroup和进程类似;</p>
+<p>Cgroup也是继承体系,并且子cgroup继承其父cgroup的某些属性,</p>
+<p>两者最基本的差别在于,进程是单继承体系,而Cgroup可以存在多个不同的继承体系<br>(意思就是可以有多个单继承体系，每个单继承体系互不影响)  </p>
+<h2 id="Cgroup概念"><a href="#Cgroup概念" class="headerlink" title="Cgroup概念"></a>Cgroup概念</h2><ul>
+<li><p>Subsystems: 称之为子系统，一个子系统就是一个资源控制器，比如 cpu子系统就是控制cpu时间分配的一个控制器。</p>
+</li>
+<li><p>Hierarchies: 可以称之为层次体系也可以称之为继承体系，指的是Control Groups是按照层次体系的关系进行组织的。</p>
+</li>
+<li><p>Control Groups: 一组按照某种标准划分的进程。进程可以从一个Control Groups迁移到另外一个Control Groups中，同时Control Groups中的进程也会受到这个组的资源限制。</p>
+</li>
+<li><p>Tasks: 在cgroups中，Tasks就是系统的一个进程。</p>
+</li>
+</ul>
+<h3 id="Subsystems"><a href="#Subsystems" class="headerlink" title="Subsystems"></a>Subsystems</h3><p>在Red_Hat_Enterprise_Linux-6系列的linux中，默认提供了如下子系统。</p>
+<ul>
+<li><p>blkio这个子系统为块设备设定输入/输出限制，比如物理设备（磁盘，固态硬盘，USB 等等） 。</p>
+</li>
+<li><p>cpu这个子系统使用调度程序提供对 CPU 的 cgroup 任务访问。</p>
+</li>
+<li><p>cpuacct这个子系统自动生成 cgroup 中任务所使用的 CPU 报告。</p>
+</li>
+<li><p>cpuset这个子系统为 cgroup 中的任务分配独立 CPU（在多核系统）和内存节点。</p>
+</li>
+<li><p>devices这个子系统可允许或者拒绝 cgroup 中的任务访问设备。</p>
+</li>
+<li><p>freezer这个子系统挂起或者恢复 cgroup 中的任务。</p>
+</li>
+<li><p>memory这个子系统设定 cgroup 中任务使用的内存限制，并自动生成由那些任务使用的内存资源报告。</p>
+</li>
+<li><p>net_cls这个子系统使用等级识别符（classid）标记网络数据包，可允许 Linux 流量控制程序（tc）识别从具体 cgroup 中生成的数据包。</p>
+</li>
+<li><p>ns名称空间子系统。</p>
+</li>
+</ul>
+<h3 id="子系统、层次结构、控制组和任务之间的关系"><a href="#子系统、层次结构、控制组和任务之间的关系" class="headerlink" title="子系统、层次结构、控制组和任务之间的关系"></a>子系统、层次结构、控制组和任务之间的关系</h3><p>资源管理在这个部分通过引入4条规则  </p>
+<ul>
+<li>规则1,一个单继承体系(单层次体系)可以附加1个或者多个子系统<br>  <img src="/2018/12/04/linux-lxc/image-03.png" width="350px">  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Cpu和Memory两个子系统附加到了cpu_mem_cg的这个继承体系中cg1和cg2是两个Control Groups</span><br><span class="line">但是需要注意的是如果此前有Cpu或者Memory子系统附加到其它继承体系中的</span><br><span class="line">那么Cpu或者Memory就不能再次附加到cpu_mem_cg这个继承体系中了。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>规则2,一个子系统不能被附加到多个继承体系中。<br>  <img src="/2018/12/04/linux-lxc/image-04.png" width="350px">  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">可以看出CPU子系统已经被附加到左侧的cpu_cg这个继承体系中了</span><br><span class="line">当cpu子系统要再次被附加到cpu_mem_cg的时候会发生附加失败。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>规则3</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">每当在系统中创建一个继承体系的时候,会默认再创建一个control groups,并且这个control groups被称之为root cgroup</span><br><span class="line">此时整个系统中的tasks(进程)都属于这个root cgroup。</span><br><span class="line">系统中的进程在一个继承体系中都明确的属于一个control groups</span><br><span class="line">并且这个进程可以从一个control groups移动到另外一个control groups中</span><br><span class="line">但是需要主要的是在一个继承体系中一个进程是没办法同时属于两个control groups的</span><br><span class="line">但是一个进程可以同时属于两个不同的继承体系中的control groups。</span><br></pre></td></tr></table></figure>
+<p>  <img src="/2018/12/04/linux-lxc/image-05.png" width="400px"></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在上面的这副图中可以看出httpd这个进程无法同时属于A继承体系中的cg1和cg2这两个control groups</span><br><span class="line">但是httpd进程却可以同时属于A继承体系中的cg1和B继承体系中的cg3。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>规则4</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">系统上的任何task(进程)通过fork创建子task(进程)的时候</span><br><span class="line">这个子task(进程)自动继承其父task(进程)的control groups成为这个control groups的一员。</span><br><span class="line">此后这个子task(进程)可以移动到其他control groups中</span><br><span class="line">父task(进程)和子task(进程)完全独立。</span><br></pre></td></tr></table></figure>
+<p>  <img src="/2018/12/04/linux-lxc/image-06.png" width="400px">  </p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以看出httpd进程fork出来的子进程仍然是属于cg1这个control group的。</span><br></pre></td></tr></table></figure>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2018/12/04/linux-lxc/';
+        this.page.title = 'Linux_[lxc笔记]';
+        this.page.identifier = '2018/12/04/linux-lxc/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

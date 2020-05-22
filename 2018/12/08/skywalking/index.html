@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>OpenTracing-SkyWalking | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="SkyWalking 相关的源码详解笔记 
+分析优点
+探针技术,无需开发任何介入,只需告知SpringCloud服务模块名称,即可在部署的时候加入链路追踪  
+
+探针插件系统强大,基本符合开发常用的所有技术栈链路监控,也可自定义相关的链路追踪业务插件     
+
+
+
+探针性能从网络Jemeter测试,skywalking的探针对吞吐量的影响最小,zipkin的吞吐量居中,pinpoint的探针对吞吐量的影响较为明显     
+
+所有错误(超时.异常)全都会以log event记录在案,并以Ala">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分析"><span class="toc-number">1.</span> <span class="toc-text">分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#优点"><span class="toc-number">1.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点"><span class="toc-number">1.2.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaAgent"><span class="toc-number">2.</span> <span class="toc-text">JavaAgent</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PreMain"><span class="toc-number">2.1.</span> <span class="toc-text">PreMain</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transformer"><span class="toc-number">2.2.</span> <span class="toc-text">Transformer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#案例"><span class="toc-number">2.3.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Client"><span class="toc-number">3.</span> <span class="toc-text">Client</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Config"><span class="toc-number">3.1.</span> <span class="toc-text">Config</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RemoteDownstreamConfig"><span class="toc-number">3.2.</span> <span class="toc-text">RemoteDownstreamConfig</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Plugin"><span class="toc-number">3.3.</span> <span class="toc-text">Plugin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PluginBootstrap"><span class="toc-number">3.4.</span> <span class="toc-text">PluginBootstrap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PluginFinder"><span class="toc-number">3.5.</span> <span class="toc-text">PluginFinder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ServiceManager"><span class="toc-number">3.6.</span> <span class="toc-text">ServiceManager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BootService"><span class="toc-number">3.7.</span> <span class="toc-text">BootService</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Plugin-1"><span class="toc-number">3.8.</span> <span class="toc-text">Plugin</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#插件的加载"><span class="toc-number">3.8.1.</span> <span class="toc-text">插件的加载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AgentClassLoader"><span class="toc-number">3.8.1.1.</span> <span class="toc-text">AgentClassLoader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PluginResourcesResolver"><span class="toc-number">3.8.1.2.</span> <span class="toc-text">PluginResourcesResolver</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PluginCfg"><span class="toc-number">3.8.1.3.</span> <span class="toc-text">PluginCfg</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AbstractClassEnhancePluginDefine"><span class="toc-number">3.8.1.4.</span> <span class="toc-text">AbstractClassEnhancePluginDefine</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Server"><span class="toc-number">4.</span> <span class="toc-text">Server</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Collector-组件"><span class="toc-number">4.1.</span> <span class="toc-text">Collector 组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OAPServerStartUp"><span class="toc-number">4.1.1.</span> <span class="toc-text">OAPServerStartUp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplicationConfigLoader"><span class="toc-number">4.1.2.</span> <span class="toc-text">ApplicationConfigLoader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ModuleManager"><span class="toc-number">4.1.3.</span> <span class="toc-text">ModuleManager</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Collector处理Trace数据"><span class="toc-number">4.2.</span> <span class="toc-text">Collector处理Trace数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Collector-Streaming-流式处理"><span class="toc-number">4.3.</span> <span class="toc-text">Collector Streaming 流式处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Graph"><span class="toc-number">4.3.1.</span> <span class="toc-text">Graph</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Graph创建"><span class="toc-number">4.3.1.1.</span> <span class="toc-text">Graph创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Graph-启动"><span class="toc-number">4.3.1.2.</span> <span class="toc-text">Graph 启动</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WayToNode"><span class="toc-number">4.3.2.</span> <span class="toc-text">WayToNode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新版本的变动"><span class="toc-number">4.3.3.</span> <span class="toc-text">新版本的变动</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            OpenTracing-SkyWalking
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2018/12/08/skywalking/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-12-08T07:57:44.000Z" itemprop="datePublished">2018-12-08</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/SkyWalking/">SkyWalking</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>SkyWalking 相关的源码详解笔记<br><a id="more"></a> </p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li><p>探针技术,无需开发任何介入,只需告知SpringCloud服务模块名称,即可在部署的时候加入链路追踪  </p>
+</li>
+<li><p>探针插件系统强大,基本符合开发常用的所有技术栈链路监控,也可自定义相关的链路追踪业务插件     </p>
+</li>
+</ul>
+<ul>
+<li><p>探针性能从网络Jemeter测试,skywalking的探针对吞吐量的影响最小,zipkin的吞吐量居中,pinpoint的探针对吞吐量的影响较为明显     </p>
+</li>
+<li><p>所有错误(超时.异常)全都会以log event记录在案,并以<code>Alarm</code>界面展现   </p>
+</li>
+<li><p>collector服务端代码模块很好,强大的Module/Provider结构模块自定义扩展   </p>
+</li>
+<li><p>collector后端数据流采用了Streaming,类似简约Storm结构处理    </p>
+</li>
+<li><p>支持业务工具toolkit,自己标注tag       </p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Trace</span><span class="comment">//@Trace 注解的方法,会创建一个LocalSpan   </span></span><br><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/log"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">log</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ActiveSpan.tag(<span class="string">"mp"</span>, <span class="string">"test"</span>);</span><br><span class="line">    System.out.println(<span class="string">"traceId："</span> + TraceContext.traceId());</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"log"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ul>
+<li><p>部署的时候,Host问题  </p>
+</li>
+<li><p>WebUI trace排序缺少倒叙正序   </p>
+</li>
+<li><p>WebUI log只有官方定义Exception,日志查询需要后期与通过traceId关联ELK查询,也可以通过ActiveSpan.tag进行新增tag           </p>
+</li>
+<li><p>异常报警,虽然有界面,但是缺少短信和邮件相关功能支持  </p>
+</li>
+</ul>
+<p>由于该技术用了JavaAgent,探针技术所以先传阐述一下探针技术   </p>
+<h1 id="JavaAgent"><a href="#JavaAgent" class="headerlink" title="JavaAgent"></a>JavaAgent</h1><p><img src="/2018/12/08/skywalking/image-05.png" width="500px"></p>
+<p>jdk1.5以后引入了javaAgent技术,javaAgent是运行方法之前的拦截器。</p>
+<p>我们利用javaAgent和ASM字节码技术,在JVM加载class二进制文件的时候.</p>
+<p>利用ASM动态的修改加载的class文件,在监控的方法前后添加计时器功能.</p>
+<p>用于计算监控方法耗时</p>
+<h2 id="PreMain"><a href="#PreMain" class="headerlink" title="PreMain"></a>PreMain</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> agent;</span><br><span class="line"><span class="keyword">import</span> java.lang.instrument.Instrumentation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">pre_MyProgram</span> </span>&#123;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 该方法在main方法之前运行，与main方法运行在同一个JVM中</span></span><br><span class="line"><span class="comment">     * 并被同一个System ClassLoader装载</span></span><br><span class="line"><span class="comment">     * 被统一的安全策略(security policy)和上下文(context)管理</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> agentOps</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> inst</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> SHANHY</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@create</span>  2016年3月30日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span>    <span class="title">premain</span><span class="params">(String agentOps,Instrumentation inst)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        System.out.println(<span class="string">"====premain 方法执行"</span>);</span><br><span class="line">        System.out.println(agentOps);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 添加Transformer</span></span><br><span class="line">        inst.addTransformer(<span class="keyword">new</span> MyTransformer());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如果不存在 premain(String agentOps, Instrumentation inst) </span></span><br><span class="line"><span class="comment">     * 则会执行 premain(String agentOps)</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> agentOps</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> SHANHY</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@create</span>  2016年3月30日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentOps)</span></span>&#123;</span><br><span class="line">       </span><br><span class="line">       System.out.println(<span class="string">"====premain方法执行2===="</span>);</span><br><span class="line">       System.out.println(agentOps);</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub   </span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTransformer</span> <span class="keyword">implements</span> <span class="title">ClassFileTransformer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">static</span> String prefix = <span class="string">"\nlong startTime = System.currentTimeMillis();\n"</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">static</span> String postfix = <span class="string">"\nlong endTime = System.currentTimeMillis();\n"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 被处理的方法列表</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">static</span> Map&lt;String, List&lt;String&gt;&gt; methodMap = <span class="keyword">new</span> HashMap&lt;String, List&lt;String&gt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyTransformer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        add(<span class="string">"com.shanhy.demo.TimeTest.sayHello"</span>);</span><br><span class="line">        add(<span class="string">"com.shanhy.demo.TimeTest.sayHello2"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String methodString)</span> </span>&#123;</span><br><span class="line">        String className = methodString.substring(<span class="number">0</span>, methodString.lastIndexOf(<span class="string">"."</span>));</span><br><span class="line">        String methodName = methodString.substring(methodString.lastIndexOf(<span class="string">"."</span>) + <span class="number">1</span>);</span><br><span class="line">        List&lt;String&gt; list = methodMap.get(className);</span><br><span class="line">        <span class="keyword">if</span> (list == <span class="keyword">null</span>) &#123;</span><br><span class="line">            list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">            methodMap.put(className, list);</span><br><span class="line">        &#125;</span><br><span class="line">        list.add(methodName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">byte</span>[] transform(ClassLoader loader, String className, Class&lt;?&gt; classBeingRedefined,</span><br><span class="line">            ProtectionDomain protectionDomain, <span class="keyword">byte</span>[] classfileBuffer) <span class="keyword">throws</span> IllegalClassFormatException &#123;</span><br><span class="line">        className = className.replace(<span class="string">"/"</span>, <span class="string">"."</span>);</span><br><span class="line">        <span class="keyword">if</span> (methodMap.containsKey(className)) &#123;<span class="comment">// 判断加载的class的包路径是不是需要监控的类</span></span><br><span class="line">            CtClass ctclass = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                ctclass = ClassPool.getDefault().get(className);<span class="comment">// 使用全称,用于取得字节码类&lt;使用javassist&gt;</span></span><br><span class="line">                <span class="keyword">for</span> (String methodName : methodMap.get(className)) &#123;</span><br><span class="line">                    String outputStr = <span class="string">"\nSystem.out.println(\"this method "</span> + methodName</span><br><span class="line">                            + <span class="string">" cost:\" +(endTime - startTime) +\"ms.\");"</span>;</span><br><span class="line"></span><br><span class="line">                    CtMethod ctmethod = ctclass.getDeclaredMethod(methodName);<span class="comment">// 得到这方法实例</span></span><br><span class="line">                    String newMethodName = methodName + <span class="string">"$old"</span>;<span class="comment">// 新定义一个方法叫做比如sayHello$old</span></span><br><span class="line">                    ctmethod.setName(newMethodName);<span class="comment">// 将原来的方法名字修改</span></span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 创建新的方法，复制原来的方法，名字为原来的名字</span></span><br><span class="line">                    CtMethod newMethod = CtNewMethod.copy(ctmethod, methodName, ctclass, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 构建新的方法体</span></span><br><span class="line">                    StringBuilder bodyStr = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">                    bodyStr.append(<span class="string">"&#123;"</span>);</span><br><span class="line">                    bodyStr.append(prefix);</span><br><span class="line">                    bodyStr.append(newMethodName + <span class="string">"($$);\n"</span>);<span class="comment">// 调用原有代码，类似于method();($$)表示所有的参数</span></span><br><span class="line">                    bodyStr.append(postfix);</span><br><span class="line">                    bodyStr.append(outputStr);</span><br><span class="line">                    bodyStr.append(<span class="string">"&#125;"</span>);</span><br><span class="line"></span><br><span class="line">                    newMethod.setBody(bodyStr.toString());<span class="comment">// 替换新方法</span></span><br><span class="line">                    ctclass.addMethod(newMethod);<span class="comment">// 增加新方法</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> ctclass.toBytecode();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                System.out.println(e.getMessage());</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        sayHello();</span><br><span class="line">        sayHello2(<span class="string">"hello world222222222"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            System.out.println(<span class="string">"hello world!!"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sayHello2</span><span class="params">(String hello)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            System.out.println(hello);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">====premain 方法执行</span><br><span class="line">Hello1</span><br><span class="line">====premain 方法执行</span><br><span class="line">Hello2</span><br><span class="line"></span><br><span class="line">hello world!!</span><br><span class="line"><span class="keyword">this</span> method sayHello cost:<span class="number">2000</span>ms.</span><br><span class="line">hello world222222222</span><br><span class="line"><span class="keyword">this</span> method sayHello2 cost:<span class="number">1000</span>ms.</span><br></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<h1 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h1><p>客户端起点在于配置初始化<br><code>org.skywalking.apm.agent.core.conf.SnifferConfigInitializer</code>,Agent 配置初始化器。</p>
+<p>配置类有 Config 和 RemoteDownstreamConfig 两种。</p>
+<ul>
+<li>Config 为 Agent 本地配置类，使用 SnifferConfigInitializer 进行初始化。  </li>
+<li>RemoteDownstreamConfig 为 Agent 远程配置类，从 Collector Server 读取。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SnifferConfigInitializer#initialize</span><br><span class="line"></span><br><span class="line">在loadConfig()处开始从从&#123;agent目录&#125;/config/agent.config</span><br><span class="line"></span><br><span class="line">后overrideConfigBySystemProp()处又开始读取环境变量覆盖配置</span><br><span class="line"></span><br><span class="line">agent.config 为 agent.application_code</span><br><span class="line">则环境变量为 skywalking.agent.application_code</span><br></pre></td></tr></table></figure>
+<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><blockquote>
+<p>Agent 本地配置类<br>此类内部主要有Agent / Collector / Jvm / Buffer / Dictionary / Logging / Plugin 七个小类  </p>
+</blockquote>
+<p><img src="/2018/12/08/skywalking/image-01.png" width="500px">  </p>
+<h2 id="RemoteDownstreamConfig"><a href="#RemoteDownstreamConfig" class="headerlink" title="RemoteDownstreamConfig"></a>RemoteDownstreamConfig</h2><blockquote>
+<p>Agent 远程配置类。<br>只有Agent小类    </p>
+</blockquote>
+<p><img src="/2018/12/08/skywalking/image-02.png" width="500px"></p>
+<h2 id="Plugin"><a href="#Plugin" class="headerlink" title="Plugin"></a>Plugin</h2><blockquote>
+<p>SkyWalking Agent 提供了多种插件,实现不同框架的透明接入SkyWalking。</p>
+</blockquote>
+<p><code>apm-sniffer/apm-sdk-plugin</code>目录下,有插件的实现代码    </p>
+<p><img src="/2018/12/08/skywalking/image-03.png" height="450px"></p>
+<h2 id="PluginBootstrap"><a href="#PluginBootstrap" class="headerlink" title="PluginBootstrap"></a>PluginBootstrap</h2><blockquote>
+<p>插件引导程序类,创建需要加载的插件对象数组。<br><code>org.skywalking.apm.agent.core.plugin.PluginBootstrap</code>  </p>
+</blockquote>
+<p>通过<code>loadPlugins()</code>作如下事项  </p>
+<ul>
+<li>初始化<code>AgentClassLoader</code>  </li>
+<li>获得插件定义路径数组  </li>
+<li>获得插件定义<code>PluginDefine</code>  </li>
+<li><p>创建类增强插件定义<code>AbstractClassEnhancePluginDefine</code>,并提供<code>define</code>形成<code>builder</code>  </p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">不同插件定义不同的切面,记录调用链路</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/2018/12/08/skywalking/image-04.png" height="450px"></p>
+<h2 id="PluginFinder"><a href="#PluginFinder" class="headerlink" title="PluginFinder"></a>PluginFinder</h2><blockquote>
+<p>插件发现者   </p>
+</blockquote>
+<p>提供<code>find(typeDescription)</code>查找相关的类增强插件<code>AbstractClassEnhancePluginDefine</code></p>
+<ul>
+<li><code>find()</code>查找<code>AbstractClassEnhancePluginDefine</code>对象  <ul>
+<li>处理<code>NameMatch</code>为匹配的<code>AbstractClassEnhancePluginDefine</code>对象，添加到<code>nameMatchDefine</code>属性。  </li>
+<li>处理非<code>NameMatch</code>为匹配的<code>AbstractClassEnhancePluginDefine</code>对象，添加到<code>signatureMatchDefine</code>属性。 </li>
+</ul>
+</li>
+</ul>
+<h2 id="ServiceManager"><a href="#ServiceManager" class="headerlink" title="ServiceManager"></a>ServiceManager</h2><blockquote>
+<p><code>BootService</code>管理器,负责管理和初始化BootService实例们<br><code>org.skywalking.apm.agent.core.boot.ServiceManager</code>  </p>
+</blockquote>
+<ul>
+<li><p><code>loadAllServices()</code>方法,加载所有BootService实例类的实例数组<br>  ServiceManager 基于<code>SPI (Service Provider Interface)</code>机制<br>  在<code>/resources/META-INF.services/org.skywalking.apm.agent.core.boot.BootService</code>文件里<br>  定义了所有<code>BootService</code>的实现类。  </p>
+</li>
+<li><p><code>beforeBoot()</code>调用每个<code>BootService#beforeBoot()</code>方法  </p>
+</li>
+<li><code>startup()</code>,调用每个<code>BootService#boot()</code>方法  </li>
+<li><code>afterBoot()</code>调用每个<code>BootService#afterBoot()</code>方法   </li>
+</ul>
+<h2 id="BootService"><a href="#BootService" class="headerlink" title="BootService"></a>BootService</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">org.apache.skywalking.apm.agent.core.remote.TraceSegmentServiceClient</span><br><span class="line">org.apache.skywalking.apm.agent.core.context.ContextManager</span><br><span class="line">org.apache.skywalking.apm.agent.core.sampling.SamplingService</span><br><span class="line">org.apache.skywalking.apm.agent.core.remote.GRPCChannelManager</span><br><span class="line">org.apache.skywalking.apm.agent.core.jvm.JVMService</span><br><span class="line">org.apache.skywalking.apm.agent.core.remote.ServiceAndEndpointRegisterClient</span><br><span class="line">org.apache.skywalking.apm.agent.core.context.ContextManagerExtendService</span><br></pre></td></tr></table></figure>
+<p>定义以上七个,分别有beforeBoot() / boot() / afterBoot() / shutdown() 接口方法。</p>
+<p><br></p>
+<h2 id="Plugin-1"><a href="#Plugin-1" class="headerlink" title="Plugin"></a>Plugin</h2><h3 id="插件的加载"><a href="#插件的加载" class="headerlink" title="插件的加载"></a>插件的加载</h3><p>Agent 初始化时，调用<code>PluginBootstrap#loadPlugins()</code>方法，加载所有的插件。</p>
+<p><img src="/2018/12/08/skywalking/image-06.png" width="700px"></p>
+<h4 id="AgentClassLoader"><a href="#AgentClassLoader" class="headerlink" title="AgentClassLoader"></a>AgentClassLoader</h4><p>应用透明SkyWalking,不会显式导入SkyWalking依赖,所以自定义ClassLoader  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AgentClassLoader <span class="title">initDefaultLoader</span><span class="params">()</span> <span class="keyword">throws</span> AgentPackageNotFoundException </span>&#123;</span><br><span class="line">    DEFAULT_LOADER = <span class="keyword">new</span> AgentClassLoader(PluginBootstrap.class.getClassLoader());</span><br><span class="line">    <span class="keyword">return</span> getDefault();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AgentClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The default class loader for the agent.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AgentClassLoader DEFAULT_LOADER;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * classpath</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;File&gt; classpath;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Jar 数组</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;Jar&gt; allJars;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Jar 读取时的锁</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> ReentrantLock jarScanLock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AgentClassLoader</span><span class="params">(ClassLoader parent)</span> <span class="keyword">throws</span> AgentPackageNotFoundException </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(parent);</span><br><span class="line">        File agentDictionary = AgentPackagePath.getPath();</span><br><span class="line">        classpath = <span class="keyword">new</span> LinkedList&lt;File&gt;();</span><br><span class="line">        classpath.add(<span class="keyword">new</span> File(agentDictionary, <span class="string">"plugins"</span>));</span><br><span class="line">        classpath.add(<span class="keyword">new</span> File(agentDictionary, <span class="string">"activations"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 ClassLoader 加载资源(例如，类),会调用如下  </p>
+<ul>
+<li>#findResource(name)  </li>
+<li>#findResources(name)   </li>
+</ul>
+<h4 id="PluginResourcesResolver"><a href="#PluginResourcesResolver" class="headerlink" title="PluginResourcesResolver"></a>PluginResourcesResolver</h4><p>插件资源解析器,读取所有插件(<code>/resource/skywalking-plugin.def</code>)定义文件  </p>
+<p><img src="/2018/12/08/skywalking/image-07.png" width="500px"></p>
+<p><code>#getResources()</code>方法,获得插件定义路径数组    </p>
+<p>使用了AgentClassLoader获得所有<code>skywalking-plugin.def</code>的路径。</p>
+<h4 id="PluginCfg"><a href="#PluginCfg" class="headerlink" title="PluginCfg"></a>PluginCfg</h4><p>插件定义配置,读取玩<code>skywalking-plugin.def</code><br>生成插件定义(<code>org.skywalking.apm.agent.core.plugin.PluginDefinie</code>)数组。 </p>
+<h4 id="AbstractClassEnhancePluginDefine"><a href="#AbstractClassEnhancePluginDefine" class="headerlink" title="AbstractClassEnhancePluginDefine"></a>AbstractClassEnhancePluginDefine</h4><p>类增强插件定义抽象基类。</p>
+<p>不同插件通过实现<code>AbstractClassEnhancePluginDefine</code>抽象类</p>
+<p>定义不同框架的切面记录调用链路</p>
+<p><br></p>
+<h1 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h1><h2 id="Collector-组件"><a href="#Collector-组件" class="headerlink" title="Collector 组件"></a>Collector 组件</h2><p><img src="/2018/12/08/skywalking/image-08.png" width="700px">  </p>
+<h3 id="OAPServerStartUp"><a href="#OAPServerStartUp" class="headerlink" title="OAPServerStartUp"></a>OAPServerStartUp</h3><blockquote>
+<p>skyWalking Collector 启动入口 </p>
+</blockquote>
+<ul>
+<li>调用<code>ApplicationConfiguration#load()</code>方法，加载<code>Collector</code>配置。   </li>
+<li>调用<code>ModuleManager#init(...)</code>方法，初始化<code>Collector</code>组件们。  </li>
+</ul>
+<h3 id="ApplicationConfigLoader"><a href="#ApplicationConfigLoader" class="headerlink" title="ApplicationConfigLoader"></a>ApplicationConfigLoader</h3><p><img src="/2018/12/08/skywalking/image-09.png" width="600px"></p>
+<blockquote>
+<p>绿框部分，对应一个组件配置类。<br>红框部分，对应一个组件服务提供者配置类。  </p>
+</blockquote>
+<p>理一下关系  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Collectior使用组件管理器(`ModuleManager`)管理多个组件(`Module`)  </span><br><span class="line">一个组件有多种组件服务提供者(`MudoleProvider`)</span><br><span class="line">同时一个组件只允许使用一个组件服务提供者  </span><br><span class="line"></span><br><span class="line">Collector使用一个应用配置类(`ApplicationConfiguration`)  </span><br><span class="line">一个应用配置类包含多个组件配置类(`ModuleConfiguration`)</span><br><span class="line">每个组件对应一个组件配置类     </span><br><span class="line"></span><br><span class="line">一个组件配置类包含多个组件服务提供者配置(`ProviderConfiguration`)。</span><br><span class="line">每个组件服务提供者对应一个组件配置类。</span><br><span class="line"></span><br><span class="line">注意：因为一个组件只允许同时使用一个组件服务提供者，</span><br><span class="line">所以一个组件配置类只设置一个组件服务提供者配置。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>调用 #loadConfig() 方法   </p>
+</blockquote>
+<p>从 apm-collector-core 的 application.yml 加载自定义配置。</p>
+<blockquote>
+<p><code>overrideConfigBySystemEnv</code>  </p>
+</blockquote>
+<p>从系统环境覆盖配置  </p>
+<h3 id="ModuleManager"><a href="#ModuleManager" class="headerlink" title="ModuleManager"></a>ModuleManager</h3><p><code>ModuleManager</code> 组件管理器，负责组件的管理与初始化。  </p>
+<blockquote>
+<p><code>init()</code> 初始化组件  </p>
+</blockquote>
+<p><code>ServiceLoader.load(ModuleDefine.class);</code>j加载所有Module实现类数组  </p>
+<p>ServiceManager 基于<code>SPI (Service Provider Interface)</code>机制  </p>
+<p>在每个serverPlugin项目的<code>/resources/META-INF.services/org.skywalking.apm.collector.core.module.Module</code>文件里  </p>
+<p>定义了该项目 Module 的实现类。</p>
+<blockquote>
+<p>遍历Module实现的实例数组,创建配置中的Module实现类的实例  </p>
+</blockquote>
+<ul>
+<li>创建Module对象  </li>
+<li>调用<code>prepare(...)</code>方法,执行Module准备阶段的逻辑  <ul>
+<li>方法内部寻找<code>ServiceLoader.load(ModuleProvider.class);</code>   </li>
+<li>实例化然后ModuleProvider添加到loadedProviders  </li>
+</ul>
+</li>
+<li><code>BootstrapFlow#start(...)</code>方法，执行<code>Module</code>启动逻辑  </li>
+<li><code>BootstrapFlow#notifyAfterCompleted()</code>方法，执行<code>Module</code>启动完成，通知<code>ModuleProvider</code>。      </li>
+</ul>
+<p><img src="/2018/12/08/skywalking/image-10.png" width="600px"></p>
+<h2 id="Collector处理Trace数据"><a href="#Collector处理Trace数据" class="headerlink" title="Collector处理Trace数据"></a>Collector处理Trace数据</h2><p><img src="/2018/12/08/skywalking/image-11.png" width="600px"></p>
+<h2 id="Collector-Streaming-流式处理"><a href="#Collector-Streaming-流式处理" class="headerlink" title="Collector Streaming 流式处理"></a>Collector Streaming 流式处理</h2><blockquote>
+<p><code>graph</code>包的基础上:提供异步、跨节点等等的流式处理的封装  </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在 Storm 中，先要设计一个用于实时计算的图状结构，我们称之为拓扑（topology）。</span><br><span class="line">这个拓扑将会被提交给集群，由集群中的主控节点（master node）分发代码</span><br><span class="line">将任务分配给工作节点（worker node）执行。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Graph ：定义了一个数据在各个 Node 的处理拓扑图。  </li>
+<li>WayToNode ：提交数据给 Node 的方式。  </li>
+<li>Node ：节点，包含一个 NodeProcessor 和 一个 Next 。  <ul>
+<li>NodeProcessor ：Node 处理器，处理数据。  </li>
+<li>Next ：包含 WayToNode 数组，即 Node 提交数据给 Next 的 Node 数组的方式。  </li>
+</ul>
+</li>
+</ul>
+<p><img src="/2018/12/08/skywalking/image-12.png" width="700px">  </p>
+<p><img src="/2018/12/08/skywalking/image-13.png" width="700px">  </p>
+<h3 id="Graph"><a href="#Graph" class="headerlink" title="Graph"></a>Graph</h3><h4 id="Graph创建"><a href="#Graph创建" class="headerlink" title="Graph创建"></a>Graph创建</h4><blockquote>
+<p>创建<code>Graph</code>的顺序图如下   </p>
+</blockquote>
+<p><img src="/2018/12/08/skywalking/image-14.png" width="700px">  </p>
+<ul>
+<li><p>第一步<code>GraphManager#createIfAbsent(graphId, input)</code>方法,创建一个<code>Graph</code>对象,并添加到 Graph 映射     </p>
+</li>
+<li><p>第二步<code>Graph#addNode(WayToNode)</code>方法,创建该<code>Graph</code>的首个<code>Node</code>对象。  </p>
+</li>
+<li><p>第三步<code>Node#addNext(WayToNode)</code>方法，创建该<code>Node</code>的下一个<code>Node</code>对象。     </p>
+</li>
+</ul>
+<h4 id="Graph-启动"><a href="#Graph-启动" class="headerlink" title="Graph 启动"></a>Graph 启动</h4><p><img src="/2018/12/08/skywalking/image-15.png" width="700px">  </p>
+<table>
+<thead>
+<tr>
+<th>数据流向</th>
+<th>FROM</th>
+<th>TO</th>
+<th>逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一步</td>
+<td>Graph</td>
+<td>WayToNode</td>
+<td></td>
+</tr>
+<tr>
+<td>第二步</td>
+<td>WayToNode</td>
+<td>Node</td>
+<td></td>
+</tr>
+<tr>
+<td>第三步</td>
+<td>Node</td>
+<td>NodeProcessor</td>
+<td></td>
+</tr>
+<tr>
+<td>第四步</td>
+<td>NodeProcessor</td>
+<td>Next</td>
+<td>根据具体实现，若到 Next ，重复第一步</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/2018/12/08/skywalking/image-16.png" width="700px">  </p>
+<h3 id="WayToNode"><a href="#WayToNode" class="headerlink" title="WayToNode"></a>WayToNode</h3><blockquote>
+<p>在<code>graph</code>包的基础上，提供异步、跨节点等等的流式处理的封装。主要在 WayToNode 、NodeProcessor 的实现类上做文章。</p>
+</blockquote>
+<h3 id="新版本的变动"><a href="#新版本的变动" class="headerlink" title="新版本的变动"></a>新版本的变动</h3><p>各类Provider -&gt; 各类ServerHandler  -&gt; 各类Handler预处理(JVMSourceDispatcher)  -&gt; DispatcherManager  </p>
+<p>DispatcherManager(根据scope选取dispatcher处理)  -&gt;   AbstractWorker(真正的Work)  -&gt; DataCarrier(异步处理库)       </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IndicatorRemoteWorker直接remoteClient实例Push外网其他节点工作构建  并保存到异步处理库</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>数据消费处理   </p>
+</blockquote>
+<p>DataCarrier(异步处理库)  -&gt;  consume(consumerPool#begin())  -&gt;  consumerThread.start() -&gt;  dataSource.obtain();     </p>
+<p>dataSource.obtain();(获得数据,开始消费) -&gt; <code>RemoteMessageConsumer/PersistentConsumer</code>引出各类真正的Consumer  -&gt;  执行操作  </p>
+<p>Node转换为Worker,并且Worker以各类形态示人  </p>
+<p><a href="http://www.iocoder.cn/categories/SkyWalking/" target="_blank" rel="noopener">芋道代码详解</a><br><a href="https://github.com/apache/incubator-skywalking/" target="_blank" rel="noopener">代码来源</a></p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2018/12/08/skywalking/';
+        this.page.title = 'OpenTracing-SkyWalking';
+        this.page.identifier = '2018/12/08/skywalking/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

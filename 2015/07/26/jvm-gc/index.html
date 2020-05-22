@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Jvm虚拟机Gc相关笔记 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="java 虚拟机内存回收相关笔记
+
+一句话简述回收算法经历   
+
+标记-清除算法:最基础的回收算法,主要划分为标记,清除两个阶段;后续的算法都是基于这种思路并对其不足之处进行修改而得;  
+标记-清除算法:问题一为效率问题:标记和清除两个过程的效率都不高;另一个是空间问题:标记清除之后产生大量不连续的内存碎片(导致后期分配大对象不得不提前触发垃圾回收);
+复制算法:为了解决效率问题将可用内存划分大小相等的两块,每次只使用其中一块,当这块的内存用完了,就将还存活着的对象复制到另外一块上面,然后把">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#回收算法"><span class="toc-number">1.</span> <span class="toc-text">回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标记-清除"><span class="toc-number">1.1.</span> <span class="toc-text">标记-清除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标记-整理-压缩"><span class="toc-number">1.2.</span> <span class="toc-text">标记-整理(压缩)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复制"><span class="toc-number">1.3.</span> <span class="toc-text">复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分代收集算法"><span class="toc-number">1.4.</span> <span class="toc-text">分代收集算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#收集器"><span class="toc-number">2.</span> <span class="toc-text">收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Serial收集器-年轻代"><span class="toc-number">2.1.</span> <span class="toc-text">Serial收集器(年轻代)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ParNew收集器-年轻代"><span class="toc-number">2.2.</span> <span class="toc-text">ParNew收集器(年轻代)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parallel-Scavenge收集器-年轻代"><span class="toc-number">2.3.</span> <span class="toc-text">Parallel Scavenge收集器(年轻代)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Serial-Old收集器-年老代"><span class="toc-number">2.4.</span> <span class="toc-text">Serial Old收集器(年老代)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parallel-Old收集器-年老代"><span class="toc-number">2.5.</span> <span class="toc-text">Parallel Old收集器(年老代)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CMS（Concurrent-Mark-Sweep）收集器-年老代"><span class="toc-number">2.6.</span> <span class="toc-text">CMS（Concurrent Mark Sweep）收集器(年老代)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#G1收集器"><span class="toc-number">2.7.</span> <span class="toc-text">G1收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#步骤"><span class="toc-number">2.7.1.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特点"><span class="toc-number">2.7.2.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#新生代收集"><span class="toc-number">2.7.3.</span> <span class="toc-text">新生代收集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#老年代收集"><span class="toc-number">2.7.4.</span> <span class="toc-text">老年代收集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">2.7.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存分配与回收策略"><span class="toc-number">3.</span> <span class="toc-text">内存分配与回收策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#内存分配"><span class="toc-number">3.1.</span> <span class="toc-text">内存分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#大对象直接进入老年代"><span class="toc-number">3.2.</span> <span class="toc-text">大对象直接进入老年代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#长期存活将进入老年代"><span class="toc-number">3.3.</span> <span class="toc-text">长期存活将进入老年代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态年龄判定"><span class="toc-number">3.4.</span> <span class="toc-text">动态年龄判定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间分配担保"><span class="toc-number">3.5.</span> <span class="toc-text">空间分配担保</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#root搜索算法"><span class="toc-number">4.</span> <span class="toc-text">root搜索算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OopMap"><span class="toc-number">4.1.</span> <span class="toc-text">OopMap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安全点"><span class="toc-number">4.1.1.</span> <span class="toc-text">安全点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全区"><span class="toc-number">4.1.2.</span> <span class="toc-text">安全区</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RememberedSet"><span class="toc-number">4.2.</span> <span class="toc-text">RememberedSet</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四种引用关系"><span class="toc-number">5.</span> <span class="toc-text">四种引用关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ReferenceQueue"><span class="toc-number">5.1.</span> <span class="toc-text">ReferenceQueue</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GC类型"><span class="toc-number">6.</span> <span class="toc-text">GC类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GC-细节"><span class="toc-number">6.1.</span> <span class="toc-text">GC 细节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结-1"><span class="toc-number">6.2.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">6.3.</span> <span class="toc-text">工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#jps"><span class="toc-number">6.3.1.</span> <span class="toc-text">jps</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jstack"><span class="toc-number">6.3.2.</span> <span class="toc-text">jstack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jmap"><span class="toc-number">6.3.3.</span> <span class="toc-text">jmap</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务器配置参数"><span class="toc-number">7.</span> <span class="toc-text">服务器配置参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java内存模型"><span class="toc-number">8.</span> <span class="toc-text">Java内存模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile内存语义的实现"><span class="toc-number">8.1.</span> <span class="toc-text">volatile内存语义的实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java各类锁"><span class="toc-number">9.</span> <span class="toc-text">Java各类锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁获取过程"><span class="toc-number">9.1.</span> <span class="toc-text">偏向锁获取过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁的释放"><span class="toc-number">9.2.</span> <span class="toc-text">偏向锁的释放</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#轻量级锁获取过程"><span class="toc-number">9.3.</span> <span class="toc-text">轻量级锁获取过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#轻量级锁的释放"><span class="toc-number">9.4.</span> <span class="toc-text">轻量级锁的释放</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Jvm虚拟机Gc相关笔记
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2015/07/26/jvm-gc/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2015-07-25T16:30:24.000Z" itemprop="datePublished">2015-07-26</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/Gc/">Gc</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>java 虚拟机内存回收相关笔记<br><a id="more"></a></p>
+<blockquote>
+<p>一句话简述回收算法经历   </p>
+</blockquote>
+<p><code>标记-清除算法</code>:最基础的回收算法,主要划分为<code>标记</code>,<code>清除</code>两个阶段;后续的算法都是基于这种思路并对其不足之处进行修改而得;  </p>
+<p><code>标记-清除算法</code>:问题一为效率问题:标记和清除两个过程的效率都不高;另一个是空间问题:标记清除之后产生大量不连续的内存碎片(导致后期分配大对象不得不提前触发垃圾回收);</p>
+<p><code>复制算法</code>:为了解决效率问题将可用内存划分大小相等的两块,每次只使用其中一块,当这块的内存用完了,就将还存活着的对象复制到另外一块上面,然后把已使用的那一半内存空间清理掉;  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">IBM公司发行百分之98%的对象都是马上清理掉的,所以并不需要1:1划分,而是将内存划分为较大的Eden空间和两块较小的Survivor空间</span><br><span class="line">每次使用Eden+Survivor空间,若还存活复制到另一块Survivor空间上,清理刚刚的Eden和Survivor空间,虚拟机默认Eden和Survivor为8:1</span><br><span class="line">如果另一块Survivor没有足够空间存放上一次新生代搜集下来的存货对象,将通过分配担保直接进入老年代</span><br><span class="line">否则将等到年龄&gt;15进入老年代,或相同年龄所有对象大小的总和大于Survivor空间的一半,年龄对于或等于年龄的对象就可以直接进入老年代</span><br></pre></td></tr></table></figure>
+<p><code>标记-整理算法</code>:<code>复制算法</code>在对象存活率较高时就进行较多的复制操作,效率变低且如果不想浪费50%空间就需要额外的空间担保来应对内存中所有对象100%存活的极端情况,所以老年代不选用这类算法<br>根据老年代的特色,提出了<code>标记-整理</code>算法(标记不存活对象,让所有存活对象向一端移动,然后直接清理掉边界以外的内存)  </p>
+<p><br></p>
+<p><img src="/2015/07/26/jvm-gc/image-01.png" width="500px"></p>
+<blockquote>
+<p>对象的内存布局  </p>
+</blockquote>
+<p>对象在内存中分为:对象头、实例数据和对齐填充  </p>
+<blockquote>
+<p>对象头</p>
+</blockquote>
+<p><img src="/2015/07/26/jvm-gc/image-24.png" width="400px"></p>
+<p>实例数据:真正存储的有效信息  </p>
+<p>对齐填充:占位符的作用    </p>
+<p><br></p>
+<h2 id="回收算法"><a href="#回收算法" class="headerlink" title="回收算法"></a>回收算法</h2><p>标记-清除（Mark-Sweep）算法<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">效率问题:标记和清除效率都不高</span><br><span class="line">空间问题:空间碎片太多导致分配大内存对象不够而提前触发一次回收</span><br></pre></td></tr></table></figure></p>
+<p>复制（Copying）算法<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">为解决空间碎片太多问题,复制算法出现</span><br><span class="line">划分两块大小相等可不用考虑内存碎片情况</span><br><span class="line">但由于新对象是朝生夕死,所以不1:1划分空间而是出Eden空间和两块较小的Survivor空间, 8:1:1</span><br><span class="line">Eden和Survivor存活的移到另一块Survivor空间,并删除Eden和Survivor</span><br></pre></td></tr></table></figure></p>
+<p>标记-整理（Mark-Compact）算法<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">对象存活率较高就进行较多的复制操作,效率会变低</span><br><span class="line">不想浪费50%的空间就需要额外的空间进行分配担保(100%对象都存活的情况)</span><br></pre></td></tr></table></figure></p>
+<p>分代收集（Generational Collection）</p>
+<h3 id="标记-清除"><a href="#标记-清除" class="headerlink" title="标记-清除"></a>标记-清除</h3><p>标记清除的算法最简单，主要是标记出来需要回收的对象，然后然后把这些对象在内存的信息清除。</p>
+<p><img src="/2015/07/26/jvm-gc/image-06.png" width="500px"></p>
+<h3 id="标记-整理-压缩"><a href="#标记-整理-压缩" class="headerlink" title="标记-整理(压缩)"></a>标记-整理(压缩)</h3><p>标记-清除的算法之上进行一下压缩空间，重新移动对象的过程。  </p>
+<p>因为标记清除算法会导致很多的留下来的内存空间碎片，随着碎片的增多，严重影响内存读写的性能，所以在标记-清除之后，会对内存的碎片进行整理。最简单的整理就是把对象压缩到一边，留出另一边的空间。由于压缩空间需要一定的时间，会影响垃圾收集的时间。   </p>
+<p><img src="/2015/07/26/jvm-gc/image-08.png" width="500px"></p>
+<h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><p>内存分配为两个空间，一个空间（A）用来负责装载正常的对象信息,另外一个内存空间（B）是垃圾回收用的。  </p>
+<p>每次把空间A中存活的对象全部复制到空间B里面，在一次性的把空间A删除。  </p>
+<p>这个算法在效率上比标记-清除-压缩高，但是需要两块空间，对内存要求比较大，内存的利用率比较低。  </p>
+<p>适用于老年代短生存期的对象，持续复制长生存期的对象则导致效率降低  </p>
+<p>在HotSpot里，考虑到大部分对象存活时间很短，将内存分为Eden和两块Survivor，默认比例为8:1:1。代价是存在部分内存空间浪费，且可能存在空间不够需要分配担保的情况，所以适合在新生代使用；</p>
+<p><img src="/2015/07/26/jvm-gc/image-07.png" width="500px"></p>
+<h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h3><p>一般把Java堆分新生代和老年代，在新生代用复制算法<br>在老年代用标记-清理或标记-整理算法，是现代虚拟机通常采用的算法。</p>
+<p><img src="/2015/07/26/jvm-gc/image-09.png" width="500px"></p>
+<p><br><br><br><br><br></p>
+<h2 id="收集器"><a href="#收集器" class="headerlink" title="收集器"></a>收集器</h2><h3 id="Serial收集器-年轻代"><a href="#Serial收集器-年轻代" class="headerlink" title="Serial收集器(年轻代)"></a>Serial收集器(年轻代)</h3><p>单线程，采取复制算法，并且在它干活的时候它会Stop The World </p>
+<p><img src="/2015/07/26/jvm-gc/image-10.png" width="500px"></p>
+<h3 id="ParNew收集器-年轻代"><a href="#ParNew收集器-年轻代" class="headerlink" title="ParNew收集器(年轻代)"></a>ParNew收集器(年轻代)</h3><p><img src="/2015/07/26/jvm-gc/image-11.png" width="500px"></p>
+<p>Serial收集器的多线程版本，其余几乎和Serial一样，采取复制算法，并且在它干活的时候它会Stop The World</p>
+<table>
+<thead>
+<tr>
+<th>Parallel Scavenge参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MaxGCPauseMillis</code></td>
+<td>(毫秒数) 收集器将尽力保证内存回收花费的时间不超过设定值, 但如果太小将会导致GC的频率增加.</td>
+</tr>
+<tr>
+<td><code>GCTimeRatio</code></td>
+<td>(整数:<code>0 &lt; GCTimeRatio &lt; 100</code>) 是垃圾收集时间占总时间的比率</td>
+</tr>
+<tr>
+<td><code>XX:+UseAdaptiveSizePolicy</code></td>
+<td>启用GC自适应的调节策略: 不再需要手工指定<code>-Xmn</code>、<code>-XX:SurvivorRatio</code>、<code>-XX:PretenureSizeThreshold</code>等细节参数, VM会根据当前系统的运行情况收集性能监控信息, 动态调整这些参数以提供最合适的停顿时间或最大的吞吐量</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Parallel-Scavenge收集器-年轻代"><a href="#Parallel-Scavenge收集器-年轻代" class="headerlink" title="Parallel Scavenge收集器(年轻代)"></a>Parallel Scavenge收集器(年轻代)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">吞吐量（Throughput） = 运行用户代码时间 / （运行用户代码时间 + 垃圾收集时间）</span><br></pre></td></tr></table></figure>
+<p>采取复制算法，并行的多线程收集器</p>
+<ul>
+<li>–XX:MaxGCPauseMillis(最大垃圾收集停顿时间)</li>
+<li>–XX:GCTimeRatio（吞吐量大小）</li>
+</ul>
+<h3 id="Serial-Old收集器-年老代"><a href="#Serial-Old收集器-年老代" class="headerlink" title="Serial Old收集器(年老代)"></a>Serial Old收集器(年老代)</h3><p>单线程，采取标记-整理算法 ，并且在它干活的时候它会Stop The World </p>
+<p><img src="/2015/07/26/jvm-gc/image-12.png" width="500px"></p>
+<h3 id="Parallel-Old收集器-年老代"><a href="#Parallel-Old收集器-年老代" class="headerlink" title="Parallel Old收集器(年老代)"></a>Parallel Old收集器(年老代)</h3><p><img src="/2015/07/26/jvm-gc/image-13.png" width="500px"></p>
+<p>多线程，采取标记-整理算法，1.6中才开始提供</p>
+<p>在注重吞吐量和CPU敏感的场合，都可以优先考虑Parallel Scavenge + Parallel Old</p>
+<h3 id="CMS（Concurrent-Mark-Sweep）收集器-年老代"><a href="#CMS（Concurrent-Mark-Sweep）收集器-年老代" class="headerlink" title="CMS（Concurrent Mark Sweep）收集器(年老代)"></a>CMS（Concurrent Mark Sweep）收集器(年老代)</h3><p>运作过程：<br>初始标记（CMS initial mark）<br>并发标记（CMS concurrent mark）<br>重新标记（CMS remark）<br>并发清除（CMS concurrent sweep）</p>
+<p><img src="/2015/07/26/jvm-gc/image-03.png" width="500px"></p>
+<p><img src="/2015/07/26/jvm-gc/image-14.png" width="500px"></p>
+<p>该算法会有以下两个问题: </p>
+<ol>
+<li>效率问题: 标记和清除过程的效率都不高; </li>
+<li>空间问题: 标记清除后会产生大量不连续的内存碎片, 空间碎片太多可能会导致在运行过程中需要分配较大对象时无法找到足够的连续内存而不得不提前触发另一次垃圾收集.</li>
+</ol>
+<p><img src="/2015/07/26/jvm-gc/image-04.png" width="500px"></p>
+<p>CMS基于标记-清除算法，所以会产生大量空间碎片，为此它提供两个参数用来缓解这个问题</p>
+<ul>
+<li>-XX:+UseCMSCompactAtFullCollection</li>
+</ul>
+<p>Full GC后进行碎片整理，内存整理过程无法并发</p>
+<ul>
+<li>-XX:CMSFullGCsBeforeCompaction</li>
+</ul>
+<p>执行多少次不压缩的Full GC后跟着来一次带压缩的</p>
+<blockquote>
+<p>相关建议</p>
+</blockquote>
+<ol>
+<li><p>CMS默认启动的回收线程数=(CPU数目+3)4</p>
+<p>当CPU数&gt;4时, GC线程最多占用不超过<code>25%</code>的CPU资源, 但是当CPU数&lt;=4时, GC线程可能就会过多的占用用户CPU资源, 从而导致应用程序变慢, 总吞吐量降低.</p>
+</li>
+<li><p>无法处理浮动垃圾, 可能出现<em>Promotion Failure</em>、<em>Concurrent Mode Failure</em>而导致另一次Full GC的产生: 浮动垃圾是指在CMS并发清理阶段用户线程运行而产生的新垃圾. 由于在GC阶段用户线程还需运行, 因此还需要预留足够的内存空间给用户线程使用, 导致CMS不能像其他收集器那样等到老年代几乎填满了再进行收集. 因此CMS提供了<code>-XX:CMSInitiatingOccupancyFraction</code>参数来设置GC的触发百分比(以及<code>-XX:+UseCMSInitiatingOccupancyOnly</code>来启用该触发百分比), 当老年代的使用空间超过该比例后CMS就会被触发(JDK 1.6之后默认92%). 但当CMS运行期间预留的内存无法满足程序需要, 就会出现上述<em>Promotion Failure</em>等失败, 这时VM将启动后备预案: 临时启用Serial Old收集器来重新执行Full GC(CMS通常配合大内存使用, 一旦大内存转入串行的Serial GC, 那停顿的时间就是大家都不愿看到的了).</p>
+</li>
+<li><p>最后, 由于CMS采用”标记-清除”算法实现, 可能会产生大量内存碎片. 内存碎片过多可能会导致无法分配大对象而提前触发Full GC. 因此CMS提供了<code>-XX:+UseCMSCompactAtFullCollection</code>开关参数, 用于在Full GC后再执行一个碎片整理过程. 但内存整理是无法并发的, 内存碎片问题虽然没有了, 但停顿时间也因此变长了, 因此CMS还提供了另外一个参数<code>-XX:CMSFullGCsBeforeCompaction</code>用于设置在执行N次不进行内存整理的Full GC后, 跟着来一次带整理的(默认为0: 每次进入Full GC时都进行碎片整理).</p>
+</li>
+</ol>
+<h3 id="G1收集器"><a href="#G1收集器" class="headerlink" title="G1收集器"></a>G1收集器</h3><p><img src="/2015/07/26/jvm-gc/image-09.png" width="500px"></p>
+<p>一款面向服务端应用的垃圾收集器，后续会替换掉CMS垃圾收集器</p>
+<p><img src="/2015/07/26/jvm-gc/image-15.png" width="500px"></p>
+<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><p>与CMS的过程比较类似</p>
+<ul>
+<li>初始标记（标记一下GC Roots能直接关联的对象并修改TAMS值，需要STW但耗时很短）</li>
+<li>并发标记（从GC Root从堆中对象进行可达性分析找存活的对象，耗时较长但可以与用户线程并发执行）</li>
+<li>最终标记（为了修正并发标记期间产生变动的那一部分标记记录，这一期间的变化记录在Remembered </li>
+<li>Set Log里，然后合并到Remembered Set里，该阶段需要STW但是可并行执行）</li>
+<li>筛选回收（对各个Region回收价值排序，根据用户期望的GC停顿时间制定回收计划来回收）</li>
+</ul>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>并行与并发（充分利用多核多CPU缩短STW时间）</li>
+<li>分代收集（独立管理整个Java堆，但针对不同年龄的对象采取不同的策略）</li>
+<li>空间整合（局部看是基于复制算法，从整体来看是基于标记-整理算法，都不会产生内存碎片）</li>
+<li>可预测的停顿（可以明确指定在一个长度为M毫秒的时间片内垃圾收集不会超过N毫秒）</li>
+</ul>
+<h4 id="新生代收集"><a href="#新生代收集" class="headerlink" title="新生代收集"></a>新生代收集</h4><p><img src="/2015/07/26/jvm-gc/image-16.png" width="500px"></p>
+<p>G1的新生代收集跟ParNew类似: 存活的对象被转移到一个/多个<strong>Survivor Regions</strong>. 如果存活时间达到阀值, 这部分对象就会被提升到老年代. </p>
+<p><img src="/2015/07/26/jvm-gc/image-17.png" width="500px"></p>
+<p>G1的新生代收集特点如下:</p>
+<ul>
+<li>一整块堆内存被分为多个Regions.</li>
+<li>存活对象被拷贝到新的Survivor区或老年代.</li>
+<li>年轻代内存由一组不连续的heap区组成, 这种方法使得可以动态调整各代区域尺寸.</li>
+<li>Young GCs会有STW事件, 进行时所有应用程序线程都会被暂停.</li>
+<li>多线程并发GC.</li>
+</ul>
+<h4 id="老年代收集"><a href="#老年代收集" class="headerlink" title="老年代收集"></a>老年代收集</h4><p>G1老年代GC会执行以下阶段:</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>Phase</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1)</td>
+<td>初始标记 (Initial Mark: Stop the World Event)</td>
+<td>在G1中, 该操作附着一次年轻代GC, 以标记Survivor中有可能引用到老年代对象的Regions.</td>
+</tr>
+<tr>
+<td>(2)</td>
+<td>扫描根区域 (Root Region Scanning: 与应用程序并发执行)</td>
+<td>扫描Survivor中能够引用到老年代的references. 但必须在Minor GC触发前执行完.</td>
+</tr>
+<tr>
+<td>(3)</td>
+<td>并发标记 (Concurrent Marking : 与应用程序并发执行)</td>
+<td>在整个堆中查找存活对象, 但该阶段可能会被Minor GC中断.</td>
+</tr>
+<tr>
+<td>(4)</td>
+<td>重新标记 (Remark : Stop the World Event)</td>
+<td>完成堆内存中存活对象的标记. 使用<strong>snapshot-at-the-beginning(SATB, 起始快照)</strong>算法, 比CMS所用算法要快得多(空Region直接被移除并回收, 并计算所有区域的活跃度).</td>
+</tr>
+<tr>
+<td>(5)</td>
+<td>清理 (Cleanup : Stop the World Event and Concurrent)</td>
+<td>见下 5-1、2、3</td>
+</tr>
+<tr>
+<td></td>
+<td>5-1 (Stop the world)</td>
+<td>在含有存活对象和完全空闲的区域上进行统计</td>
+</tr>
+<tr>
+<td></td>
+<td>5-2 (Stop the world)</td>
+<td>擦除Remembered Sets.</td>
+</tr>
+<tr>
+<td></td>
+<td>5-3 (Concurrent)</td>
+<td>重置空regions并将他们返还给空闲列表(free list)</td>
+</tr>
+<tr>
+<td>(*)</td>
+<td>Copying/Cleanup (Stop the World Event)</td>
+<td>选择”活跃度”最低的区域(这些区域可以最快的完成回收). 拷贝/转移存活的对象到新的尚未使用的regions. 该阶段会被记录在gc-log内(只发生年轻代<code>[GC pause (young)]</code>, 与老年代一起执行则被记录为<code>[GC Pause (mixed)]</code>.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>将堆分为大小相等的独立区域,避免全区域的垃圾收集;<br>新生代和老年代不再物理隔离,只是部分Region的集合;<br>G1跟踪各个Region垃圾堆积的价值大小，在后台维护一个优先列表，根据允许的收集时间优先回收价值最大的Region;<br>Region之间的对象引用以及其他收集器中的新生代与老年代之间的对象引用，采用Remembered Set来避免全堆扫描;  </p>
+<p><br><br><br><br><br></p>
+<h2 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h2><h3 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h3><p>对象优先在Eden分配,当Eden没有足够空间,虚拟机将发起一次<code>MinorGC</code>    </p>
+<ul>
+<li>新生代GC(Minor GC):指发生在新生代的垃圾收集动作   </li>
+<li>老年代GC(Major GC/Full GC):指发生在老年代的GC,出现了MajorGC经常会伴随至少一次的MinorGC(但在ParallelScavenge收集器的搜集策略就有直接进行MarjorGC的策略选择过程)  </li>
+</ul>
+<h3 id="大对象直接进入老年代"><a href="#大对象直接进入老年代" class="headerlink" title="大对象直接进入老年代"></a>大对象直接进入老年代</h3><p>虚拟机提供<code>-XX:PretenureSizeThreshold</code>参数,令大于这个设置值的对象直接在老年代分配;避免Eden区及两个Survivor区之间发生大量的内存复制  </p>
+<h3 id="长期存活将进入老年代"><a href="#长期存活将进入老年代" class="headerlink" title="长期存活将进入老年代"></a>长期存活将进入老年代</h3><p>如果对象在Eden区经历一次MinorGC移动到Survivor区还存活则年龄+1,直到增加到(默认15也可参数设置<code>-XX:MaxTenuringThreshold</code>)晋升到老年代  </p>
+<h3 id="动态年龄判定"><a href="#动态年龄判定" class="headerlink" title="动态年龄判定"></a>动态年龄判定</h3><p>如果Survivor空间中相同年龄的所有对象大小的总和大于Survivor空间的一半,年龄大于或等于该年龄的对象就可以直接进入老年代,无需等待<code>-XX:MaxTenuringThreshold</code>中要求的年龄  </p>
+<h3 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h3><p>在发送MinorGC之前,先检查老年代最大可用连续空间是否大于新生代所有对象总空间,如果能行则此次MinorGC是安全的,否则将会查看<code>HandlerPromotionFailure</code>设置值是否允许担保失败<br>如果允许担保失败,继续检查老年代最大可用连续空间是否大于历次晋升老年代对象的平均大小<br>如果大于则尝试进行一次MinorGC,如果小于或<code>HandlerPromotionFailure</code>设置不允许担保失败则进行一次<code>FullGC</code></p>
+<p><br><br><br><br><br></p>
+<h2 id="root搜索算法"><a href="#root搜索算法" class="headerlink" title="root搜索算法"></a>root搜索算法</h2><p><img src="/2015/07/26/jvm-gc/image-02.png" width="500px"></p>
+<p>以下对象会被认为是root对象  </p>
+<ul>
+<li>方法区: 类静态属性引用的对象;</li>
+<li>方法区: 常量引用的对象;</li>
+<li>虚拟机栈(本地变量表)中引用的对象.</li>
+<li>本地方法栈JNI(Native方法)中引用的对象。</li>
+</ul>
+<p>如果对象能够达到root，就不会被回收，如果对象不能够达到root，就会被回收。<br><br></p>
+<h3 id="OopMap"><a href="#OopMap" class="headerlink" title="OopMap"></a>OopMap</h3><blockquote>
+<p>OopMap <code>用于枚举 GC Roots;避免全栈扫描,加快枚举根节点的速度</code>  </p>
+</blockquote>
+<p>OopMap 记录了栈上本地变量到堆上对象的引用关系。其作用是:<code>垃圾收集时，收集线程会对栈上的内存进行扫描，看看哪些位置存储了 Reference 类型。如果发现某个位置确实存的是 Reference 类型,就意味着它所引用的对象这一次不能被回收。但问题是，栈上的本地变量表里面只有一部分数据是 Reference 类型的(它们是我们所需要的),那些非 Reference 类型的数据对我们而言毫无用处，但我们还是不得不对整个栈全部扫描一遍，这是对时间和资源的一种浪费。</code> </p>
+<p>一个很自然的想法是，能不能用空间换时间，在某个时候把栈上代表引用的位置全部记录下来，这样到真正 gc 的时候就可以直接读取，而不用再一点一点的扫描了。</p>
+<h4 id="安全点"><a href="#安全点" class="headerlink" title="安全点"></a>安全点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">一个线程意味着一个栈,一个栈由多个栈帧组成,一个栈帧对应着一个方法,一个方法里面可能有多个安全点。 </span><br><span class="line">gc发生时程序首先运行到最近的一个安全点停下来,然后更新自己的 OopMap,记下栈上哪些位置代表着引用。</span><br><span class="line">枚举根节点时递归遍历每个栈帧的 OopMap,通过栈中记录的被引用对象的内存地址,即可找到这些对象(GC Roots)。</span><br></pre></td></tr></table></figure>
+<h4 id="安全区"><a href="#安全区" class="headerlink" title="安全区"></a>安全区</h4><p>如果程序没有分配到CPU时间或处于Sleep状态或Blocked状态,jvm也不可能等线程进入Runnable状态走到SafePoint安全点,于是就有安全区域(SafeRegion)<br>安全区指的是:一片代码片段中,引用关系无变化,这个区域任何地方都是GC安全的安全点  </p>
+<p><br></p>
+<h3 id="RememberedSet"><a href="#RememberedSet" class="headerlink" title="RememberedSet"></a>RememberedSet</h3><blockquote>
+<p>RememberedSet:<code>记录老年代对象引用新生代对象</code>  </p>
+</blockquote>
+<p>RememberedSet 用于处理这类问题:<code>gc 过程是这样的:首先枚举根节点。根节点有可能在新生代中,也有可能在老年代中。这里由于我们只想收集新生代(换句话说，不想收集老年代),所以没有必要对位于老年代的 GC Roots 做全面的可达性分析。但问题是确实可能存在位于老年代的某个GC Root,它引用了新生代的某个对象这个对象你是不能清除的。那怎么办呢？</code></p>
+<p>仍然是拿空间换时间的办法,对应上面所举的例子<code>“老年代对象引用新生代对象”</code>这种关系会在引用关系发生时<br>在新生代边上专门开辟一块空间记录下来这就是<code>RememberedSet</code>。所以<code>“新生代的 GC Roots ” + “ RememberedSet 存储的内容”</code>,才是新生代收集时真正的 GC Roots 。<br>然后就可以以此为据在新生代上做可达性分析进行垃圾回收。 </p>
+<p><br><br><br><br><br></p>
+<h2 id="四种引用关系"><a href="#四种引用关系" class="headerlink" title="四种引用关系"></a>四种引用关系</h2><ul>
+<li>Strong Reference（强引用):只有在引用对象root不可达的情况下才会标识为可回收，垃圾回收才可能进行回收</li>
+<li>Soft Reference(软引用):即使在root算法中 其引用的对象root可达到，但是如果jvm堆内存 不够的时候，还是会被回收。</li>
+<li>Weak Reference(弱引用):无论其引用的对象是否root可达，在响应内存需要时，由垃圾回收判断是否需要回收。</li>
+<li>Phantom Reference(引用):在回收器确定其指示对象可另外回收之后，被加入垃圾回收队列.</li>
+</ul>
+<h3 id="ReferenceQueue"><a href="#ReferenceQueue" class="headerlink" title="ReferenceQueue"></a>ReferenceQueue</h3><p>四种状态<br>每一时刻，Reference对象都处于下面四种状态中。这四种状态用Reference的成员变量queue与next（类似于单链表中的next）来标示。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ReferenceQueue&lt;? <span class="keyword">super</span> T&gt; queue;</span><br><span class="line">Reference next;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>Active。新创建的引用对象都是这个状态，在 GC 检测到引用对象已经到达合适的reachability时，GC 会根据引用对象是否在创建时制定ReferenceQueue参数进行状态转移，如果指定了，那么转移到Pending，如果没指定，转移到Inactive。在这个状态中</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如果构造参数中没指定queue，那么queue为ReferenceQueue.NULL，否则为构造参数中传递过来的queue</span></span><br><span class="line">queue = ReferenceQueue || ReferenceQueue.NULL</span><br><span class="line">next = <span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Pending。pending-Reference列表中的引用都是这个状态，它们等着被内部线程ReferenceHandler处理（会调用ReferenceQueue.enqueue方法）。没有注册的实例不会进入这个状态。在这个状态中</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造参数参数中传递过来的queue</span></span><br><span class="line">queue = ReferenceQueue</span><br><span class="line">next = 该queue中的下一个引用，如果是该队列中的最后一个，那么为<span class="keyword">this</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Enqueued。调用ReferenceQueue.enqueued方法后的引用处于这个状态中。没有注册的实例不会进入这个状态。在这个状态中</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">queue = ReferenceQueue.ENQUEUED</span><br><span class="line">next = 该queue中的下一个引用，如果是该队列中的最后一个，那么为<span class="keyword">this</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Inactive。最终状态，处于这个状态的引用对象，状态不会在改变。在这个状态中</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">queue = ReferenceQueue.NULL</span><br><span class="line">next = <span class="keyword">this</span></span><br></pre></td></tr></table></figure>
+<p>有了这些约束，GC 只需要检测next字段就可以知道是否需要对该引用对象采取特殊处理</p>
+<ul>
+<li>如果next为null，那么说明该引用为Active状态</li>
+<li>如果next不为null，那么 GC 应该按其正常逻辑处理该引用。</li>
+</ul>
+<p><br><br><br><br><br></p>
+<h2 id="GC类型"><a href="#GC类型" class="headerlink" title="GC类型"></a>GC类型</h2><p>GC有两种类型：Scavenge(minor) GC和Full GC。 </p>
+<ol>
+<li>Scavenge(minor) GC<br>一般情况下，当新对象生成，并且在Eden申请空间失败时，就好触发Scavenge GC，堆Eden区域进行GC，清除非存活对象，并且把尚且存活的对象移动到Survivor区。然后整理Survivor的两个区。 </li>
+<li>Full GC<br>对整个堆进行整理，包括Young、Tenured和Perm。Full GC比Scavenge GC要慢，因此应该尽可能减少Full GC。有如下原因可能导致Full GC： </li>
+</ol>
+<ul>
+<li>Tenured被写满 </li>
+<li>Perm域被写满 </li>
+<li>System.gc()被显示调用 </li>
+<li>上一次GC之后Heap的各域分配策略动态变化 </li>
+</ul>
+<h3 id="GC-细节"><a href="#GC-细节" class="headerlink" title="GC 细节"></a>GC 细节</h3><ul>
+<li>对象优先在Eden分配</li>
+<li><p>大对象直接进入年老代<br>-XX:PertenureSizeThreshold</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">多大的对象才算是大对象，这个是可以控制的，虚拟机参数为-XX:PertenureSizeThreshold</span><br><span class="line">需要精确到B,-XX:PertenureSizeThreshold=3145728</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>长期存活的对象将进入年老代<br>-XX:MaxTenuringThreshold</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">什么样算老年了呢，默认为15岁，可以通过-XX:MaxTenuringThreshold来设置</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>动态对象年龄判断</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">不是永远要求等到MaxTenuringThreshold参数设置的年龄。</span><br><span class="line"></span><br><span class="line">如果在Survivor空间中相同年龄的所有对象大小总和大于Survivor空间的一半，</span><br><span class="line">大于或等于该年龄的对象就可以直接进入年老代。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>空间分配担保</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">当Survivor空间不够用时，需要依赖其他内存(年老代)进行分配担保(Hanle Promotion)</span><br><span class="line"></span><br><span class="line">分配担保流程如下：</span><br><span class="line"></span><br><span class="line">a. 在发生Minor GC之前，JVM首先检查年老代最大可用的连续空间是否大于新生所有对象的空间。</span><br><span class="line"></span><br><span class="line">b. 如果大于，那么可以确保Minor GC是安全的。</span><br><span class="line"></span><br><span class="line">c. 如果不大于，则JVM查看HandlePromotionFailure值是否允许担保失败。</span><br><span class="line"></span><br><span class="line">d. 如果允许，将尝试进行一次Minor GC，但这是有风险对的,失败后只有重新发起一次Full GC；</span><br><span class="line"></span><br><span class="line">e. 如果小于或HandlePromotionFailure值不允许冒险，那这时，要改为进行一次Full GC；</span><br><span class="line"></span><br><span class="line"> JDK1.6新规则 </span><br><span class="line">JDK1.6之后，JVM代码中已经不再使用HandlePromotionFailure参数了...</span><br><span class="line">规则变为：</span><br><span class="line"></span><br><span class="line">只要年老代最大可用的连续空间大于新生所有对象的空间或历次晋升到年老代对象的平均大小，就会进行MinorGC，否则进行Full GC。</span><br><span class="line"></span><br><span class="line">即年老代最大可用的连续空间小于新生所有对象空间时，不在检查HandlePromotionFailure，而是直接检查历次晋升到年老代对象的平均大小。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>Eden区最大，对外提供堆内存。当Eden区快要满了，则进行Minor GC，把存活对象放入Survivor A区，清空Eden区；</li>
+<li>Eden区被清空后，继续对外提供堆内存；</li>
+<li>当Eden区再次被填满，此时对Eden区和Survivor A区同时进行Minor GC，把存活对象放入Survivor B区，同时清空Eden 区和Survivor A区；</li>
+<li>Eden区继续对外提供堆内存，并重复上述过程，即在Eden区填满后，把Eden区和某个Survivor区的存活对象放到另一个Survivor区；</li>
+<li>当某个Survivor区被填满，且仍有对象未被复制完毕时或者某些对象在反复Survive 15次左右时，则把这部分剩余对象放到Old区；</li>
+<li>当Old区也被填满时，进行Major GC，对Old区进行垃圾回收。</li>
+</ol>
+<p><br><br><br><br><br></p>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><h4 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">jps</span><br><span class="line">-q 不输出类名、Jar名和传入main方法的参数</span><br><span class="line">-m 输出传入main方法的参数</span><br><span class="line">-l 输出main类或Jar的全限名</span><br><span class="line">-v 输出传入JVM的参数</span><br></pre></td></tr></table></figure>
+<h4 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-l long listings，会打印出额外的锁信息，在发生死锁时可以用jstack -l pid来观察锁持有情况</span><br><span class="line">-m mixed mode，不仅会输出Java堆栈信息，还会输出C/C++堆栈信息（比如Native方法）</span><br></pre></td></tr></table></figure>
+<h4 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> -dump:生成java堆转储快照</span><br><span class="line"> -finalizerinfo:显示在F-Queue中等待Finalizer线程执行finalize方法的对象(只在Linux/Solaris下有效)</span><br><span class="line"> -heap:显示java堆详细信息(只在Linux/Solaris下有效)</span><br><span class="line"> -histo:显示堆中对象统计信息</span><br><span class="line"> -permstat:以ClassLoader为统计口径显示永久代内存状态(只在Linux/Solaris下有效)</span><br><span class="line"> -F:当虚拟机进程对-dump选项没有响应时，可使用这个选项强制生成dump快照(只在Linux/Solaris下有效)</span><br><span class="line"></span><br><span class="line">jmap -dump:format=b,file=d:xmind.hprof 6012</span><br></pre></td></tr></table></figure>
+<p><br><br><br><br><br></p>
+<h2 id="服务器配置参数"><a href="#服务器配置参数" class="headerlink" title="服务器配置参数"></a>服务器配置参数</h2><p>服务的虚拟机参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-server       --启用能够执行优化的编译器，显著提高服务器的性能</span><br><span class="line">-Xmx4000M     --堆最大值</span><br><span class="line">-Xms4000M     --堆初始大小</span><br><span class="line">-Xmn600M      --年轻代大小</span><br><span class="line">-XX:PermSize=200M         --持久代初始大小</span><br><span class="line">-XX:MaxPermSize=200M      --持久代最大值</span><br><span class="line">-Xss256K                  --每个线程的栈大小</span><br><span class="line">-XX:+DisableExplicitGC    --关闭System.gc()</span><br><span class="line">-XX:SurvivorRatio=1       --年轻代中Eden区与两个Survivor区的比值</span><br><span class="line">-XX:+UseConcMarkSweepGC   --使用CMS内存收集</span><br><span class="line">-XX:+UseParNewGC          --设置年轻代为并行收集</span><br><span class="line">-XX:+CMSParallelRemarkEnabled        --降低标记停顿</span><br><span class="line">-XX:+UseCMSCompactAtFullCollection   --在FULL GC的时候，对年老代进行压缩，可能会影响性能，但是可以消除碎片</span><br><span class="line">-XX:CMSFullGCsBeforeCompaction=0     --此值设置运行多少次GC以后对内存空间进行压缩、整理</span><br><span class="line">-XX:+CMSClassUnloadingEnabled        --回收动态生成的代理类 SEE：http://stackoverflow.com/questions/3334911/what-does-jvm-flag-cmsclassunloadingenabled-actually-do</span><br><span class="line">-XX:LargePageSizeInBytes=128M        --内存页的大小不可设置过大， 会影响Perm的大小</span><br><span class="line">-XX:+UseFastAccessorMethods          --原始类型的快速优化</span><br><span class="line">-XX:+UseCMSInitiatingOccupancyOnly   --使用手动定义初始化定义开始CMS收集，禁止hostspot自行触发CMS GC</span><br><span class="line">-XX:CMSInitiatingOccupancyFraction=80  --使用cms作为垃圾回收，使用80％后开始CMS收集</span><br><span class="line">-XX:SoftRefLRUPolicyMSPerMB=0          --每兆堆空闲空间中SoftReference的存活时间</span><br><span class="line">-XX:+PrintGCDetails                    --输出GC日志详情信息</span><br><span class="line">-XX:+PrintGCApplicationStoppedTime     --输出垃圾回收期间程序暂停的时间</span><br><span class="line">-Xloggc:$WEB_APP_HOME/.tomcat/logs/gc.log  --把相关日志信息记录到文件以便分析.</span><br><span class="line">-XX:+HeapDumpOnOutOfMemoryError            --发生内存溢出时生成heapdump文件</span><br><span class="line">-XX:HeapDumpPath=$WEB_APP_HOME/.tomcat/logs/heapdump.hprof  --heapdump文件地址</span><br></pre></td></tr></table></figure></p>
+<p><br><br><br><br><br></p>
+<h2 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h2><p><img src="/2015/07/26/jvm-gc/image-18.png" width="500px"></p>
+<p><img src="/2015/07/26/jvm-gc/image-19.png" width="500px"></p>
+<p>可见性(主内存和工作内存)、原子性(volatile的long是具备原子性的)、有序性(happen—before规则);     </p>
+<p>Java语言中有一个“先行发生”（happen—before）的规则，它是Java内存模型中定义的两项操作之间的偏序关系  </p>
+<blockquote>
+<p>Java内存模型和硬件内存架构并不一致。硬件内存架构中并没有区分栈和堆</p>
+<p>从硬件上看，不管是栈还是堆，大部分数据都会存到主存中</p>
+<p>当然一部分栈和堆的数据也有可能会存到CPU寄存器中</p>
+<p>Java内存模型和计算机硬件内存架构是一个交叉关系</p>
+</blockquote>
+<p><img src="/2015/07/26/jvm-gc/image-22.png" width="500px"></p>
+<ul>
+<li>编译器优化重排序：编译器在不改变单线程程序语义的前提下，可以重新安排语句的执行顺序。</li>
+<li>指令级并行的重排序：如果不存l在数据依赖性，处理器可以改变语句对应机器指令的执行顺序。</li>
+<li>内存系统的重排序：处理器使用缓存和读写缓冲区，这使得加载和存储操作看上去可能是在乱序执行。</li>
+</ul>
+<blockquote>
+<p>通过插入特定类型的<code>Memory Barrier</code>来禁止特定类型的编译器重排序和处理器重排序 </p>
+</blockquote>
+<p>下面是Java内存模型中的八条可保证happen—before的规则，它们无需任何同步器协助就已经存在，可以在编码中直接使用。<br>如果两个操作之间的关系不在此列，并且无法从下列规则推导出来的话，它们就没有顺序性保障，虚拟机可以对它们进行随机地重排序。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1、程序次序规则：在一个单独的线程中，按照程序代码的执行流顺序，（时间上）先执行的操作happen—before（时间上）后执行的操作。</span><br><span class="line">2、管理锁定规则：一个unlock操作happen—before后面（时间上的先后顺序，下同）对同一个锁的lock操作。</span><br><span class="line">3、volatile变量规则：对一个volatile变量的写操作happen—before后面对该变量的读操作。</span><br><span class="line">4、线程启动规则：Thread对象的start（）方法happen—before此线程的每一个动作。</span><br><span class="line">5、线程终止规则：线程的所有操作都happen—before对此线程的终止检测，可以通过Thread.join（）方法结束、Thread.isAlive（）的返回值等手段检测到线程已经终止执行。</span><br><span class="line">6、线程中断规则：对线程interrupt（）方法的调用happen—before发生于被中断线程的代码检测到中断时事件的发生。</span><br><span class="line">7、对象终结规则：一个对象的初始化完成（构造函数执行结束）happen—before它的finalize（）方法的开始。</span><br><span class="line">8、传递性：如果操作A happen—before操作B，操作B happen—before操作C，那么可以得出A happen—before操作C。</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>锁的内存语义</p>
+</blockquote>
+<ul>
+<li><p>当线程释放锁时，JMM会把该线程对应的本地内存中的共享变量刷新到主内存中。</p>
+</li>
+<li><p>当线程获取锁时，JMM会把该线程对应的本地内存置为无效。从而使得被监视器保护的临界区代码必须要从主内存中去读取共享变量。</p>
+</li>
+</ul>
+<blockquote>
+<p>volatile的内存语义</p>
+</blockquote>
+<ul>
+<li><p>一是保证多个线程对共享变量访问的可见性     </p>
+</li>
+<li><p>二防止指令重排序     </p>
+</li>
+</ul>
+<h3 id="volatile内存语义的实现"><a href="#volatile内存语义的实现" class="headerlink" title="volatile内存语义的实现"></a>volatile内存语义的实现</h3><p>内存屏障</p>
+<p>由于现代操作系统都是多处理器操作系统，每个处理器都会有自己的缓存，可能存再不同处理器缓存不一致的问题，而且由于操作系统可能存在重排序，导致读取到错误的数据，因此，操作系统提供了一些内存屏障以解决这种问题：</p>
+<blockquote>
+<p>LoadLoad屏障</p>
+</blockquote>
+<ul>
+<li>对于Load1; LoadLoad; Load2 ，操作系统保证在Load2及后续的读操作读取之前，Load1已经读取。</li>
+</ul>
+<blockquote>
+<p>StoreStore屏障</p>
+</blockquote>
+<ul>
+<li>对于Store1; StoreStore; Store2 ，操作系统保证在Store2及后续的写操作写入之前，Store1已经写入。</li>
+</ul>
+<blockquote>
+<p>LoadStore屏障</p>
+</blockquote>
+<ul>
+<li>对于Load1; LoadStore; Store2，操作系统保证在Store2及后续写入操作执行前，Load1已经读取。</li>
+</ul>
+<blockquote>
+<p>StoreLoad屏障</p>
+</blockquote>
+<ul>
+<li>对于Store1; StoreLoad; Load2 ，操作系统保证在Load2及后续读取操作执行前，Store1已经写入，开销较大，但是同时具备其他三种屏障的效果。</li>
+</ul>
+<p>下面对volatile写和volatile读的内存语义做个总结：</p>
+<ul>
+<li>线程A写一个volatile变量，实质上是线程A向接下来将要读这个volatile变量的某个线程发出了（其对共享变量所在修改的）消息。</li>
+<li>线程B读一个volatile变量，实质上是线程B接收了之前某个线程发出的（在写这个volatile变量之前对共享变量所做修改的）消息。</li>
+<li>线程A写一个volatile变量，随后线程B读这个volatile变量，这个过程实质上是线程A通过主内存向线程B发送消息。</li>
+</ul>
+<p>JMM如何实现volatile写/读的内存语义?</p>
+<p>重排序分为编译器重排序和处理器重排序。</p>
+<p>下面是JMM针对编译器制定的volatile重排序规则表：</p>
+<table>
+<thead>
+<tr>
+<th>是否能重排序</th>
+<th>第二个操作</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一个操作</td>
+<td>普通读/写</td>
+<td>volatile读</td>
+<td>volatile写</td>
+</tr>
+<tr>
+<td>普通读/写</td>
+<td></td>
+<td></td>
+<td>NO</td>
+</tr>
+<tr>
+<td>volatile读</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>volatile写</td>
+<td></td>
+<td>NO</td>
+<td>NO</td>
+</tr>
+</tbody>
+</table>
+<p>下面是基于保守策略的JMM内存屏障插入策略：</p>
+<ul>
+<li>在每个volatile写操作的前面插入一个StoreStore屏障。</li>
+<li>在每个volatile写操作的后面插入一个StoreLoad屏障。</li>
+<li>在每个volatile读操作的后面插入一个LoadLoad屏障。</li>
+<li>在每个volatile读操作的后面插入一个LoadStore屏障。</li>
+</ul>
+<p><br></p>
+<h2 id="Java各类锁"><a href="#Java各类锁" class="headerlink" title="Java各类锁"></a>Java各类锁</h2><p>JVM锁有4种状态：无锁、偏向锁（通过MarkWord的线程ID）、轻量级锁（通过MarkWord的锁记录指针）、重量级锁;</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>标志位</th>
+<th>存储内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未锁定</td>
+<td>01</td>
+<td>对象哈希码、对象分代年龄</td>
+</tr>
+<tr>
+<td>轻量级锁定</td>
+<td>00</td>
+<td>指向锁记录的指针</td>
+</tr>
+<tr>
+<td>膨胀(重量级锁定)</td>
+<td>10</td>
+<td>执行重量级锁定的指针</td>
+</tr>
+<tr>
+<td>GC标记</td>
+<td>11</td>
+<td>空(不需要记录信息)</td>
+</tr>
+<tr>
+<td>可偏向</td>
+<td>01</td>
+<td>偏向线程ID、偏向时间戳、对象分代年龄</td>
+</tr>
+</tbody>
+</table>
+<p>markword是java对象数据结构中的一部分,markword数据的长度在32位和64位的虚拟机（未开启压缩指针）中分别为32bit和64bit，它的<strong>最后2bit是锁状态标志位</strong>，用来标记当前对象的状态，对象的所处的状态.</p>
+<p><img src="/2015/07/26/jvm-gc/image-20.png" width="500px"></p>
+<blockquote>
+<p>每种锁只有在其特定的场景下，才会有出色的表现</p>
+<p>java中没有哪种锁能够在所有情况下都能有出色的效率</p>
+<p>引入这么多锁的原因就是为了应对不同的情况</p>
+</blockquote>
+<h3 id="偏向锁获取过程"><a href="#偏向锁获取过程" class="headerlink" title="偏向锁获取过程"></a>偏向锁获取过程</h3><ol>
+<li>访问Mark Word中偏向锁的标识是否设置成1，锁标志位是否为01，确认为可偏向状态。</li>
+<li>如果为可偏向状态，则测试线程ID是否指向当前线程，如果是，进入步骤5，否则进入步骤3。</li>
+<li>如果线程ID并未指向当前线程，则通过CAS操作竞争锁。如果竞争成功，则将Mark Word中线程ID设置为当前线程ID，然后执行5；如果竞争失败，执行4。</li>
+<li>如果CAS获取偏向锁失败，则表示有竞争。当到达全局安全点（safepoint）时获得偏向锁的线程被挂起，偏向锁升级为轻量级锁，然后被阻塞在安全点的线程继续往下执行同步代码。（撤销偏向锁的时候会导致stop the word）</li>
+<li>执行同步代码。</li>
+</ol>
+<h3 id="偏向锁的释放"><a href="#偏向锁的释放" class="headerlink" title="偏向锁的释放"></a>偏向锁的释放</h3><p>偏向锁的撤销在上述第四步骤中有提到。偏向锁只有遇到其他线程尝试竞争偏向锁时，持有偏向锁的线程才会释放锁，线程不会主动去释放偏向锁。偏向锁的撤销，需要等待全局安全点（在这个时间点上没有字节码正在执行），它会首先暂停拥有偏向锁的线程，判断锁对象是否处于被锁定状态，撤销偏向锁后恢复到未锁定（标志位为“01”）或轻量级锁（标志位为“00”）的状态。</p>
+<h3 id="轻量级锁获取过程"><a href="#轻量级锁获取过程" class="headerlink" title="轻量级锁获取过程"></a>轻量级锁获取过程</h3><p>轻量级锁是由偏向所升级来的，偏向锁运行在一个线程进入同步块的情况下，当第二个线程加入锁争用的时候，偏向锁就会升级为轻量级锁；<br>轻量级锁的加锁过程：</p>
+<ol>
+<li>在代码进入同步块的时候，如果同步对象锁状态为无锁状态（锁标志位为“01”状态，是否为偏向锁为“0”），虚拟机首先将在当前线程的栈帧中建立一个名为锁记录（Lock Record）的空间，用于存储锁对象目前的Mark Word的拷贝，官方称之为 Displaced Mark Word。</li>
+<li>拷贝对象头中的Mark Word复制到锁记录中</li>
+<li>拷贝成功后，虚拟机将使用CAS操作尝试将对象的Mark Word更新为指向Lock Record的指针，并将Lock record里的owner指针指向object mark word。如果更新成功，则执行步骤4，否则执行步骤5。</li>
+<li>如果这个更新动作成功了，那么这个线程就拥有了该对象的锁，并且对象Mark Word的锁标志位设置为“00”，即表示此对象处于轻量级锁定状态</li>
+<li>如果这个更新操作失败了，虚拟机首先会检查对象的Mark Word是否指向当前线程的栈帧，如果是就说明当前线程已经拥有了这个对象的锁，那就可以直接进入同步块继续执行。否则说明多个线程竞争锁，轻量级锁就要膨胀为重量级锁，锁标志的状态值变为“10”，Mark Word中存储的就是指向重量级锁（互斥量）的指针，后面等待锁的线程也要进入阻塞状态。 而当前线程便尝试使用自旋来获取锁，自旋就是为了不让线程阻塞，而采用循环去获取锁的过程。</li>
+</ol>
+<h3 id="轻量级锁的释放"><a href="#轻量级锁的释放" class="headerlink" title="轻量级锁的释放"></a>轻量级锁的释放</h3><p><strong>释放锁线程视角</strong>：由轻量锁切换到重量锁，是发生在轻量锁释放锁的期间</p>
+<p>之前在获取锁的时候它拷贝了锁对象头的markword</p>
+<p>在释放锁的时候如果它发现在它持有锁的期间有其他线程来尝试获取锁了</p>
+<p>并且该线程对markword做了修改，两者比对发现不一致，则切换到重量锁。</p>
+<p><img src="/2015/07/26/jvm-gc/image-21.jpeg" width="500px"></p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2015/07/26/jvm-gc/';
+        this.page.title = 'Jvm虚拟机Gc相关笔记';
+        this.page.identifier = '2015/07/26/jvm-gc/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>领域驱动设计 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="领域驱动设计 + UML 相关思想详解笔记 
+领域驱动基本概述模型关系图
+实体(Entity) &amp;amp; 值对象(Value Object)12实体:在时间上有连续性,并且有唯一标识可以来区分的对象。值对象:用来描述事物的,不区分谁是谁的,不可变的对象。
+服务(Services)服务存在的目的就是为领域提供简单的方法。为了提供大量便捷的方法，自然要关联许多领域模型，所以说，行为(Action)天生就应该存在于服务中。服务具有以下特点：
+
+a)服务中体现的行为一定是不属于任何实体和值对象的，但它">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#领域驱动基本概述"><span class="toc-number">1.</span> <span class="toc-text">领域驱动基本概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#模型关系图"><span class="toc-number">1.1.</span> <span class="toc-text">模型关系图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实体-Entity-amp-值对象-Value-Object"><span class="toc-number">1.1.1.</span> <span class="toc-text">实体(Entity) &amp; 值对象(Value Object)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务-Services"><span class="toc-number">1.1.2.</span> <span class="toc-text">服务(Services)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工厂-Factories"><span class="toc-number">1.1.3.</span> <span class="toc-text">工厂(Factories)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#层结构"><span class="toc-number">1.2.</span> <span class="toc-text">层结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#公司规定"><span class="toc-number">1.3.</span> <span class="toc-text">公司规定</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#术语"><span class="toc-number">1.3.1.</span> <span class="toc-text">术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开发规则说明"><span class="toc-number">1.3.2.</span> <span class="toc-text">开发规则说明</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            领域驱动设计
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2019/08/18/domain-driven-design/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-08-18T08:40:13.000Z" itemprop="datePublished">2019-08-18</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>领域驱动设计 + UML 相关思想详解笔记<br><a id="more"></a> </p>
+<h1 id="领域驱动基本概述"><a href="#领域驱动基本概述" class="headerlink" title="领域驱动基本概述"></a>领域驱动基本概述</h1><h2 id="模型关系图"><a href="#模型关系图" class="headerlink" title="模型关系图"></a>模型关系图</h2><p><img src="/2019/08/18/domain-driven-design/image-02.png" width="500px"></p>
+<h3 id="实体-Entity-amp-值对象-Value-Object"><a href="#实体-Entity-amp-值对象-Value-Object" class="headerlink" title="实体(Entity) &amp; 值对象(Value Object)"></a>实体(Entity) &amp; 值对象(Value Object)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">实体:在时间上有连续性,并且有唯一标识可以来区分的对象。</span><br><span class="line">值对象:用来描述事物的,不区分谁是谁的,不可变的对象。</span><br></pre></td></tr></table></figure>
+<h3 id="服务-Services"><a href="#服务-Services" class="headerlink" title="服务(Services)"></a>服务(Services)</h3><p>服务存在的目的就是为领域提供简单的方法。为了提供大量便捷的方法，自然要关联许多领域模型，所以说，行为(Action)天生就应该存在于服务中。<br>服务具有以下特点：</p>
+<ul>
+<li>a)服务中体现的行为一定是不属于任何实体和值对象的，但它属于领域模型的范围内</li>
+<li>b)服务的行为一定设计其他多个对象</li>
+<li>c)服务的操作是无状态的</li>
+</ul>
+<h3 id="工厂-Factories"><a href="#工厂-Factories" class="headerlink" title="工厂(Factories)"></a>工厂(Factories)</h3><p>工厂专用于构造实体和聚合很复杂对象</p>
+<p>以下场景不需要工厂：</p>
+<ul>
+<li>a)构造器很简单</li>
+<li>b)构造对象时不依赖于其他对象的创建</li>
+<li>c)用策略模式就可以解决</li>
+</ul>
+<h2 id="层结构"><a href="#层结构" class="headerlink" title="层结构"></a>层结构</h2><p><img src="/2019/08/18/domain-driven-design/image-01.png" width="500px"></p>
+<ul>
+<li>User Interface(DubboProvider)  </li>
+</ul>
+<p>展现层:负责向用户展现信息,解析用户行为。</p>
+<ul>
+<li>Application Layer</li>
+</ul>
+<p>应用层:它主要为程序提供任务处理,没有业务逻辑代码,。</p>
+<ul>
+<li>Domain Layer</li>
+</ul>
+<p>领域层:这一层包含有关领域的信息;是业务的核心,领域模型的状态都直接或间接(持久化至数据库)存储在这一层。</p>
+<ul>
+<li>Infrastructure Layer</li>
+</ul>
+<p>为其他层提供底层依赖操作。如Mongdb,Redis,Mysql等。</p>
+<hr>
+
+<h2 id="公司规定"><a href="#公司规定" class="headerlink" title="公司规定"></a>公司规定</h2><h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><ul>
+<li>Provider：属于应用层，提供程序，对外暴露 Dubbo Service，主要进行领域行为的编排工作。</li>
+<li>QueryProvider：属于应用层，提供程序，对外暴露 Dubbo Service，主要进行 QueryRepository 的编排工作。</li>
+<li>QueryRepository：属于应用层，为单纯的 Provider 查询接口提供技术支撑。</li>
+<li>DO：属于领域层。领域对象实体，封装内聚业务实体属性和行为。</li>
+<li>VO：属于领域层。领域对象值对象，封装 DO 中的整体不变性属性。</li>
+<li>Factory：属于领域层。工厂，封装领域对象实体或值对象的创建。</li>
+<li>Repository：属于领域层。资源库，提供 DO 的持久和获取。</li>
+<li>Service：属于领域层。领域服务，表示一个无状态的操作，单个 DO 的行为不足以满足 Provider 行为时定义。</li>
+<li>Event：属于领域层。领域事件。</li>
+<li>Specification：属于领域层。约束条件，封装执行内聚业务时需要判断的业务约束。</li>
+<li>Facade：属于领域层。防腐层，封装调用其他业务域的 Provider 或 QueryProvider 的行为。</li>
+</ul>
+<h3 id="开发规则说明"><a href="#开发规则说明" class="headerlink" title="开发规则说明"></a>开发规则说明</h3><p>通过特定的语言开发，一定会有各种特定的问题，所以需要相应的开发规范。</p>
+<p>针对基于 Spring 的 Java 开发，规则如下：</p>
+<ol>
+<li>所有 QueryProvider 查询接口不走领域层,直接调用 QueryRepository。</li>
+<li>所有的调用非本业务域的 Provider 通过 Facade 包装。</li>
+<li>Repository 返回的 DO 是个完整的 DO。换句话说，就是可以进行接下来的业务操作。所以，如果这个 DO 的某些 VO 需要通过查询其他服务的，在 Repository 里调用 Facade 接口，封装好后再返回整个 DO。</li>
+<li>一般情况下，一个 Repository 只有一个更新整个 DO 的方法。如果遇到性能问题，如批量更新，允许创建另外一个更新方法。</li>
+<li>事务控制在 Repository 和 Service。</li>
+<li>如果 DO 在执行某个方法时有需要，允许注入领域中其他接口，包括 Facade、Service、Specification。</li>
+<li>Specification 不是所有的业务规则，而是指约束条件，如：订单的商品数量不能为 0。</li>
+<li>修改 DO 时，通过对 Repository 查询获得的 DO 修改，然后使用 Repository 保存这个 DO。不要新建一个新的 DO。</li>
+<li>Repository 实现包中的 Convertor 一定是做 PO 相关的转换。换句话说，就是入参是 PO 或者返回值是 PO。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Client:</span><br><span class="line">	Constant:					封装常量</span><br><span class="line">	Param:						参数DTO封装</span><br><span class="line">	Result:						结果DTO封装</span><br><span class="line">	Provider:</span><br><span class="line">		Provider: 				Dubbo服务暴露层</span><br><span class="line">		QueryProvider:				Dubbo查询服务暴露层</span><br><span class="line">Service:</span><br><span class="line">	Application:</span><br><span class="line">		Provider:</span><br><span class="line">			ProviderImpl: 			Dubbo服务暴露实现层</span><br><span class="line">			QueryProviderImpl:		Dubbo查询服务暴露实现层</span><br><span class="line">		Repository:</span><br><span class="line">			QueryReposity:			查询持久</span><br><span class="line">	Domain:</span><br><span class="line">		Factory:				主要作convert转换操作,DTO与DO的转换成</span><br><span class="line">		Model:					各类数据库DO</span><br><span class="line">		Repository:				再次丰富持久层</span><br><span class="line">			Reposityry:			操作持久</span><br><span class="line">		Service:				复杂操作多个Repository,放入接口与实现</span><br><span class="line">			Impl:				服务实现层</span><br><span class="line">		Specification:				约束条件</span><br><span class="line">	Infrastructure:</span><br><span class="line">		Exception:				封装ISP、ISV异常机制</span><br><span class="line">		Facade:					定义接口与实现类,操作复杂的外部Provider</span><br><span class="line">		Repository:				实现与redis和mysql操作的持久实现类</span><br><span class="line">			Converter:			PO与DO的转换层</span><br><span class="line">			Entity:				PO实体类</span><br><span class="line">			mapper:				Mybatis的mapper操作类</span><br><span class="line">			Impl:				Repository的操作实现层</span><br><span class="line">			mongo:				Mongo数据操作层</span><br><span class="line">		Util:					工具包</span><br></pre></td></tr></table></figure>
+<p><code>Provider、QueryProvider</code>:可以直接操作<code>Repository</code>,如果遇到多个复杂的<code>Respository</code>以操作<code>Service</code>为准</p>
+<p><code>Facade</code>:只操作<code>Reference</code>的外部<code>Provider</code></p>
+<p><code>Factory</code>:只负责进行<code>Convert</code>转换操作。</p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2019/08/18/domain-driven-design/';
+        this.page.title = '领域驱动设计';
+        this.page.identifier = '2019/08/18/domain-driven-design/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Tomcat原理源码解析 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Tomcat 组成与原理以及相关源码解析 
+组成
+
+Server：指的就是整个 Tomcat 服 务器，包含多组服务，负责管理和 启动各个 Service，同时监听 8005 端口发过来的 shutdown 命令，用 于关闭整个容器 ；
+Service：Tomcat 封装的、对外提 供完整的、基于组件的 web 服务，一个service可以包括多个connector和一个container 核心组件，以及多个功能组件，各 个 Service 之间是独立的，但是共享 同一 JVM 的资源 ；
+Co">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#组成"><span class="toc-number">1.</span> <span class="toc-text">组成</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#时序图"><span class="toc-number">2.</span> <span class="toc-text">时序图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Server"><span class="toc-number">2.1.</span> <span class="toc-text">Server</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat"><span class="toc-number">2.1.1.</span> <span class="toc-text">Tomcat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Server-1"><span class="toc-number">2.1.2.</span> <span class="toc-text">Server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Service"><span class="toc-number">2.1.3.</span> <span class="toc-text">Service</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-实例化"><span class="toc-number">2.2.</span> <span class="toc-text">Container 实例化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Engine"><span class="toc-number">2.2.1.</span> <span class="toc-text">Engine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Host-–-Tomcat-startStop-线程"><span class="toc-number">2.2.2.</span> <span class="toc-text">Host – Tomcat-startStop- 线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Context-–-localhost-startStop-线程"><span class="toc-number">2.2.3.</span> <span class="toc-text">Context – localhost-startStop- 线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wrapper"><span class="toc-number">2.2.4.</span> <span class="toc-text">Wrapper</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Connector-实例化"><span class="toc-number">2.3.</span> <span class="toc-text">Connector 实例化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本构造"><span class="toc-number">2.3.1.</span> <span class="toc-text">基本构造</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Acceptor"><span class="toc-number">2.3.2.</span> <span class="toc-text">Acceptor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Poller"><span class="toc-number">2.3.3.</span> <span class="toc-text">Poller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Worker"><span class="toc-number">2.3.4.</span> <span class="toc-text">Worker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动流程"><span class="toc-number">2.4.</span> <span class="toc-text">启动流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问流程"><span class="toc-number">2.5.</span> <span class="toc-text">访问流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#细节"><span class="toc-number">2.5.1.</span> <span class="toc-text">细节</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Tomcat原理源码解析
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2017/07/26/tomcat/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2017-07-26T01:00:12.000Z" itemprop="datePublished">2017-07-26</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/java/">java</a>, <a class="article-tag-link" href="/tags/tomcat/">tomcat</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Tomcat 组成与原理以及相关源码解析<br><a id="more"></a> </p>
+<h1 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h1><p><img src="/2017/07/26/tomcat/image-01.png" alt="img"></p>
+<ul>
+<li>Server：指的就是整个 Tomcat 服 务器，包含多组服务，负责管理和 启动各个 Service，同时监听 8005 端口发过来的 shutdown 命令，用 于关闭整个容器 ；</li>
+<li>Service：Tomcat 封装的、对外提 供完整的、基于组件的 web 服务，一个service可以包括多个connector和一个container 核心组件，以及多个功能组件，各 个 Service 之间是独立的，但是共享 同一 JVM 的资源 ；</li>
+<li>Connector：Tomcat 与外部世界的连接器，监听固定端口接收外部请求，传递给 Container，并 将 Container 处理的结果返回给外部；</li>
+<li>Container：Catalina，Servlet 容器，内部有多层容器组成，用于管理</li>
+<li>Servlet 生命周期，调用 servlet 相关方法。</li>
+<li>Loader：封装了 Java ClassLoader，用于 Container 加载类文件； </li>
+<li>Realm：Tomcat 中为 web 应用程序提供访问认证和角色管理的机制；</li>
+<li>JMX：Java SE 中定义技术规范，是一个为应用程序、设备、系统等植入管理功能的框架，通过 JMX 可以远程监控 Tomcat 的运行状态；</li>
+<li>Jasper：Tomcat 的 Jsp 解析引擎，用于将 Jsp 转换成 Java 文件，并编译成 class 文件。 Session：负责管理和创建 session，以及 Session 的持久化(可自定义)，支持 session 的集群。</li>
+<li>Pipeline：在容器中充当管道的作用，管道中可以设置各种 valve(阀门)，请求和响应在经由管 道中各个阀门处理，提供了一种灵活可配置的处理请求和响应的机制。</li>
+<li><p>Naming：命名服务，JNDI， Java 命名和目录接口，是一组在 Java 应用中访问命名和目录服务的 API。命名服务将名称和对象联系起来，使得我们可以用名称访问对象，目录服务也是一种命名 服务，对象不但有名称，还有属性。Tomcat 中可以使用 JNDI 定义数据源、配置信息，用于开发 与部署的分离。</p>
+</li>
+<li><p>Engine：Servlet 的顶层容器，包含一 个或多个 Host 子容器；</p>
+</li>
+<li>Host：虚拟主机，负责 web 应用的部 署和 Context 的创建；</li>
+<li>Context：Web 应用上下文，包含多个 Wrapper，负责 web 配置的解析、管 理所有的 Web 资源；</li>
+<li>Wrapper：最底层的容器，是对 Servlet 的封装，负责 Servlet 实例的创 建、执行和销毁。</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<p><img src="/2017/07/26/tomcat/image-06.png" width="500px"></p>
+<p><br></p>
+<h1 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">SpringApplication-&gt;&gt;SpringApplication:refresh</span><br><span class="line">SpringApplication-&gt;&gt;AbstractApplicationContext:refresh</span><br><span class="line">AbstractApplicationContext-&gt;&gt;EmbeddedWebApplicationContext:onRefresh</span><br><span class="line">EmbeddedWebApplicationContext-&gt;&gt;EmbeddedWebApplicationContext:createEmbeddedServletContainer</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">EmbeddedWebAppContext-&gt;&gt;EmbeddedWebAppContext:getEmbeddedServletContainerFactory</span><br><span class="line">EmbeddedWebAppContext-&gt;&gt;TomcatEmbedSerContainerFactory:getEmbeddedServletContainer</span><br><span class="line">TomcatEmbedSerContainerFactory-&gt;&gt;TomcatEmbedSerContainerFactory:new TomcatEmbeddedServletContainer</span><br><span class="line">TomcatEmbedSerContainerFactory-&gt;&gt;TomcatEmbedSerContainer:initialize</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/07/26/tomcat/image-02.png" alt="img"></p>
+<h2 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h2><h3 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h3><p>TomcatEmbeddedServletContainer#initialize</p>
+<blockquote>
+<p>this.tomcat.start();  </p>
+<blockquote>
+<p>server.start();    </p>
+</blockquote>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">tomcat#start -----&gt;LifecycleBase#start</span><br><span class="line"></span><br><span class="line">LifecycleBase#start</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> <span class="keyword">throws</span> LifecycleException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (state.equals(LifecycleState.NEW)) &#123;</span><br><span class="line">        init();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (state.equals(LifecycleState.FAILED)) &#123;</span><br><span class="line">        stop();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!state.equals(LifecycleState.INITIALIZED) &amp;&amp;</span><br><span class="line">            !state.equals(LifecycleState.STOPPED)) &#123;</span><br><span class="line">        invalidTransition(Lifecycle.BEFORE_START_EVENT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        startInternal();</span><br><span class="line">        <span class="keyword">if</span> (state.equals(LifecycleState.FAILED)) &#123;</span><br><span class="line">            stop();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!state.equals(LifecycleState.STARTING)) &#123;</span><br><span class="line">            invalidTransition(Lifecycle.AFTER_START_EVENT);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            setStateInternal(LifecycleState.STARTED, <span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">        ExceptionUtils.handleThrowable(t);</span><br><span class="line">        setStateInternal(LifecycleState.FAILED, <span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> LifecycleException(sm.getString(<span class="string">"lifecycleBase.startFail"</span>, toString()), t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从<code>LifecycleBase</code>全局看进行每个组件StandardServer,StandardEngine等的<code>initInternal</code>&amp;&amp;<code>startInternal</code>方法      </p>
+<p>Server的<code>Init</code>走的步骤不多      </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">StandardServer#init---&gt;StandardService#init---&gt;StandardEngine#init</span><br><span class="line"></span><br><span class="line">StanardEngine#init一调用走LifeCycleBase#init---&gt;StandardEngine#initInternal---&gt;ContainerBase#initInternal</span><br><span class="line"></span><br><span class="line">在ContainerBase#initInternal</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initInternal</span><span class="params">()</span> <span class="keyword">throws</span> LifecycleException </span>&#123;</span><br><span class="line">    BlockingQueue&lt;Runnable&gt; startStopQueue = <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;();</span><br><span class="line">    startStopExecutor = <span class="keyword">new</span> ThreadPoolExecutor(</span><br><span class="line">            getStartStopThreadsInternal(),</span><br><span class="line">            getStartStopThreadsInternal(), <span class="number">10</span>, TimeUnit.SECONDS,</span><br><span class="line">            startStopQueue,</span><br><span class="line">            <span class="keyword">new</span> StartStopThreadFactory(getName() + <span class="string">"-startStop-"</span>));</span><br><span class="line">    startStopExecutor.allowCoreThreadTimeOut(<span class="keyword">true</span>);</span><br><span class="line">    <span class="keyword">super</span>.initInternal();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">起了线程池<span class="string">"-startStop-"</span> : startStopExecutor</span><br></pre></td></tr></table></figure>
+<p>init后接着就开始各个组件的start  </p>
+<blockquote>
+<p>以下所有的组件将经历模板设计模式的历练  </p>
+</blockquote>
+<p>某调用者对 组件A#start-&gt;  LifeCycleBase#start -&gt; 组件A#startInternal -&gt; 引出内部组件B#start …….</p>
+<h3 id="Server-1"><a href="#Server-1" class="headerlink" title="Server"></a>Server</h3><p>StandardServer#start 接上server.start()</p>
+<blockquote>
+<p>默认进入到父类 LifecycleBase.start()</p>
+<blockquote>
+<p>StandardServer#startInternal<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">startInternal</span><span class="params">()</span> <span class="keyword">throws</span> LifecycleException </span>&#123;</span><br><span class="line"></span><br><span class="line">    fireLifecycleEvent(CONFIGURE_START_EVENT, <span class="keyword">null</span>);</span><br><span class="line">    setState(LifecycleState.STARTING);</span><br><span class="line"></span><br><span class="line">    globalNamingResources.start();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">synchronized</span> (servicesLock) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; services.length; i++) &#123;</span><br><span class="line">            services[i].start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+<p><code>services</code>为<code>StandardService</code></p>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>StandardService#start 接上services[i].start()  </p>
+<blockquote>
+<p>默认进入到父类 LifecycleBase.start()  </p>
+<blockquote>
+<p>StandardService#startInternal</p>
+</blockquote>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">startInternal</span><span class="params">()</span> <span class="keyword">throws</span> LifecycleException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(log.isInfoEnabled())</span><br><span class="line">        log.info(sm.getString(<span class="string">"standardService.start.name"</span>, <span class="keyword">this</span>.name));</span><br><span class="line">    setState(LifecycleState.STARTING);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (engine != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (engine) &#123;</span><br><span class="line">            engine.start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">synchronized</span> (executors) &#123;</span><br><span class="line">        <span class="keyword">for</span> (Executor executor: executors) &#123;</span><br><span class="line">            executor.start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mapperListener.start();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">synchronized</span> (connectorsLock) &#123;</span><br><span class="line">        <span class="keyword">for</span> (Connector connector: connectors) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// If it has already failed, don't try and start it</span></span><br><span class="line">                <span class="keyword">if</span> (connector.getState() != LifecycleState.FAILED) &#123;</span><br><span class="line">                    connector.start();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                log.error(sm.getString(</span><br><span class="line">                        <span class="string">"standardService.connector.startFailed"</span>,</span><br><span class="line">                        connector), e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>engine</code>为<code>StandardEngine</code>  </p>
+<h2 id="Container-实例化"><a href="#Container-实例化" class="headerlink" title="Container 实例化"></a>Container 实例化</h2><ul>
+<li>（1）Engine：引擎，用来管理多个站点，一个Service最多只能有一个Engine； </li>
+<li>（2）Host：代表一个站点，也可以叫虚拟主机，通过配置Host就可以添加站点； </li>
+<li>（3）Context：代表一个应用程序，对应着平时开发的一套程序，或者一个WEB-INF目录以及下面的web.xml文件； </li>
+<li>（4）Wrapper：每一Wrapper封装着一个Servlet；</li>
+</ul>
+<h3 id="Engine"><a href="#Engine" class="headerlink" title="Engine"></a>Engine</h3><ul>
+<li>StandardEngine#start 接上engine.start();</li>
+</ul>
+<blockquote>
+<p>默认进入到父类 LifecycleBase.start()  </p>
+<blockquote>
+<p>StandardEngine#startInternal</p>
+</blockquote>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">startInternal</span><span class="params">()</span> <span class="keyword">throws</span> LifecycleException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(log.isInfoEnabled())</span><br><span class="line">        log.info( <span class="string">"Starting Servlet Engine: "</span> + ServerInfo.getServerInfo());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">super</span>.startInternal();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ContainerBase#startInternal 接上super.startInternal();</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">startInternal</span><span class="params">()</span> <span class="keyword">throws</span> LifecycleException </span>&#123;</span><br><span class="line"></span><br><span class="line">    logger = <span class="keyword">null</span>;</span><br><span class="line">    getLogger();</span><br><span class="line">    Cluster cluster = getClusterInternal();</span><br><span class="line">    <span class="keyword">if</span> (cluster <span class="keyword">instanceof</span> Lifecycle) &#123;</span><br><span class="line">        ((Lifecycle) cluster).start();</span><br><span class="line">    &#125;</span><br><span class="line">    Realm realm = getRealmInternal();</span><br><span class="line">    <span class="keyword">if</span> (realm <span class="keyword">instanceof</span> Lifecycle) &#123;</span><br><span class="line">        ((Lifecycle) realm).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Container children[] = findChildren();</span><br><span class="line">    List&lt;Future&lt;Void&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; children.length; i++) &#123;</span><br><span class="line">        results.add(startStopExecutor.submit(<span class="keyword">new</span> StartChild(children[i])));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> fail = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (Future&lt;Void&gt; result : results) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            result.get();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            log.error(sm.getString(<span class="string">"containerBase.threadedStartFailed"</span>), e);</span><br><span class="line">            fail = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (fail) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> LifecycleException(</span><br><span class="line">                sm.getString(<span class="string">"containerBase.threadedStartFailed"</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pipeline <span class="keyword">instanceof</span> Lifecycle)</span><br><span class="line">        ((Lifecycle) pipeline).start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    setState(LifecycleState.STARTING);</span><br><span class="line"></span><br><span class="line">    threadStart();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Tomcat-startStop-</code> 线程池起线程</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">results.add(startStopExecutor.submit(<span class="keyword">new</span> StartChild(children[i])));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>后续操作</li>
+</ul>
+<p><code>ContainerBackgroundProcessor[StandardEngine[Tomcat]]</code>起线程<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">threadStart();</span><br></pre></td></tr></table></figure></p>
+<h3 id="Host-–-Tomcat-startStop-线程"><a href="#Host-–-Tomcat-startStop-线程" class="headerlink" title="Host – Tomcat-startStop- 线程"></a>Host – Tomcat-startStop- 线程</h3><ul>
+<li>LifecycleBase#start</li>
+<li>StandardHost#startInternal</li>
+<li>ContainerBase#startInternal<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//又起线程</span></span><br><span class="line"><span class="comment">//线程名:localhost-startStop-</span></span><br><span class="line"></span><br><span class="line">results.add(startStopExecutor.submit(<span class="keyword">new</span> StartChild(children[i])));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Context-–-localhost-startStop-线程"><a href="#Context-–-localhost-startStop-线程" class="headerlink" title="Context – localhost-startStop- 线程"></a>Context – localhost-startStop- 线程</h3><ul>
+<li><p>LifecycleBase#start</p>
+<blockquote>
+<p>优先进入了LifecycleBase#init函数</p>
+</blockquote>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">LifeCycleBase#init -----&gt; StandardContext#initInternal -&gt; ContainerBase#initInternal 又启动一个线程池</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initInternal</span><span class="params">()</span> <span class="keyword">throws</span> LifecycleException </span>&#123;</span><br><span class="line">    BlockingQueue&lt;Runnable&gt; startStopQueue = <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;();</span><br><span class="line">    startStopExecutor = <span class="keyword">new</span> ThreadPoolExecutor(</span><br><span class="line">            getStartStopThreadsInternal(),</span><br><span class="line">            getStartStopThreadsInternal(), <span class="number">10</span>, TimeUnit.SECONDS,</span><br><span class="line">            startStopQueue,</span><br><span class="line">            <span class="keyword">new</span> StartStopThreadFactory(getName() + <span class="string">"-startStop-"</span>));</span><br><span class="line">    startStopExecutor.allowCoreThreadTimeOut(<span class="keyword">true</span>);</span><br><span class="line">    <span class="keyword">super</span>.initInternal();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>StandardContext#startInternal</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (Container child : findChildren()) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!child.getState().isAvailable()) &#123;</span><br><span class="line">        child.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Wrapper"><a href="#Wrapper" class="headerlink" title="Wrapper"></a>Wrapper</h3><ul>
+<li><p>LifecycleBase#start</p>
+<blockquote>
+<p>优先进入了LifecycleBase#init函数</p>
+</blockquote>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">LifeCycleBase#init -----&gt; StandardWrapper#initInternal(暂未实现直接跳上级方法) -&gt; ContainerBase#initInternal 又启动一个线程池default-startStop</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initInternal</span><span class="params">()</span> <span class="keyword">throws</span> LifecycleException </span>&#123;</span><br><span class="line">    BlockingQueue&lt;Runnable&gt; startStopQueue = <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;();</span><br><span class="line">    startStopExecutor = <span class="keyword">new</span> ThreadPoolExecutor(</span><br><span class="line">            getStartStopThreadsInternal(),</span><br><span class="line">            getStartStopThreadsInternal(), <span class="number">10</span>, TimeUnit.SECONDS,</span><br><span class="line">            startStopQueue,</span><br><span class="line">            <span class="keyword">new</span> StartStopThreadFactory(getName() + <span class="string">"-startStop-"</span>));</span><br><span class="line">    startStopExecutor.allowCoreThreadTimeOut(<span class="keyword">true</span>);</span><br><span class="line">    <span class="keyword">super</span>.initInternal();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>StandardContext#startInternal</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">entry.getKey().onStartup(entry.getValue(),</span><br><span class="line">                            getServletContext());</span><br><span class="line">                            </span><br><span class="line"><span class="comment">//初始化Servlet</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>TomcatStarter#onStartup</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">initializer.onStartup(servletContext);</span><br><span class="line"><span class="comment">//直接跳转到</span></span><br><span class="line">EmbeddedWebApplicationContext#selfInitialize</span><br><span class="line"></span><br><span class="line"><span class="comment">//至此各个Servlet   ContextInitializer bean启动</span></span><br><span class="line"><span class="keyword">for</span> (ServletContextInitializer beans : getServletContextInitializerBeans()) &#123;</span><br><span class="line">    beans.onStartup(servletContext);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Connector-实例化"><a href="#Connector-实例化" class="headerlink" title="Connector 实例化"></a>Connector 实例化</h2><p><img src="/2017/07/26/tomcat/image-05.png" alt="img"></p>
+<p>与Containner配合工作<br>起Io线程-Service装配Connector  </p>
+<h3 id="基本构造"><a href="#基本构造" class="headerlink" title="基本构造"></a>基本构造</h3><h3 id="Acceptor"><a href="#Acceptor" class="headerlink" title="Acceptor"></a>Acceptor</h3><p>接收socket线程，这里虽然是基于NIO的connector，但是在接收socket方面还是传统的serverSocket.accept()方式，获得SocketChannel对象，然后封装在一个tomcat的实现类org.apache.tomcat.util.net.NioChannel对象中。然后将NioChannel对象封装在一个PollerEvent对象中，并将PollerEvent对象压入events queue里。这里是个典型的生产者-消费者模式，Acceptor与Poller线程之间通过queue通信，Acceptor是events queue的生产者，Poller是events queue的消费者。</p>
+<h3 id="Poller"><a href="#Poller" class="headerlink" title="Poller"></a>Poller</h3><p>Poller线程中维护了一个Selector对象，NIO就是基于Selector来完成逻辑的。在connector中并不止一个Selector，在socket的读写数据时，为了控制timeout也有一个Selector，在后面的BlockSelector中介绍。可以先把Poller线程中维护的这个Selector标为主Selector。 Poller是NIO实现的主要线程。首先作为events queue的消费者，从queue中取出PollerEvent对象，然后将此对象中的channel以OP_READ事件注册到主Selector中，然后主Selector执行select操作，遍历出可以读数据的socket，并从Worker线程池中拿到可用的Worker线程，然后将socket传递给Worker。整个过程是典型的NIO实现。</p>
+<h3 id="Worker"><a href="#Worker" class="headerlink" title="Worker"></a>Worker</h3><p>Worker线程拿到Poller传过来的socket后，将socket封装在SocketProcessor对象中。然后从Http11ConnectionHandler中取出Http11NioProcessor对象，从Http11NioProcessor中调用CoyoteAdapter的逻辑，跟BIO实现一样。在Worker线程中，会完成从socket中读取http request，解析成HttpServletRequest对象，分派到相应的servlet并完成逻辑，然后将response通过socket发回client。在从socket中读数据和往socket中写数据的过程，并没有像典型的非阻塞的NIO的那样，注册OP_READ或OP_WRITE事件到主Selector，而是直接通过socket完成读写，这时是阻塞完成的，但是在timeout控制上，使用了NIO的Selector机制，但是这个Selector并不是Poller线程维护的主Selector，而是BlockPoller线程中维护的Selector，称之为辅Selector。</p>
+<h2 id="启动流程"><a href="#启动流程" class="headerlink" title="启动流程"></a>启动流程</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line"></span><br><span class="line">AbstractApplicationContext-&gt;&gt;EmbeddedWebApplicationContext:finishRefresh</span><br><span class="line">EmbeddedWebApplicationContext-&gt;&gt;EmbeddedWebApplicationContext:startEmbeddedServletContainer</span><br><span class="line">EmbeddedWebApplicationContext-&gt;&gt;TomcatEmbedSerContainer:start</span><br><span class="line">TomcatEmbedSerContainer-&gt;&gt;TomcatEmbedSerContainer:addPreviouslyRemovedConnectors</span><br><span class="line">TomcatEmbedSerContainer-&gt;&gt;StandardService:addConnector</span><br></pre></td></tr></table></figure>
+<ul>
+<li>LifecycleBase#start</li>
+<li><p>Connector#startInternal</p>
+</li>
+<li><p>AbstractProtocol#start</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">asyncTimeout = <span class="keyword">new</span> AsyncTimeout();</span><br><span class="line">Thread timeoutThread = <span class="keyword">new</span> Thread(asyncTimeout, getNameInternal() + <span class="string">"-AsyncTimeout"</span>);</span><br><span class="line"><span class="keyword">int</span> priority = endpoint.getThreadPriority();</span><br><span class="line"><span class="keyword">if</span> (priority &lt; Thread.MIN_PRIORITY || priority &gt; Thread.MAX_PRIORITY) &#123;</span><br><span class="line">    priority = Thread.NORM_PRIORITY;</span><br><span class="line">&#125;</span><br><span class="line">timeoutThread.setPriority(priority);</span><br><span class="line">timeoutThread.setDaemon(<span class="keyword">true</span>);</span><br><span class="line">timeoutThread.start();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>AsyncTimeout线程创建 </li>
+</ul>
+</li>
+<li><p>NioEndpoint#startInternal</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startInternal</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!running) &#123;</span><br><span class="line">        running = <span class="keyword">true</span>;</span><br><span class="line">        paused = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        processorCache = <span class="keyword">new</span> SynchronizedStack&lt;&gt;(SynchronizedStack.DEFAULT_SIZE,</span><br><span class="line">                socketProperties.getProcessorCache());</span><br><span class="line">        eventCache = <span class="keyword">new</span> SynchronizedStack&lt;&gt;(SynchronizedStack.DEFAULT_SIZE,</span><br><span class="line">                        socketProperties.getEventCache());</span><br><span class="line">        nioChannels = <span class="keyword">new</span> SynchronizedStack&lt;&gt;(SynchronizedStack.DEFAULT_SIZE,</span><br><span class="line">                socketProperties.getBufferPool());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Create worker collection</span></span><br><span class="line">        <span class="keyword">if</span> ( getExecutor() == <span class="keyword">null</span> ) &#123;</span><br><span class="line">            createExecutor();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        initializeConnectionLatch();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Start poller threads</span></span><br><span class="line">        pollers = <span class="keyword">new</span> Poller[getPollerThreadCount()];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;pollers.length; i++) &#123;</span><br><span class="line">            pollers[i] = <span class="keyword">new</span> Poller();</span><br><span class="line">            Thread pollerThread = <span class="keyword">new</span> Thread(pollers[i], getName() + <span class="string">"-ClientPoller-"</span>+i);</span><br><span class="line">            pollerThread.setPriority(threadPriority);</span><br><span class="line">            pollerThread.setDaemon(<span class="keyword">true</span>);</span><br><span class="line">            pollerThread.start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        startAcceptorThreads();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>createExecutor<br>  创建IO工作线程池  <code>http-nio-端口号-exec</code></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createExecutor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    internalExecutor = <span class="keyword">true</span>;</span><br><span class="line">    TaskQueue taskqueue = <span class="keyword">new</span> TaskQueue();</span><br><span class="line">    TaskThreadFactory tf = <span class="keyword">new</span> TaskThreadFactory(getName() + <span class="string">"-exec-"</span>, daemon, getThreadPriority());</span><br><span class="line">    executor = <span class="keyword">new</span> ThreadPoolExecutor(getMinSpareThreads(), getMaxThreads(), <span class="number">60</span>, TimeUnit.SECONDS,taskqueue, tf);</span><br><span class="line">    taskqueue.setParent( (ThreadPoolExecutor) executor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pollerThread.start()<br>  创建ClientPoller线程 <code>http-nio-端口号-ClientPoller</code></p>
+</li>
+<li><p>startAcceptorThreads<br>  创建Acceptor线程 <code>http-nio-端口号-Acceptor</code><br>  ​    </p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="访问流程"><a href="#访问流程" class="headerlink" title="访问流程"></a>访问流程</h2><p><img src="/2017/07/26/tomcat/image-04.png" alt="img"></p>
+<p><img src="/2017/07/26/tomcat/image-03.png" alt="img"></p>
+<p><br></p>
+<p>Container处理请求是使用Pipeline-Value管道来处理  </p>
+<p>Pipeline-Value是责任链模式，责任链模式是指在一个请求处理的过程中有很多处理者依次对请求进行处理，每个处理者负责做自己相应的处理，处理完之后将处理后的请求返回，再让下一个处理着继续处理。</p>
+<ul>
+<li>1）每个Pipeline都有特定的Value，而且是在管道的最后一个执行，这个Value叫做BaseValue，BaseValue是不可删除的；  </li>
+<li>2）在上层容器的管道的BaseValue中会调用下层容器的管道。</li>
+</ul>
+<p>Container包含四个子容器：StandardEngineValue、StandardHostValue、StandardContextValue、StandardWrapperValue。</p>
+<h3 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h3><ol>
+<li><p>Connector在接收到请求后会首先调用最顶层容器的Pipeline来处理，这里的最顶层容器的Pipeline就是EnginePipeline（Engine的管道）；</p>
+</li>
+<li><p>在Engine的管道中依次会执行EngineValue1、EngineValue2等等，最后会执行StandardEngineValue，在StandardEngineValue中会调用Host管道，然后再依次执行Host的HostValue1、HostValue2等，最后在执行StandardHostValue，然后再依次调用Context的管道和Wrapper的管道，最后执行到StandardWrapperValue。</p>
+</li>
+<li><p>当执行到StandardWrapperValue的时候，会在StandardWrapperValue中创建FilterChain，并调用其doFilter方法来处理请求，这个FilterChain包含着我们配置的与请求相匹配的Filter和Servlet，其doFilter方法会依次调用所有的Filter的doFilter方法和Servlet的service方法，这样请求就得到了处理！</p>
+</li>
+<li><p>当所有的Pipeline-Value都执行完之后，并且处理完了具体的请求，这个时候就可以将返回的结果交给Connector了，Connector在通过Socket的方式将结果返回给客户端。</p>
+</li>
+</ol>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><p><a href="https://juejin.im/post/58eb5fdda0bb9f00692a78fc#heading-3" target="_blank" rel="noopener">Tomcat组成与工作原理</a></p>
+</li>
+<li><p><a href="https://mp.weixin.qq.com/s/J4tVgs0-cSSVXsYK9_Z0zw" target="_blank" rel="noopener">一头扎进tomcat</a></p>
+</li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2017/07/26/tomcat/';
+        this.page.title = 'Tomcat原理源码解析';
+        this.page.identifier = '2017/07/26/tomcat/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

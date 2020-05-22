@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>汇编语言解析 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="汇编语言编程相关详解笔记 
+寄存器助记
+12345678910111213141516171819202122234个段地址寄存器：CS(code segment)——16位的代码段寄存器；DS(data segment)——16位的数据段寄存器；ES(extra segment)——16位的扩展段寄存器；SS(stack segment)——16位的堆栈段寄存器；16位的指令指针寄存器IP；20位的地址加法器；6字节的指令队列缓冲器。执行单元执行部件由下列几个部分组成：8个通用寄存器：即AX、">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#寄存器助记"><span class="toc-number">1.</span> <span class="toc-text">寄存器助记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#指令助记"><span class="toc-number">2.</span> <span class="toc-text">指令助记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基础知识"><span class="toc-number">3.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#汇编语言产生"><span class="toc-number">3.1.</span> <span class="toc-text">汇编语言产生</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#汇编语言的组成"><span class="toc-number">3.2.</span> <span class="toc-text">汇编语言的组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存储器"><span class="toc-number">3.3.</span> <span class="toc-text">存储器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令和数据"><span class="toc-number">3.4.</span> <span class="toc-text">指令和数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存储单元"><span class="toc-number">3.5.</span> <span class="toc-text">存储单元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CPU对存储器的读写"><span class="toc-number">3.6.</span> <span class="toc-text">CPU对存储器的读写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#地址总线"><span class="toc-number">3.7.</span> <span class="toc-text">地址总线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据总线"><span class="toc-number">3.8.</span> <span class="toc-text">数据总线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#控制总线"><span class="toc-number">3.9.</span> <span class="toc-text">控制总线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#硬件设备"><span class="toc-number">3.10.</span> <span class="toc-text">硬件设备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主板"><span class="toc-number">3.10.1.</span> <span class="toc-text">主板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口卡"><span class="toc-number">3.10.2.</span> <span class="toc-text">接口卡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#各类存储器芯片"><span class="toc-number">3.10.3.</span> <span class="toc-text">各类存储器芯片</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#寄存器"><span class="toc-number">4.</span> <span class="toc-text">寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#通用寄存器"><span class="toc-number">4.1.</span> <span class="toc-text">通用寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字在寄存器的存储"><span class="toc-number">4.2.</span> <span class="toc-text">字在寄存器的存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#几条汇编指令"><span class="toc-number">4.3.</span> <span class="toc-text">几条汇编指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#物理地址"><span class="toc-number">4.4.</span> <span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16位结构的CPU"><span class="toc-number">4.5.</span> <span class="toc-text">16位结构的CPU</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8086CPU给出物理地址的方法"><span class="toc-number">4.6.</span> <span class="toc-text">8086CPU给出物理地址的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#“段地址X16-偏移地址-物理地址”的含义"><span class="toc-number">4.6.1.</span> <span class="toc-text">“段地址X16+偏移地址=物理地址”的含义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#段的概念"><span class="toc-number">4.7.</span> <span class="toc-text">段的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#段寄存器"><span class="toc-number">4.8.</span> <span class="toc-text">段寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CS和IP"><span class="toc-number">4.9.</span> <span class="toc-text">CS和IP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改CS、IP的指令"><span class="toc-number">4.10.</span> <span class="toc-text">修改CS、IP的指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码段"><span class="toc-number">4.11.</span> <span class="toc-text">代码段</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#寄存器-内存访问"><span class="toc-number">5.</span> <span class="toc-text">寄存器(内存访问)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#内存中字的存储"><span class="toc-number">5.1.</span> <span class="toc-text">内存中字的存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DS和ADDRESS"><span class="toc-number">5.1.1.</span> <span class="toc-text">DS和ADDRESS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存中字的传送"><span class="toc-number">5.2.</span> <span class="toc-text">内存中字的传送</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关问题"><span class="toc-number">5.2.1.</span> <span class="toc-text">相关问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mov、add、sub指令"><span class="toc-number">5.3.</span> <span class="toc-text">mov、add、sub指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据段"><span class="toc-number">5.4.</span> <span class="toc-text">数据段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关问题-1"><span class="toc-number">5.4.1.</span> <span class="toc-text">相关问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈"><span class="toc-number">5.5.</span> <span class="toc-text">栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU提供的栈机制"><span class="toc-number">5.5.1.</span> <span class="toc-text">CPU提供的栈机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈顶超界问题"><span class="toc-number">5.5.2.</span> <span class="toc-text">栈顶超界问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#push、pop指令"><span class="toc-number">5.6.</span> <span class="toc-text">push、pop指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关问题-2"><span class="toc-number">5.6.1.</span> <span class="toc-text">相关问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈段"><span class="toc-number">5.7.</span> <span class="toc-text">栈段</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第一个程序"><span class="toc-number">6.</span> <span class="toc-text">第一个程序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#源程序"><span class="toc-number">6.1.</span> <span class="toc-text">源程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#程序结构"><span class="toc-number">6.1.1.</span> <span class="toc-text">程序结构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BX-和loop指令"><span class="toc-number">7.</span> <span class="toc-text">[BX]和loop指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#BX"><span class="toc-number">7.1.</span> <span class="toc-text">[BX]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#loop指令"><span class="toc-number">7.2.</span> <span class="toc-text">loop指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bx-和loop联合应用"><span class="toc-number">7.3.</span> <span class="toc-text">[bx]和loop联合应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#段前缀"><span class="toc-number">7.4.</span> <span class="toc-text">段前缀</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#段前缀的使用"><span class="toc-number">7.4.1.</span> <span class="toc-text">段前缀的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一段安全的空间"><span class="toc-number">7.5.</span> <span class="toc-text">一段安全的空间</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#包含多个段的程序"><span class="toc-number">8.</span> <span class="toc-text">包含多个段的程序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#代码段中使用数据"><span class="toc-number">8.1.</span> <span class="toc-text">代码段中使用数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码段中使用栈"><span class="toc-number">8.2.</span> <span class="toc-text">代码段中使用栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据、栈、代码放入不同段"><span class="toc-number">8.3.</span> <span class="toc-text">数据、栈、代码放入不同段</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#更灵活的定位内存地址方法"><span class="toc-number">9.</span> <span class="toc-text">更灵活的定位内存地址方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ASCII码"><span class="toc-number">9.1.</span> <span class="toc-text">ASCII码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#以字符形式给出的数据"><span class="toc-number">9.2.</span> <span class="toc-text">以字符形式给出的数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大小写转换问题"><span class="toc-number">9.3.</span> <span class="toc-text">大小写转换问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bx-idata"><span class="toc-number">9.4.</span> <span class="toc-text">[bx+idata]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例问题"><span class="toc-number">9.4.1.</span> <span class="toc-text">案例问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用-bx-idata-的方式进行数组处理"><span class="toc-number">9.4.2.</span> <span class="toc-text">用[bx+idata]的方式进行数组处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SI和DI"><span class="toc-number">9.5.</span> <span class="toc-text">SI和DI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bx-si-和-bx-di"><span class="toc-number">9.5.1.</span> <span class="toc-text">[bx+si]和[bx+di]</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#案例"><span class="toc-number">9.5.1.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bx-si-idata-和-bx-di-idata"><span class="toc-number">9.5.2.</span> <span class="toc-text">[bx+si+idata]和[bx+di+idata]</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#案例-1"><span class="toc-number">9.5.2.1.</span> <span class="toc-text">案例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不同寻址方式的灵活应用"><span class="toc-number">9.6.</span> <span class="toc-text">不同寻址方式的灵活应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-2"><span class="toc-number">9.6.1.</span> <span class="toc-text">案例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bx-si-di和bp"><span class="toc-number">10.</span> <span class="toc-text">bx,si,di和bp</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器指令处理的数据在什么地方"><span class="toc-number">10.1.</span> <span class="toc-text">机器指令处理的数据在什么地方</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据位置的表达"><span class="toc-number">10.2.</span> <span class="toc-text">数据位置的表达</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#立即数"><span class="toc-number">10.2.1.</span> <span class="toc-text">立即数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寄存器-1"><span class="toc-number">10.2.2.</span> <span class="toc-text">寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#段地址-SA-和偏移地址-EA"><span class="toc-number">10.2.3.</span> <span class="toc-text">段地址(SA)和偏移地址(EA)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#寻址方式"><span class="toc-number">10.3.</span> <span class="toc-text">寻址方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令处理的数据长度"><span class="toc-number">10.4.</span> <span class="toc-text">指令处理的数据长度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-3"><span class="toc-number">10.4.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#div指令"><span class="toc-number">10.5.</span> <span class="toc-text">div指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伪指令dd"><span class="toc-number">10.6.</span> <span class="toc-text">伪指令dd</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-4"><span class="toc-number">10.6.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dup"><span class="toc-number">10.7.</span> <span class="toc-text">dup</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#转移指令原理"><span class="toc-number">11.</span> <span class="toc-text">转移指令原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#操作符offset"><span class="toc-number">11.1.</span> <span class="toc-text">操作符offset</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-5"><span class="toc-number">11.1.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jmp指令"><span class="toc-number">11.2.</span> <span class="toc-text">jmp指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#依据位移进行转移的jmp指令"><span class="toc-number">11.2.1.</span> <span class="toc-text">依据位移进行转移的jmp指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转移地址在指令中的jmp指令"><span class="toc-number">11.2.2.</span> <span class="toc-text">转移地址在指令中的jmp指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#案例-6"><span class="toc-number">11.2.2.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转移地址在寄存器中的jmp指令"><span class="toc-number">11.2.3.</span> <span class="toc-text">转移地址在寄存器中的jmp指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转移地址在内存中的jmp指令"><span class="toc-number">11.2.4.</span> <span class="toc-text">转移地址在内存中的jmp指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jcxz指令"><span class="toc-number">11.3.</span> <span class="toc-text">jcxz指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#loop指令-1"><span class="toc-number">11.4.</span> <span class="toc-text">loop指令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CALL和RET指令"><span class="toc-number">12.</span> <span class="toc-text">CALL和RET指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ret和retf"><span class="toc-number">12.1.</span> <span class="toc-text">ret和retf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#call指令"><span class="toc-number">12.2.</span> <span class="toc-text">call指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#依据位移进行转移的call指令"><span class="toc-number">12.2.1.</span> <span class="toc-text">依据位移进行转移的call指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转移地址在指令中的call"><span class="toc-number">12.2.2.</span> <span class="toc-text">转移地址在指令中的call</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转移地址在寄存器中的call"><span class="toc-number">12.2.3.</span> <span class="toc-text">转移地址在寄存器中的call</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转移地址在内存中的call"><span class="toc-number">12.2.4.</span> <span class="toc-text">转移地址在内存中的call</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#call和ret的配合使用"><span class="toc-number">12.3.</span> <span class="toc-text">call和ret的配合使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mul指令"><span class="toc-number">12.4.</span> <span class="toc-text">mul指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-7"><span class="toc-number">12.4.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参数和结果传递的问题"><span class="toc-number">12.5.</span> <span class="toc-text">参数和结果传递的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-8"><span class="toc-number">12.5.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#批量数据的传递"><span class="toc-number">12.6.</span> <span class="toc-text">批量数据的传递</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-9"><span class="toc-number">12.6.1.</span> <span class="toc-text">案例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#标志寄存器"><span class="toc-number">13.</span> <span class="toc-text">标志寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ZF-标志"><span class="toc-number">13.1.</span> <span class="toc-text">ZF 标志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PF标志"><span class="toc-number">13.2.</span> <span class="toc-text">PF标志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SF标志"><span class="toc-number">13.3.</span> <span class="toc-text">SF标志</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-10"><span class="toc-number">13.3.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CF标志"><span class="toc-number">13.4.</span> <span class="toc-text">CF标志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OF标志"><span class="toc-number">13.5.</span> <span class="toc-text">OF标志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#adc指令"><span class="toc-number">13.6.</span> <span class="toc-text">adc指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-11"><span class="toc-number">13.6.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sbb指令"><span class="toc-number">13.7.</span> <span class="toc-text">sbb指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-12"><span class="toc-number">13.7.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cmp指令"><span class="toc-number">13.8.</span> <span class="toc-text">cmp指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-13"><span class="toc-number">13.8.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#各类条件转移指令"><span class="toc-number">13.9.</span> <span class="toc-text">各类条件转移指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DF标志和串传送指令"><span class="toc-number">13.10.</span> <span class="toc-text">DF标志和串传送指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#movsb"><span class="toc-number">13.10.1.</span> <span class="toc-text">movsb</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#movsw"><span class="toc-number">13.10.2.</span> <span class="toc-text">movsw</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#内中断"><span class="toc-number">14.</span> <span class="toc-text">内中断</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#中断处理程序"><span class="toc-number">14.1.</span> <span class="toc-text">中断处理程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中断向量表"><span class="toc-number">14.2.</span> <span class="toc-text">中断向量表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中断过程"><span class="toc-number">14.3.</span> <span class="toc-text">中断过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中断处理程序和iret指令"><span class="toc-number">14.4.</span> <span class="toc-text">中断处理程序和iret指令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#int指令"><span class="toc-number">15.</span> <span class="toc-text">int指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#编写中断例程"><span class="toc-number">15.1.</span> <span class="toc-text">编写中断例程</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            汇编语言解析
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2018/12/09/assembly/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-12-09T09:39:37.000Z" itemprop="datePublished">2018-12-09</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/assembly/">assembly</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>汇编语言编程相关详解笔记<br><a id="more"></a> </p>
+<h1 id="寄存器助记"><a href="#寄存器助记" class="headerlink" title="寄存器助记"></a>寄存器助记</h1><p><img src="/2018/12/09/assembly/image-153.png" width="450px"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">4个段地址寄存器：</span><br><span class="line">CS(code segment)——16位的代码段寄存器；</span><br><span class="line">DS(data segment)——16位的数据段寄存器；</span><br><span class="line">ES(extra segment)——16位的扩展段寄存器；</span><br><span class="line">SS(stack segment)——16位的堆栈段寄存器；</span><br><span class="line"></span><br><span class="line">16位的指令指针寄存器IP；</span><br><span class="line"></span><br><span class="line">20位的地址加法器；</span><br><span class="line"></span><br><span class="line">6字节的指令队列缓冲器。</span><br><span class="line"></span><br><span class="line">执行单元</span><br><span class="line">执行部件由下列几个部分组成：</span><br><span class="line"></span><br><span class="line">8个通用寄存器：即AX、BX、CX、DX,BP,SP,SI,DI ；</span><br><span class="line">其中，4个数据寄存器：AX、BX、CX、DX；</span><br><span class="line">2个地址指针寄存器：BP(base pointer),SP(stack pointer)；</span><br><span class="line">2个变址寄存器：SI(source index),DI(destination index) [2]  ；</span><br><span class="line"></span><br><span class="line">标志寄存器FR(flags register)；</span><br><span class="line"></span><br><span class="line">算术逻辑单元ALU(arithmetic logic unit)。</span><br></pre></td></tr></table></figure>
+<h1 id="指令助记"><a href="#指令助记" class="headerlink" title="指令助记"></a>指令助记</h1><p>mov 传送指令, mov ax,123 ax值设为123  </p>
+<p>add 增加指令, add ax,bx  ax+bx赋值给ax寄存器 </p>
+<p>jmp 转移指令, jmp 3:0B16 CS=003H,IP=0B16H，cpu将从00B46H处读取指令  </p>
+<p>sub 减去指令, sub ax,bx  ax-bx之后赋值给ax寄存器  </p>
+<p>push 指令      入栈,以栈的顺序访问</p>
+<p>pop  指令     出栈,将对这段空间按后进先出的规则进行访问</p>
+<p>SS寄存器,    栈顶的段位置存放在SS </p>
+<p>SP寄存器,    栈的偏移地址存放在SP中</p>
+<p>ds寄存器,     段寄存器,通常用来存放访问数据的段地址</p>
+<p>[bx],        默认是为ds的段前缀+bx的偏移地址  bx可通过mov设值  </p>
+<p>loop,        循环,循环次数由cx来决定         </p>
+<p>inc bx         bx += 1        </p>
+<p>dw             定义字型数据  </p>
+<p>db             定义字节型数据  </p>
+<p>dd             定义双字型数据</p>
+<p>cs             存放代码段的段地址  </p>
+<p>CS:IP          指向的内容当作指令执行  </p>
+<p>and指令      逻辑与指令,按位进行与运算    </p>
+<p>or指令        逻辑或指令,按位进行或运算  </p>
+<p>si           偏移地址,源变址寄存器可用来存放相对于DS段之源变址指针</p>
+<p>di             偏移地址,变址指针</p>
+<p>BP             基址指针寄存器，可用作SS的一个相对基址位置</p>
+<p>idata          常量,一个1或2或3等的常量数值   </p>
+<p>ax             寄存器可以分为两个独立的 8 位的 AH 和 AL 寄存器；</p>
+<p>ah             表示高位的 8 位寄存器</p>
+<p>al          表示低位的 8 位寄存器 </p>
+<p>div          除法指令 </p>
+<p>jcxz          当cx!=0什么也不做,jcxz标号 相当于 if(cx == 0) jmp 标号  </p>
+<p>adc         是带进位加法指令,利用了CF标志上记录的进位值  </p>
+<p>sbb         是带借位减法指令,利用了CF标志上记录的进位值  </p>
+<p>cmp         cmp是比较指令,cmp的功能相当于减法指令,只是不保存结果,只影响标志位   </p>
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><p>8086CPU完成计算 s = 768 + 12288 - 1280的机器码如下  </p>
+<p><img src="/2018/12/09/assembly/image-11.png" width="500px"></p>
+<p>书写和阅读机器码程序十分难懂和不易差错  </p>
+<h2 id="汇编语言产生"><a href="#汇编语言产生" class="headerlink" title="汇编语言产生"></a>汇编语言产生</h2><p>汇编语言是机器指令便于记忆的书写格式  </p>
+<p><img src="/2018/12/09/assembly/image-10.png" width="500px"></p>
+<p>一个cpu中有很多寄存器,AX是其中一个寄存器的代号,BX是另一个寄存器的代号  </p>
+<p>此后程序员用汇编指令编写程序,需要有个编译器,将汇编指令转换成机器指令的翻译程序,机器最终执行机器码   </p>
+<p><img src="/2018/12/09/assembly/image-12.png" width="500px">  </p>
+<h2 id="汇编语言的组成"><a href="#汇编语言的组成" class="headerlink" title="汇编语言的组成"></a>汇编语言的组成</h2><ul>
+<li>汇编指令:机器码助记符,有对应的机器码  </li>
+<li>伪指令:没有对应的机器码,由编译器执行,计算机并不执行  </li>
+<li>其他符号:如+、-、*、/、由编译器识别,没有对应的机器码  </li>
+</ul>
+<h2 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h2><p>指令和数据在存储器存放,也就是内存,内存作用仅次于CPU,离开了内存,性能再好的CPU也无法工作,就像再聪明的大脑,没有了记忆也无法进行思考  </p>
+<p>磁盘不同于内存,磁盘上数据或程序如果不读到内存,就无法被CPU使用  </p>
+<h2 id="指令和数据"><a href="#指令和数据" class="headerlink" title="指令和数据"></a>指令和数据</h2><p>指令和数据都是应用上的概念,在内存或磁盘上,指令和数据没有区别,都是二进制信息,CPU在工作的时候把有的信息看作指令,有的信息看成数据,为同样的二进制赋予不同的意义  </p>
+<p><img src="/2018/12/09/assembly/image-13.png" width="300px"></p>
+<p>机器把它看做大小为89D8H的数据处理,也可以看做指令mov ax,bx来执行  </p>
+<h2 id="存储单元"><a href="#存储单元" class="headerlink" title="存储单元"></a>存储单元</h2><p>存储器划分若干个存储单元,每个存储单元从0开始顺序编号</p>
+<p><img src="/2018/12/09/assembly/image-14.png" width="300px"></p>
+<p>通常一个存储单元为1个字节  </p>
+<h2 id="CPU对存储器的读写"><a href="#CPU对存储器的读写" class="headerlink" title="CPU对存储器的读写"></a>CPU对存储器的读写</h2><p>cpu要从内存读数据,首先要指定存储单元地址  </p>
+<p>cpu要进行数据的读写,必须和外部器件进行3类的信息交互  </p>
+<ul>
+<li>存储单元的地址(地址信息)  </li>
+<li>器件的选择,读或写的命令(控制信息)  </li>
+<li>读或写的数据(数据信息)  </li>
+</ul>
+<p><img src="/2018/12/09/assembly/image-15.png" width="400px">  </p>
+<ul>
+<li>1: CPU通过地址线将地址信息3发出  </li>
+<li>2：CPU通过控制线发出内存度命令,选中存储器芯片,并通知它,将要从中获取数据  </li>
+<li>3：存储器3号单元中的数据8通过数据线送入CPU   </li>
+</ul>
+<p>写操作和读操作步骤类似  </p>
+<ul>
+<li>1：CPU通过地址线将地址信息3发出  </li>
+<li>2：CPU通过控制线发出内存写命令,选中存储器芯片,并通知它,要向其中写入数据  </li>
+<li>3：CPU通过数据线将数据26送入内存3号单元中  </li>
+</ul>
+<h2 id="地址总线"><a href="#地址总线" class="headerlink" title="地址总线"></a>地址总线</h2><p>CPU通过地址总线来指定存储器单元    </p>
+<p>假设一个CPU有10根地址总线,现看一下寻址情况,在电子计算机,一个导线可以传送稳定状态有两种,高电平和低电平,用二进制表示为1或0,10根导线可以传送10位二进制数据, 而10位二进制数可以表示2的10次方个数据,最小数为0,最大数为1023  </p>
+<p>一个CPU有N根地址线,则可以说这个CPU的地址总线宽度为N,这样的CPU最多可寻找2的N次方个内存单元  </p>
+<p><img src="/2018/12/09/assembly/image-16.png" width="350px">  </p>
+<p>CPU的总线宽度为10,那么可以寻址1024个内存单元  </p>
+<h2 id="数据总线"><a href="#数据总线" class="headerlink" title="数据总线"></a>数据总线</h2><p>CPU与内存或其他器件之间的数据传送是通过数据总线来进行的,数据总线的宽度决定了CPU与外界的数据传送速度  </p>
+<p>8跟数据总线一次可传送8位二进制数据(即一个字节),16根数据总线一次课传送2个字节  </p>
+<blockquote>
+<p>8位数据总线上传送的信息</p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-17.png" width="350px">  </p>
+<blockquote>
+<p>16位数据总线上传送的信息   </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-18.png" width="350px">  </p>
+<h2 id="控制总线"><a href="#控制总线" class="headerlink" title="控制总线"></a>控制总线</h2><p>CPU对外部器件的控制是通过控制总线来进行,控制总线是一些不同控制线的集合  </p>
+<p>有多少根控制总线,就意味着CPU提供了对外部期缴的多少种控制,所以控制总线的宽度决定了CPU对外部器件的控制能力  </p>
+<p>内存的读或写命令由几根控制总线综合发出  </p>
+<ul>
+<li>其中一根称为”读信号输出”负责CPU向外传送读信号<br>  CPU向该控制线上输出低电平表示将要读取数据   </li>
+<li>有一根是”写信号输出”的控制线则负责传送写信号  </li>
+</ul>
+<h2 id="硬件设备"><a href="#硬件设备" class="headerlink" title="硬件设备"></a>硬件设备</h2><h3 id="主板"><a href="#主板" class="headerlink" title="主板"></a>主板</h3><p>主板上的核心器件和一些主要器件,这些器件通过(地址总线、数据总线、控制总线相连),这些器件有CPU、存储器、外围芯片组、扩展插槽,扩展插槽一般都插有RAM内存条和各种接口卡   </p>
+<h3 id="接口卡"><a href="#接口卡" class="headerlink" title="接口卡"></a>接口卡</h3><p>所有可程序控制其工作的设备,必须受到cpu的控制,如显示器,音响等  </p>
+<h3 id="各类存储器芯片"><a href="#各类存储器芯片" class="headerlink" title="各类存储器芯片"></a>各类存储器芯片</h3><ul>
+<li>随机存储器(RAM):可读可写,但必须带点存储   </li>
+<li>只读存储器(ROM):只读存储器只能读取不能写入,关机后其中内容不丢失  </li>
+</ul>
+<p><img src="/2018/12/09/assembly/image-19.png" width="350px"></p>
+<h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><p>典型的CPU由运算器、控制器、寄存器等器件构成,这些器件由内部总线相连  </p>
+<p>内部总线实现了CPU内部各个器件之前的联系,外部总线实现了cpu与主板上其他器件的联系  </p>
+<ul>
+<li>运算器的信息处理  </li>
+<li>寄存器的信息存储  </li>
+<li>控制器控制各类器件进行工作  </li>
+<li>内部总线连接各种器件,在他们之前进行数据传送   </li>
+</ul>
+<h2 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h2><p>8086CPU有十四个寄存器,每个寄存器都有名字:AX,BX,CX,DX,SI,DI,SP,BP,IP,CS,SS,DS,ES,PSW</p>
+<p>8086cpu寄存器都是16位,可存放两个字节,AX,BX,CX,DX这四个寄存器存放一般性数据,被称为通用寄存器  </p>
+<p>这四个寄存器可分为两个可独立使用的8位寄存器来用  </p>
+<ul>
+<li>AX可分为AH和AL;  </li>
+<li>BX可分为BH和BL;  </li>
+<li>CX可分为CH和CL;  </li>
+<li>DX可分为DH和DL;  </li>
+</ul>
+<h2 id="字在寄存器的存储"><a href="#字在寄存器的存储" class="headerlink" title="字在寄存器的存储"></a>字在寄存器的存储</h2><ul>
+<li>字节,记为byte,一个字节8个位,可存在8位寄存器中  </li>
+<li>字,记为word,一个字由两个字节组成,这两个字节分别称为这个字的高位字节和低位字节  </li>
+</ul>
+<p><img src="/2018/12/09/assembly/image-20.png" width="300px">  </p>
+<h2 id="几条汇编指令"><a href="#几条汇编指令" class="headerlink" title="几条汇编指令"></a>几条汇编指令</h2><p><img src="/2018/12/09/assembly/image-21.png" width="300px">  </p>
+<p>寄存器名称不区分大小写,如mov ax,18和MOV AX,18相同  </p>
+<h2 id="物理地址"><a href="#物理地址" class="headerlink" title="物理地址"></a>物理地址</h2><p>CPU访问内存单元,要给出内存单元的地址,所有内存单元构成的存储空间是一个一维线性空间,每个内存单元在这个空间都有唯一的地址,这个唯一的地址称为物理地址  </p>
+<p>CPU通过地址总线送入存储器,必须是一个内存单元的物理地址,CPU向地址总线上发出物理地址之前,必须要在内部先形成这个物理地址,不同的CPU可以由不同形成物理地址的方式  </p>
+<h2 id="16位结构的CPU"><a href="#16位结构的CPU" class="headerlink" title="16位结构的CPU"></a>16位结构的CPU</h2><p>8086是16位机,也可以说16位结构的cpu  </p>
+<ul>
+<li>运算器一次最多可以处理16位的数据  </li>
+<li>寄存器的最大宽度是16位  </li>
+<li>寄存器和运算器之间的通路位16位  </li>
+</ul>
+<p>所以8086内部能够一次性处理、传输、暂时存储的信息最大长度是16位  </p>
+<h2 id="8086CPU给出物理地址的方法"><a href="#8086CPU给出物理地址的方法" class="headerlink" title="8086CPU给出物理地址的方法"></a>8086CPU给出物理地址的方法</h2><p>8086CPU有20位地址总线,可以传送20位地址,达到1MB寻址能力  </p>
+<p>8086CPU又是16位结构,在内部一次性处理、传输、暂时存储的地址为16位  </p>
+<p>从8086cpu的内部结构来看,如果地址从内部简单发出,那么只能送出16位的地址,表现的寻址能力只有64kb  </p>
+<p>而内部用了两个16位地址合成方法形成20位的物理地址  </p>
+<p><img src="/2018/12/09/assembly/image-22.png" width="350px">  </p>
+<p>当CPU要读写内存时  </p>
+<ul>
+<li>cpu的相关部件提供两个16位地址,一个段地址,另一个称偏移地址  </li>
+<li>段地址和偏移地址通过内部总线送入一个称为地址加法器的部件  </li>
+<li>地址加法器将两个16位地址合成一个20位的物理地址  </li>
+<li>地址加法器通过内部总线将20位物理地址送入输入输出控制电路 </li>
+<li>输入输出控制电路将20位物理地址送上地址总线  </li>
+<li>20位物理地址被地址总线传送到存储器  </li>
+</ul>
+<p>地址加法器采用了<code>物理地址=段地址X16+偏移地址</code>的方法用段地址和偏移地址合成物理地址  </p>
+<p><img src="/2018/12/09/assembly/image-23.png" width="350px">  </p>
+<h3 id="“段地址X16-偏移地址-物理地址”的含义"><a href="#“段地址X16-偏移地址-物理地址”的含义" class="headerlink" title="“段地址X16+偏移地址=物理地址”的含义"></a>“段地址X16+偏移地址=物理地址”的含义</h3><p>本质含义CPU在访问内存是,用一个基础的地址和一个相对基础地址的偏移地址相加,给出内存单元的物理地址  </p>
+<p>这种寻址功能是”基础地址+偏移地址=物理地址”的寻址模式一种具体实现方案   </p>
+<blockquote>
+<p>举例  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-24.png" width="350px">  </p>
+<p>纸条通信,你问我图书馆的地址,我只能写在纸条,我必须有张容纳4位数据的纸条写2826,可是现在仅两张3位数据纸条   </p>
+<p>于是写上200 和 826两张   </p>
+<p>而你做这样的运算:200(段地址)X10+826(偏移地址) = 2826物理地址  </p>
+<h2 id="段的概念"><a href="#段的概念" class="headerlink" title="段的概念"></a>段的概念</h2><p>使人误认为内存被划分一个个段,每个段有个段地址,这样是错误的认识  </p>
+<p>内存并没有分段,段的划分来自CPU，8086CPU用”基础地址(段地址X16) + 偏移地址 = 物理地址”<br>的方式给出内存单元的物理地址, 使得我们可以分段管理内存  </p>
+<p><img src="/2018/12/09/assembly/image-25.png" width="350px">  </p>
+<p>以后编程可以根据需要,将若干地址连续的内存看作一个段,用段地址X16定位段的起始地址(基础地址),用偏移地址定位段中的内存单元  </p>
+<h2 id="段寄存器"><a href="#段寄存器" class="headerlink" title="段寄存器"></a>段寄存器</h2><p>8086CPU有四个段寄存器:CS、DS、SS、ES<br>当8086CPU要访问内存时由着4个段寄存器提供内存单元的段地址  </p>
+<h2 id="CS和IP"><a href="#CS和IP" class="headerlink" title="CS和IP"></a>CS和IP</h2><p>CS和IP是8086cpu最关键的寄存器  </p>
+<p>假设任意时刻,CS中的内容为M,IP中的内容为N,8086CPU将从内存MX16 + N单元开始,读取一条指令并执行,即CPU将CS:IP指向的内容当作指令执行  </p>
+<p><img src="/2018/12/09/assembly/image-27.png" width="400px">  </p>
+<blockquote>
+<p>以下组图展示了8086cpu读取和执行一条指令的过程  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-28.png" width="400px"><br><img src="/2018/12/09/assembly/image-29.png" width="400px"><br><img src="/2018/12/09/assembly/image-30.png" width="400px"><br><img src="/2018/12/09/assembly/image-31.png" width="400px"><br><img src="/2018/12/09/assembly/image-32.png" width="400px"><br><img src="/2018/12/09/assembly/image-33.png" width="400px"><br><img src="/2018/12/09/assembly/image-34.png" width="400px"><br><img src="/2018/12/09/assembly/image-35.png" width="400px">  </p>
+<blockquote>
+<p>下面的组图是以2.19为初始状态,展现8086CPU继续读取、执行3条指令的过程<br>忽略了读每条指令的细节   </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-36.png" width="400px"><br><img src="/2018/12/09/assembly/image-37.png" width="400px"><br><img src="/2018/12/09/assembly/image-38.png" width="400px">  </p>
+<blockquote>
+<p>8086工作过程简要描述如下  </p>
+</blockquote>
+<ul>
+<li>1:从CS:IP指向的内存单元读取指令,读取的指令进入指令缓冲区     </li>
+<li>2:IP=IP+所读取指令的长度,从而指向下一条指令      </li>
+<li>3:执行指令,转到步骤一,重复这个过程     </li>
+</ul>
+<h2 id="修改CS、IP的指令"><a href="#修改CS、IP的指令" class="headerlink" title="修改CS、IP的指令"></a>修改CS、IP的指令</h2><p>8086提供了修改AX值的指令     </p>
+<p>可以用mov指令,如mov ax,123 将ax中的值设为123<br>显然可以设置其他寄存器的值,如mov bx,123; mov cx,123; mov dx,123等  </p>
+<p>mov指令称为传送指令,但不能用于设置CS,IP的值,因为8086cpu没有提供这样的功能,8086cpu为CS,IP提供了另外的指令改变他们的值   </p>
+<p>能够修改CS,IP内容的指令被称为转移指令:jmp指令  </p>
+<blockquote>
+<p>若同时修改CS,IP的内容,可用形如”jmp 段地址:偏移地址”的指令完成  如  </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jmp 2AE3:3 执行后: cs=2AE3H, ip=0003H,cpu将从2AE33H处读取指令</span><br><span class="line">jmp 3:OB16 执行后: cs=0003H, ip=0B16H,cpu将从0OB46H处读取指令</span><br></pre></td></tr></table></figure>
+<p>如果仅仅想修改IP则可以如下</p>
+<p><img src="/2018/12/09/assembly/image-39.png" width="350px">  </p>
+<h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h2><p>8086PC机,编程时,可以根据需要将一组内存单元定义为一个段,长度为N(N小于等于64kb)的一组代码,存在一组地址连续,起始地址为16的倍数的内存单元中,可以认为这段内存是用来存放代码的,从而定义一个代码段  </p>
+<p><img src="/2018/12/09/assembly/image-40.png" width="400px"></p>
+<p>这段长度10个字节的代码，存放在123B0H~123B9H的一组内存单元中  </p>
+<blockquote>
+<p>如何使得代码段指令执行?  </p>
+</blockquote>
+<p>将一段内存当代码段,CPU却不知道这样做,CPU只认CS:IP指向的内存单元中的内容为指令  </p>
+<p>所以要让CPU执行我们放在代码段的指令,就将CS:IP指向所定义的代码段中第一条指令首地址  </p>
+<p>于是设CS=123BH,IP=000H即可</p>
+<h1 id="寄存器-内存访问"><a href="#寄存器-内存访问" class="headerlink" title="寄存器(内存访问)"></a>寄存器(内存访问)</h1><h2 id="内存中字的存储"><a href="#内存中字的存储" class="headerlink" title="内存中字的存储"></a>内存中字的存储</h2><p>CPU中用16位寄存器存储一个字,高8位存放高位字节,低8位存放低位字节,由于内存单元是字节单位(一个单元存放一个字节),则一个字需要两个地址连续的内存单元存放  </p>
+<p>这个字的低位字节存放在低位地址单元中,高位字节存放在高地址单元中  </p>
+<p><img src="/2018/12/09/assembly/image-41.png" width="150px">  </p>
+<p>如存放数据20000(4E20H),运用了0,1两个内存单元用来存储一个字,这两个单元<br>0号是低地址单元,1是高地址单元  </p>
+<p>又比如存放数据18(0012H),则3是高位存放00,2是低位存放12  </p>
+<h3 id="DS和ADDRESS"><a href="#DS和ADDRESS" class="headerlink" title="DS和ADDRESS"></a>DS和ADDRESS</h3><p>cpu要读写一个内存单元的时候,必须先给出这个内存单元的地址<br>0806PC中内存地址由段地址+偏移地址组成  </p>
+<p>所以8086cpu中有一个DS寄存器,通常用来存放访问数据的段地址  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov bx,1000H</span><br><span class="line">mov ds,bx</span><br><span class="line">mov al,[0]</span><br></pre></td></tr></table></figure>
+<p>上面3条指令将10000H中的数据读到了al中  </p>
+<p>mov指令,可完成两种传送  </p>
+<ul>
+<li>将数据直接送入寄存器  </li>
+<li>将一个寄存器中的内容送入另一个寄存器  </li>
+</ul>
+<p>“[…]”表示一个内存单元,”[…]”中的0表示内存单元的偏移地址  </p>
+<p>只有偏移地址不能定位一个内存单元,得知道段地址, 8086CPU自动取ds中的数据为内存单元的段地址  </p>
+<p>如此再来看<code>mov bx, 10000H</code>指令中的mov指令从10000H中读取数据,10000H用段地址和偏移地址表示为1000:0,<br>再将段地址1000H放入ds,然后<code>mov al,[0]</code>完成传送,mov指令中的[]说明操作对象是一个内存单元,[]中的0说明这个内存单元的偏移地址是0,它的段地址默认放在ds中,指令执行时,8086cpu自动从ds中取出  </p>
+<h2 id="内存中字的传送"><a href="#内存中字的传送" class="headerlink" title="内存中字的传送"></a>内存中字的传送</h2><p>mov指令在寄存器和内存之间进行字节型数据的传送,因为8086CPU有16位结构,有16根数据线,也就是一次性传送一个字,mov指令只需给出16位的寄存器就可以进行16位数据的传送了  </p>
+<h3 id="相关问题"><a href="#相关问题" class="headerlink" title="相关问题"></a>相关问题</h3><blockquote>
+<p>第一题</p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-42.png" width="400px"></p>
+<blockquote>
+<p>第二题</p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-43.png" width="400px"><br><img src="/2018/12/09/assembly/image-44.png" width="400px">  </p>
+<h2 id="mov、add、sub指令"><a href="#mov、add、sub指令" class="headerlink" title="mov、add、sub指令"></a>mov、add、sub指令</h2><p>mov指令的以下几种形式  </p>
+<p><img src="/2018/12/09/assembly/image-45.png" width="400px"></p>
+<p>add和sub指令同mov一样,都有两个操作对象  </p>
+<p><img src="/2018/12/09/assembly/image-46.png" width="400px"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">add 是后方+前方 结果赋值 前方</span><br><span class="line">sub和add类似，不过是相减，</span><br><span class="line">sub ax,9                给ax减9，之后的结果赋值给ax</span><br><span class="line">sub ax,bx               语意是ax = bx - ax </span><br><span class="line">sub ax,[0]              将偏移地址为0的内存单元 - ax 再赋值给ax</span><br></pre></td></tr></table></figure>
+<h2 id="数据段"><a href="#数据段" class="headerlink" title="数据段"></a>数据段</h2><p>8086PC在编程时,可根据需要将一组内存单元定义为一个段,可以将一组长度为N(N小于等于64kb)，<br>地址连续、起始地址为16的倍数的内存单元当作专门存储数据的内存空间,从而定义了一个数据段  </p>
+<p><img src="/2018/12/09/assembly/image-47.png" width="350px">  </p>
+<h3 id="相关问题-1"><a href="#相关问题-1" class="headerlink" title="相关问题"></a>相关问题</h3><blockquote>
+<p>第一题  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-48.png" width="400px"></p>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><blockquote>
+<p>入栈方式  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-49.png" width="400px"></p>
+<blockquote>
+<p>出栈方式  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-50.png" width="400px">  </p>
+<h3 id="CPU提供的栈机制"><a href="#CPU提供的栈机制" class="headerlink" title="CPU提供的栈机制"></a>CPU提供的栈机制</h3><p>现如今的cpu都有栈的设计,8086CPU提供相关指令来以栈的方式访问内存空间<br>这意味着可以把一段内存当做栈来使用   </p>
+<p>下面举例将10000H~1000FH这段内存当做栈来使用<br><img src="/2018/12/09/assembly/image-51.png" width="400px"></p>
+<p>push指令和pop指令,将对这段空间按<code>后进先出</code>的规则进行访问  </p>
+<p>但是CPU如何知道10000H~1000FH这段空间被当做栈来使用?  </p>
+<p>push ax等入栈指令执行,要将寄存器中的内容放入当前栈顶单元的上方成为新的栈顶元素<br>pop ax等指令执行,要从栈顶单元中取出数据,送入寄存器<br>显然push、pop在执行的时候,必须知道哪个单元是栈顶单元,可是如何知道呢?  </p>
+<p>CS,IP存放着当前指令的段地址和偏移地址,CPU如何知道栈顶的位置?<br>显然也应该有响应的寄存器来存放栈顶地址, 8086CPU有两个寄存器   </p>
+<ul>
+<li>SS寄存器,栈顶的段位置存放在SS  </li>
+<li>SP寄存器,偏移地址存放在SP中  </li>
+</ul>
+<p>任意时刻,SS:SP指向栈顶元素,push和pop指令执行时,CPU从SS和SP中得到栈顶地址  </p>
+<p><img src="/2018/12/09/assembly/image-52.png" width="400px"></p>
+<h3 id="栈顶超界问题"><a href="#栈顶超界问题" class="headerlink" title="栈顶超界问题"></a>栈顶超界问题</h3><p>用SS和SP指示栈顶的地址,并提供push和pop指令实现入栈和出栈  </p>
+<p>如何保证栈顶不超过栈空间  </p>
+<p><img src="/2018/12/09/assembly/image-53.png" width="400px"></p>
+<p><img src="/2018/12/09/assembly/image-54.png" width="400px"></p>
+<p>只对8086CPU来说,它只考虑当前的情况,当前的栈顶在何处,当前要执行的指令是哪一条,他们都无从知晓  </p>
+<h2 id="push、pop指令"><a href="#push、pop指令" class="headerlink" title="push、pop指令"></a>push、pop指令</h2><p><img src="/2018/12/09/assembly/image-55.png" width="400px"></p>
+<p><img src="/2018/12/09/assembly/image-56.png" width="400px"></p>
+<h3 id="相关问题-2"><a href="#相关问题-2" class="headerlink" title="相关问题"></a>相关问题</h3><blockquote>
+<p>第一题  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-57.png" width="400px"></p>
+<p><img src="/2018/12/09/assembly/image-58.png" width="400px">  </p>
+<h2 id="栈段"><a href="#栈段" class="headerlink" title="栈段"></a>栈段</h2><p>8086PC编程可以根据需要,将一组内存单元定义为一个段,长度为N(N小于等于64kb)的一组连续、起始地址为16的倍数的内存单元,当做栈空间,从而定义了一个栈段   </p>
+<p>将SS:SP指向我们定义的栈段即可  </p>
+<h1 id="第一个程序"><a href="#第一个程序" class="headerlink" title="第一个程序"></a>第一个程序</h1><blockquote>
+<p>一个源程序从写出到执行的过程</p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-59.png" width="250px">  </p>
+<h2 id="源程序"><a href="#源程序" class="headerlink" title="源程序"></a>源程序</h2><p>汇编语言源程序,包含两种指令,一种是汇编指令,另一种是伪指令  </p>
+<p>汇编指令是有对应机器码的指令,可以编译成机器指令,最终为cpu执行的  </p>
+<p>而伪指令没有对应的机器指令,最终不被cpu所执行,伪指令由编译器来执行的指令,编译器根据伪指令进行相关的编译工作  </p>
+<p><img src="/2018/12/09/assembly/image-60.png" width="250px">  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">segment和ends是一对成对使用的伪指令,这是在写可被编译器编译的汇编程序时必须要用到的一对伪指令  </span><br><span class="line"></span><br><span class="line">segment和ends的功能是定义一个段,segment说明一个段开始,ends说明一个段结束</span><br></pre></td></tr></table></figure>
+<p>汇编程序拥有多个段,用来存放代码、数据或当作栈空间使用  </p>
+<p><code>assume</code>这条伪指令含义为”假设”,假设某一段寄存器和程序中的某个用<code>segment..ends</code>相关联  </p>
+<p><img src="/2018/12/09/assembly/image-61.png" width="250px">  </p>
+<h3 id="程序结构"><a href="#程序结构" class="headerlink" title="程序结构"></a>程序结构</h3><p><img src="/2018/12/09/assembly/image-62.png" width="350px"></p>
+<h1 id="BX-和loop指令"><a href="#BX-和loop指令" class="headerlink" title="[BX]和loop指令"></a>[BX]和loop指令</h1><h2 id="BX"><a href="#BX" class="headerlink" title="[BX]"></a>[BX]</h2><p>[0]表示一个内存单元,0表示单元的偏移地址,段地址默认在ds中  </p>
+<p>[bx]同样也表示一个内存单元,它的偏移地址在bx中 </p>
+<p><img src="/2018/12/09/assembly/image-63.png" width="350px"><br><img src="/2018/12/09/assembly/image-64.png" width="350px"><br><img src="/2018/12/09/assembly/image-65.png" width="350px"></p>
+<h2 id="loop指令"><a href="#loop指令" class="headerlink" title="loop指令"></a>loop指令</h2><p>loop指令格式 loop 标号,cpu执行loop指令的时候,要进行两步操作  </p>
+<ul>
+<li><p>cx = cx - 1  </p>
+</li>
+<li><p>判断cx的值,不为零则转至标号处执行程序   </p>
+</li>
+</ul>
+<p><img src="/2018/12/09/assembly/image-70.png" width="450px">    </p>
+<p>于是我们编写这样的loop简化了程序  </p>
+<p><img src="/2018/12/09/assembly/image-71.png" width="150px">    </p>
+<p><img src="/2018/12/09/assembly/image-73.png" width="150px">    </p>
+<h2 id="bx-和loop联合应用"><a href="#bx-和loop联合应用" class="headerlink" title="[bx]和loop联合应用"></a>[bx]和loop联合应用</h2><p>考虑这样的问题,计算ffff:0~ffff:b单元中的数据的和,结果存储在dx中  </p>
+<p><img src="/2018/12/09/assembly/image-74.png" width="350px">    </p>
+<p><img src="/2018/12/09/assembly/image-75.png" width="350px">    </p>
+<p>这样写的过长了,可以简化成这样  </p>
+<p><img src="/2018/12/09/assembly/image-76.png" width="350px">    </p>
+<h2 id="段前缀"><a href="#段前缀" class="headerlink" title="段前缀"></a>段前缀</h2><p><code>mov ax,[bx]</code>内存单元的偏移地址由bx给出,而段地址默认在ds中,我们可以在访问内存单元的指令中显式地给出内存单元的段地址所在的段寄存器 </p>
+<p>例如 </p>
+<p><img src="/2018/12/09/assembly/image-77.png" width="400px">  </p>
+<h3 id="段前缀的使用"><a href="#段前缀的使用" class="headerlink" title="段前缀的使用"></a>段前缀的使用</h3><blockquote>
+<p>原程序  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-78.png" width="400px">  </p>
+<blockquote>
+<p>改进后程序  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-79.png" width="400px">  </p>
+<h2 id="一段安全的空间"><a href="#一段安全的空间" class="headerlink" title="一段安全的空间"></a>一段安全的空间</h2><p>在8086模式中,随意向一段内存空间写入内容是很危险的,因为这段空间可能存放着重要的系统数据或代码  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov ax,1000h</span><br><span class="line">mov ds,ax</span><br><span class="line">mov al,0</span><br><span class="line">mov ds:[0],al</span><br></pre></td></tr></table></figure>
+<p>此指令做法是不合理的,因为之前并没有论证过1000:0中是否存放着重要的系统数据或代码  </p>
+<p>如果1000:0中存放着重要的系统数据或代码,那么<code>mov ds:[0],al</code>将引发错误   </p>
+<p>所以总结如下   </p>
+<ul>
+<li>我们需要直接向一段内存中写入内容  </li>
+<li>这段内存空间不应存放系统或其他程序的数据或代码,否则写入操作很可能引发错误  </li>
+<li>DOS方式下,一般情况,0:200~0:2ff空间中没有系统或其他程序的数据或代码  </li>
+<li>以后我们需要直接向一段内存中写入内容,就是用0:200~0:2ff这段空间  </li>
+</ul>
+<h1 id="包含多个段的程序"><a href="#包含多个段的程序" class="headerlink" title="包含多个段的程序"></a>包含多个段的程序</h1><h2 id="代码段中使用数据"><a href="#代码段中使用数据" class="headerlink" title="代码段中使用数据"></a>代码段中使用数据</h2><p>第五章内说过,0:200~0:2ff是相对安全的,可这段空间的容量只有256个字节,如果需要的空间超过26个字节怎么办？  </p>
+<p>在操作系统环境合法地通过操作系统取得的空间都是安全地,因为操作系统不会让一个程序所用的空间和其他程序以及系统自己的空间相冲突   </p>
+<p>当可执行文件中的程序被加载入内存时,这些数据也同时被加载入内存,与此同时,要处理的数据也就自然而然地获得了存储空间   </p>
+<p><img src="/2018/12/09/assembly/image-80.png" width="400px">  </p>
+<p>dw的含义是定义字型数据,dw即”define word”  </p>
+<p>程序中要对8个数据进行累加, 程序运行的时候CS中存放代码段的段地址,所以可以从CS中得到他们的代码段,偏移地址是多少?  </p>
+<p>因为dw定义数据处于代码段最开始,所以偏移地址为0   </p>
+<p>这8个数据在代码段的偏移0、2、4、6、8、A、C、E处,程序运行时,它们的地址就是CS:0,CS:2,CS:4,CS:6,CS:8,CS:A,CS:C,CS:E  </p>
+<p>程序中,用bx存放加2的递增偏移地址,用循环累加  </p>
+<h2 id="代码段中使用栈"><a href="#代码段中使用栈" class="headerlink" title="代码段中使用栈"></a>代码段中使用栈</h2><p>利用栈将程序中定义的数据逆序存放   </p>
+<p><img src="/2018/12/09/assembly/image-81.png" width="400px">  </p>
+<p>可以在程序中通过定义数据来取得一段空间,然后将这段空间当做栈空间来用  </p>
+<p>程序代码如下 </p>
+<p><img src="/2018/12/09/assembly/image-82.png" width="400px">  </p>
+<p>dw定义了16个数据,即在程序中写入了16个字型数据,而程序在加载后,将用32个字节的内存空间来存放他们,这段内存空间是我们所需要的,程序将它用作栈空间   </p>
+<h2 id="数据、栈、代码放入不同段"><a href="#数据、栈、代码放入不同段" class="headerlink" title="数据、栈、代码放入不同段"></a>数据、栈、代码放入不同段</h2><p>程序中用到了数据和栈,将数据、栈和代码都放到了一个段里面,在编程的时候注意何处是数据,何处是栈,何处是代码   </p>
+<p>如果数据、栈和代码需要的空间超过64kb,就不能放在一个段中,因为一个段容量不能大于64kb,这64kb只是8086模式的限制,并不是所有都是如此     </p>
+<p>于是以下代码就将数据、栈和代码放到了不同的段中   </p>
+<p><img src="/2018/12/09/assembly/image-83.png" width="400px"><br><img src="/2018/12/09/assembly/image-84.png" width="400px">  </p>
+<p>1:定义多个段的方法  </p>
+<p>只是对于不同的段,要有不同的段名  </p>
+<p>2:对段地址的引用   </p>
+<p>限制程序中有多个段,如何访问段中数据,通过段地址和偏移地址</p>
+<p><code>mov ax,data</code>将名称为data的段的段地址送入ax,一个段中的数据的段地址可由段名代表,偏移地址就看它在段中的位置  </p>
+<h1 id="更灵活的定位内存地址方法"><a href="#更灵活的定位内存地址方法" class="headerlink" title="更灵活的定位内存地址方法"></a>更灵活的定位内存地址方法</h1><ul>
+<li><p>and指令:逻辑与指令,按位进行与运算    </p>
+</li>
+<li><p>or指令:逻辑或指令,按位进行或运算  </p>
+</li>
+</ul>
+<blockquote>
+<p>and</p>
+</blockquote>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mov</span> <span class="built_in">al</span>, <span class="number">01100011B</span>  </span><br><span class="line"><span class="keyword">and</span> <span class="built_in">al</span>, <span class="number">00111011B</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">;al = 00100011B</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>or  </p>
+</blockquote>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mov</span> <span class="built_in">al</span>, <span class="number">01100011B</span>  </span><br><span class="line"><span class="keyword">or</span>  <span class="built_in">al</span>, <span class="number">00111011B</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">;al = 01111011B</span></span><br></pre></td></tr></table></figure>
+<h2 id="ASCII码"><a href="#ASCII码" class="headerlink" title="ASCII码"></a>ASCII码</h2><p>将符号变为二进制信息,如61H表示”a”,62H表示”b”  </p>
+<h2 id="以字符形式给出的数据"><a href="#以字符形式给出的数据" class="headerlink" title="以字符形式给出的数据"></a>以字符形式给出的数据</h2><p><img src="/2018/12/09/assembly/image-85.png" width="200px"><br><img src="/2018/12/09/assembly/image-86.png" width="200px"></p>
+<p>上面的源程序 “db ‘unix”相当于”db 75H,6EH,49H,58H”  </p>
+<p>u,n,I,X的ASCII码分别为75H,6EH,49H,58H  </p>
+<h2 id="大小写转换问题"><a href="#大小写转换问题" class="headerlink" title="大小写转换问题"></a>大小写转换问题</h2><p>“A”的ASCII码为41H,”a”的ASCII码为61H,改变大小写就是改变所对应的ASCII码,所以只要对比一下就能找到减20就成小写转大写,加20就从大写转小写  </p>
+<p><img src="/2018/12/09/assembly/image-87.png" width="400px">  </p>
+<h2 id="bx-idata"><a href="#bx-idata" class="headerlink" title="[bx+idata]"></a>[bx+idata]</h2><p>我们用[bx]的方式来指明一个内存单元,还可以用更灵活的方式来指明内存单元,</p>
+<p>bx+idata]表示一个内存单元  </p>
+<p>它的偏移地址就是(bx)+idata  (bx中的数值加上idata)  </p>
+<p>数字描述为:<code>(ax) = ((ds) * 16 + (bs) + 200)</code></p>
+<h3 id="案例问题"><a href="#案例问题" class="headerlink" title="案例问题"></a>案例问题</h3><p><img src="/2018/12/09/assembly/image-88.png" width="500px">  </p>
+<h3 id="用-bx-idata-的方式进行数组处理"><a href="#用-bx-idata-的方式进行数组处理" class="headerlink" title="用[bx+idata]的方式进行数组处理"></a>用[bx+idata]的方式进行数组处理</h3><p>以下将数据段的第一个字符串转大写,第二个字符串转小写  </p>
+<p><img src="/2018/12/09/assembly/image-89.png" width="200px">  </p>
+<p><img src="/2018/12/09/assembly/image-90.png" width="350px">  </p>
+<blockquote>
+<p>现在有了[bx+idata]的方式,可以更加简化我们的程序  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-91.png" width="350px">  </p>
+<p><img src="/2018/12/09/assembly/image-92.png" width="350px">  </p>
+<h2 id="SI和DI"><a href="#SI和DI" class="headerlink" title="SI和DI"></a>SI和DI</h2><p>si和di是8086cpu中和bx功能相近的寄存器  </p>
+<blockquote>
+<p>下面三组实现了相同的功能  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-93.png" width="200px">   </p>
+<blockquote>
+<p>下面三组也实现了相同的功能  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-94.png" width="200px">   </p>
+<h3 id="bx-si-和-bx-di"><a href="#bx-si-和-bx-di" class="headerlink" title="[bx+si]和[bx+di]"></a>[bx+si]和[bx+di]</h3><p>在之前我们用[bx(si或di)]和[bx(si或di)+idata]的方式来指明一个内存单元,我们还可以用更灵活的方式:[bx+si]和[bx+di]  </p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mov</span> <span class="built_in">ax</span>,[<span class="built_in">bx</span>+<span class="built_in">si</span>]</span><br><span class="line"><span class="comment">;数字化描述 </span></span><br><span class="line"><span class="comment">;(ax) = ((ds)*16 + (bx) + (si))</span></span><br></pre></td></tr></table></figure>
+<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p><img src="/2018/12/09/assembly/image-95.png" width="400px"><br><img src="/2018/12/09/assembly/image-96.png" width="400px"></p>
+<h3 id="bx-si-idata-和-bx-di-idata"><a href="#bx-si-idata-和-bx-di-idata" class="headerlink" title="[bx+si+idata]和[bx+di+idata]"></a>[bx+si+idata]和[bx+di+idata]</h3><p><code>[bx+si+idata]</code>和<code>[bx+di+idata]</code>的含义相似  </p>
+<p><code>[bx+si+idata]</code>表示一个内存单元,偏移地址为(bx)+(si)+idata  </p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;指令</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">ax</span>,[<span class="built_in">bx</span>+<span class="built_in">si</span>+idata]</span><br><span class="line"><span class="comment">;数字化描述为 (ax) = ((ds)*16 + (bx) + (si) + idata)</span></span><br></pre></td></tr></table></figure>
+<h4 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h4><p><img src="/2018/12/09/assembly/image-97.png" width="400px"></p>
+<h2 id="不同寻址方式的灵活应用"><a href="#不同寻址方式的灵活应用" class="headerlink" title="不同寻址方式的灵活应用"></a>不同寻址方式的灵活应用</h2><blockquote>
+<p>总结  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-98.png" width="400px"></p>
+<h3 id="案例-2"><a href="#案例-2" class="headerlink" title="案例"></a>案例</h3><p><img src="/2018/12/09/assembly/image-99.png" width="400px"></p>
+<p>datasg中定义了6个字符串,每个长度为16个字节(注意,为了直观字符串后面加上了空格,满足长度16)  </p>
+<p>所以这6个字符是一个6行16列的二维数组  </p>
+<p><img src="/2018/12/09/assembly/image-100.png" width="400px"></p>
+<p><img src="/2018/12/09/assembly/image-101.png" width="400px"></p>
+<h1 id="bx-si-di和bp"><a href="#bx-si-di和bp" class="headerlink" title="bx,si,di和bp"></a>bx,si,di和bp</h1><ul>
+<li>8086cpu只有这四个寄存器可以用在”[…]”中进行内存单元寻址  </li>
+</ul>
+<p><img src="/2018/12/09/assembly/image-102.png" width="200px"></p>
+<blockquote>
+<p>这四个寄存器可以单个出现,或以4种组合出现  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-103.png" width="200px"></p>
+<h2 id="机器指令处理的数据在什么地方"><a href="#机器指令处理的数据在什么地方" class="headerlink" title="机器指令处理的数据在什么地方"></a>机器指令处理的数据在什么地方</h2><p>处理大致分为:读取,写入,运算  </p>
+<p><img src="/2018/12/09/assembly/image-104.png" width="400px"></p>
+<p>所处理的数据可以再3个地方:CPU内部、内存、端口  </p>
+<h2 id="数据位置的表达"><a href="#数据位置的表达" class="headerlink" title="数据位置的表达"></a>数据位置的表达</h2><h3 id="立即数"><a href="#立即数" class="headerlink" title="立即数"></a>立即数</h3><p>包含在机器指令中的数据(执行前在CPU的指令缓冲器),在汇编语言中称”立即数”  </p>
+<p><img src="/2018/12/09/assembly/image-107.png" width="150px"></p>
+<h3 id="寄存器-1"><a href="#寄存器-1" class="headerlink" title="寄存器"></a>寄存器</h3><p>指令要处理的数据在寄存器,在汇编指令中给出相应的寄存器名  </p>
+<p><img src="/2018/12/09/assembly/image-106.png" width="150px"></p>
+<h3 id="段地址-SA-和偏移地址-EA"><a href="#段地址-SA-和偏移地址-EA" class="headerlink" title="段地址(SA)和偏移地址(EA)"></a>段地址(SA)和偏移地址(EA)</h3><p>指令要处理的数据在内存中,在汇编指令中可用[X]的格式给出EA,SA在某个段寄存器  </p>
+<p>例如 </p>
+<p><img src="/2018/12/09/assembly/image-105.png" width="400px"></p>
+<h2 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h2><p>当数据放在内存中的时候,多种方式来给定这个内存单元的偏移地址,这类定位内存单元的方法称为寻址方式   </p>
+<p><img src="/2018/12/09/assembly/image-108.png" width="400px"></p>
+<h2 id="指令处理的数据长度"><a href="#指令处理的数据长度" class="headerlink" title="指令处理的数据长度"></a>指令处理的数据长度</h2><p>8086cpu指令可以处理两种尺寸的数据:byte和word  </p>
+<blockquote>
+<p>1:用寄存器名来指明处理数据的尺寸  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-110.png" width="400px">  </p>
+<blockquote>
+<p>2:用操作符X ptr指明内存单元的长度,X在汇编指令中可以为word或byte  </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-109.png" width="400px">  </p>
+<h3 id="案例-3"><a href="#案例-3" class="headerlink" title="案例"></a>案例</h3><p><img src="/2018/12/09/assembly/image-111.png" width="400px">  </p>
+<p><img src="/2018/12/09/assembly/image-112.png" width="400px">  </p>
+<h2 id="div指令"><a href="#div指令" class="headerlink" title="div指令"></a>div指令</h2><ul>
+<li><p>除数:有8位和16位两种，在一个reg或内存单元中  </p>
+</li>
+<li><p>被除数:默认放在AX或DX和AX中,如果除数是8位,被除数则为16位,默认在AX中存放:如果除数为16位,被除数则为32位,在DX和AX中存放,DX存放高16位,AX存放低16位  </p>
+</li>
+</ul>
+<ul>
+<li>结果:如果除数为8位,则AL存储除法操作的商,AH存储除法操作的余数;如果除数为16位,则AX存储除法操作的商,DX存储除法操作的余数  </li>
+</ul>
+<p>格式如下  </p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">div</span> reg</span><br><span class="line"><span class="keyword">div</span> 内存单元</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/12/09/assembly/image-113.png" width="400px"></p>
+<h2 id="伪指令dd"><a href="#伪指令dd" class="headerlink" title="伪指令dd"></a>伪指令dd</h2><p>db和dw定义字节型数据和字型数据,dd是用来定义dword(double word 双字)型数据  </p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data <span class="meta">segment</span></span><br><span class="line"></span><br><span class="line"> <span class="built_in">db</span> <span class="number">1</span></span><br><span class="line"> <span class="built_in">dw</span> <span class="number">1</span></span><br><span class="line"> <span class="built_in">dd</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">data ends</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一个数据为01H,在data:0处,占1个字节  </li>
+<li>第二个数据为0001H,在data:1处,占1个字  </li>
+<li>第三个数据为00000001H,在data:3处,占两个字  </li>
+</ul>
+<h3 id="案例-4"><a href="#案例-4" class="headerlink" title="案例"></a>案例</h3><p><img src="/2018/12/09/assembly/image-114.png" width="400px">  </p>
+<h2 id="dup"><a href="#dup" class="headerlink" title="dup"></a>dup</h2><p>dup是一个操作符,在汇编语言同db、dw、dd等一样,也是由编译器识别处理的符号  </p>
+<p>它是和db、dw、dd等数据定义伪指令配合使用的,用来进行数据的重复  </p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">db</span> <span class="number">3</span> dup (<span class="number">0</span>)</span><br><span class="line"><span class="comment">;相当于 db 0,0,0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">db</span> <span class="number">3</span> dup(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment">;定义了9个字节  他们是0、1、2、0、1、2、0、1、2相当于db 0,1,2,0,1,2,0,1,2</span></span><br></pre></td></tr></table></figure>
+<p>db 重复次数 dup  (重复的字节型数据)<br>dw 重复次数 dup     (重复的字型数据)<br>dd 重复次数 dup  (重复的双字型数据)  </p>
+<h1 id="转移指令原理"><a href="#转移指令原理" class="headerlink" title="转移指令原理"></a>转移指令原理</h1><p>可以修改ip,或同事修改CS和IP的指令统称为转移指令   </p>
+<p>8086cpu的转移行为有以下几类  </p>
+<ul>
+<li>只修改IP时,称为段内转移,比如 jmp ax    </li>
+<li>同时修改CS和IP时,称为段间转移,比如 jmp 1000:0   </li>
+</ul>
+<p>由于转移指令对IP修改范围不同,段内转移又分为:短转移和近转移  </p>
+<ul>
+<li>短转移IP的修改范围-128~127  </li>
+<li>近转移IP的修改范围-32768~32767   </li>
+</ul>
+<p>转移指令分以下几类  </p>
+<ul>
+<li>无条件转移如jmp   </li>
+<li>条件转移指令   </li>
+<li>循环指令如loop   </li>
+<li>过程     </li>
+<li>中断   </li>
+</ul>
+<h2 id="操作符offset"><a href="#操作符offset" class="headerlink" title="操作符offset"></a>操作符offset</h2><p>功能是取得标号的偏移地址   </p>
+<p><img src="/2018/12/09/assembly/image-115.png" width="400px">  </p>
+<p>上面程序 offset操作符取得标号start和s的偏移地址0和3   </p>
+<h3 id="案例-5"><a href="#案例-5" class="headerlink" title="案例"></a>案例</h3><p><img src="/2018/12/09/assembly/image-116.png" width="400px"></p>
+<h2 id="jmp指令"><a href="#jmp指令" class="headerlink" title="jmp指令"></a>jmp指令</h2><p>无条件转移指令  </p>
+<p>jmp指令要给出两种信息:  </p>
+<ul>
+<li>转移的目的地址  </li>
+<li>转移的举例(段间转移、段内短转移、段内近转移)     </li>
+</ul>
+<h3 id="依据位移进行转移的jmp指令"><a href="#依据位移进行转移的jmp指令" class="headerlink" title="依据位移进行转移的jmp指令"></a>依据位移进行转移的jmp指令</h3><blockquote>
+<p>jmp short 标号 (转到标号处执行指令)   </p>
+</blockquote>
+<p>这种格式是段内短转移,对IP修改范围是-128~127   </p>
+<p><img src="/2018/12/09/assembly/image-117.png" width="400px">  </p>
+<h3 id="转移地址在指令中的jmp指令"><a href="#转移地址在指令中的jmp指令" class="headerlink" title="转移地址在指令中的jmp指令"></a>转移地址在指令中的jmp指令</h3><p>jmp指令,其对应的机器指令并没有转移的目的地址,相当于当前IP的转移位移   </p>
+<blockquote>
+<p>jmp far ptr 标号  </p>
+</blockquote>
+<p>段间转移,又称远转移   </p>
+<p>功能如下:<br>CS=标号所在段的段地址; IP=标号在段中的偏移地址  </p>
+<p>far ptr 指明了指令用标号的段地址和偏移地址修改CS和IP  </p>
+<h4 id="案例-6"><a href="#案例-6" class="headerlink" title="案例"></a>案例</h4><p><img src="/2018/12/09/assembly/image-118.png" width="200px"></p>
+<h3 id="转移地址在寄存器中的jmp指令"><a href="#转移地址在寄存器中的jmp指令" class="headerlink" title="转移地址在寄存器中的jmp指令"></a>转移地址在寄存器中的jmp指令</h3><p>指令格式: jmp 16位 reg<br>功能: IP=(16位 reg)</p>
+<h3 id="转移地址在内存中的jmp指令"><a href="#转移地址在内存中的jmp指令" class="headerlink" title="转移地址在内存中的jmp指令"></a>转移地址在内存中的jmp指令</h3><ul>
+<li>jmp word ptr 内存单元地址(段内转移)   </li>
+</ul>
+<p>功能:从内存单元地址处开始存放着一个字,是转移的目的偏移地址   </p>
+<p><img src="/2018/12/09/assembly/image-119.png" width="200px">  </p>
+<ul>
+<li>jmp dword ptr 内存单元地址(段间转移)  </li>
+</ul>
+<p>功能:从内存单元地址处开始存放着两个字,高地址处的字是转移的目的段地址,低地址处是转移的目的偏移地址  </p>
+<p><img src="/2018/12/09/assembly/image-120.png" width="200px">  </p>
+<h2 id="jcxz指令"><a href="#jcxz指令" class="headerlink" title="jcxz指令"></a>jcxz指令</h2><p>jcxz指令为有条件转移指令,所有的有条件转移指令都是短转移,在对应的机器码中包含转移的唯一,而不是目的地址,对IP的修改范围是-128~127  </p>
+<p>指令格式: jcxz 标号(如果(cx)=0,转移到标号处执行)    </p>
+<p>操作  当(cx)=0时,(IP)=(IP)+8位位移<br>当(cx)  不等0时,什么也不做  </p>
+<p><code>jcxz 标号</code>功能相当于如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if((cx) == 0) jmp short 标号;</span><br></pre></td></tr></table></figure>
+<h2 id="loop指令-1"><a href="#loop指令-1" class="headerlink" title="loop指令"></a>loop指令</h2><p>指令格式: loop 标号((cx) = (cx) - 1,如果(cx)不等0,转移到标号处执行)  </p>
+<ul>
+<li>(cx)= (cx) - 1   </li>
+<li>如果(cx)不等0,(ip)=(ip)+8位位移      </li>
+</ul>
+<p><code>loop 标号</code>的功能相当于如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(cx)--;</span><br><span class="line">if((cx)!=0) jmp short 标号;</span><br></pre></td></tr></table></figure></p>
+<h1 id="CALL和RET指令"><a href="#CALL和RET指令" class="headerlink" title="CALL和RET指令"></a>CALL和RET指令</h1><p>call和ret指令都是转移指令,都修改IP,或同时修改CS和IP,经常被共用来实现子程序的设计   </p>
+<h2 id="ret和retf"><a href="#ret和retf" class="headerlink" title="ret和retf"></a>ret和retf</h2><p>ret指令用栈中的数据,修改IP的内容,从而实现近转移<br>retf指令用栈中的数据,修改CS和IP的内容,从而实现远转移  </p>
+<p><img src="/2018/12/09/assembly/image-121.png" width="400px"></p>
+<h2 id="call指令"><a href="#call指令" class="headerlink" title="call指令"></a>call指令</h2><p>当cpu执行call指令时,进行两步操作   </p>
+<ul>
+<li>将当期的IP或CS和IP压入栈中  </li>
+<li>转移  </li>
+</ul>
+<h3 id="依据位移进行转移的call指令"><a href="#依据位移进行转移的call指令" class="headerlink" title="依据位移进行转移的call指令"></a>依据位移进行转移的call指令</h3><p>call 标号 (将当期的IP压栈后,转到标号处执行指令)  </p>
+<p>CPU执行此种格式的call指令时,进行如下操作  </p>
+<ul>
+<li><p>(sp) = (sp) - 2<br>  ((ss)*16 + (sp)) = (IP)  </p>
+</li>
+<li><p>(IP) = (IP)+16位 位移   </p>
+</li>
+</ul>
+<p>16位位移=标号处的地址-call指令后的第一个字节的地址<br>16位位移的范围为-32768~32767,用补码表示<br>16位位移由编译程序在编译时算出    </p>
+<p>所以CPU执行”call 标号”时,相当于进行   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push IP</span><br><span class="line">jmp near ptr 标号</span><br></pre></td></tr></table></figure>
+<h3 id="转移地址在指令中的call"><a href="#转移地址在指令中的call" class="headerlink" title="转移地址在指令中的call"></a>转移地址在指令中的call</h3><p><img src="/2018/12/09/assembly/image-122.png" width="400px">  </p>
+<h3 id="转移地址在寄存器中的call"><a href="#转移地址在寄存器中的call" class="headerlink" title="转移地址在寄存器中的call"></a>转移地址在寄存器中的call</h3><p><img src="/2018/12/09/assembly/image-123.png" width="400px">  </p>
+<h3 id="转移地址在内存中的call"><a href="#转移地址在内存中的call" class="headerlink" title="转移地址在内存中的call"></a>转移地址在内存中的call</h3><p><img src="/2018/12/09/assembly/image-124.png" width="400px">  </p>
+<p><img src="/2018/12/09/assembly/image-125.png" width="400px">  </p>
+<h2 id="call和ret的配合使用"><a href="#call和ret的配合使用" class="headerlink" title="call和ret的配合使用"></a>call和ret的配合使用</h2><p><img src="/2018/12/09/assembly/image-126.png" width="350px"></p>
+<p><img src="/2018/12/09/assembly/image-127.png" width="350px"></p>
+<h2 id="mul指令"><a href="#mul指令" class="headerlink" title="mul指令"></a>mul指令</h2><p>mul乘法指令注意以下两点  </p>
+<ul>
+<li><p>两个相乘的数:两个相乘的书,要么都是8位,要么都是16位,如果是8位,一个默认放在AL中,另一个放在8位的reg或内存字节单元中;如果是16位,一个默认在AX中,另一个放在16位reg或内存字单元中  </p>
+</li>
+<li><p>结果:如果是8位乘法,结果默认在AX;如果是16位乘法,结果高位默认在DX中存放,低位在AX中放  </p>
+</li>
+</ul>
+<p>格式如下:   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mul reg</span><br><span class="line">mul 内存单元</span><br></pre></td></tr></table></figure>
+<p>内存单元可以用不同的寻址方式给出,比如   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mul byte ptr ds:[0]</span><br><span class="line">;含义为 ax = ax*(ds*16 + 0)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mul word ptr [bx+si+8]  </span><br><span class="line"></span><br><span class="line">;含义为 	ax = ax*(ds*16 + bx + si + 8)的结果低16位</span><br><span class="line">;		dx = ax*(ds * 16 + bx + si + 8)的结果高16位</span><br></pre></td></tr></table></figure>
+<h3 id="案例-7"><a href="#案例-7" class="headerlink" title="案例"></a>案例</h3><blockquote>
+<p>计算100 * 10000   </p>
+</blockquote>
+<p>100小于255,可10000大于255, 所以要做16位乘法  </p>
+<p><img src="/2018/12/09/assembly/image-129.png" width="300px"></p>
+<blockquote>
+<p>计算100 * 10 </p>
+</blockquote>
+<p>10和100都小于255,做8位乘法  </p>
+<p><img src="/2018/12/09/assembly/image-130.png" width="300px">  </p>
+<h2 id="参数和结果传递的问题"><a href="#参数和结果传递的问题" class="headerlink" title="参数和结果传递的问题"></a>参数和结果传递的问题</h2><p>子程序一般都要根据提供的参数处理一定的事务,处理后将结果(返回值)提供给调用者,   </p>
+<blockquote>
+<p>如何存储子程序需要的参数和产生的返回值?   </p>
+</blockquote>
+<p>用寄存器来存储,将参数放到bx中;因为子程序要计算,可将结果放到dx和ax  </p>
+<h3 id="案例-8"><a href="#案例-8" class="headerlink" title="案例"></a>案例</h3><p><img src="/2018/12/09/assembly/image-131.png" width="400px">  </p>
+<h2 id="批量数据的传递"><a href="#批量数据的传递" class="headerlink" title="批量数据的传递"></a>批量数据的传递</h2><p>子程序只有一个参数,放bx中,如果有两个参数,那么可以放两个寄存器,可是如果3个，4个甚至更多怎么办?   </p>
+<p>寄存器的数量还是有限的,对于返回值也是有同样的问题   </p>
+<p>这个时候,将批量数据放到内存中,然后将他们所在的内存空间的首地址放在寄存器中,传递给需要的子程序,对于具有批量数据的返回结果,也可用同样的方法   </p>
+<h3 id="案例-9"><a href="#案例-9" class="headerlink" title="案例"></a>案例</h3><p>将一个全是字母的字符串转化为大写  </p>
+<p><img src="/2018/12/09/assembly/image-132.png" width="400px">  </p>
+<h1 id="标志寄存器"><a href="#标志寄存器" class="headerlink" title="标志寄存器"></a>标志寄存器</h1><p>CPU内部寄存器中,有一种特殊的寄存器(对于不同的处理机,个数和结构都可能不同)  </p>
+<ul>
+<li>用来存储相关指令的某些执行结果   </li>
+<li>用来为CPU执行相关指令提供行为依据   </li>
+<li>用来控制CPU的相关工作方式  </li>
+</ul>
+<p>这类特殊寄存器被称为标志寄存器  </p>
+<p>我们已经使用过了ax,bx,cx,dx,si,di,bp,sp,IP,cs,ss,ds,es等13个寄存器了,标志寄存器(flag)是学习的最后一个寄存器  </p>
+<p>flag不同其他寄存器,其他寄存器是用来存放数据,都是整个寄存器具有一个含义的,而flag寄存器是按位起作用的,也就是说,它的每一位都有专门的含义,记录特定的信息   </p>
+<p><img src="/2018/12/09/assembly/image-133.png" width="400px">  </p>
+<p>flag的1、3、4、12、13、14、15位在8086CPU中没有使用,不具有任何含义<br>而0、2、4、6、7、8、9、10、11位具有特殊的含义  </p>
+<h2 id="ZF-标志"><a href="#ZF-标志" class="headerlink" title="ZF 标志"></a>ZF 标志</h2><p>flag的第六位是ZF,零标志位,记录相关指令执行后,其结果是否为0  </p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mov</span> <span class="built_in">ax</span>,<span class="number">1</span></span><br><span class="line"><span class="keyword">sub</span> <span class="built_in">ax</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>如果结果为0,那么zf=1;如果结果不为0,那么zf=0</p>
+<p>计算机中1表逻辑真,表肯定,所以当结果为0时zf=1,表示结果为0  </p>
+<p>如果结果不为0,zf要记录下”不是0”这样的否定信息,在计算机中0表示逻辑假,表示否定  </p>
+<p><img src="/2018/12/09/assembly/image-134.png" width="300px"></p>
+<p>指令集中影响标志寄存器的如下 </p>
+<ul>
+<li>add  </li>
+<li>sub  </li>
+<li>mul  </li>
+<li>div  </li>
+<li>inc  </li>
+<li>or  </li>
+<li>and等  </li>
+</ul>
+<p>大多数运算指令  </p>
+<p>对标志寄存器不影响的是  </p>
+<ul>
+<li>mov    </li>
+<li>push   </li>
+<li>pop   </li>
+</ul>
+<p>大多是传送指令  </p>
+<h2 id="PF标志"><a href="#PF标志" class="headerlink" title="PF标志"></a>PF标志</h2><p>flag的第2位是PF,奇偶标志位,记录相关指令执行后  </p>
+<p>起结果的所有bit位中1的个数是否为偶数,如果为偶数pf=1,如果为奇数,那么pf=0    </p>
+<p><img src="/2018/12/09/assembly/image-135.png" width="300px"></p>
+<h2 id="SF标志"><a href="#SF标志" class="headerlink" title="SF标志"></a>SF标志</h2><p>flag的第7位是SF,符号标志位,记录相关指令执行后,其结果是否为负  </p>
+<p>如果结果为负,sf=1,如果非负,sf=0  </p>
+<p>计算机都是补码来表示有符号数据,计算机中的一个数据可以看做有符号数或无符号数  </p>
+<p>SF标志就是CPU对有符号数运算结果的一种记录,记录数据的正负,在将数据当做有符号数来运算的时候,可以通过它来得知结果的正负  </p>
+<p>如果通过无符号数来运算,则SF的值无意义  </p>
+<h3 id="案例-10"><a href="#案例-10" class="headerlink" title="案例"></a>案例</h3><p><img src="/2018/12/09/assembly/image-137.png" width="400px"><br><img src="/2018/12/09/assembly/image-138.png" width="400px"></p>
+<h2 id="CF标志"><a href="#CF标志" class="headerlink" title="CF标志"></a>CF标志</h2><p>flag的第0位是CF,进位标志位,一般情况下,在进行无符号数运算的时候,记录了运算结果的最高有效位向更高为的进位值,或从更高为的错位值  </p>
+<p>两个数据相加,有可能产生从最高有效位向更高位的进位   </p>
+<p><img src="/2018/12/09/assembly/image-139.png" width="400px"><br><img src="/2018/12/09/assembly/image-140.png" width="400px"></p>
+<p>两个数做减法,向更高位借位</p>
+<p><img src="/2018/12/09/assembly/image-141.png" width="400px"></p>
+<h2 id="OF标志"><a href="#OF标志" class="headerlink" title="OF标志"></a>OF标志</h2><p>在进行有符号数运算的时候,如果超过了机器所能表示的范围称为溢出   </p>
+<p>指令运算的结果用8位寄存器或内存单元来放,比如add al,3,那么对于8位的有符号数据,机器所能表示的范围就是-128~127  </p>
+<p>flag的第11位是OF,溢出标志位,一般情况下,OF记录有符号数运算的结构是否发生了溢出,如果发生溢出OF=1,如果没有,OF=0  </p>
+<h2 id="adc指令"><a href="#adc指令" class="headerlink" title="adc指令"></a>adc指令</h2><p>adc是带进位加法指令,利用了CF标志上记录的进位值  </p>
+<p>指令格式  </p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abc 操作对象<span class="number">1</span>, 操作对象<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>功能:操作对象1 = 操作对象1 + 操作对象2 + CF  </p>
+<h3 id="案例-11"><a href="#案例-11" class="headerlink" title="案例"></a>案例</h3><p><img src="/2018/12/09/assembly/image-142.png" width="400px">  </p>
+<h2 id="sbb指令"><a href="#sbb指令" class="headerlink" title="sbb指令"></a>sbb指令</h2><p>sbb是带借位减法指令,利用了CF标志上记录的进位值  </p>
+<p>指令格式  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbb 操作对象1,操作对象2</span><br></pre></td></tr></table></figure>
+<p>功能:操作对象1 = 操作对象1 - 操作对象2 - CF  </p>
+<h3 id="案例-12"><a href="#案例-12" class="headerlink" title="案例"></a>案例</h3><p><img src="/2018/12/09/assembly/image-143.png" width="400px">  </p>
+<h2 id="cmp指令"><a href="#cmp指令" class="headerlink" title="cmp指令"></a>cmp指令</h2><p>cmp是比较指令,cmp的功能相当于减法指令,只是不保存结果   </p>
+<p>cmp指令执行后,将对标志寄存器产生影响   </p>
+<p>指令格式 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmp 操作对象1,操作对象2</span><br></pre></td></tr></table></figure>
+<p>功能:计算操作对象1-操作对象2 但并不保存结果,仅仅根据计算结果对标志寄存器进行设置   </p>
+<h3 id="案例-13"><a href="#案例-13" class="headerlink" title="案例"></a>案例</h3><p><img src="/2018/12/09/assembly/image-144.png" width="400px">  </p>
+<blockquote>
+<p>规律如下   </p>
+</blockquote>
+<p><img src="/2018/12/09/assembly/image-145.png" width="400px">   </p>
+<h2 id="各类条件转移指令"><a href="#各类条件转移指令" class="headerlink" title="各类条件转移指令"></a>各类条件转移指令</h2><p>“转移”指的是它能修改IP,“条件”指的是它可以根据某种条件,决定是否修改IP  </p>
+<p><img src="/2018/12/09/assembly/image-146.png" width="400px"></p>
+<h2 id="DF标志和串传送指令"><a href="#DF标志和串传送指令" class="headerlink" title="DF标志和串传送指令"></a>DF标志和串传送指令</h2><p>flag 第10位的DF，方向标志位,串处理指令中,控制每次操作后si、di的增减  </p>
+<p>df = 0 每次操作后si、di递增<br>df = 1 每次操作后si、di递减  </p>
+<h3 id="movsb"><a href="#movsb" class="headerlink" title="movsb"></a>movsb</h3><p>格式: movsb<br>功能：执行movsb指令相当于进行以下几步操作  </p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">es</span>*<span class="number">16</span> + <span class="built_in">di</span>) = (<span class="built_in">ds</span> * <span class="number">16</span> + <span class="built_in">si</span>)</span><br><span class="line"></span><br><span class="line">- 如果df = <span class="number">0</span> 则：  <span class="built_in">si</span> = <span class="built_in">si</span> + <span class="number">1</span></span><br><span class="line">				  <span class="built_in">di</span> = <span class="built_in">di</span> + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">      df = <span class="number">1</span> 则:	  <span class="built_in">si</span> = <span class="built_in">si</span> - <span class="number">1</span></span><br><span class="line">      			  <span class="built_in">di</span> = <span class="built_in">di</span> -  <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h3 id="movsw"><a href="#movsw" class="headerlink" title="movsw"></a>movsw</h3><p>格式: movesw<br>功能: 将ds:si指向的内存字单元中的字送入es:di中,然后根据标志寄存器df位的值,将si、di递增2或递减2  </p>
+<h1 id="内中断"><a href="#内中断" class="headerlink" title="内中断"></a>内中断</h1><p>检测到从CPU外部发送过来的或内部产生的一种特殊信息,并且可以立即对所接收到信息进行处理,这类特殊信息,称其为中断信息   </p>
+<p>cpu内部产生中断信息情况如下  </p>
+<ul>
+<li>除法错误,比如执行div指令产生除法溢出           0中断类型码</li>
+<li>单步执行                                      1中断类型码</li>
+<li>执行into指令                                  4中断类型码</li>
+<li>执行int指令,指令格式  int n, n为字节型立即数,提供CPU中断类型码</li>
+</ul>
+<h2 id="中断处理程序"><a href="#中断处理程序" class="headerlink" title="中断处理程序"></a>中断处理程序</h2><p>CPU收到中断信息,如何对中断信息处理,由编程决定,用来处理中断信息的程序被称为中断处理程序  </p>
+<p>如8086cpu执行某处的程序,就要将CS:IP执行它的入口(即程序第一条指令的地址)  </p>
+<p>首要问题,cpu在收到中断信息后,如何根据终端信息确定处理程序入口  </p>
+<p>CPU设计者必须在中断信息与其处理程序的入口地址之间建立某种联系,使得CPU根据中断信息找到要执行的处理程序  </p>
+<h2 id="中断向量表"><a href="#中断向量表" class="headerlink" title="中断向量表"></a>中断向量表</h2><p>CPU用8位的中断类型码通过中断向量表找到相应的中断处理程序的入口地址  </p>
+<p><img src="/2018/12/09/assembly/image-147.png" width="150px">  </p>
+<p>中断向量表在内存中保存,存放着256个中断源所对应的中断处理程序入口  </p>
+<p>可见CPU只要知道了中断类型码,就可以定位程序的入口地址  </p>
+<h2 id="中断过程"><a href="#中断过程" class="headerlink" title="中断过程"></a>中断过程</h2><p>我们通过中断向量表获得入口地址,用它设置CS和IP,使CPU执行中断处理程序  </p>
+<p>CPU在执行完中断处理程序后,应该返回原来的执行点继续执行下面的指令,所以在中断过程中,在设置CS:IP之前,还要将原来的CS和IP值保存起来,在使用call指令调用子程序时有同样的问题,子程序执行后还要返回原来的执行点继续执行,所以call指令先保存当前CS和IP值,然后再设置CS和IP值  </p>
+<p>中断过程如下  </p>
+<ul>
+<li><p>从终端信息中获取中断类型码     </p>
+</li>
+<li><p>标志寄存器的值入栈(因为中断过程要改变标志寄存器的值,所以先将保存在栈中)  </p>
+</li>
+<li><p>设置标志寄存器的第8位TF和第9位IF的值0  </p>
+</li>
+<li><p>CS的内容入栈  </p>
+</li>
+<li><p>IP的内容入栈  </p>
+</li>
+<li><p>从内存地址中断类型码<em>4和中断类型码</em>4+2的两个字单元中读取中断处理程序的入口地址设置IP和CS  </p>
+</li>
+</ul>
+<p><img src="/2018/12/09/assembly/image-148.png" width="400px">  </p>
+<h2 id="中断处理程序和iret指令"><a href="#中断处理程序和iret指令" class="headerlink" title="中断处理程序和iret指令"></a>中断处理程序和iret指令</h2><p>由于CPU随时都处理中断程序,所以中断处理程序必须一直存储在内存某段空间之中,而中断处理程序的入口地址,即中断向量,必须存储在对应的中断向量表表项中  </p>
+<p><img src="/2018/12/09/assembly/image-149.png" width="400px">  </p>
+<p>iret通常和硬件自动完成的中断过程配合使用,寄存器入栈的顺序是标志寄存器、CS、IP<br>而iret出栈顺序是IP、CS、标志寄存器,刚好对应  </p>
+<p>实现了用于执行中断程序钱CPU线程恢复标志寄存器和CS、IP的工作  </p>
+<p>iret指令执行后,cpu又回到执行中断前继续执行程序  </p>
+<h1 id="int指令"><a href="#int指令" class="headerlink" title="int指令"></a>int指令</h1><p>int指令格式:<code>int n</code>,n为中断类型码,功能是引发中断过程  </p>
+<p><img src="/2018/12/09/assembly/image-150.png" width="400px">  </p>
+<h2 id="编写中断例程"><a href="#编写中断例程" class="headerlink" title="编写中断例程"></a>编写中断例程</h2><p><img src="/2018/12/09/assembly/image-151.png" width="400px">  </p>
+<p><img src="/2018/12/09/assembly/image-152.png" width="400px">  </p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2018/12/09/assembly/';
+        this.page.title = '汇编语言解析';
+        this.page.identifier = '2018/12/09/assembly/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Yarn资源管理 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Yarn相关笔记 
+简介概述Yarn是在MRv1基础上演化而来,MRv1有以下局限性  
+
+扩展性差:JobTracker同时兼备了资源管理和作业控制,严重制约了hadoop集群扩展性  
+可靠性低:MRv1采用Master/Slave结构,其中Master存在单点故障 
+资源利用率低:MRv1基于槽位粗粒度资源分配模型  
+无法支持多种计算框架: MapReduce属于磁盘的离线计算框架以及不能满足应用要求,包括内存计算、流式计算和迭代式计算框架等,而MRv1不能支持多种计算框架并存  
+
+所">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MRv1"><span class="toc-number">1.1.1.</span> <span class="toc-text">MRv1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MRv2"><span class="toc-number">1.1.2.</span> <span class="toc-text">MRv2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算平台"><span class="toc-number">1.1.3.</span> <span class="toc-text">计算平台</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本组成"><span class="toc-number">1.2.</span> <span class="toc-text">基本组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ResourceManager（RM）"><span class="toc-number">1.2.1.</span> <span class="toc-text">ResourceManager（RM）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplicationMaster（AM）"><span class="toc-number">1.2.2.</span> <span class="toc-text">ApplicationMaster（AM）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NodeManager（NM）"><span class="toc-number">1.2.3.</span> <span class="toc-text">NodeManager（NM）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Container"><span class="toc-number">1.2.4.</span> <span class="toc-text">Container</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#YARN的工作流程"><span class="toc-number">1.3.</span> <span class="toc-text">YARN的工作流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#作业提交"><span class="toc-number">1.3.1.</span> <span class="toc-text">作业提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作业初始化"><span class="toc-number">1.3.2.</span> <span class="toc-text">作业初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#任务分配"><span class="toc-number">1.3.3.</span> <span class="toc-text">任务分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#任务运行"><span class="toc-number">1.3.4.</span> <span class="toc-text">任务运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进度和状态更新"><span class="toc-number">1.3.5.</span> <span class="toc-text">进度和状态更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作业完成"><span class="toc-number">1.3.6.</span> <span class="toc-text">作业完成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Yarn通信协议"><span class="toc-number">1.4.</span> <span class="toc-text">Yarn通信协议</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Yarn基本架构"><span class="toc-number">2.</span> <span class="toc-text">Yarn基本架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#应用设计之法"><span class="toc-number">2.1.</span> <span class="toc-text">应用设计之法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Client设计"><span class="toc-number">2.2.</span> <span class="toc-text">Client设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Client与RM"><span class="toc-number">2.2.1.</span> <span class="toc-text">Client与RM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ApplicationMaster设计"><span class="toc-number">2.3.</span> <span class="toc-text">ApplicationMaster设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AM与RM通信"><span class="toc-number">2.3.1.</span> <span class="toc-text">AM与RM通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AM与NM通信"><span class="toc-number">2.3.2.</span> <span class="toc-text">AM与NM通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Yarn自带的AMs-除MRAM之外"><span class="toc-number">2.3.3.</span> <span class="toc-text">Yarn自带的AMs(除MRAM之外)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DistributedShell-使用案例"><span class="toc-number">2.3.3.1.</span> <span class="toc-text">DistributedShell 使用案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Unmanaged-AM"><span class="toc-number">2.3.3.2.</span> <span class="toc-text">Unmanaged AM</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resource-Manager"><span class="toc-number">2.4.</span> <span class="toc-text">Resource Manager</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Resource-Manager内部架构"><span class="toc-number">2.4.1.</span> <span class="toc-text">Resource Manager内部架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Resource-Manager相关的PRC协议"><span class="toc-number">2.4.2.</span> <span class="toc-text">Resource Manager相关的PRC协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Resource-Manager事件交互图"><span class="toc-number">2.4.3.</span> <span class="toc-text">Resource Manager事件交互图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplicationMaster管理"><span class="toc-number">2.4.4.</span> <span class="toc-text">ApplicationMaster管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NodeManager管理"><span class="toc-number">2.4.5.</span> <span class="toc-text">NodeManager管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Resource-Manager状态机"><span class="toc-number">2.4.6.</span> <span class="toc-text">Resource Manager状态机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#资源调度器"><span class="toc-number">2.5.</span> <span class="toc-text">资源调度器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#调度器背景"><span class="toc-number">2.5.1.</span> <span class="toc-text">调度器背景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#作为事件处理器"><span class="toc-number">2.5.1.1.</span> <span class="toc-text">作为事件处理器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NodeManager"><span class="toc-number">2.6.</span> <span class="toc-text">NodeManager</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录"><span class="toc-number">3.</span> <span class="toc-text">附录</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Yarn资源管理
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2017/11/15/yarn/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2017-11-15T01:52:38.000Z" itemprop="datePublished">2017-11-15</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/Yarn/">Yarn</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Yarn相关笔记<br><a id="more"></a> </p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Yarn是在MRv1基础上演化而来,MRv1有以下局限性  </p>
+<ul>
+<li>扩展性差:JobTracker同时兼备了资源管理和作业控制,严重制约了hadoop集群扩展性  </li>
+<li>可靠性低:MRv1采用Master/Slave结构,其中Master存在单点故障 </li>
+<li>资源利用率低:MRv1基于槽位粗粒度资源分配模型  </li>
+<li>无法支持多种计算框架: MapReduce属于磁盘的离线计算框架以及不能满足应用要求,包括内存计算、流式计算和迭代式计算框架等,而MRv1不能支持多种计算框架并存  </li>
+</ul>
+<p>所以MRv2讲资源管理功能抽象成一个独立的通用系统Yarn  </p>
+<p><img src="/2017/11/15/yarn/image-03.png" width="600px"></p>
+<ul>
+<li>以MapReduce为核心,Yarn是可插拔替换的,比如选择Mesos替换Yarn  </li>
+<li>以Yarn为核心,Mapreduce和Spark实现了Yarn资源管理系统的接口,即可打造多计算框架的Hadoop生态  </li>
+</ul>
+<h3 id="MRv1"><a href="#MRv1" class="headerlink" title="MRv1"></a>MRv1</h3><p>MapReduce 1.0计算框架由三部分组成, 编程模型,数据处理引擎和运行时环境  </p>
+<blockquote>
+<p>编程模型: Map和Reduce两个阶段</p>
+</blockquote>
+<ul>
+<li>Map阶段将输入数据解析成Key/Value,迭代调用map()函数处理后,再以Key/Value形式输出到本地目录   </li>
+<li>Reduce阶段将Key相同的value进行规约处理,并将最终结果写到Hdfs  </li>
+</ul>
+<h3 id="MRv2"><a href="#MRv2" class="headerlink" title="MRv2"></a>MRv2</h3><p>MRv2具有与MRv1相同的编程模型和数据处理引擎, 唯一不同的运行时环境  </p>
+<p>MRv2的运行时环境不再是由JobTracker和TaskTracker等服务组成的,而运行于资源管理框架的Yarn计算框架的MapReduce    </p>
+<h3 id="计算平台"><a href="#计算平台" class="headerlink" title="计算平台"></a>计算平台</h3><ul>
+<li>离线处理MapReduce  </li>
+<li>在线处理Storm  </li>
+<li>迭代式计算框架Spark </li>
+<li>流失计算框架S4  </li>
+</ul>
+<p><img src="/2017/11/15/yarn/image-04.png" width="200px">  </p>
+<p><br></p>
+<h2 id="基本组成"><a href="#基本组成" class="headerlink" title="基本组成"></a>基本组成</h2><p><img src="/2017/11/15/yarn/image-06.png" width="500px"></p>
+<p>从 YARN 的架构图来看,它主要由ResourceManager、NodeManager、ApplicationMaster和Container等以下几个组件构成。</p>
+<h3 id="ResourceManager（RM）"><a href="#ResourceManager（RM）" class="headerlink" title="ResourceManager（RM）"></a>ResourceManager（RM）</h3><p>YARN 分层结构的本质是 ResourceManager。这个实体控制整个集群并管理应用程序向基础计算资源的分配。ResourceManager 将各个资源部分（计算、内存、带宽等）精心安排给基础 NodeManager（YARN 的每节点代理）。ResourceManager 还与 ApplicationMaster 一起分配资源,与 NodeManager 一起启动和监视它们的基础应用程序。在此上下文中,ApplicationMaster 承担了以前的 TaskTracker 的一些角色,ResourceManager 承担了 JobTracker 的角色。</p>
+<p>总的来说,RM有以下作用</p>
+<ul>
+<li><p>1）处理客户端请求</p>
+</li>
+<li><p>2）启动或监控ApplicationMaster</p>
+</li>
+<li><p>3）监控NodeManager</p>
+</li>
+<li><p>4）资源的分配与调度</p>
+</li>
+</ul>
+<h3 id="ApplicationMaster（AM）"><a href="#ApplicationMaster（AM）" class="headerlink" title="ApplicationMaster（AM）"></a>ApplicationMaster（AM）</h3><p>ApplicationMaster 管理在YARN内运行的每个应用程序实例。ApplicationMaster 负责协调来自 ResourceManager 的资源,并通过 NodeManager 监视容器的执行和资源使用（CPU、内存等的资源分配）。请注意,尽管目前的资源更加传统（CPU 核心、内存）,但未来会带来基于手头任务的新资源类型（比如图形处理单元或专用处理设备）。从 YARN 角度讲,ApplicationMaster 是用户代码,因此存在潜在的安全问题。YARN 假设 ApplicationMaster 存在错误或者甚至是恶意的,因此将它们当作无特权的代码对待。</p>
+<p>总的来说,AM有以下作用</p>
+<ul>
+<li>与 RM 调度器协商以获取资源(用 Container 表示);</li>
+<li>将得到的任务进一步分配给内部的任务;</li>
+<li>与 NM 通信以启动 / 停止任务;</li>
+<li>监控所有任务运行状态，并在任务运行失败时重新为任务申请资源以重启任务。</li>
+</ul>
+<p>此外，一些其他的计算框架对应的 AM 正在开发中，比如 Open MPI、Spark 等</p>
+<h3 id="NodeManager（NM）"><a href="#NodeManager（NM）" class="headerlink" title="NodeManager（NM）"></a>NodeManager（NM）</h3><p>NodeManager管理YARN集群中的每个节点。NodeManager 提供针对集群中每个节点的服务,从监督对一个容器的终生管理到监视资源和跟踪节点健康。MRv1 通过插槽管理 Map 和 Reduce 任务的执行,而 NodeManager 管理抽象容器,这些容器代表着可供一个特定应用程序使用的针对每个节点的资源。</p>
+<p>总的来说,NM有以下作用</p>
+<ul>
+<li><p>1）管理单个节点上的资源</p>
+</li>
+<li><p>2）处理来自ResourceManager的命令</p>
+</li>
+<li><p>3）处理来自ApplicationMaster的命令</p>
+</li>
+</ul>
+<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p>Container 是 YARN 中的资源抽象,它封装了某个节点上的多维度资源,如内存、CPU、磁盘、网络等,当AM向RM申请资源时,RM为AM返回的资源便是用Container表示的。YARN会为每个任务分配一个Container,且该任务只能使用该Container中描述的资源。</p>
+<p>总的来说,Container有以下作用</p>
+<ul>
+<li>1）对任务运行环境进行抽象,封装CPU、内存等多维度的资源以及环境变量、启动命令等任务运行相关的信息</li>
+</ul>
+<p>要使用一个 YARN 集群,首先需要一个包含应用程序的客户的请求。ResourceManager 协商一个容器的必要资源,启动一个 ApplicationMaster 来表示已提交的应用程序。通过使用一个资源请求协议,ApplicationMaster 协商每个节点上供应用程序使用的资源容器。执行应用程序时,ApplicationMaster 监视容器直到完成。当应用程序完成时,ApplicationMaster 从 ResourceManager 注销其容器,执行周期就完成了。</p>
+<p>通过上面的讲解,应该明确的一点是,旧的 Hadoop 架构受到了 JobTracker 的高度约束,JobTracker 负责整个集群的资源管理和作业调度。新的 YARN 架构打破了这种模型,允许一个新 ResourceManager 管理跨应用程序的资源使用,ApplicationMaster 负责管理作业的执行。这一更改消除了一处瓶颈,还改善了将 Hadoop 集群扩展到比以前大得多的配置的能力。此外,不同于传统的 MapReduce,YARN 允许使用MPI( Message Passing Interface) 等标准通信模式,同时执行各种不同的编程模型,包括图形处理、迭代式处理、机器学习和一般集群计算。</p>
+<p><br></p>
+<h2 id="YARN的工作流程"><a href="#YARN的工作流程" class="headerlink" title="YARN的工作流程"></a>YARN的工作流程</h2><p>YARN 的作业运行,主要由以下几个步骤组成</p>
+<p><img src="/2017/11/15/yarn/image-02.png" width="600px"></p>
+<h3 id="作业提交"><a href="#作业提交" class="headerlink" title="作业提交"></a>作业提交</h3><p>client 调用job.waitForCompletion方法,向整个集群提交MapReduce作业 (第1步) 。 新的作业ID(应用ID)由资源管理器分配(第2步). 作业的client核实作业的输出, 计算输入的split, 将作业的资源(包括Jar包, 配置文件, split信息)拷贝给HDFS(第3步). 最后, 通过调用资源管理器的submitApplication()来提交作业(第4步).</p>
+<h3 id="作业初始化"><a href="#作业初始化" class="headerlink" title="作业初始化"></a>作业初始化</h3><p>当资源管理器收到submitApplciation()的请求时, 就将该请求发给调度器(scheduler), 调度器分配container, 然后资源管理器在该container内启动应用管理器进程, 由节点管理器监控(第5步).</p>
+<p>MapReduce作业的应用管理器是一个主类为MRAppMaster的Java应用. 其通过创造一些bookkeeping对象来监控作业的进度, 得到任务的进度和完成报告(第6步). 然后其通过分布式文件系统得到由客户端计算好的输入split(第7步). 然后为每个输入split创建一个map任务, 根据mapreduce.job.reduces创建reduce任务对象.</p>
+<h3 id="任务分配"><a href="#任务分配" class="headerlink" title="任务分配"></a>任务分配</h3><p>如果作业很小, 应用管理器会选择在其自己的JVM中运行任务。</p>
+<p>如果不是小作业, 那么应用管理器向资源管理器请求container来运行所有的map和reduce任务(第8步). 这些请求是通过心跳来传输的, 包括每个map任务的数据位置, 比如存放输入split的主机名和机架(rack). 调度器利用这些信息来调度任务, 尽量将任务分配给存储数据的节点, 或者分配给和存放输入split的节点相同机架的节点.</p>
+<h3 id="任务运行"><a href="#任务运行" class="headerlink" title="任务运行"></a>任务运行</h3><p>当一个任务由资源管理器的调度器分配给一个container后, 应用管理器通过联系节点管理器来启动container(第9步). 任务由一个主类为YarnChild的Java应用执行. 在运行任务之前首先本地化任务需要的资源, 比如作业配置, JAR文件, 以及分布式缓存的所有文件(第10步). 最后, 运行map或reduce任务(第11步).</p>
+<p>YarnChild运行在一个专用的JVM中, 但是YARN不支持JVM重用.</p>
+<h3 id="进度和状态更新"><a href="#进度和状态更新" class="headerlink" title="进度和状态更新"></a>进度和状态更新</h3><p>YARN中的任务将其进度和状态(包括counter)返回给应用管理器, 客户端每秒(通过mapreduce.client.progressmonitor.pollinterval设置)向应用管理器请求进度更新, 展示给用户。</p>
+<h3 id="作业完成"><a href="#作业完成" class="headerlink" title="作业完成"></a>作业完成</h3><p>除了向应用管理器请求作业进度外, 客户端每5分钟都会通过调用waitForCompletion()来检查作业是否完成. 时间间隔可以通过mapreduce.client.completion.pollinterval来设置. 作业完成之后, 应用管理器和container会清理工作状态, OutputCommiter的作业清理方法也会被调用. 作业的信息会被作业历史服务器存储以备之后用户核查.</p>
+<p><br></p>
+<h2 id="Yarn通信协议"><a href="#Yarn通信协议" class="headerlink" title="Yarn通信协议"></a>Yarn通信协议</h2><p><img src="/2017/11/15/yarn/image-07.png" width="500px"></p>
+<ul>
+<li>JobClient(作业提交客户端)与 RM 之间的协议 — ApplicationClientProtocol : JobClient 通过该 RPC 协议提交应用程序、查询应用程序状态等。</li>
+<li>Admin(管理员)与 RM 之间的通信协议— ResourceManagerAdministrationProtocol : Admin 通过该 RPC 协议更新系统配置文件，比如节点黑白名单、用户队列权限等。</li>
+<li>AM 与 RM 之间的协议— ApplicationMasterProtocol :AM 通过该 RPC 协议向 RM 注册和撤销自己，并为各个任务申请资源。</li>
+<li>AM 与 NM 之间的协议 — ContainerManagementProtocol :AM 通过该 RPC 要求 NM 启动或者停止 Container，获取各个 Container 的使用状态等信息。</li>
+<li>NM 与 RM 之间的协议— ResourceTracker :NM 通过该 RPC 协议向 RM 注册，并 定时发送心跳信息汇报当前节点的资源使用情况和 Container 运行情况。</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<h1 id="Yarn基本架构"><a href="#Yarn基本架构" class="headerlink" title="Yarn基本架构"></a>Yarn基本架构</h1><h2 id="应用设计之法"><a href="#应用设计之法" class="headerlink" title="应用设计之法"></a>应用设计之法</h2><blockquote>
+<p>用户编写客户端和ApplicationMaster两个组件<br>其中客户端负责向ResourceManager提交ApplicationMaster并查询应用程序的运行状态<br>ApplicationMaster负责向ResourceManager神器资源(以Container形式表示),并与NodeManager通信以启动各个Container<br>ApplicationMaster还得监控各个人物运行状态,并在失败时为其重新申请资源  </p>
+</blockquote>
+<p><br><br><br></p>
+<h2 id="Client设计"><a href="#Client设计" class="headerlink" title="Client设计"></a>Client设计</h2><p><img src="/2017/11/15/yarn/image-20.png" width="400px"></p>
+<p>设计出三个RPC协议</p>
+<ul>
+<li>ApplicationClientProtocol:用于Client与ResourceManager之间  </li>
+<li>ApplicationMasterProtocol:用于ApplicationMaster与ResourceManager之间  </li>
+<li>ContainerManagementProtocol:用于ApplicationMaster与NodeManager之间   </li>
+</ul>
+<h3 id="Client与RM"><a href="#Client与RM" class="headerlink" title="Client与RM"></a>Client与RM</h3><blockquote>
+<p>Client与ResourceManager通信  </p>
+</blockquote>
+<p><img src="/2017/11/15/yarn/image-21.png" width="400px">  </p>
+<ul>
+<li>Client通过RPC函数ApplicationClientProtocol#getNewApplication从ResourceManager中获取唯一的applicationId  </li>
+<li>Client通过RPC函数applicationClientProtocol#submitApplication将ApplicationMaster提交到ResourceManager上  </li>
+</ul>
+<p>之后就通过以下RPC相互交流任务情况</p>
+<p><img src="/2017/11/15/yarn/image-22.png" width="350px"><br><img src="/2017/11/15/yarn/image-23.png" width="350px"></p>
+<p><br><br><br></p>
+<h2 id="ApplicationMaster设计"><a href="#ApplicationMaster设计" class="headerlink" title="ApplicationMaster设计"></a>ApplicationMaster设计</h2><p>ApplicationMaster(AM),ResourceManager(RM),NodeManager(NM)</p>
+<h3 id="AM与RM通信"><a href="#AM与RM通信" class="headerlink" title="AM与RM通信"></a>AM与RM通信</h3><blockquote>
+<p>ApplicationMaster与ResourceManager通信流程    </p>
+</blockquote>
+<p><img src="/2017/11/15/yarn/image-11.png" width="600px"></p>
+<ul>
+<li><p>ApplicationMaster通过RPC函数ApplicationMasterProtocol#registerApplicationMaster向ResourceManager注册  </p>
+</li>
+<li><p>ApplicaitonMaster通过RPC函数ApplicationMasterProtocol#allocate向ResourceManager申请资源(以Container形式标识)</p>
+</li>
+<li><p>ApplicationMaster通过RPC函数ApplicationMasterProtocol#finishApplicationMaster告诉ResourceManager应用程序执行完毕,并退出  </p>
+</li>
+</ul>
+<blockquote>
+<p>ApplicationMaster将重复步骤2,不断为应用程序申请资源,直到资源得到满足或整个应用程序运行完成  </p>
+</blockquote>
+<p>ApplicationMaster与ResourceManager交互部分做成通用的编程库  </p>
+<p><img src="/2017/11/15/yarn/image-16.png" width="300px"></p>
+<p>两者交互的核心逻辑均有AMRMClientImpl和AMRMClientAsync实现  </p>
+<p>AMRMClientImpl是阻塞式实现即每个函数执行完成之后才返回  </p>
+<p>AMRMClientAsync则是基于AMRMClientImpl的非阻塞式实现,ApplicationMaster触发任何一个操作后,AMRMClientAsync讲它封装成事件放入事件队列后便返回,而事件的处理是由一个专门的线程池完成,从而达到了异步非阻塞  </p>
+<p>用户自己实现的ApplicationMaster则需要实现回调类AMRMClientAsync.CallbackHandler  </p>
+<p><br><br><br></p>
+<h3 id="AM与NM通信"><a href="#AM与NM通信" class="headerlink" title="AM与NM通信"></a>AM与NM通信</h3><blockquote>
+<p>ApplicationMaster与NodeManager通信流程  </p>
+</blockquote>
+<p><img src="/2017/11/15/yarn/image-12.png" width="600px"></p>
+<ul>
+<li><p>ApplicationMaster将申请到的资源二次分配给内容的任务,并通过RPC函数ContainerManagementProtocol#startContainer与对应的NodeManager通信以启动Container  </p>
+</li>
+<li><p>为了实时掌握各个Container运行状态,ApplicationMaster可通过RPC函数ContainerManagementProtocol#getContainerStatus向NodeManager询问Container运行状态,一旦发现某个Container运行失败,ApplicationMaster可尝试重新为对应的任务申请资源  </p>
+</li>
+<li><p>一旦一个Container运行完成后,ApplicationMaster可通过RPC函数ContainerManagementProtocol#stopContainer释放Container  </p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">注意,Yarn是一个资源管理系统,不仅负责分配资源,还负责回收资源</span><br><span class="line">当一个Container运行完成后,它会主动确认Container是否将对应的资源释放了</span><br><span class="line">也就是说任何一个Container运行结束后</span><br><span class="line">ApplicationMaster必须调用RPC函数(ContainerManagerProtocol#stopContainer)释放Container</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/2017/11/15/yarn/image-17.png" width="300px"></p>
+<p>ApplicationMaster与NodeManager交互的核心逻辑均有NMClientImpl和NMClientAsync实现  </p>
+<p>其中NMClientImpl是阻塞式实现,即每个函数执行完成之后返回  </p>
+<p>NMClientAsync则是基于NMClientImpl的非阻塞式实现,ApplicationMaster触发任何一个操作后,NMClientAsync将封装成事件放入事件队列后便返回 </p>
+<p>自己实现的ApplicationMaster则需要实现回调类NMClientAsync.CallbackHandler</p>
+<p><br><br><br></p>
+<h3 id="Yarn自带的AMs-除MRAM之外"><a href="#Yarn自带的AMs-除MRAM之外" class="headerlink" title="Yarn自带的AMs(除MRAM之外)"></a>Yarn自带的AMs(除MRAM之外)</h3><h4 id="DistributedShell-使用案例"><a href="#DistributedShell-使用案例" class="headerlink" title="DistributedShell 使用案例"></a>DistributedShell 使用案例</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/hadoop jar \</span><br><span class="line">share/hadoop/yarn/hadoop-yarn-application-distributeshell-*.jar \</span><br><span class="line">org.apache.hadoop.yarn.applications.distributeshell.client</span><br><span class="line">[COMMAND_OPTIONS]</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/11/15/yarn/image-18.png" width="500px"></p>
+<h4 id="Unmanaged-AM"><a href="#Unmanaged-AM" class="headerlink" title="Unmanaged AM"></a>Unmanaged AM</h4><p>在Yarn中,一个ApplicationMaster需要占用一个Container, 该Container可能位于任意的NodeManager上  </p>
+<p>给ApplicationMaster调试带来很大麻烦,所以引入Unmanaged AM,这种AM运行在客户端  </p>
+<p>不再由ResourceManager启动和销毁,用户只需在提交应用程序设置参数,Yarn便运行将ApplicationMaster运行在客户端的一个单独进程中  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/hadoop jar \</span><br><span class="line">share/hadoop/yarn/hadoop-yarn-applications-unmanaged-am-launcher-*.jar \</span><br><span class="line">org.apache.hadoop.yarn.applications.unmanagedamlauncher.unmanagedAMLauncher </span><br><span class="line">[COMMAND_OPTIONS]</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/11/15/yarn/image-19.png" width="500px"></p>
+<p><br><br><br></p>
+<h2 id="Resource-Manager"><a href="#Resource-Manager" class="headerlink" title="Resource Manager"></a>Resource Manager</h2><h3 id="Resource-Manager内部架构"><a href="#Resource-Manager内部架构" class="headerlink" title="Resource Manager内部架构"></a>Resource Manager内部架构</h3><p><img src="/2017/11/15/yarn/image-08.png" width="700px"></p>
+<h3 id="Resource-Manager相关的PRC协议"><a href="#Resource-Manager相关的PRC协议" class="headerlink" title="Resource Manager相关的PRC协议"></a>Resource Manager相关的PRC协议</h3><p><img src="/2017/11/15/yarn/image-09.png" width="700px"></p>
+<h3 id="Resource-Manager事件交互图"><a href="#Resource-Manager事件交互图" class="headerlink" title="Resource Manager事件交互图"></a>Resource Manager事件交互图</h3><p><img src="/2017/11/15/yarn/image-10.png" width="700px"></p>
+<p><br></p>
+<h3 id="ApplicationMaster管理"><a href="#ApplicationMaster管理" class="headerlink" title="ApplicationMaster管理"></a>ApplicationMaster管理</h3><p>主要由三个服务构成,分别是ApplicationMasterLauncher,AMLiveLinessMonitor和ApplicationMasterService  </p>
+<p>共同管理应用程序的ApplicationMaster的生存周期  </p>
+<blockquote>
+<p>组件功能  </p>
+</blockquote>
+<ul>
+<li>ApplicationMasterLauncher  </li>
+</ul>
+<p>既是服务也是事件处理器, 处理AMLauncherEvent类型的事件,分别请求启动一个ApplicationMaster的”LAUNCH”事件和请求清理一个ApplicationMaster的”CLEANUP”事件  </p>
+<ul>
+<li>AMLiveLinessMonitor  </li>
+</ul>
+<p>该服务周期性遍历所有应用程序的ApplicationMaster,如果一个ApplicationMaster在一定时间内未汇报心跳信息,则认为离线  </p>
+<p>它上面所有正在运行的Container被置为运行失败  </p>
+<p>如果AM运行失败,则由RM重新为它申请资源,以便能够重新分配到另一个节点上  </p>
+<ul>
+<li>ApplicationMasterService  </li>
+</ul>
+<p>主要负责处理ApplicationMaster的请求,请求包括:注册、心跳、清理三种  </p>
+<p>其中注册是ApplicationMaster启动时发生的行为,包含AM所在节点,RPC端口号和trackingURL等信息  </p>
+<p>心跳是周期性行为,包含请求资源的类型描述符,待释放的Container列表等  </p>
+<p>清理是应用程序运行结束时发送的行为,ApplicationMaster向RM发送清理应用程序请求,以回收资源和清理各种内存空间  </p>
+<p><img src="/2017/11/15/yarn/image-24.png" width="350px">  </p>
+<blockquote>
+<p>整个步骤体系  </p>
+</blockquote>
+<ul>
+<li><p>用户向Yarn RM提交应用程序,RM收到提交请求后,先向资源调度器申请用以启动AM的资源,待申请资源后,再由ApplicationMasterLauncher与对应的NodeManager通信,从而启动应用程序的ApplicationMaster  </p>
+</li>
+<li><p>AM启动完成后,ApplicationMasterLauncher会通过事件的形式,将刚刚启动的AM注册到AMLiveLinessMonitor,以启动心跳监控  </p>
+</li>
+<li><p>AM启动后,先向ApplicationMasterService注册,并将自己所在的host、端口号等信息汇报给它  </p>
+</li>
+<li><p>AM运行过程中,周期性地向ApplicationMasterService汇报心跳(“心跳”信息中包含想要申请的资源描述)  </p>
+</li>
+<li><p>ApplicationMasterService每次收到AM的心跳信息后,将通知AMLiveLinessMonitor更新该应用程序最近汇报的心跳时间  </p>
+</li>
+<li><p>当应用程序运行完成后,ApplicationMaster向ApplicationMasterService发送请求,注销自己 </p>
+</li>
+<li><p>ApplicationMasterService收到注销请求后,标注应用程序运行状态为完成,同时通知AMLiveLinessMonitor移除对它的心跳监控</p>
+</li>
+</ul>
+<p><br><br><br></p>
+<h3 id="NodeManager管理"><a href="#NodeManager管理" class="headerlink" title="NodeManager管理"></a>NodeManager管理</h3><p>NodeManager管理部分分三个服务构成,NMLiveLinessMonitor,NodesListManager,ResourceTrackerService  </p>
+<p>共同管理nodeManager的生存周期  </p>
+<p><br><br><br></p>
+<h3 id="Resource-Manager状态机"><a href="#Resource-Manager状态机" class="headerlink" title="Resource Manager状态机"></a>Resource Manager状态机</h3><p>RMContainer 状态机</p>
+<p><img src="/2017/11/15/yarn/image-15.png" width="700px"></p>
+<h2 id="资源调度器"><a href="#资源调度器" class="headerlink" title="资源调度器"></a>资源调度器</h2><p>ResourceManager中的一个插拔式服务组件,负责整个集群资源的管理和分配  </p>
+<p>MRv1仅采用了简单的FIFO调度机制分配任务  </p>
+<p>Yarn资源调度直接从MRv1基础上修改而来,提供了三种可用资源调度 </p>
+<ul>
+<li>FIFO  </li>
+<li>Capacity Scheduler  </li>
+<li>Facebook的Fair Scheduler  </li>
+</ul>
+<h3 id="调度器背景"><a href="#调度器背景" class="headerlink" title="调度器背景"></a>调度器背景</h3><p>初期Hadoop仅提供了非常简单的调度机制,FIFO先来先服务,在该调度机制下,所有作业呗统一提交到一个队列中,Hadoop按照提交顺序依次来运行这些作业  </p>
+<p>现在随着用户量越来越大,不同用户提交的应用程序往往具有不同的服务质量要求(QOS)  </p>
+<ul>
+<li>批处理,这类耗时长,如数据挖掘和机器学习  </li>
+<li>交互式作业,希望及时返回结果,如SQL查询(hive)等  </li>
+<li>生产性作业,有一定量的资源保障,如统计值计算、垃圾数据分析等  </li>
+</ul>
+<h4 id="作为事件处理器"><a href="#作为事件处理器" class="headerlink" title="作为事件处理器"></a>作为事件处理器</h4><p>YARN资源管理器实际上是事件处理器,需要处理来自外部6种Scheduler-EventType类型的时间  </p>
+<p><img src="/2017/11/15/yarn/image-13.png" width="600px"></p>
+<h2 id="NodeManager"><a href="#NodeManager" class="headerlink" title="NodeManager"></a>NodeManager</h2><p><img src="/2017/11/15/yarn/image-14.png" width="600px"></p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><ul>
+<li><a href="https://www.cnblogs.com/cxzdy/p/5494929.html" target="_blank" rel="noopener">https://www.cnblogs.com/cxzdy/p/5494929.html</a></li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2017/11/15/yarn/';
+        this.page.title = 'Yarn资源管理';
+        this.page.identifier = '2017/11/15/yarn/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

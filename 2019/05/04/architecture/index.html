@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>架构设计[思维] | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="架构设计相关思想详解笔记 
+系统设计原则高并发原则无状态应用无状态、配置文件有状态,那么应用容易水平扩展  
+拆分&amp;amp;&amp;amp;服务化如果开发人员少,资源有限,就没有必要对系统拆分(拆分商品和订单)   
+如果类似京东秒杀系统,访问量大且投入资源充足可按功能拆分系统  
+
+系统维度
+
+按照功能/业务拆分;比如商品系统、购物车、结算、订单系统等  
+
+功能维度  
+
+对于功能模块可以按照不同的业务逻辑状态再进行划分;例如要优惠券拆分优惠券创建系统、领券系统、用券系统等 
+
+读写维度  
+
+按">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系统设计原则"><span class="toc-number">1.</span> <span class="toc-text">系统设计原则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#高并发原则"><span class="toc-number">1.1.</span> <span class="toc-text">高并发原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无状态"><span class="toc-number">1.1.1.</span> <span class="toc-text">无状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拆分-amp-amp-服务化"><span class="toc-number">1.1.2.</span> <span class="toc-text">拆分&amp;&amp;服务化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#消息队列"><span class="toc-number">1.1.3.</span> <span class="toc-text">消息队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据闭环"><span class="toc-number">1.1.4.</span> <span class="toc-text">数据闭环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据缓存"><span class="toc-number">1.1.5.</span> <span class="toc-text">数据缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#浏览器缓存"><span class="toc-number">1.1.5.1.</span> <span class="toc-text">浏览器缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#App客户端缓存"><span class="toc-number">1.1.5.2.</span> <span class="toc-text">App客户端缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CDN缓存"><span class="toc-number">1.1.5.3.</span> <span class="toc-text">CDN缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx缓存"><span class="toc-number">1.1.5.4.</span> <span class="toc-text">Nginx缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#应用层缓存"><span class="toc-number">1.1.5.5.</span> <span class="toc-text">应用层缓存</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高可用原则"><span class="toc-number">1.2.</span> <span class="toc-text">高可用原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#降级"><span class="toc-number">1.2.1.</span> <span class="toc-text">降级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#限流"><span class="toc-number">1.2.2.</span> <span class="toc-text">限流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#切流量"><span class="toc-number">1.2.3.</span> <span class="toc-text">切流量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可回滚"><span class="toc-number">1.2.4.</span> <span class="toc-text">可回滚</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务设计原则"><span class="toc-number">1.3.</span> <span class="toc-text">业务设计原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#防重设计"><span class="toc-number">1.3.1.</span> <span class="toc-text">防重设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#幂等设计"><span class="toc-number">1.3.2.</span> <span class="toc-text">幂等设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#状态与状态机"><span class="toc-number">1.3.3.</span> <span class="toc-text">状态与状态机</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#隔离"><span class="toc-number">2.</span> <span class="toc-text">隔离</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程隔离"><span class="toc-number">2.1.</span> <span class="toc-text">线程隔离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进程隔离"><span class="toc-number">2.2.</span> <span class="toc-text">进程隔离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集群隔离"><span class="toc-number">2.3.</span> <span class="toc-text">集群隔离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机房隔离"><span class="toc-number">2.4.</span> <span class="toc-text">机房隔离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读写隔离"><span class="toc-number">2.5.</span> <span class="toc-text">读写隔离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动静隔离"><span class="toc-number">2.6.</span> <span class="toc-text">动静隔离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#热点隔离"><span class="toc-number">2.7.</span> <span class="toc-text">热点隔离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#资源隔离"><span class="toc-number">2.8.</span> <span class="toc-text">资源隔离</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#限流技术"><span class="toc-number">3.</span> <span class="toc-text">限流技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#限流算法"><span class="toc-number">3.1.</span> <span class="toc-text">限流算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#令牌桶"><span class="toc-number">3.1.1.</span> <span class="toc-text">令牌桶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏桶算法"><span class="toc-number">3.1.2.</span> <span class="toc-text">漏桶算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区别"><span class="toc-number">3.1.3.</span> <span class="toc-text">区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用级限流"><span class="toc-number">3.2.</span> <span class="toc-text">应用级限流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#限流总并发-总连接-总请求数"><span class="toc-number">3.2.1.</span> <span class="toc-text">限流总并发/总连接/总请求数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#限流资源数"><span class="toc-number">3.2.2.</span> <span class="toc-text">限流资源数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#限流某个接口的总并发数和请求书"><span class="toc-number">3.2.3.</span> <span class="toc-text">限流某个接口的总并发数和请求书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#限制某个接口的时间窗请求数"><span class="toc-number">3.2.4.</span> <span class="toc-text">限制某个接口的时间窗请求数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#平滑限流某个接口的请求数"><span class="toc-number">3.2.5.</span> <span class="toc-text">平滑限流某个接口的请求数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式限流"><span class="toc-number">3.2.6.</span> <span class="toc-text">分布式限流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接入层限流"><span class="toc-number">3.2.7.</span> <span class="toc-text">接入层限流</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#降级技术"><span class="toc-number">4.</span> <span class="toc-text">降级技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#自动开关降级"><span class="toc-number">4.1.</span> <span class="toc-text">自动开关降级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#超时降级"><span class="toc-number">4.1.1.</span> <span class="toc-text">超时降级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计失败次数降级"><span class="toc-number">4.1.2.</span> <span class="toc-text">统计失败次数降级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#故障降级"><span class="toc-number">4.1.3.</span> <span class="toc-text">故障降级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#限流降级"><span class="toc-number">4.1.4.</span> <span class="toc-text">限流降级</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#人工开关降级"><span class="toc-number">4.2.</span> <span class="toc-text">人工开关降级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读服务降级"><span class="toc-number">4.3.</span> <span class="toc-text">读服务降级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写服务降级"><span class="toc-number">4.4.</span> <span class="toc-text">写服务降级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多级降级"><span class="toc-number">4.5.</span> <span class="toc-text">多级降级</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#缓存技术"><span class="toc-number">5.</span> <span class="toc-text">缓存技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#缓存算法"><span class="toc-number">5.1.</span> <span class="toc-text">缓存算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LRU-Least-Recently-Used"><span class="toc-number">5.1.1.</span> <span class="toc-text">LRU(Least-Recently-Used)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LFU-Least-Frequently-Used"><span class="toc-number">5.1.2.</span> <span class="toc-text">LFU(Least-Frequently-Used)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LRU2-Least-Recently-Used2"><span class="toc-number">5.1.3.</span> <span class="toc-text">LRU2(Least-Recently-Used2)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2Q-Two-Queues"><span class="toc-number">5.1.4.</span> <span class="toc-text">2Q(Two Queues)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LRU-Threshold"><span class="toc-number">5.1.5.</span> <span class="toc-text">LRU-Threshold</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MRU-Most-Recently-Used"><span class="toc-number">5.1.6.</span> <span class="toc-text">MRU(Most Recently Used)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FIFO"><span class="toc-number">5.1.7.</span> <span class="toc-text">FIFO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomCache"><span class="toc-number">5.1.8.</span> <span class="toc-text">RandomCache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缓存回收策略"><span class="toc-number">5.2.</span> <span class="toc-text">缓存回收策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器缓存-1"><span class="toc-number">5.3.</span> <span class="toc-text">浏览器缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后端缓存"><span class="toc-number">5.4.</span> <span class="toc-text">后端缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#接入层缓存"><span class="toc-number">5.4.1.</span> <span class="toc-text">接入层缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库缓存"><span class="toc-number">5.4.2.</span> <span class="toc-text">数据库缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mysql的查询缓存"><span class="toc-number">5.4.2.1.</span> <span class="toc-text">Mysql的查询缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB缓存性能"><span class="toc-number">5.4.2.2.</span> <span class="toc-text">InnoDB缓存性能</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用级缓存"><span class="toc-number">5.4.3.</span> <span class="toc-text">应用级缓存</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            架构设计[思维]
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2019/05/04/architecture/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-05-04T05:34:46.000Z" itemprop="datePublished">2019-05-04</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>架构设计相关思想详解笔记<br><a id="more"></a> </p>
+<h1 id="系统设计原则"><a href="#系统设计原则" class="headerlink" title="系统设计原则"></a>系统设计原则</h1><h2 id="高并发原则"><a href="#高并发原则" class="headerlink" title="高并发原则"></a>高并发原则</h2><h3 id="无状态"><a href="#无状态" class="headerlink" title="无状态"></a>无状态</h3><p>应用无状态、配置文件有状态,那么应用容易水平扩展  </p>
+<h3 id="拆分-amp-amp-服务化"><a href="#拆分-amp-amp-服务化" class="headerlink" title="拆分&amp;&amp;服务化"></a>拆分&amp;&amp;服务化</h3><p>如果开发人员少,资源有限,就没有必要对系统拆分(拆分商品和订单)   </p>
+<p>如果类似京东秒杀系统,访问量大且投入资源充足可按功能拆分系统  </p>
+<ul>
+<li>系统维度</li>
+</ul>
+<p>按照功能/业务拆分;比如商品系统、购物车、结算、订单系统等  </p>
+<ul>
+<li>功能维度  </li>
+</ul>
+<p>对于功能模块可以按照不同的业务逻辑状态再进行划分;例如要优惠券拆分优惠券创建系统、领券系统、用券系统等 </p>
+<ul>
+<li>读写维度  </li>
+</ul>
+<p>按照读写不同的压力进行拆分;读的量大于写,因此拆分商品写服务、商品读服务  </p>
+<ul>
+<li>AOP维度  </li>
+</ul>
+<p>根据访问特征;比如商品详情页可以分为CDN、页面渲染模块等</p>
+<ul>
+<li>纵深维度  </li>
+</ul>
+<p>按照纵深的维度,最底层的是基础服务,最上层的是业务服务;代码结构一般按照MVC三层架构来进行划分。</p>
+<p><br></p>
+<p>随系统拆分越来越多,需要考虑服务自动注册与发行   </p>
+<p>其次还要考虑服务的分组、隔离   </p>
+<p>随着调用量增加还考虑服务的限流、黑白名单   </p>
+<p>还要一些细节上的超时时间、重试机制、服务路由(能动态切换不同分组),故障补偿等  </p>
+<p><br></p>
+<h3 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h3><blockquote>
+<p>功能:用消息队列进行服务解耦、异步处理、流量肖峰/缓冲等  </p>
+</blockquote>
+<p>如果订阅者太多,订阅单个消息队列会成为瓶颈,此时考虑对消息队列进行多个镜像复制集群  </p>
+<blockquote>
+<p>考虑的问题?</p>
+</blockquote>
+<ul>
+<li>处理生成消息失败  </li>
+<li>消息重复接收的场景  <ul>
+<li>对消息重复,业务层面需要进行防重处理   </li>
+</ul>
+</li>
+<li>有些消息队列提供重试,重试完还未成功,对不容忍失败的业务场景要做好后续的数据处理工作  <ul>
+<li>如:增加日志、报警灯</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<h3 id="数据闭环"><a href="#数据闭环" class="headerlink" title="数据闭环"></a>数据闭环</h3><p>数据闭环如商品详情页,数据来源太多,影响服务稳定性因素也多  </p>
+<p>最好的颁发就是使用到的数据进行异构存储,形成数据闭环   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">数据异构:MQ机制接收数据变更,存储到合适的存储引擎如Redis</span><br><span class="line">数据聚合:数据异构目的就是把数据多个数据源拿过来做聚合,这样前端可以调用一个拿到所有数据</span><br><span class="line">前端展示:前端通过一次货少量几次调用拿到所需要的数据</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h3 id="数据缓存"><a href="#数据缓存" class="headerlink" title="数据缓存"></a>数据缓存</h3><p><img src="/2019/05/04/architecture/image-01.png" width="500px">  </p>
+<h4 id="浏览器缓存"><a href="#浏览器缓存" class="headerlink" title="浏览器缓存"></a>浏览器缓存</h4><p>设置响应头Expires、Cache-control控制  </p>
+<p>适用于对实时性不敏感的数据,如商品详情页、广告词<br>不适用价格、库存等要求较高的数据  </p>
+<h4 id="App客户端缓存"><a href="#App客户端缓存" class="headerlink" title="App客户端缓存"></a>App客户端缓存</h4><p>App所需要的如首屏数据缓存下来,如网络异常也有客户端降级的托底数据展示给用户  </p>
+<h4 id="CDN缓存"><a href="#CDN缓存" class="headerlink" title="CDN缓存"></a>CDN缓存</h4><p>有些页面、活动页、图片等服务考虑将推送到离用户最近的CDN节点</p>
+<p>有推送机制(内容变更主动推CDN节点)和拉取机制(访问节点,当没有内容回源到服务器拿到内容缓存到节点)  </p>
+<h4 id="Nginx缓存"><a href="#Nginx缓存" class="headerlink" title="Nginx缓存"></a>Nginx缓存</h4><ul>
+<li>proxy_cache:使用内存级/SSD级代理来缓存内容</li>
+<li>proxy_cache_lock:使用lock机制,将多个回源合并一个,减少回源量,并设置lock超时时间  </li>
+</ul>
+<h4 id="应用层缓存"><a href="#应用层缓存" class="headerlink" title="应用层缓存"></a>应用层缓存</h4><p>应用部署一组Redis,先读本机的Redis获取数据,多机之间使用主从机制同步数据  </p>
+<p><img src="/2019/05/04/architecture/image-02.png" width="450px"></p>
+<ul>
+<li>先进(nginx+lua)读取本地proxy cache/local cache  </li>
+<li>如果不命中,则接入层会读取分布式Redis集群  </li>
+<li>如果还不命中,则回源到Tomcat,然后读取Tomcat应用堆内的cache  </li>
+<li>如果缓存还没命中,则调用依赖业务来获取数据,然后异步化写到Redis集群   </li>
+</ul>
+<p><br><br><br></p>
+<h2 id="高可用原则"><a href="#高可用原则" class="headerlink" title="高可用原则"></a>高可用原则</h2><h3 id="降级"><a href="#降级" class="headerlink" title="降级"></a>降级</h3><p>高可用服务,重要设计就是降级开关   </p>
+<ul>
+<li>开关集中化管理:推送机制把开关推送到各个应用  </li>
+</ul>
+<p><img src="/2019/05/04/architecture/image-05.png" width="500px"></p>
+<ul>
+<li>可降级多级读服务:服务调用降级为只读本地缓存、只读分布式缓存、只读默认降级数据     </li>
+</ul>
+<p><img src="/2019/05/04/architecture/image-04.png" width="400px"></p>
+<ul>
+<li>开关前置化:如<code>Nginx-&gt;Tomcat</code>;可以将开关前置到Nginx接入层,降级后不回源Tomcat集群或只有一小部分流量访问  </li>
+</ul>
+<p><img src="/2019/05/04/architecture/image-03.png" width="400px">    </p>
+<p><br></p>
+<h3 id="限流"><a href="#限流" class="headerlink" title="限流"></a>限流</h3><p>防止恶意请求流量、恶意攻击或防止流量超出系统峰值  </p>
+<ul>
+<li>恶意请求只访问到cache  </li>
+<li>对穿透到后端应用的流量用<code>Nginx</code>的<code>limit</code>模块处理  </li>
+<li>对恶意IP可以使用<code>nginx deny</code>进行屏蔽</li>
+</ul>
+<p><br> </p>
+<h3 id="切流量"><a href="#切流量" class="headerlink" title="切流量"></a>切流量</h3><p>多机房某个机房挂了或某个机架挂了或某台服务器挂了,都需要如下手段切流量   </p>
+<ul>
+<li><p>1:DNS 切换机房入口</p>
+</li>
+<li><p>2: HttpDns 客户端配置DNS,绕过运营商DNS  </p>
+</li>
+<li><p>3: LVS/HAProxy 切换故障的Nginx接入层 </p>
+</li>
+<li><p>4: Nginx: 切换故障的应用层  </p>
+</li>
+</ul>
+<p><br>  </p>
+<h3 id="可回滚"><a href="#可回滚" class="headerlink" title="可回滚"></a>可回滚</h3><p>版本华可审计可追溯  </p>
+<ul>
+<li>事务回滚  </li>
+<li>代码库回滚  </li>
+<li>部署版本回滚  </li>
+<li>数据版本回滚  </li>
+<li>静态资源版本回滚  </li>
+<li>应用配置回滚    </li>
+</ul>
+<p><br><br><br></p>
+<h2 id="业务设计原则"><a href="#业务设计原则" class="headerlink" title="业务设计原则"></a>业务设计原则</h2><h3 id="防重设计"><a href="#防重设计" class="headerlink" title="防重设计"></a>防重设计</h3><p>如下单扣库存需要防止重复扣减库存,解决方案考虑防重Key、防重表  </p>
+<h3 id="幂等设计"><a href="#幂等设计" class="headerlink" title="幂等设计"></a>幂等设计</h3><p>消息中间件基本不保证不发重复消息  </p>
+<p>因此重复消息等接口需要设计幂等处理  </p>
+<h3 id="状态与状态机"><a href="#状态与状态机" class="headerlink" title="状态与状态机"></a>状态与状态机</h3><p>交易系统设计中订单状态(待付款、待发货、已发货、完成)和逆向状态(取消、退款)  </p>
+<p>考虑要不要使用状态机来驱动状态的变更和后续流程节点操作,尤其是状态很多的时候使用状态机能够更好地控制状态迁移    </p>
+<p><img src="/2019/05/04/architecture/image-06.png" width="600px"></p>
+<p><br><br><br></p>
+<h1 id="隔离"><a href="#隔离" class="headerlink" title="隔离"></a>隔离</h1><h2 id="线程隔离"><a href="#线程隔离" class="headerlink" title="线程隔离"></a>线程隔离</h2><p>线程隔离主要指线程池隔离,将请求分类交给不同的线程池处理,当一种业务的请求处理发送问题,不会将故障扩散带其他线程池,从而保证其他服务可用  </p>
+<p><img src="/2019/05/04/architecture/image-07.png" width="600px"></p>
+<p><br></p>
+<h2 id="进程隔离"><a href="#进程隔离" class="headerlink" title="进程隔离"></a>进程隔离</h2><p>刚开始都是从零到一做系统,而不是上来就系统拆分,这样开发出的大而全系统,系统中某个功能/模块出现问题,整个系统就不可用了  </p>
+<p>解决方案是部署多个实例,通过均衡负责进行转发,但无法避免某个Bug导致系统不可用的风险  </p>
+<p>因此较好的方案是拆分多个子系统实现物理隔离,通过进程隔离使得某个子系统出现问题时不会应影响到其他子系统  </p>
+<p><img src="/2019/05/04/architecture/image-08.png" width="600px"></p>
+<p><br></p>
+<h2 id="集群隔离"><a href="#集群隔离" class="headerlink" title="集群隔离"></a>集群隔离</h2><p>随系统发展需要服务化技术,通过部署多个服务形成的服务集群,来提升系统容量,多个服务集群进行隔离  </p>
+<p><img src="/2019/05/04/architecture/image-09.png" width="300px">  </p>
+<p><br></p>
+<h2 id="机房隔离"><a href="#机房隔离" class="headerlink" title="机房隔离"></a>机房隔离</h2><p>当一个机房服务发送问题时,DNS/负载均衡将请求全部切换另一个机房  </p>
+<p><img src="/2019/05/04/architecture/image-10.png" width="150px"></p>
+<p><br></p>
+<h2 id="读写隔离"><a href="#读写隔离" class="headerlink" title="读写隔离"></a>读写隔离</h2><p>通过主从模式将读和写集群分离,读服务只从Redis集群获取数据,当主Redis集群出现问题,从Redis集群还是可用,从而不影响用户  </p>
+<p><img src="/2019/05/04/architecture/image-11.png" width="300px"></p>
+<p><br></p>
+<h2 id="动静隔离"><a href="#动静隔离" class="headerlink" title="动静隔离"></a>动静隔离</h2><p>JS/CSS静态资源放入CDN,  </p>
+<p><img src="/2019/05/04/architecture/image-12.png" width="100px"></p>
+<p><br></p>
+<h2 id="热点隔离"><a href="#热点隔离" class="headerlink" title="热点隔离"></a>热点隔离</h2><p>秒杀、抢购属于非常适合的热点例子   </p>
+<p>对于这类热点应用将秒杀和抢购做成独立系统或服务进行隔离,从而保证秒杀和抢购不影响主流程  </p>
+<p><br></p>
+<h2 id="资源隔离"><a href="#资源隔离" class="headerlink" title="资源隔离"></a>资源隔离</h2><p>常见的CPU、磁盘、内存资源都存在竞争问题  </p>
+<p>使用Docker容器虚拟化进行资源隔离  </p>
+<p><br><br><br></p>
+<h1 id="限流技术"><a href="#限流技术" class="headerlink" title="限流技术"></a>限流技术</h1><h2 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h2><p>常见的限流算法有:令牌桶、漏铜、计数器(粗暴限流实现)  </p>
+<h3 id="令牌桶"><a href="#令牌桶" class="headerlink" title="令牌桶"></a>令牌桶</h3><ul>
+<li>假设限制2r/s,则按照500毫秒的固定速率往桶中添加令牌  </li>
+<li>桶中最多存放b个令牌,当桶满时,新添加的令牌被丢弃或拒绝 </li>
+<li>当一个n个字节大小的数据包到达,将从桶中删除n个令牌,接着数据包被发送到网络上  </li>
+<li>如果桶中的令牌不足n个,则不会删除令牌,且该数据包被限流(要么丢弃,要么缓冲区等待)  </li>
+</ul>
+<p><img src="/2019/05/04/architecture/image-13.png" width="350px"></p>
+<p><br></p>
+<h3 id="漏桶算法"><a href="#漏桶算法" class="headerlink" title="漏桶算法"></a>漏桶算法</h3><p>漏铜作为计量工具,可用于流量整形和流量控制  </p>
+<ul>
+<li>一个固定容量的漏桶,按照常量固定速率流出水滴  </li>
+<li>如果桶是空的,则不需要流出水滴  </li>
+<li>可以以任意速率流入水滴到漏桶 </li>
+<li>如果流入水滴超出了桶的容量,则流入的水滴溢出(被丢弃),而漏桶容量是不变的  </li>
+</ul>
+<p><img src="/2019/05/04/architecture/image-14.png" width="350px"></p>
+<p><br></p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
+<li>令牌桶允许突发请求,只要有令牌就可以处理,支持一次拿3个令牌或4个令牌,并允许一定程度的突发流量  </li>
+<li>漏桶限制的是常量流出速率,流入请求速率任意,当流入的请求数累积到漏桶容量,则新流入的请求被拒绝  </li>
+</ul>
+<p><br>  </p>
+<h2 id="应用级限流"><a href="#应用级限流" class="headerlink" title="应用级限流"></a>应用级限流</h2><h3 id="限流总并发-总连接-总请求数"><a href="#限流总并发-总连接-总请求数" class="headerlink" title="限流总并发/总连接/总请求数"></a>限流总并发/总连接/总请求数</h3><p>Tomcat的Connector其中一种配置如下几个参数  </p>
+<ul>
+<li><p>acceptCount:如果Tomcat线程都忙响应,新来的连接会进入队列排队,超出队列大小拒绝连接  </p>
+</li>
+<li><p>macConnections:瞬时最大连接数,超出会排队等待  </p>
+</li>
+<li><p>maxThreads:Tomcat能启动用来处理请求最大线程数,如果请求处理量一直远远大于最大线程数,会引起响应变慢甚至僵死  </p>
+</li>
+</ul>
+<p><br>  </p>
+<h3 id="限流资源数"><a href="#限流资源数" class="headerlink" title="限流资源数"></a>限流资源数</h3><p>对数据库连接、线程采用池技术管理来限制总资源数,如连接池、线程池  </p>
+<p><br></p>
+<h3 id="限流某个接口的总并发数和请求书"><a href="#限流某个接口的总并发数和请求书" class="headerlink" title="限流某个接口的总并发数和请求书"></a>限流某个接口的总并发数和请求书</h3><p>采用Java的<code>AtomicLong</code>或<code>Semaphore</code>进行限流  </p>
+<p>Hystrix在信号量模式也使用了<code>Semaphore</code>限制某个接口的总并发数  </p>
+<p><br>  </p>
+<h3 id="限制某个接口的时间窗请求数"><a href="#限制某个接口的时间窗请求数" class="headerlink" title="限制某个接口的时间窗请求数"></a>限制某个接口的时间窗请求数</h3><p>即一个时间窗口内的请求数,如限制某个接口/服务每秒/每分钟/每天的请求数  </p>
+<p><img src="/2019/05/04/architecture/image-15.png" width="400px"></p>
+<p><br></p>
+<h3 id="平滑限流某个接口的请求数"><a href="#平滑限流某个接口的请求数" class="headerlink" title="平滑限流某个接口的请求数"></a>平滑限流某个接口的请求数</h3><p>之前的限流不能很好的应对突发请求,即瞬间请求可能都被允许,从而导致一些问题,即没有进行平均速率请求处理  </p>
+<p>使用Guava的<code>RateLimiter</code>提供的令牌桶算法可用于<code>平滑突发限流</code>和<code>平滑预热限流</code>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RateLimiter limiter = Ratelimiter.create(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(limiter.acquire());</span><br><span class="line">System.out.println(limiter.acquire());</span><br><span class="line">System.out.println(limiter.acquire());</span><br><span class="line">System.out.println(limiter.acquire());</span><br><span class="line">System.out.println(limiter.acquire());</span><br></pre></td></tr></table></figure>
+<ul>
+<li>1:<code>Ratelimiter.create(5);</code>表示桶容量为5,每秒新增5个令牌,即每隔200毫秒新增一个令牌  </li>
+<li>2:<code>limiter.acquire()</code>,表示消费一个令牌,如果当前桶有足够令牌,则成功(返回值为0),如果桶中没有令牌,则暂停一段时间(返回值为暂停的时间数量)  </li>
+</ul>
+<p><br></p>
+<h3 id="分布式限流"><a href="#分布式限流" class="headerlink" title="分布式限流"></a>分布式限流</h3><p>Nginx+Lua实现复杂的令牌桶或漏桶算法,从而进行分布式口子上的限流  </p>
+<p><img src="/2019/05/04/architecture/image-16.png" width="400px"><br><br></p>
+<h3 id="接入层限流"><a href="#接入层限流" class="headerlink" title="接入层限流"></a>接入层限流</h3><p>接入层指请求流量入口,该层主要目的有:负载均衡、非法请求过滤、请求聚合、缓存、降级、A/B测试、服务质量监控  </p>
+<p>对Nginx接入层限流可以使用Nginx自带的两个模块:连接数限流<code>ngx_http_limit_conn_module</code>或漏桶算法实现的请求限流<code>ngx_http_limit_req_module</code>  </p>
+<p><br><br><br></p>
+<h1 id="降级技术"><a href="#降级技术" class="headerlink" title="降级技术"></a>降级技术</h1><ul>
+<li><p>降级按照是否自动化可分为:<code>自动开关降级</code>和<code>人工开关降级</code>  </p>
+</li>
+<li><p>降级按照功能可分为:<code>读服务降级</code>和<code>写服务降级</code>  </p>
+</li>
+<li><p>降级按照处于系统层次可分为:<code>多级降级</code>  </p>
+</li>
+</ul>
+<h2 id="自动开关降级"><a href="#自动开关降级" class="headerlink" title="自动开关降级"></a>自动开关降级</h2><p>自动降级根据系统负载、资源使用情况、SLA等指标进行降级  </p>
+<h3 id="超时降级"><a href="#超时降级" class="headerlink" title="超时降级"></a>超时降级</h3><p>当访问数据/http响应慢, 且该服务不是核心服务可以在超时后自动降级  </p>
+<p>比如商品详情页上有推荐内容/评价  </p>
+<p><br></p>
+<h3 id="统计失败次数降级"><a href="#统计失败次数降级" class="headerlink" title="统计失败次数降级"></a>统计失败次数降级</h3><p>依赖不稳定API,比如调用外部机票服务,当失败调用次数达到一定阈值自动降级(熔断器),然后异步线程去探测服务是否恢复了,恢复则取消降级  </p>
+<p><br></p>
+<h3 id="故障降级"><a href="#故障降级" class="headerlink" title="故障降级"></a>故障降级</h3><p>如果远程服务(网络故障、DNS故障、HTTP服务返回错误的状态码、RPC服务抛出异常)直接降级  </p>
+<p>降级后处理方案:默认值、兜底数据(比如广告、提前准备好的静态页面)、缓存(之前访问暂存的一些缓存数据)、降级数据池</p>
+<p><br></p>
+<h3 id="限流降级"><a href="#限流降级" class="headerlink" title="限流降级"></a>限流降级</h3><p>因访问了过大而导致系统崩溃,开发者会使用限流限制访问量,后续请求就会被降级  </p>
+<p>降级页面处理方案: <code>排队页面</code>,<code>无货</code>,<code>错误页</code></p>
+<p><br></p>
+<h2 id="人工开关降级"><a href="#人工开关降级" class="headerlink" title="人工开关降级"></a>人工开关降级</h2><p>开关存放在配置文件、数据库、Redis/Zookeeper,定期同步开关数据,通过判断Key的值来决定是否降级  </p>
+<p><br></p>
+<h2 id="读服务降级"><a href="#读服务降级" class="headerlink" title="读服务降级"></a>读服务降级</h2><p>读降级一般采用的策略   </p>
+<ul>
+<li>暂时切换读(降级到读缓存、降级到走静态化)  </li>
+<li>暂时屏蔽读(屏蔽读入口、屏蔽某个读服务)  </li>
+</ul>
+<p>还有页面静态化  </p>
+<p>平时网站走动态化渲染商品详情页,到了大促来临之际将其切换为静态化来减少对核心资源的占用,从而提升性能<br>通过一个程序定期推送静态页到缓存或者生产到磁盘,出问题时直接切过去  </p>
+<p><br></p>
+<h2 id="写服务降级"><a href="#写服务降级" class="headerlink" title="写服务降级"></a>写服务降级</h2><p>写服务大多数场景是不可降级的,不过可以将同步操作转为异步操作,或者限制写的量/比例  </p>
+<p>正常情况下为同步扣除库存,在性能扛不住时,降级为异步操作  </p>
+<p>例如秒杀场景可以直接降级为异步,从而保护系统<br>如下单操作可在大促销时暂时降级,将下单数据写入Redis,等峰值过去再同步回DB  </p>
+<p><br></p>
+<h2 id="多级降级"><a href="#多级降级" class="headerlink" title="多级降级"></a>多级降级</h2><p>缓存是离用户越近越高效,而降级是离用户越近对系统保护得越好  </p>
+<ul>
+<li><p>页面JS降级开关:主要控制页面功能的降级,在JS脚本部署功能降级开关,在适当实际开关  </p>
+</li>
+<li><p>接入层降级开关:主要控制请求入口的降级,请求进入后会首先进入接入层,接入层可配种功能降级开关,根据实际情况进行人工/自动降级  </p>
+</li>
+<li><p>应用层降级开关:主要控制业务的降级,在应用中配置相应的功能开关,根据实际业务情况进行自动/人工降级  </p>
+</li>
+</ul>
+<p><br><br><br></p>
+<h1 id="缓存技术"><a href="#缓存技术" class="headerlink" title="缓存技术"></a>缓存技术</h1><p>缓存是系统快速响应中的关键技术,是一组被保存起来以备将来使用的东西  </p>
+<p><br></p>
+<h2 id="缓存算法"><a href="#缓存算法" class="headerlink" title="缓存算法"></a>缓存算法</h2><p>缓存技术专用术语  </p>
+<ul>
+<li><code>缓存命中</code>:请求的数据在缓存中</li>
+<li><code>没有命中</code>:<code>cache miss</code>如果缓存中有存储空间,没有命中的对象会被存储到缓存中  </li>
+<li><code>存储成本</code>:当数据存放缓存所需要的时间和空间就是成本  </li>
+<li><code>缓存失效</code>:当存储在缓存中的数据需要更新,意味着缓存中的数据失效了  </li>
+<li><code>替代策略</code>:当缓存没有命中,缓存容量也满了,就需要缓存移除旧数据再加新数据  </li>
+</ul>
+<h3 id="LRU-Least-Recently-Used"><a href="#LRU-Least-Recently-Used" class="headerlink" title="LRU(Least-Recently-Used)"></a>LRU(Least-Recently-Used)</h3><p>替换最近请求最少的对象, 在CPU缓存淘汰和虚拟内存系统中效果最好  </p>
+<h3 id="LFU-Least-Frequently-Used"><a href="#LFU-Least-Frequently-Used" class="headerlink" title="LFU(Least-Frequently-Used)"></a>LFU(Least-Frequently-Used)</h3><p>替换访问次数最少的缓存,保留最常用、最流行的对象  </p>
+<h3 id="LRU2-Least-Recently-Used2"><a href="#LRU2-Least-Recently-Used2" class="headerlink" title="LRU2(Least-Recently-Used2)"></a>LRU2(Least-Recently-Used2)</h3><p>LRU的变种,两次访问过的对象放入缓存池,池满后把两次最少使用的缓存对象去除  </p>
+<h3 id="2Q-Two-Queues"><a href="#2Q-Two-Queues" class="headerlink" title="2Q(Two Queues)"></a>2Q(Two Queues)</h3><p>把访问数据放入LRU缓存中,如果对象再访问就转移第二个、更大的LRU缓存<br>去除缓存对象为保持第一个缓存池是第二个缓存池的1/3,当缓存的访问负载是固定时候,LRU换成LRU2  </p>
+<h3 id="LRU-Threshold"><a href="#LRU-Threshold" class="headerlink" title="LRU-Threshold"></a>LRU-Threshold</h3><p>不缓存超过某一Size的对象,其他和LRU相同  </p>
+<h3 id="MRU-Most-Recently-Used"><a href="#MRU-Most-Recently-Used" class="headerlink" title="MRU(Most Recently Used)"></a>MRU(Most Recently Used)</h3><p>MRU与LRU相对,移除最近使用最多的对象  </p>
+<h3 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h3><p>FIFO通过队列跟踪所有缓存对象,容量满的时候排在前面的缓存会被踢走    </p>
+<h3 id="RandomCache"><a href="#RandomCache" class="headerlink" title="RandomCache"></a>RandomCache</h3><p>随机缓存,随意的替换缓存数据  </p>
+<p><br></p>
+<h2 id="缓存回收策略"><a href="#缓存回收策略" class="headerlink" title="缓存回收策略"></a>缓存回收策略</h2><ul>
+<li>基于空间  </li>
+</ul>
+<p>基于空间指缓存设置了存储空间,如设置为10MB,当达到存储空间上限时,按照一定的策略移除数据  </p>
+<ul>
+<li>基于容量  </li>
+</ul>
+<p>基于容量指缓存设置了最大大小,当缓存的条目超过最大大小时,按照一定的策略移除旧数据  </p>
+<ul>
+<li><p>基于时间  </p>
+<ul>
+<li>TTL:存活期,即缓存数据从创建开始直到到期的一个时间段(缓存数据都将过期)  </li>
+<li>TTI:空闲期,即缓存数据多久没被访问后移除缓存的时间  </li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<h2 id="浏览器缓存-1"><a href="#浏览器缓存-1" class="headerlink" title="浏览器缓存"></a>浏览器缓存</h2><p>HTTP 1.1引入实体标签<code>E-TAG</code>, <code>E-TAG</code>是文件或对象的唯一标识,这意味着可以请求一个资源以及提供所持有的文件  </p>
+<p><img src="/2019/05/04/architecture/image-17.png" width="300px">  </p>
+<p>如果某一个文件的<code>E-TAG</code>是有效,那么服务器会生成<code>304-Not Modified</code>应答(浏览器直接从本地缓存取数据)<br>否则会发送<code>200-OK</code>应答(如果数据有变化,将整个数据重新发给浏览器)  </p>
+<p><code>Last-Modified/ETag</code>与<code>Cache-Control/Expires</code>的作用是不一样的,如果检测到本地缓存还在有效的时间范围内,浏览器则直接使用本地缓存,不会发送任何请求  </p>
+<p>两者在一起使用时,<code>Cache-Control/Expires</code>的优先级要高于<code>Last-modified/ETag</code> (即当本地副本数据根据<code>Cache-Control/Expires</code>发现还在有效期内,则不会发送请求去询问服务器修改时间<code>Last-Modified</code>或标签实体<code>E-Tag</code>)  </p>
+<p><img src="/2019/05/04/architecture/image-18.png" width="500px"></p>
+<p><br></p>
+<h2 id="后端缓存"><a href="#后端缓存" class="headerlink" title="后端缓存"></a>后端缓存</h2><h3 id="接入层缓存"><a href="#接入层缓存" class="headerlink" title="接入层缓存"></a>接入层缓存</h3><p>Nginx+Lua配合Redis可以在网关进行缓存操作  </p>
+<p><br></p>
+<h3 id="数据库缓存"><a href="#数据库缓存" class="headerlink" title="数据库缓存"></a>数据库缓存</h3><h4 id="Mysql的查询缓存"><a href="#Mysql的查询缓存" class="headerlink" title="Mysql的查询缓存"></a>Mysql的查询缓存</h4><p><code>Query Cache</code>作用于整个Mysql实例,主要用于缓存Mysql中的ResultSet,也就是一条Sql语句执行的结果集,所以仅仅只能针对于Select语句  </p>
+<blockquote>
+<p><code>Query Cache</code>流程 </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Mysql会根据直接预先设定好的Hash算法将接收到的Select语句以字符串方式进行Hash</span><br><span class="line">然后到QueryCache中查找是否已经缓存</span><br><span class="line">如果已经有结果在缓存中,该Select请求就会直接将数据返回,从而省略后面的步骤,从而极大提高性能</span><br></pre></td></tr></table></figure>
+<p>当然数据变化频繁使用<code>Query Cache</code>可能得不偿失  </p>
+<ul>
+<li><code>query_cache_size</code>:缓存ResultSet的内存大小  </li>
+<li><code>query_cache_type</code>:设置在任何场景下使用<code>QueryCache</code>  </li>
+</ul>
+<h4 id="InnoDB缓存性能"><a href="#InnoDB缓存性能" class="headerlink" title="InnoDB缓存性能"></a>InnoDB缓存性能</h4><p><code>innodb_buffer_pool_size</code>是影响性能的关键参数  </p>
+<blockquote>
+<p>用来设置缓存InnoDB索引及数据块的内存区域大小  </p>
+</blockquote>
+<p>当操作一个InnoDB表的时候,返回的所有数据或查询过程中用到的任何一个索引块,都会在这个内存区域中查询一遍  </p>
+<p><code>table_cache</code>是Mysql重要的性能参数 </p>
+<blockquote>
+<p>主要用于设置table高速缓存的数量  </p>
+</blockquote>
+<p>当某一连接访问表的时候,Mysql先检查当前已经缓存表的数量,如果已经在缓存中,则直接访问缓存中的表加快查询速度,如果未被缓存则将当前表添加进缓存并进行查询  </p>
+<p><br></p>
+<h3 id="应用级缓存"><a href="#应用级缓存" class="headerlink" title="应用级缓存"></a>应用级缓存</h3><blockquote>
+<p>多级缓存的系统架构  </p>
+</blockquote>
+<p><img src="/2019/05/04/architecture/image-19.png" width="500px"></p>
+<p>Nginx应用服务器读取本地缓存,实现本地缓存方式<code>Lua Shared Dict</code>,或者面向磁盘或内存的<code>Nginx Proxy Cache</code>,以及本地的Redis实现等 </p>
+<p>如果本地缓存命中直接返回,如果本地缓存没有命中,就会进一步读取相应的分布式缓存<code>Redis分布式缓存集群</code>  </p>
+<p>如果分布式缓存命中则直接返回响应数据,并回写到Nginx应用服务器的本地缓存中  </p>
+<p>如果<code>Redis分布式缓存集群</code>也没有命中,就会回源到<code>Tomcat集群</code>,在回源到<code>Tomcat集群</code>也使用轮询和一致性哈希作为负载均衡算法</p>
+<p>在<code>Tomcat集群</code>应用中首先读取本都平台级缓存,如果平台级缓存命中则直接返回数据,并会同步写到主Redis集群,然后再同步到从Redis集群  </p>
+<p>如果所有缓存都没有命中,则只能查询数据库或者相关的服务获取相关数据并返回,当然数据库也是有缓存的  </p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2019/05/04/architecture/';
+        this.page.title = '架构设计[思维]';
+        this.page.identifier = '2019/05/04/architecture/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

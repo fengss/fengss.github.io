@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>在线云Debug[项目篇] | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="在线云Debug系统
+项目背景基本背景复杂的微服务系统Debug或者调试问题的时候非常麻烦,主要有以下几点
+
+线上系统出现一些问题但是没有相关日志记录。
+线上线下环境隔离,线上无法回放当时的具体栈帧细节,得全靠日志猜。
+交付测试的时候遇到低概率事件,没打日志需要打日志重启再看。
+开发联调环境,单独自己Remote Debugger会阻塞其他正常服务流程和开发。
+无法分析调用链上的细节数据、虽然有分布式链路追踪系统,但是粒度太粗。
+每次调试预发布环境代码,只能修改一份重启环境、浪费时间和开发机资源">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#项目背景"><span class="toc-number">1.</span> <span class="toc-text">项目背景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本背景"><span class="toc-number">1.1.</span> <span class="toc-text">基本背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目一期版本功能"><span class="toc-number">1.2.</span> <span class="toc-text">项目一期版本功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目愿景"><span class="toc-number">1.3.</span> <span class="toc-text">项目愿景</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目结构"><span class="toc-number">2.</span> <span class="toc-text">项目结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent"><span class="toc-number">2.1.</span> <span class="toc-text">Agent</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">2.1.1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JavaAgent"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">JavaAgent</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#PreMain"><span class="toc-number">2.1.1.1.1.</span> <span class="toc-text">PreMain</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Transformer"><span class="toc-number">2.1.1.1.2.</span> <span class="toc-text">Transformer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Demo"><span class="toc-number">2.1.1.1.3.</span> <span class="toc-text">Demo</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JVMTIAgent"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">JVMTIAgent</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#JVMTI的历史"><span class="toc-number">2.1.1.2.1.</span> <span class="toc-text">JVMTI的历史</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JVMTI的功能"><span class="toc-number">2.1.1.2.2.</span> <span class="toc-text">JVMTI的功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JVMTI的实现"><span class="toc-number">2.1.1.2.3.</span> <span class="toc-text">JVMTI的实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#资料参考"><span class="toc-number">2.1.1.2.4.</span> <span class="toc-text">资料参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DebugAgent"><span class="toc-number">2.1.2.</span> <span class="toc-text">DebugAgent</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RPC-Service"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">RPC Service</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Plugin-Service"><span class="toc-number">2.1.2.2.</span> <span class="toc-text">Plugin Service</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cache-Service"><span class="toc-number">2.1.2.3.</span> <span class="toc-text">Cache Service</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Storage-Service"><span class="toc-number">2.1.2.4.</span> <span class="toc-text">Storage Service</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JVMTI"><span class="toc-number">2.1.2.5.</span> <span class="toc-text">JVMTI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#UI-Service"><span class="toc-number">2.1.2.6.</span> <span class="toc-text">UI Service</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Server"><span class="toc-number">2.2.</span> <span class="toc-text">Server</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Rpc-Module"><span class="toc-number">2.2.1.</span> <span class="toc-text">Rpc Module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cache-Module"><span class="toc-number">2.2.2.</span> <span class="toc-text">Cache Module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UI-Module"><span class="toc-number">2.2.3.</span> <span class="toc-text">UI Module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Storage-Module"><span class="toc-number">2.2.4.</span> <span class="toc-text">Storage Module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Meta-Module-amp-Cluster-Module"><span class="toc-number">2.2.5.</span> <span class="toc-text">Meta Module &amp; Cluster Module</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenTracing"><span class="toc-number">3.</span> <span class="toc-text">OpenTracing</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#名词解释"><span class="toc-number">3.1.</span> <span class="toc-text">名词解释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Trace"><span class="toc-number">3.1.1.</span> <span class="toc-text">Trace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Span"><span class="toc-number">3.1.2.</span> <span class="toc-text">Span</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tags"><span class="toc-number">3.1.3.</span> <span class="toc-text">Tags</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logs"><span class="toc-number">3.1.4.</span> <span class="toc-text">Logs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpanContext"><span class="toc-number">3.1.5.</span> <span class="toc-text">SpanContext</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Baggage-Items"><span class="toc-number">3.1.6.</span> <span class="toc-text">Baggage Items</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Debug-Opentracing"><span class="toc-number">3.2.</span> <span class="toc-text">Debug Opentracing</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            在线云Debug[项目篇]
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2019/10/25/debugos/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-10-25T12:47:32.000Z" itemprop="datePublished">2019-10-25</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/debug/">debug</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>在线云Debug系统<br><a id="more"></a></p>
+<h1 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h1><h2 id="基本背景"><a href="#基本背景" class="headerlink" title="基本背景"></a>基本背景</h2><p>复杂的微服务系统Debug或者调试问题的时候非常麻烦,主要有以下几点</p>
+<ul>
+<li>线上系统出现一些问题但是没有相关日志记录。</li>
+<li>线上线下环境隔离,线上无法回放当时的具体栈帧细节,得全靠日志猜。</li>
+<li>交付测试的时候遇到低概率事件,没打日志需要打日志重启再看。</li>
+<li>开发联调环境,单独自己Remote Debugger会阻塞其他正常服务流程和开发。</li>
+<li>无法分析调用链上的细节数据、虽然有分布式链路追踪系统,但是粒度太粗。</li>
+<li>每次调试预发布环境代码,只能修改一份重启环境、浪费时间和开发机资源。无法做到实时热加载最新修改代码</li>
+</ul>
+<h2 id="项目一期版本功能"><a href="#项目一期版本功能" class="headerlink" title="项目一期版本功能"></a>项目一期版本功能</h2><p>基于<code>JVMTI</code>接口并参考大量以往开源项目<code>Stackdriver Debugger</code>, <code>Zdebugger</code>, <code>libinstrument</code>, <code>Arthas</code>等</p>
+<ul>
+<li>调试: 断点表达式、断点达成录制快照、快照后期回放、映射<code>source tree</code>展开与包跳转、即时修改并<code>redefineClass</code></li>
+<li>分析: <code>Trace</code>某方法内部调用链路情况(时间、出入参)、<code>Stack</code>某方法被调用的各链路情况(时间、入参)</li>
+</ul>
+<p>以上功能解决了基本的项目背景遇到的问题 </p>
+<blockquote>
+<p>先做单机版本、后期再尝试做集群版(集群<code>Opentracing</code>分布式链路追踪、集群<code>DebugTrace</code>分布式调试追踪、集群分布式<code>Metric</code>)</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1: 接入pinpoint丰富span数据</span><br><span class="line"></span><br><span class="line">- rpc或db操作将会形成span最后串联成trace,基于以上形成的span,丰富每个span内部各个method调用的链路情况(出入参及时间消耗)</span><br><span class="line">- 根据表达式成立的情况,进行span调用节点数据丰富</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2: 热加载class</span><br><span class="line"></span><br><span class="line">- 提供外部热加载class入口</span><br><span class="line">- 根据git commit推送hook,自动获取commit信息中含有&quot;[debug]&quot;信息所涉及的class热加载替换</span><br></pre></td></tr></table></figure>
+<h2 id="项目愿景"><a href="#项目愿景" class="headerlink" title="项目愿景"></a>项目愿景</h2><ul>
+<li>开发一期功能Alpha(宋小菜开发联调、宋小菜测试环境预装)</li>
+<li>一期功能修补Bug后进入Beta、并推入开源社区</li>
+<li>经过开源社区的公开Issue提供Bug修补进入RC</li>
+<li>进行部分性能影响功能点阉割后发布一期功能的1.0Release </li>
+</ul>
+<h1 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h1><blockquote>
+<p>Agent端:放置应用端,做应用层数据录制搜集和上报服务端,<code>RedefineClasses</code>代码, 接受Server端的远程操作等<br>Server端:做数据整理功能和数据的查询服务,以及操作<code>Agent</code>端的代码与配置推送等</p>
+</blockquote>
+<h2 id="Agent"><a href="#Agent" class="headerlink" title="Agent"></a>Agent</h2><blockquote>
+<p>设计轮廓 </p>
+</blockquote>
+<ul>
+<li><p>Agent技术,无需开发任何介入,对业务是无侵入,即可在部署的时候加入调试追踪、链路追踪等功能</p>
+</li>
+<li><p>Agent插件系统强大,基本符合开发常用的所有技术栈链路监控和调试,也可自定义相关的追踪业务插件</p>
+</li>
+</ul>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><h4 id="JavaAgent"><a href="#JavaAgent" class="headerlink" title="JavaAgent"></a>JavaAgent</h4><p><img src="/2019/10/25/debugos/image-03.png" width="500px"> </p>
+<p>jdk1.5以后引入了javaAgent技术,javaAgent是运行方法之前的拦截器。</p>
+<p>我们利用javaAgent和ASM字节码技术,在JVM加载class二进制文件的时候.</p>
+<p>比如利用ASM动态的修改加载的class文件,在监控的方法前后添加计时器功能.用于计算监控方法耗时</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Instrumentation</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//增加一个Class 文件的转换器，转换器用于改变 Class 二进制流的数据，参数 canRetransform 设置是否允许重新转换。</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addTransformer</span><span class="params">(ClassFileTransformer transformer, <span class="keyword">boolean</span> canRetransform)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//在类加载之前，重新定义 Class 文件，ClassDefinition 表示对一个类新的定义，如果在类加载之后，需要使用 retransformClasses 方法重新定义。addTransformer方法配置之后，后续的类加载都会被Transformer拦截。对于已经加载过的类，可以执行retransformClasses来重新触发这个Transformer的拦截。类加载的字节码被修改后，除非再次被retransform，否则不会恢复。</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addTransformer</span><span class="params">(ClassFileTransformer transformer)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//删除一个类转换器</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">removeTransformer</span><span class="params">(ClassFileTransformer transformer)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isRetransformClassesSupported</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//在类加载之后，重新定义 Class。这个很重要，该方法是1.6 之后加入的，事实上，该方法是 update 了一个类。</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">retransformClasses</span><span class="params">(Class&lt;?&gt;... classes)</span> <span class="keyword">throws</span> UnmodifiableClassException</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isRedefineClassesSupported</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">redefineClasses</span><span class="params">(ClassDefinition... definitions)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span>  ClassNotFoundException, UnmodifiableClassException</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isModifiableClass</span><span class="params">(Class&lt;?&gt; theClass)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"rawtypes"</span>)</span><br><span class="line">    Class[] getAllLoadedClasses();</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"rawtypes"</span>)</span><br><span class="line">    Class[] getInitiatedClasses(ClassLoader loader);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取一个对象的大小</span></span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">getObjectSize</span><span class="params">(Object objectToSize)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">appendToBootstrapClassLoaderSearch</span><span class="params">(JarFile jarfile)</span></span>;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">appendToSystemClassLoaderSearch</span><span class="params">(JarFile jarfile)</span></span>;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isNativeMethodPrefixSupported</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setNativeMethodPrefix</span><span class="params">(ClassFileTransformer transformer, String prefix)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="PreMain"><a href="#PreMain" class="headerlink" title="PreMain"></a>PreMain</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> agent;</span><br><span class="line"><span class="keyword">import</span> java.lang.instrument.Instrumentation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">pre_MyProgram</span> </span>&#123;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 该方法在main方法之前运行，与main方法运行在同一个JVM中</span></span><br><span class="line"><span class="comment">     * 并被同一个System ClassLoader装载</span></span><br><span class="line"><span class="comment">     * 被统一的安全策略(security policy)和上下文(context)管理</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> agentOps</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> inst</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> SHANHY</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@create</span>  2016年3月30日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentOps,Instrumentation inst)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        System.out.println(<span class="string">"====premain 方法执行"</span>);</span><br><span class="line">        System.out.println(agentOps);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 添加Transformer</span></span><br><span class="line">        inst.addTransformer(<span class="keyword">new</span> MyTransformer());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如果不存在 premain(String agentOps, Instrumentation inst) </span></span><br><span class="line"><span class="comment">     * 则会执行 premain(String agentOps)</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> agentOps</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> SHANHY</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@create</span>  2016年3月30日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentOps)</span></span>&#123;</span><br><span class="line">       </span><br><span class="line">       System.out.println(<span class="string">"====premain方法执行2===="</span>);</span><br><span class="line">       System.out.println(agentOps);</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub   </span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTransformer</span> <span class="keyword">implements</span> <span class="title">ClassFileTransformer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">static</span> String prefix = <span class="string">"\nlong startTime = System.currentTimeMillis();\n"</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">static</span> String postfix = <span class="string">"\nlong endTime = System.currentTimeMillis();\n"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 被处理的方法列表</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">static</span> Map&lt;String, List&lt;String&gt;&gt; methodMap = <span class="keyword">new</span> HashMap&lt;String, List&lt;String&gt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyTransformer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        add(<span class="string">"com.shanhy.demo.TimeTest.sayHello"</span>);</span><br><span class="line">        add(<span class="string">"com.shanhy.demo.TimeTest.sayHello2"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String methodString)</span> </span>&#123;</span><br><span class="line">        String className = methodString.substring(<span class="number">0</span>, methodString.lastIndexOf(<span class="string">"."</span>));</span><br><span class="line">        String methodName = methodString.substring(methodString.lastIndexOf(<span class="string">"."</span>) + <span class="number">1</span>);</span><br><span class="line">        List&lt;String&gt; list = methodMap.get(className);</span><br><span class="line">        <span class="keyword">if</span> (list == <span class="keyword">null</span>) &#123;</span><br><span class="line">            list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">            methodMap.put(className, list);</span><br><span class="line">        &#125;</span><br><span class="line">        list.add(methodName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">byte</span>[] transform(ClassLoader loader, String className, Class&lt;?&gt; classBeingRedefined,</span><br><span class="line">            ProtectionDomain protectionDomain, <span class="keyword">byte</span>[] classfileBuffer) <span class="keyword">throws</span> IllegalClassFormatException &#123;</span><br><span class="line">        className = className.replace(<span class="string">"/"</span>, <span class="string">"."</span>);</span><br><span class="line">        <span class="keyword">if</span> (methodMap.containsKey(className)) &#123;<span class="comment">// 判断加载的class的包路径是不是需要监控的类</span></span><br><span class="line">            CtClass ctclass = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                ctclass = ClassPool.getDefault().get(className);<span class="comment">// 使用全称,用于取得字节码类&lt;使用javassist&gt;</span></span><br><span class="line">                <span class="keyword">for</span> (String methodName : methodMap.get(className)) &#123;</span><br><span class="line">                    String outputStr = <span class="string">"\nSystem.out.println(\"this method "</span> + methodName</span><br><span class="line">                            + <span class="string">" cost:\" +(endTime - startTime) +\"ms.\");"</span>;</span><br><span class="line"></span><br><span class="line">                    CtMethod ctmethod = ctclass.getDeclaredMethod(methodName);<span class="comment">// 得到这方法实例</span></span><br><span class="line">                    String newMethodName = methodName + <span class="string">"$old"</span>;<span class="comment">// 新定义一个方法叫做比如sayHello$old</span></span><br><span class="line">                    ctmethod.setName(newMethodName);<span class="comment">// 将原来的方法名字修改</span></span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 创建新的方法，复制原来的方法，名字为原来的名字</span></span><br><span class="line">                    CtMethod newMethod = CtNewMethod.copy(ctmethod, methodName, ctclass, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 构建新的方法体</span></span><br><span class="line">                    StringBuilder bodyStr = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">                    bodyStr.append(<span class="string">"&#123;"</span>);</span><br><span class="line">                    bodyStr.append(prefix);</span><br><span class="line">                    bodyStr.append(newMethodName + <span class="string">"($$);\n"</span>);<span class="comment">// 调用原有代码，类似于method();($$)表示所有的参数</span></span><br><span class="line">                    bodyStr.append(postfix);</span><br><span class="line">                    bodyStr.append(outputStr);</span><br><span class="line">                    bodyStr.append(<span class="string">"&#125;"</span>);</span><br><span class="line"></span><br><span class="line">                    newMethod.setBody(bodyStr.toString());<span class="comment">// 替换新方法</span></span><br><span class="line">                    ctclass.addMethod(newMethod);<span class="comment">// 增加新方法</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> ctclass.toBytecode();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                System.out.println(e.getMessage());</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        sayHello();</span><br><span class="line">        sayHello2(<span class="string">"hello world222222222"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            System.out.println(<span class="string">"hello world!!"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sayHello2</span><span class="params">(String hello)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            System.out.println(hello);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">====premain 方法执行</span><br><span class="line">Hello1</span><br><span class="line">====premain 方法执行</span><br><span class="line">Hello2</span><br><span class="line"></span><br><span class="line">hello world!!</span><br><span class="line"><span class="keyword">this</span> method sayHello cost:<span class="number">2000</span>ms.</span><br><span class="line">hello world222222222</span><br><span class="line"><span class="keyword">this</span> method sayHello2 cost:<span class="number">1000</span>ms.</span><br></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<h4 id="JVMTIAgent"><a href="#JVMTIAgent" class="headerlink" title="JVMTIAgent"></a>JVMTIAgent</h4><blockquote>
+<p>JVMTI的定义及原理</p>
+</blockquote>
+<p>在介绍JVMTI之前,需要先了解下Java平台调试体系JPDA<code>Java Platform Debugger Architecture</code>。</p>
+<p>它是Java虚拟机为调试和监控虚拟机专门提供的一套接口。</p>
+<p>JPDA按照抽象层次，又分为三层，分别是：</p>
+<ul>
+<li>JVM TI（Java VM Tool Interface）：虚拟机对外暴露的接口，包括debug和profile。</li>
+<li>JDWP（Java Debug Wire Protocol）：调试器和应用之间通信的协议。</li>
+<li>JDI（Java Debug Interface）：Java库接口，实现了JDWP协议的客户端，调试器可以用来和远程被调试应用通信。</li>
+</ul>
+<p>如下图所示JPDA被抽象为三层实现。其中JVMTI就是JVM对外暴露的接口。JDI是实现了JDWP通信协议的客户端,调试器通过它和JVM中被调试程序通信。</p>
+<p><img src="/2019/10/25/debugos/image-04.png" width="300px"></p>
+<p>JVMTI 本质上是在JVM内部的许多事件进行了埋点。</p>
+<p>通过这些埋点可以给外部提供当前上下文的一些信息。甚至可以接受外部的命令来改变下一步的动作。</p>
+<p>外部程序一般利用C/C++实现一个JVMTIAgent,在Agent里面注册一些JVM事件的回调。</p>
+<p>当事件发生时JVMTI调用这些回调方法。Agent可以在回调方法里面实现自己的逻辑。</p>
+<p>JVMTIAgent是以动态链接库的形式被虚拟机加载的。</p>
+<h5 id="JVMTI的历史"><a href="#JVMTI的历史" class="headerlink" title="JVMTI的历史"></a>JVMTI的历史</h5><p>JVMTI 的前身是JVMDI<code>Java Virtual Machine Profiler Interface</code> 和 JVMPI<code>Java Virtual Machine Debug Interface</code>,它们原来分别被用于提供调试 Java 程序以及 Java 程序调节性能的功能。</p>
+<p>在 J2SE 5.0 之后 JDK 取代了JVMDI 和 JVMPI 这两套接口，JVMDI 在最新的 Java SE 6 中已经不提供支持，而 JVMPI 也计划在 Java SE 7 后被彻底取代。</p>
+<h5 id="JVMTI的功能"><a href="#JVMTI的功能" class="headerlink" title="JVMTI的功能"></a>JVMTI的功能</h5><p>JVMTI处于整个JPDA 体系的最底层,所有调试功能本质上都需要通过 JVMTI 来提供。</p>
+<p>从大的方面来说,JVMTI 提供了可用于 debug 和profiler 的接口;同时在 Java 5/6 中虚拟机接口也增加了监听<code>Monitoring</code>,</p>
+<p>线程分析<code>Thread analysis</code>以及覆盖率分析<code>Coverage Analysis</code>等功能。</p>
+<p>从小的方面来说包含了虚拟机中线程、内存、堆、栈、类、方法、变量，事件、定时器处理等等诸多功能。</p>
+<p>具体可以参考oracle 的文档：<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html。" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html。</a></p>
+<p>通过这些接口开发人员不仅可以调试在该虚拟机上运行的 Java 程序,还能查看它们运行的状态,设置回调函数,控制某些环境变量从而优化程序性能。</p>
+<h5 id="JVMTI的实现"><a href="#JVMTI的实现" class="headerlink" title="JVMTI的实现"></a>JVMTI的实现</h5><p>JVMTI 并不一定在所有的 Java 虚拟机上都有实现,不同的虚拟机的实现也不尽相同。</p>
+<p>不过在一些主流的虚拟机中比如 Sun 和 IBM,以及一些开源的如Apache Harmony DRLVM 中,都提供了标准 JVMTI 实现。</p>
+<h5 id="资料参考"><a href="#资料参考" class="headerlink" title="资料参考"></a>资料参考</h5><p><a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html</a></p>
+<p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-jpda2/" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/java/j-lo-jpda2/</a></p>
+<p><a href="http://blog.caoxudong.info/blog/2017/12/07/jvmti_reference" target="_blank" rel="noopener">http://blog.caoxudong.info/blog/2017/12/07/jvmti_reference</a></p>
+<p><a href="http://lovestblog.cn/blog/2015/09/14/javaagent/" target="_blank" rel="noopener">http://lovestblog.cn/blog/2015/09/14/javaagent/</a></p>
+<p><a href="https://www.jianshu.com/p/e59c4eed44a2" target="_blank" rel="noopener">https://www.jianshu.com/p/e59c4eed44a2</a></p>
+<blockquote>
+<p>功能</p>
+</blockquote>
+<ul>
+<li>内存管理<ul>
+<li>分配 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#Allocate" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#Allocate</a>)</li>
+<li>解除分配 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#Deallocate" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#Deallocate</a>)</li>
+</ul>
+</li>
+<li>线程<ul>
+<li>获取线程状态 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadState" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadState</a>)</li>
+<li>获取所有线程 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetAllThreads" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetAllThreads</a>)</li>
+<li>挂起线程 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SuspendThread" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SuspendThread</a>)</li>
+<li>挂起线程列表 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SuspendThreadList" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SuspendThreadList</a>)</li>
+<li>恢复线程 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#ResumeThread" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#ResumeThread</a>)</li>
+<li>恢复线程列表 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#ResumeThreadList" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#ResumeThreadList</a>)</li>
+<li>停止线程 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#StopThread" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#StopThread</a>)</li>
+<li>中断线程 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#InterruptThread" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#InterruptThread</a>)</li>
+<li>获取线程信息 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadInfo" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadInfo</a>)</li>
+<li>获取自己的监视器信息 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetOwnedMonitorInfo" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetOwnedMonitorInfo</a>)</li>
+<li>获取当前的竞争监视器 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetCurrentContendedMonitor" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetCurrentContendedMonitor</a>)</li>
+<li>运行代理线程 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RunAgentThread" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RunAgentThread</a>)</li>
+<li>设置线程本地存储 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetThreadLocalStorage" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetThreadLocalStorage</a>)</li>
+<li>获取线程本地存储 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadLocalStorage" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadLocalStorage</a>)</li>
+</ul>
+</li>
+<li>线程组<ul>
+<li>获取顶线程组 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetTopThreadGroups" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetTopThreadGroups</a>)</li>
+<li>获取线程组信息 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadGroupInfo" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadGroupInfo</a>)</li>
+<li>获取线程组子线程 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadGroupChildren" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadGroupChildren</a>)</li>
+</ul>
+</li>
+<li>栈帧<ul>
+<li>获取堆栈跟踪 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetStackTrace" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetStackTrace</a>)</li>
+<li>获取所有堆栈跟踪 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetAllStackTraces" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetAllStackTraces</a>)</li>
+<li>获取线程列表堆栈跟踪 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadListStackTraces" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadListStackTraces</a>)</li>
+<li>获取帧数 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetFrameCount" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetFrameCount</a>)</li>
+<li>pop帧 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#PopFrame" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#PopFrame</a>)</li>
+<li>获取帧位置 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetFrameLocation" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetFrameLocation</a>)</li>
+<li>通知帧pop (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#NotifyFramePop" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#NotifyFramePop</a>)</li>
+</ul>
+</li>
+<li>堆<ul>
+<li>获取对象标签 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetTag" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetTag</a>)</li>
+<li>设置对象标签 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetTag" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetTag</a>)</li>
+<li>强制垃圾收集 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#ForceGarbageCollection" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#ForceGarbageCollection</a>)</li>
+<li>遍历可从对象到达的对象 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IterateOverObjectsReachableFromObject" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IterateOverObjectsReachableFromObject</a>)</li>
+<li>遍历可到达的对象 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IterateOverReachableObjects" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IterateOverReachableObjects</a>)</li>
+<li>遍历堆 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IterateOverHeap" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IterateOverHeap</a>)</li>
+<li>遍历类的实例 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IterateOverInstancesOfClass" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IterateOverInstancesOfClass</a>)</li>
+<li>获取带有标签的对象 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetObjectsWithTags" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetObjectsWithTags</a>)</li>
+</ul>
+</li>
+<li>局部变量<ul>
+<li>获取局部变量-对象 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalObject" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalObject</a>)</li>
+<li>获取局部变量-整数 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalInt" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalInt</a>)</li>
+<li>获取局部变量-长 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalLong" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalLong</a>)</li>
+<li>获取局部变量-浮点数 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalFloat" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalFloat</a>)</li>
+<li>获取局部变量-双精度 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalDouble" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalDouble</a>)</li>
+</ul>
+</li>
+<li>断点 <ul>
+<li>设定断点 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetBreakpoint" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetBreakpoint</a>)</li>
+<li>清除断点 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#ClearBreakpoint" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#ClearBreakpoint</a>)</li>
+</ul>
+</li>
+<li>监视字段<ul>
+<li>设置字段访问监视 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetFieldAccessWatch" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetFieldAccessWatch</a>)</li>
+<li>清除字段访问监视 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#ClearFieldAccessWatch" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#ClearFieldAccessWatch</a>)</li>
+<li>设置字段修改监视 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetFieldModificationWatch" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetFieldModificationWatch</a>)</li>
+<li>清除视野修改监视 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalObject" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalObject</a>)</li>
+</ul>
+</li>
+<li>类<ul>
+<li>获取加载的类 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLoadedClasses" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLoadedClasses</a>)</li>
+<li>获取类加载器类 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassLoaderClasses" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassLoaderClasses</a>)</li>
+<li>获取类签名 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassSignature" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassSignature</a>)</li>
+<li>获取类状态 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassStatus" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassStatus</a>)</li>
+<li>获取源文件名 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetSourceFileName" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetSourceFileName</a>)</li>
+<li>获取类修饰符 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassModifiers" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassModifiers</a>)</li>
+<li>获取类方法 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassMethods" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassMethods</a>)</li>
+<li>获取类字段 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassFields" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassFields</a>)</li>
+<li>获取已实现的接口 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetImplementedInterfaces" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetImplementedInterfaces</a>)</li>
+<li>是否为接口 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IsInterface" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IsInterface</a>)</li>
+<li>是数组类 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IsArrayClass" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#IsArrayClass</a>)</li>
+<li>获取类加载器 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassLoader" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetClassLoader</a>)</li>
+<li>获取源代码调试扩展 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetSourceDebugExtension" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetSourceDebugExtension</a>)</li>
+<li>重新定义类(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RedefineClasses" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RedefineClasses</a>)</li>
+</ul>
+</li>
+<li>对象<ul>
+<li>获取对象大小 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetObjectSize" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetObjectSize</a>)</li>
+<li>获取对象哈希码 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetObjectHashCode" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetObjectHashCode</a>)</li>
+<li>获取对象监视器使用情况(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetObjectMonitorUsage" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetObjectMonitorUsage</a>)</li>
+</ul>
+</li>
+<li>字段<ul>
+<li>获取字段名称(和签名) (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetFieldName" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetFieldName</a>)</li>
+<li>获取字段声明类 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetFieldDeclaringClass" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetFieldDeclaringClass</a>)</li>
+<li>获取字段修饰符 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetFieldModifiers" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetFieldModifiers</a>)</li>
+</ul>
+</li>
+<li>方法<ul>
+<li>获取方法名称（和签名）(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetMethodName" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetMethodName</a>)</li>
+<li>获取方法声明类(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetMethodDeclaringClass" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetMethodDeclaringClass</a>)</li>
+<li>获取方法修饰符(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetMethodModifiers" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetMethodModifiers</a>)</li>
+<li>获取Max Locals(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetMaxLocals" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetMaxLocals</a>)</li>
+<li>获取参数大小(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetArgumentsSize" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetArgumentsSize</a>)</li>
+<li>获取行号表(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLineNumberTable" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLineNumberTable</a>)</li>
+<li>获取方法位置(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetMethodLocation" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetMethodLocation</a>)</li>
+<li>获取局部变量表(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalVariableTable" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetLocalVariableTable</a>)</li>
+<li>获取字节码(<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetBytecodes" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetBytecodes</a>)</li>
+</ul>
+</li>
+<li>监视器<ul>
+<li>创建监视器 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#CreateRawMonitor" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#CreateRawMonitor</a>)</li>
+<li>销毁监视器 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#DestroyRawMonitor" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#DestroyRawMonitor</a>)</li>
+<li>监视器输入 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RawMonitorEnter" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RawMonitorEnter</a>)</li>
+<li>监视器出口 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RawMonitorExit" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RawMonitorExit</a>)</li>
+<li>监视器等待 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RawMonitorWait" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RawMonitorWait</a>)</li>
+<li>监视器通知 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RawMonitorNotify" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RawMonitorNotify</a>)</li>
+<li>监视器通知所有 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RawMonitorNotifyAll" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#RawMonitorNotifyAll</a>)</li>
+</ul>
+</li>
+<li>JNI功能拦截<ul>
+<li>设置JNI功能表</li>
+<li>获取JNI功能表</li>
+</ul>
+</li>
+<li>事件管理<ul>
+<li>设置事件回调 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetEventCallbacks" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#SetEventCallbacks</a>)<ul>
+<li>Breakpoint</li>
+<li>Class File Load Hook</li>
+<li>Class Load</li>
+<li>Class Prepare</li>
+<li>Compiled Method Load</li>
+<li>Compiled Method Unload</li>
+<li>Data Dump Request</li>
+<li>Dynamic Code Generated</li>
+<li>Exception</li>
+<li>Exception Catch</li>
+<li>Field Access</li>
+<li>Field Modification</li>
+<li>Frame Pop</li>
+<li>Garbage Collection Finish</li>
+<li>Garbage Collection Start</li>
+<li>Method Entry</li>
+<li>Method Exit</li>
+<li>Monitor Contended Enter</li>
+<li>Monitor Contended Entered</li>
+<li>Monitor Wait</li>
+<li>Monitor Waited</li>
+<li>Native Method Bind</li>
+<li>Object Free</li>
+<li>Single Step</li>
+<li>Thread End</li>
+<li>Thread Start</li>
+<li>VM Death Event</li>
+<li>VM Initialization Event</li>
+<li>VM Object Allocation</li>
+<li>VM Start Event</li>
+</ul>
+</li>
+<li>设置事件通知模式</li>
+</ul>
+</li>
+<li>计时器<ul>
+<li>获取当前线程CPU计时器信息 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetCurrentThreadCpuTimerInfo" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetCurrentThreadCpuTimerInfo</a>)</li>
+<li>获取当前线程的CPU时间 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetCurrentThreadCpuTime" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetCurrentThreadCpuTime</a>)</li>
+<li>获取线程CPU计时器信息 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadCpuTimerInfo" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadCpuTimerInfo</a>)</li>
+<li>获取线程CPU时间 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadCpuTime" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetThreadCpuTime</a>)</li>
+<li>获取计时器信息 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetTimerInfo" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetTimerInfo</a>)</li>
+<li>获取时间 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetTime" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetTime</a>)</li>
+<li>获取可用的处理器 (<a href="https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetAvailableProcessors" target="_blank" rel="noopener">https://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/jvmti.html#GetAvailableProcessors</a>)</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<hr>
+
+<h3 id="DebugAgent"><a href="#DebugAgent" class="headerlink" title="DebugAgent"></a>DebugAgent</h3><blockquote>
+<p>本工程借鉴了<code>SkyWalking</code>, <code>Apollo</code>, <code>Arthas</code>等结构和逻辑代码</p>
+</blockquote>
+<p><img src="/2019/10/25/debugos/image-01.png" width="900px"></p>
+<blockquote>
+<p>上图经过更改优化成下图结构形式<br>逻辑全在JavaAgent端上,JVMTIAgent只做相关的非libstrument标准之外的Jvm接口操作  </p>
+</blockquote>
+<p><img src="/2019/10/25/debugos/image-05.jpg" width="700px"></p>
+<p><br></p>
+<h4 id="RPC-Service"><a href="#RPC-Service" class="headerlink" title="RPC Service"></a>RPC Service</h4><p>Grpc通信通道,主要将Leveldb搜集上来的数据进行上报Server以及接受Server上的操作</p>
+<blockquote>
+<p>Server端操作 </p>
+</blockquote>
+<ul>
+<li>各个插件的启动和关闭</li>
+<li>插件的各个单独配置<ul>
+<li>如StackDebugPlugin临时表达式的建立,取消等操作</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Server端数据汇报</p>
+</blockquote>
+<ul>
+<li>上报各个插件的获取的业务数据</li>
+</ul>
+<h4 id="Plugin-Service"><a href="#Plugin-Service" class="headerlink" title="Plugin Service"></a>Plugin Service</h4><p>插件服务,主要的逻辑点,搜集怎样的数据主要由Plugin来提供支持,后期根据业务可以制定各类搜集插件 </p>
+<ul>
+<li><p>PluginBoostrap 插件启动器</p>
+</li>
+<li><p>PluginFinder 插件检索器 </p>
+</li>
+<li><p>PluginImpl 各类插件的业务逻辑实现</p>
+</li>
+</ul>
+<h4 id="Cache-Service"><a href="#Cache-Service" class="headerlink" title="Cache Service"></a>Cache Service</h4><p>缓存服务,主要用于汇报数据的时候防止产生大量数据后推送占用服务器带宽、所以需要有缓存来慢慢推数据 </p>
+<h4 id="Storage-Service"><a href="#Storage-Service" class="headerlink" title="Storage Service"></a>Storage Service</h4><p>存储服务,将用于防止缓存数据占用过大、导致服务器内存出现oom-kill</p>
+<p>以一定量内存数据在没有Rpc推送的情况下将会把插件上报数据慢慢推入本地磁盘</p>
+<h4 id="JVMTI"><a href="#JVMTI" class="headerlink" title="JVMTI"></a>JVMTI</h4><p>基于jvmti接口,封装部分逻辑操作或直接使用透操作接口、提供上层业务Plugin插件服务支持</p>
+<h4 id="UI-Service"><a href="#UI-Service" class="headerlink" title="UI Service"></a>UI Service</h4><p>当前Agent搜集情况以及插件启动与配置情况</p>
+<p><br></p>
+<hr>
+
+<h2 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h2><p><img src="/2019/10/25/debugos/image-02.jpg" width="900px"></p>
+<p>借鉴SkyWalking,多Module多Provier </p>
+<p>不同Module负责不同的功能领域, 一个Module下不同的Provider提供不同的能力 </p>
+<p><img src="/2019/10/25/debugos/image-06.png" width="800px"></p>
+<h3 id="Rpc-Module"><a href="#Rpc-Module" class="headerlink" title="Rpc Module"></a>Rpc Module</h3><ul>
+<li>Grpc通信接收Agent端的插件数据</li>
+</ul>
+<h3 id="Cache-Module"><a href="#Cache-Module" class="headerlink" title="Cache Module"></a>Cache Module</h3><p>基于Opentracing数据模型 </p>
+<blockquote>
+<p>单个Trace中,Span间的时间关系</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–&gt; time</span><br><span class="line"></span><br><span class="line">[Span A···················································]</span><br><span class="line">     [Span B··············································]</span><br><span class="line">         [Span D··········································]</span><br><span class="line">           [Span C········································]</span><br><span class="line">               [Span E···] [Span F··] [Span G··] [Span H··]</span><br></pre></td></tr></table></figure>
+<p>堆栈信息将切割具体的<code>一次方法调用</code>的<code>Span</code>,然后Agent将汇报以Span为维度的数据</p>
+<p>由于网络不稳定,先后顺序形成的<code>Stack Debug Trace调用链数据</code>需要靠Server来构建 </p>
+<p>所以将会有以下结构图 </p>
+<p><img src="/2019/10/25/debugos/image-08.jpg" width="800px"></p>
+<h3 id="UI-Module"><a href="#UI-Module" class="headerlink" title="UI Module"></a>UI Module</h3><p>以堆栈数据格式输出相关WebApi,前端结合Gitlab项目相关接口进行Debug回显</p>
+<h3 id="Storage-Module"><a href="#Storage-Module" class="headerlink" title="Storage Module"></a>Storage Module</h3><p>存储服务,将用于防止缓存数据占用过大、导致服务器内存出现oom-kill</p>
+<h3 id="Meta-Module-amp-Cluster-Module"><a href="#Meta-Module-amp-Cluster-Module" class="headerlink" title="Meta Module &amp; Cluster Module"></a>Meta Module &amp; Cluster Module</h3><p>后期用搜集分布式<code>Stack Debug Opentracing</code>数据及高可用 </p>
+<p><br><br><br></p>
+<h1 id="OpenTracing"><a href="#OpenTracing" class="headerlink" title="OpenTracing"></a>OpenTracing</h1><p><code>OpenTracing</code>通过提供平台无关、厂商无关的API，使得开发人员能够方便的添加(或更换)追踪系统的实现</p>
+<p>不过<code>OpenTracing</code>并不是标准。因为 CNCF 不是官方标准机构，但是它的目标是致力为分布式追踪创建更标准的 API 和工具</p>
+<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><h3 id="Trace"><a href="#Trace" class="headerlink" title="Trace"></a>Trace</h3><p>一个<code>trace</code>代表了一个事务或者流程在(分布式)系统中的执行过程</p>
+<h3 id="Span"><a href="#Span" class="headerlink" title="Span"></a>Span</h3><p>一个<code>span</code>代表在分布式系统中完成的单个工作单元。也包含其他<code>span</code>的 “引用”，这允许将多个<code>Spans</code>组合成一个完整的<code>Trace</code></p>
+<p>每个<code>span</code>根据<code>OpenTracing</code>规范封装以下内容：</p>
+<ul>
+<li>操作名称</li>
+<li>开始时间和结束时间</li>
+<li>key:value span Tags</li>
+<li>key:value span Logs</li>
+<li>SpanContext</li>
+</ul>
+<h3 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h3><p><code>Span tags</code>(跨度标签)可以理解为用户自定义的<code>Span</code>注释。便于查询、过滤和理解跟踪数据</p>
+<h3 id="Logs"><a href="#Logs" class="headerlink" title="Logs"></a>Logs</h3><p><code>Span logs</code>(跨度日志)可以记录<code>Span</code>内特定时间或事件的日志信息。主要用于捕获特定<code>Span</code>的日志信息以及应用程序本身的其他调试或信息输出</p>
+<h3 id="SpanContext"><a href="#SpanContext" class="headerlink" title="SpanContext"></a>SpanContext</h3><p><code>SpanContext</code>代表跨越进程边界，传递到子级<code>Span</code>的状态。常在追踪示意图中创建上下文时使用</p>
+<h3 id="Baggage-Items"><a href="#Baggage-Items" class="headerlink" title="Baggage Items"></a>Baggage Items</h3><p><code>Baggage Items</code>可以理解为<code>trace</code>全局运行中额外传输的数据集合</p>
+<h2 id="Debug-Opentracing"><a href="#Debug-Opentracing" class="headerlink" title="Debug Opentracing"></a>Debug Opentracing</h2><p><img src="/2019/10/25/debugos/image-09.jpg" width="900px"></p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2019/10/25/debugos/';
+        this.page.title = '在线云Debug[项目篇]';
+        this.page.identifier = '2019/10/25/debugos/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
