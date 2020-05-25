@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>恶意代码分析之旅 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="恶意代码分析笔记知识详解笔记
+简介恶意代码类型
+后门
+
+安装到一台计算机允许攻击者访问,通常让攻击者只需很少认证甚至无需认证即可访问链接远程计算机,并在本地系统执行命令
+
+僵尸网络 
+
+与后门类似,是指采用一种或多种传播手段，将大量主机感染bot程序（僵尸程序）病毒，从而在控制者和被感染主机之间所形成的一个可一对多控制的网络 
+
+下载器 
+
+用来下载其他恶意代码的恶意代码
+
+间谍软件 
+
+从受害计算机上搜集信息并发送给攻击者的恶意代码
+嗅探器,密码哈希采集器 ,键盘记录器等, 来获取在线网银、E">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/book">计划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核/">Windows内核</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows内核驱动/">Windows内核驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码类型"><span class="toc-number">1.1.</span> <span class="toc-text">恶意代码类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码分析技术"><span class="toc-number">1.2.</span> <span class="toc-text">恶意代码分析技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码分析通用规则"><span class="toc-number">1.3.</span> <span class="toc-text">恶意代码分析通用规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#静态分析基础技术"><span class="toc-number">2.</span> <span class="toc-text">静态分析基础技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#反病毒引起扫描"><span class="toc-number">2.1.</span> <span class="toc-text">反病毒引起扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希值-恶意代码的指纹"><span class="toc-number">2.2.</span> <span class="toc-text">哈希值: 恶意代码的指纹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找字符串"><span class="toc-number">2.3.</span> <span class="toc-text">查找字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加壳与混淆恶意代码"><span class="toc-number">2.4.</span> <span class="toc-text">加壳与混淆恶意代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件加壳"><span class="toc-number">2.4.1.</span> <span class="toc-text">文件加壳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PEiD检测加壳"><span class="toc-number">2.4.2.</span> <span class="toc-text">PEiD检测加壳</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PE文件"><span class="toc-number">2.5.</span> <span class="toc-text">PE文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链接库与函数"><span class="toc-number">2.6.</span> <span class="toc-text">链接库与函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#静态链接、动态链接"><span class="toc-number">2.6.1.</span> <span class="toc-text">静态链接、动态链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#导入函数"><span class="toc-number">2.6.2.</span> <span class="toc-text">导入函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#导出函数"><span class="toc-number">2.6.3.</span> <span class="toc-text">导出函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态分析技术实践"><span class="toc-number">2.7.</span> <span class="toc-text">静态分析技术实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PotentialKeylogger-exe-一个未加壳的可执行文件"><span class="toc-number">2.7.1.</span> <span class="toc-text">PotentialKeylogger.exe 一个未加壳的可执行文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PackedProgram-exe-穷途末路"><span class="toc-number">2.7.2.</span> <span class="toc-text">PackedProgram.exe 穷途末路</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            恶意代码分析之旅
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2020/05/25/malicious-code/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-05-25T05:41:15.000Z" itemprop="datePublished">2020-05-25</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/Linux/">Linux</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>恶意代码分析笔记知识详解笔记<br><a id="more"></a></p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h2 id="恶意代码类型"><a href="#恶意代码类型" class="headerlink" title="恶意代码类型"></a>恶意代码类型</h2><ul>
+<li>后门</li>
+</ul>
+<p>安装到一台计算机允许攻击者访问,通常让攻击者只需很少认证甚至无需认证即可访问链接远程计算机,并在本地系统执行命令</p>
+<ul>
+<li>僵尸网络 </li>
+</ul>
+<p>与后门类似,是指采用一种或多种传播手段，将大量主机感染bot程序（僵尸程序）病毒，从而在控制者和被感染主机之间所形成的一个可一对多控制的网络 </p>
+<ul>
+<li>下载器 </li>
+</ul>
+<p>用来下载其他恶意代码的恶意代码</p>
+<ul>
+<li>间谍软件 </li>
+</ul>
+<p>从受害计算机上搜集信息并发送给攻击者的恶意代码</p>
+<p><code>嗅探器</code>,<code>密码哈希采集器</code> ,<code>键盘记录器</code>等, 来获取在线网银、E-mail等账号的访问信息</p>
+<ul>
+<li>启动器</li>
+</ul>
+<p>启用其他恶意程序的恶意代码, 非传统技术来启动以确保其隐蔽性,或者以更高权限访问系统</p>
+<ul>
+<li>内核套件 </li>
+</ul>
+<p>设计用来隐藏其他恶意代码的恶意代码</p>
+<ul>
+<li>勒索软件 </li>
+</ul>
+<p>加密重要计算机资料,购买支付用以消除</p>
+<ul>
+<li>蠕虫、计算机病毒 </li>
+</ul>
+<p>自我复制和感染其他计算机的恶意代码 </p>
+<h2 id="恶意代码分析技术"><a href="#恶意代码分析技术" class="headerlink" title="恶意代码分析技术"></a>恶意代码分析技术</h2><ul>
+<li>静态分析基础技术 </li>
+</ul>
+<p>检查可执行文件但不查看具体指令</p>
+<ul>
+<li>动态分析基础技术 </li>
+</ul>
+<p>运行恶意代码并观察系统上的行为,以移除感染,产生有效的检测特征码<br>在运行之前需要建立一个安全环境,能够让你避免对你的系统与网络带来风险的前提下,研究允许的恶意代码</p>
+<ul>
+<li>静态分析高级技术 </li>
+</ul>
+<p>主要对恶意代码内部机制逆向工程 </p>
+<p>通过可执行文件装在反汇编器上,查看程序指令, 来发现恶意代码做了什么<br>需要掌握汇编语言、代码结构、windows操作系统概念等专业知识</p>
+<ul>
+<li>动态分析高级技术 </li>
+</ul>
+<p>使用调试器来检查一个恶意可执行程序允许时刻的内部状态</p>
+<h2 id="恶意代码分析通用规则"><a href="#恶意代码分析通用规则" class="headerlink" title="恶意代码分析通用规则"></a>恶意代码分析通用规则</h2><p>不要陷入细节, 大多数恶意程序是庞大而复杂; 当遇到困难和复杂代码段后,进入细节之前有个概要性了解 </p>
+<p>记住对于不同的工作任务, 可以使用不同的工具和方法, 没有通吃的方法, 每一种情况都是不同的</p>
+<p>如果使用一个工具没有很好的运气,那就尝试另一种工具, 在一个点卡住,就不要花太长时间在这个点上, 尝试转移问题;</p>
+<p>用不同角度来分析恶意代码或尝试不同方法 </p>
+<h1 id="静态分析基础技术"><a href="#静态分析基础技术" class="headerlink" title="静态分析基础技术"></a>静态分析基础技术</h1><p>如何对可执行文件提取有用信息的多种方法 </p>
+<ul>
+<li>使用反病毒软件确认程序样本的恶意性</li>
+<li>使用哈希来识别恶意代码 </li>
+<li>文件的字符串列表、函数和文件案头信息中发掘有用信息 </li>
+</ul>
+<h2 id="反病毒引起扫描"><a href="#反病毒引起扫描" class="headerlink" title="反病毒引起扫描"></a>反病毒引起扫描</h2><p>拿多个反病毒软件扫描这个文件, 看是否有哪个引擎已经能够识别它, 杀毒软件主要依靠已知恶意代码可识别片段的特征数据库(病毒文件特征库), 以及基于行为与模式匹配的分析(启发式检测)来识别可疑文件 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">恶意代码编写者很容易地修改自己的代码,从而改变这些程序的特征, 来躲避反病毒引起的检测 </span><br><span class="line">以及有些恶意代码根本就不在病毒文件特征库里</span><br><span class="line">最后启发式检测,尽管经常也能成功识别出一些未知恶意代码, 但仍然可以被一些新型独特的恶意代码所绕过</span><br></pre></td></tr></table></figure>
+<p>类似VirusTotal会生成病毒报告</p>
+<h2 id="哈希值-恶意代码的指纹"><a href="#哈希值-恶意代码的指纹" class="headerlink" title="哈希值: 恶意代码的指纹"></a>哈希值: 恶意代码的指纹</h2><p>哈希是一种用来唯一标识恶意代码的常用方法、恶意代码样本通过一个哈希程序,会产生出一段用于唯一标识这个样本的独特哈希值(类似指纹)</p>
+<h2 id="查找字符串"><a href="#查找字符串" class="headerlink" title="查找字符串"></a>查找字符串</h2><p>程序中的字符串就是一串可打印的字符序列; 从字符串搜索是简单的方法, 如果程序访问一个URL,就来搜索可执行文件中的可打印字符串</p>
+<h2 id="加壳与混淆恶意代码"><a href="#加壳与混淆恶意代码" class="headerlink" title="加壳与混淆恶意代码"></a>加壳与混淆恶意代码</h2><p>恶意代码编写者经常使用加壳或混淆技术,让他们的文件更难被检测或分析<br>作者尝试去隐藏其执行过程的代码 </p>
+<p>如果用strings程序来搜索发现字符串很少, 那很有可能被加壳或混淆的<br>加壳或混淆代码通常至少会包含<code>loadLibrary</code>和<code>GetPrcAddress</code>函数,用来加载和使用其他函数功能 </p>
+<h3 id="文件加壳"><a href="#文件加壳" class="headerlink" title="文件加壳"></a>文件加壳</h3><p><img src="/2020/05/25/malicious-code/image-01.png" width="500px"></p>
+<p>当加壳程序运行, 会运行一小段脱壳代码, 来解压缩加壳文件, 然后再运行脱壳后的文件 </p>
+<h3 id="PEiD检测加壳"><a href="#PEiD检测加壳" class="headerlink" title="PEiD检测加壳"></a>PEiD检测加壳</h3><p>检测加壳软件的方法使用PEiD工具,使用PEiD检测加壳的类型, 或用来链接应用程序的编译类型 </p>
+<p>PEiD工具开发和支持从2011年4月停止, 但它仍然是目前用于加壳和编译器检测的最佳工具 </p>
+<p>当一个程序被加壳完,你必须对他进行脱壳, 才能够执行进一步分析, 但脱壳国产往往是很复杂的 </p>
+<h2 id="PE文件"><a href="#PE文件" class="headerlink" title="PE文件"></a>PE文件</h2><p>可移植执行(PE)文件格式是Widnwos可执行文件、对象代码和DDL所使用的标准格式;<br>PE文件格式其实是一种数据结构,包含为Windows操作系统加载器管理可执行代码所必要的信息;<br>几乎每个在Windows系统种加载的可执行代码都是用PE文件格式 </p>
+<h2 id="链接库与函数"><a href="#链接库与函数" class="headerlink" title="链接库与函数"></a>链接库与函数</h2><p>导入函数表, 导入函数是一个程序所使用的但存储在另一程序种的那些函数,比如包哦喊了对很多程序都通用的一些代码函数库 </p>
+<p>代码库可静态链接, 也可以在运行时动态链接; </p>
+<h3 id="静态链接、动态链接"><a href="#静态链接、动态链接" class="headerlink" title="静态链接、动态链接"></a>静态链接、动态链接</h3><p>静态链接在Windows平台链接代码最不常用, 尽管在Linux程序比较常见;</p>
+<p>静态链接:当一个库被静态链接到可执行程序时, 所有这个库的代码都被复制到可执行程序种, 让执行程序增大了许多;而分析代码很难区分静态链接代码与可执行程序自身代码; 因为在PE文件头种没有迹象表明这个文件包含有链接代码 </p>
+<p>动态链接:只有当需要使用函数时,才链接到库,而不是在程序启动时就会链接 </p>
+<p>一些windowsApi允许程序员导入并没有在程序的文件头中列出链接函数,最为常见<code>LoadLibrary</code>和<code>GetProcAddress</code><br>那么如上所属, 这两个函数允许程序访问系统上任何库中的任何函数;<br>这意味着当这些函数被使用时, 你无法静态分析出可以样本程序中会链接哪些函数 </p>
+<p>PE文件头中存储了每个将被装载的库文件, 以及每个会被程序使用的函数信息 </p>
+<p>使用<code>Dependency Walker</code>工具搜索动态链接函数 </p>
+<p><img src="/2020/05/25/malicious-code/image-02.png" width="700px"></p>
+<p>以字符串作为参数的许多函数, 在他们的名字后面会包含一个A或者一个M, 如<code>CreateDirectoryW</code>;<br>它只是表明这个接受字符串参数的函数有着两个不同的版本; 以A结尾的输入参数类型为ASCII字符串,而以W解为的输入参数为宽字符字符串</p>
+<h3 id="导入函数"><a href="#导入函数" class="headerlink" title="导入函数"></a>导入函数</h3><p>PE文件头包含了可执行文件使用的特定函数相关信息;Windows函数的这些名字,可以告诉你这个可执行文件干了些什么事情,微软可通过MSDN库对Windows Api文档查阅 </p>
+<h3 id="导出函数"><a href="#导出函数" class="headerlink" title="导出函数"></a>导出函数</h3><p>与导入函数类似,Dll和Exe的导出函数, 用来与其他程序和代码进行交互时所使用的, 通常一个Dll会实现一个或多个功能函数</p>
+<h2 id="静态分析技术实践"><a href="#静态分析技术实践" class="headerlink" title="静态分析技术实践"></a>静态分析技术实践</h2><p>实战可疑的键盘记录器样本, 再分析加壳程序 </p>
+<h3 id="PotentialKeylogger-exe-一个未加壳的可执行文件"><a href="#PotentialKeylogger-exe-一个未加壳的可执行文件" class="headerlink" title="PotentialKeylogger.exe 一个未加壳的可执行文件"></a>PotentialKeylogger.exe 一个未加壳的可执行文件</h3><p>使用<code>Dependency Walker</code>工具进行手机并裁剪处理的<code>PotentialKeyLogger.exe</code>导入表<br>立马看到许多导入函数,立即得出结论, 这个文件并没有被加壳 </p>
+<p>当不确切知道一个函数具有什么功能,可对它使用的Api进行翻阅 </p>
+<p><img src="/2020/05/25/malicious-code/image-03.png" width="500px"></p>
+<p>通过实践锻炼,会很快了解哪些函数是重要的, 哪些函数并不是 </p>
+<p>通常不知道这是个可以的键盘记录器,需要寻找一些提供线索的函数</p>
+<ul>
+<li><p><code>Kernel32.dll</code>导入函数告诉我们, 这个软件会打开和操作今存(<code>OpenProcess</code>、<code>GetCurrentProcess</code>、<code>GetPrcessHeap</code>等),以及对文件进行操作(如<code>ReadFile</code>,<code>CreateFile</code>,<code>WriteFile</code>);<code>FindFirstFile</code>和<code>FindNextFile</code>函数是特别值得关注的,因为他们提供的功能是搜索一个目录下所有文件 </p>
+</li>
+<li><p><code>User32.dll</code>导入函数甚至更加有趣; 大量的图形界面操作函数如<code>RegisterClassEx</code>,<code>SetWindowsText</code>和<code>ShowWindows</code>等, 显然这个程序很可能使用了一个图形界面, 而<code>SetWindowsHookEx</code>函数是间谍软件经常使用的, 也是用来接收键盘输入最流行的方法,<code>RegisterHotKey</code>注册热键,这样每当用户按下热键便会通知应用软件 </p>
+</li>
+<li><p><code>GDI32.dll</code>导入函数和图形相关, 再次确认有图形化界面</p>
+</li>
+<li><p><code>Shell32.dll</code>导入函数告诉我们可以启动其他程序, 这个功能是恶意代码普遍的功能 </p>
+</li>
+<li><p><code>Advapi32.dll</code>导入函数告诉我们这个程序使用了注册表, 应搜索一些看起来像注册表键值的字符串, 注册表键值和文件目录非常类似;<code>Software\Microsoft\Windows\CurrentVersion\Run</code>开机启动</p>
+</li>
+</ul>
+<p>根据导入函数与导出函数静态分析得知是个键盘记录器, </p>
+<h3 id="PackedProgram-exe-穷途末路"><a href="#PackedProgram-exe-穷途末路" class="headerlink" title="PackedProgram.exe 穷途末路"></a>PackedProgram.exe 穷途末路</h3>
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2020/05/25/malicious-code/';
+        this.page.title = '恶意代码分析之旅';
+        this.page.identifier = '2020/05/25/malicious-code/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
