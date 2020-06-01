@@ -7,7 +7,7 @@
 
     
 
-    <title>恶意代码分析之旅 | Coderss</title>
+    <title>恶意代码分析之旅[笔记篇] | Coderss</title>
     <meta name="author" content="coder">
     <meta name="version" content="1.0.0">
     <meta name="keywords" content="">
@@ -141,7 +141,7 @@
         
 
         
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码类型"><span class="toc-number">1.1.</span> <span class="toc-text">恶意代码类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码分析技术"><span class="toc-number">1.2.</span> <span class="toc-text">恶意代码分析技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码分析通用规则"><span class="toc-number">1.3.</span> <span class="toc-text">恶意代码分析通用规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#静态分析基础技术"><span class="toc-number">2.</span> <span class="toc-text">静态分析基础技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#反病毒引起扫描"><span class="toc-number">2.1.</span> <span class="toc-text">反病毒引起扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希值-恶意代码的指纹"><span class="toc-number">2.2.</span> <span class="toc-text">哈希值: 恶意代码的指纹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找字符串"><span class="toc-number">2.3.</span> <span class="toc-text">查找字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加壳与混淆恶意代码"><span class="toc-number">2.4.</span> <span class="toc-text">加壳与混淆恶意代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件加壳"><span class="toc-number">2.4.1.</span> <span class="toc-text">文件加壳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PEiD检测加壳"><span class="toc-number">2.4.2.</span> <span class="toc-text">PEiD检测加壳</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PE文件"><span class="toc-number">2.5.</span> <span class="toc-text">PE文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链接库与函数"><span class="toc-number">2.6.</span> <span class="toc-text">链接库与函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#静态链接、动态链接"><span class="toc-number">2.6.1.</span> <span class="toc-text">静态链接、动态链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#导入函数"><span class="toc-number">2.6.2.</span> <span class="toc-text">导入函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#导出函数"><span class="toc-number">2.6.3.</span> <span class="toc-text">导出函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态分析技术实践"><span class="toc-number">2.7.</span> <span class="toc-text">静态分析技术实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PotentialKeylogger-exe-一个未加壳的可执行文件"><span class="toc-number">2.7.1.</span> <span class="toc-text">PotentialKeylogger.exe 一个未加壳的可执行文件</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码类型"><span class="toc-number">1.1.</span> <span class="toc-text">恶意代码类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码分析技术"><span class="toc-number">1.2.</span> <span class="toc-text">恶意代码分析技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码分析通用规则"><span class="toc-number">1.3.</span> <span class="toc-text">恶意代码分析通用规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#静态分析基础技术"><span class="toc-number">2.</span> <span class="toc-text">静态分析基础技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#反病毒引起扫描"><span class="toc-number">2.1.</span> <span class="toc-text">反病毒引起扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希值-恶意代码的指纹"><span class="toc-number">2.2.</span> <span class="toc-text">哈希值: 恶意代码的指纹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找字符串"><span class="toc-number">2.3.</span> <span class="toc-text">查找字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加壳与混淆恶意代码"><span class="toc-number">2.4.</span> <span class="toc-text">加壳与混淆恶意代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件加壳"><span class="toc-number">2.4.1.</span> <span class="toc-text">文件加壳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PEiD检测加壳"><span class="toc-number">2.4.2.</span> <span class="toc-text">PEiD检测加壳</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PE文件"><span class="toc-number">2.5.</span> <span class="toc-text">PE文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链接库与函数"><span class="toc-number">2.6.</span> <span class="toc-text">链接库与函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#静态链接、动态链接"><span class="toc-number">2.6.1.</span> <span class="toc-text">静态链接、动态链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#导入函数"><span class="toc-number">2.6.2.</span> <span class="toc-text">导入函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#导出函数"><span class="toc-number">2.6.3.</span> <span class="toc-text">导出函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态分析技术实践"><span class="toc-number">2.7.</span> <span class="toc-text">静态分析技术实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PotentialKeylogger-exe-一个未加壳的可执行文件"><span class="toc-number">2.7.1.</span> <span class="toc-text">PotentialKeylogger.exe 一个未加壳的可执行文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PE文件头与分节"><span class="toc-number">2.8.</span> <span class="toc-text">PE文件头与分节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PE文件头概述"><span class="toc-number">2.8.1.</span> <span class="toc-text">PE文件头概述</span></a></li></ol></li></ol></li></ol>
         
     </div>
 </aside>
@@ -153,7 +153,7 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            恶意代码分析之旅
+            恶意代码分析之旅[笔记篇]
         </h1>
         
         <div class="article-meta clearfix">
@@ -281,6 +281,15 @@
 </li>
 </ul>
 <p>根据导入函数与导出函数静态分析得知是个键盘记录器, </p>
+<h2 id="PE文件头与分节"><a href="#PE文件头与分节" class="headerlink" title="PE文件头与分节"></a>PE文件头与分节</h2><p>PE文件包含一个PE头、一些列的分节  </p>
+<ul>
+<li><code>.text</code>: <code>.text</code>节包含了CPU执行指令、所有其他节存储数据和支持性的信息 </li>
+<li><code>.rdata</code>: <code>.rdata</code>节包含了导入与导出函数,与DependencyWalker和PEView工具所获得的信息是相同的</li>
+<li><code>.data</code>: <code>.data</code>节包含了程序的全局数据,可以从程序的任何地方访问到 </li>
+<li><code>.rsrc</code>:<code>.rsrc</code>节包含了可执行文件所使用的资源,比如图标、图片、菜单项和字符串</li>
+</ul>
+<p><img src="/2020/05/25/malicious-code/image-04.png" width="600px"></p>
+<h3 id="PE文件头概述"><a href="#PE文件头概述" class="headerlink" title="PE文件头概述"></a>PE文件头概述</h3><p><img src="/2020/05/25/malicious-code/image-05.png" width="600px"></p>
 
         
     </section>
@@ -296,7 +305,7 @@
     window.disqus_config = function () {
         this.language = 'zh';
         this.page.url = 'http://www.coderss.cn/2020/05/25/malicious-code/';
-        this.page.title = '恶意代码分析之旅';
+        this.page.title = '恶意代码分析之旅[笔记篇]';
         this.page.identifier = '2020/05/25/malicious-code/';
     };
     (function() { // DON'T EDIT BELOW THIS LINE
