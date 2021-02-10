@@ -170,7 +170,7 @@
         <h1 id="Tms"><a href="#Tms" class="headerlink" title="Tms"></a>Tms</h1><h2 id="1、订单池"><a href="#1、订单池" class="headerlink" title="1、订单池"></a>1、订单池</h2><blockquote>
 <p>档口需求单、服务站需求单、场内采购单、基地采购单</p>
 </blockquote>
-<p>通过<code>sourceType</code>区分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SXC_ORDER(0, &quot;宋小菜订单&quot;),</span><br><span class="line">SITE_PURCHASE(1, &quot;场内采购单&quot;),</span><br><span class="line">BASE_PURCHASE(2, &quot;基地采购单&quot;),</span><br><span class="line">STALL_PURCHASE(3, &quot;档口需求单&quot;),</span><br><span class="line">BASE_DIRECT_PURCHASE(5, &quot;基地直发采购单&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>通过<code>sourceType</code>区分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_ORDER(0, &quot;订单&quot;),</span><br><span class="line">SITE_PURCHASE(1, &quot;场内采购单&quot;),</span><br><span class="line">BASE_PURCHASE(2, &quot;基地采购单&quot;),</span><br><span class="line">STALL_PURCHASE(3, &quot;档口需求单&quot;),</span><br><span class="line">BASE_DIRECT_PURCHASE(5, &quot;基地直发采购单&quot;);</span><br></pre></td></tr></table></figure></p>
 <p>所有的需求单以Requirement-<code>Location</code>送货地为主, RequirementDetail-<code>Sku</code>货物需求单为辅<br>需求单和需求子单都会以<code>sourceId</code>,<code>sourceSubId</code>来溯源外部业务场景的单据ID<br>需求子单会有<code>detail_status</code> <code>需求子单状态：0:取消配送; 10:待配送；80:配送完成</code>表明配送进度<br><code>sign_status</code>  <code>签收状态0未签收 90部分签收 100全部签收</code>来表明签收进度</p>
 <h2 id="2、-配送点"><a href="#2、-配送点" class="headerlink" title="2、 配送点"></a>2、 配送点</h2><blockquote>
 <p>档口、服务站、中心仓、虚拟中心仓(虚拟不存在的配送点)</p>
@@ -178,7 +178,7 @@
 <p>通过<code>siteType</code>区分</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CENTER_HOUSE(0,&quot;中心仓&quot;),</span><br><span class="line">PICK_HOUSE(1,&quot;提货仓&quot;),</span><br><span class="line">VIRTUAL_CENTER_HOUSE(3,&quot;虚拟中心仓&quot;),</span><br><span class="line">OUT_VIRTUAL_HOUSE(4,&quot;场外虚拟仓&quot;),</span><br><span class="line">STALL(5,&quot;档口&quot;);</span><br></pre></td></tr></table></figure>
 <p>所有配送点以DistributionSite, 配送点id相同, 后期根据外部类型和外部站点ID来确定唯一的配送点</p>
-<p>配送点外来途径: sxc.stall(档口), sxc.sxc_storehouse(中心仓、服务站)</p>
+<p>配送点外来途径: .stall(档口), ._storehouse(中心仓、服务站)</p>
 <blockquote>
 <p>虚拟仓的用法?</p>
 </blockquote>
@@ -213,7 +213,7 @@
 <p>交互流程</p>
 </blockquote>
 <p><img src="/tms-wms/index/image-03.png" width="900px"></p>
-<p>资料链接:<a href="https://songxiaocai.yuque.com/ngo6gg/vrcilw/mo3bvf" target="_blank" rel="noopener">https://songxiaocai.yuque.com/ngo6gg/vrcilw/mo3bvf</a></p>
+<p>资料链接:https://星星.yuque.com/ngo6gg/vrcilw/mo3bvf</p>
 <h2 id="4、-精准承运单"><a href="#4、-精准承运单" class="headerlink" title="4、 精准承运单"></a>4、 精准承运单</h2><p>源自草稿承运单, 一个司机多个草稿承运单串线形成最终的精准承运单 </p>
 <p>草稿和精准物流单的变迁主要靠清洗路线来实现, 清洗路线的主要规则是: </p>
 <p>清洗的节点按节点的时间顺序,如发车、签收时间点作为排序标准</p>
@@ -225,7 +225,7 @@
 <ul>
 <li>只可对状态是配送完成的调度单进行合并。</li>
 <li>来源是场内、场外虚拟仓和中心仓的调度单可以互相合并，但不能和来源是基地的调度单合并。</li>
-<li>来源是基地的调度单，如果是由宋小菜物流承运的可以进行相互合并；如果是由供应商承运的可以进行相互合并；宋小菜承运的和供应商承运的不能进行相互合并。</li>
+<li>来源是基地的调度单，如果是由物流承运的可以进行相互合并；如果是由供应商承运的可以进行相互合并；承运的和供应商承运的不能进行相互合并。</li>
 <li>只能对当前日期前1天的的调度单进行合并，举例：当前是8月3日，那么可以对8月2日和8月3日配送完成的调度单进行合并。</li>
 <li>必须是司机姓名、司机手机号和车牌号完全一致的调度单可以合并。</li>
 <li>允许多单合并。</li>
@@ -255,10 +255,10 @@
 </blockquote>
 <p><img src="/tms-wms/index/image-04.png" width="700px"></p>
 <p><br><br><br><br><br></p>
-<h1 id="Wms"><a href="#Wms" class="headerlink" title="Wms"></a>Wms</h1><h2 id="库存点管理"><a href="#库存点管理" class="headerlink" title="库存点管理"></a>库存点管理</h2><h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p><code>sxc_wms_biz_instance</code> 用来表示库存点的业务场景</p>
-<p>仓库点场景类型 1-档口仓；20-宋小菜仓；40-加工厂仓；60-配资仓；80-冷库仓, 90-宋小菜-中心仓</p>
-<h3 id="库存点表"><a href="#库存点表" class="headerlink" title="库存点表"></a>库存点表</h3><p><code>sxc_wms_warehouse</code> 库存点基础信息</p>
-<h3 id="库存点和外部id映射表"><a href="#库存点和外部id映射表" class="headerlink" title="库存点和外部id映射表"></a>库存点和外部id映射表</h3><p><code>sxc_wms_warehouse_instance_relation</code> 库存点与外部站点的关联关系</p>
+<h1 id="Wms"><a href="#Wms" class="headerlink" title="Wms"></a>Wms</h1><h2 id="库存点管理"><a href="#库存点管理" class="headerlink" title="库存点管理"></a>库存点管理</h2><h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p><code>_wms_biz_instance</code> 用来表示库存点的业务场景</p>
+<p>仓库点场景类型 1-档口仓；20-仓；40-加工厂仓；60-配资仓；80-冷库仓, 90–中心仓</p>
+<h3 id="库存点表"><a href="#库存点表" class="headerlink" title="库存点表"></a>库存点表</h3><p><code>_wms_warehouse</code> 库存点基础信息</p>
+<h3 id="库存点和外部id映射表"><a href="#库存点和外部id映射表" class="headerlink" title="库存点和外部id映射表"></a>库存点和外部id映射表</h3><p><code>_wms_warehouse_instance_relation</code> 库存点与外部站点的关联关系</p>
 <h2 id="库存管理"><a href="#库存管理" class="headerlink" title="库存管理"></a>库存管理</h2><h3 id="服务站库存管理"><a href="#服务站库存管理" class="headerlink" title="服务站库存管理"></a>服务站库存管理</h3><p>服务站库存来源于:城配承运单、基地直发单</p>
 <ul>
 <li>城配承运单: 城配单创建之初即选择好对应的<code>服务站需求单</code>,城配单会有定时任务自动签收入库、并自动根据订单号去库存提货完结订单</li>
