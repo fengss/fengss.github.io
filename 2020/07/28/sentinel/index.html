@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Alibaba-Sentinel[笔记篇] | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="阿里流量哨兵组件 相关的源码详解笔记 
+简介Hystrix对比
+
+
+对比内容
+Sentinel
+Hystrix
+
+
+
+
+隔离策略
+信号量隔离
+线程池隔离/信号量隔离
+
+
+熔断降级策略
+基于响应时间或失败比率
+基于失败比率
+
+
+实时指标实现
+滑动窗口
+滑动窗口(基于 RxJava)
+
+
+规则配置
+支持多种数据源
+支持多种数据源
+
+
+扩展性
+多个扩展点
+插件的形式
+
+
+基于注解的支持
+支持
+支持
+
+
+限流
+基于 QPS,支持基于调用关系的限流
+不支持
+
+
+流量整形
+支持慢启动、匀速器模式
+不支持
+
+">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Golang</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">System</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Reverse</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">BigData</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/ai">Math/AI</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/physical">Physical</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/life">生活规划</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mesos/">Mesos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scikit/">Scikit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SofaMesh/">SofaMesh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TroubleShoot/">TroubleShoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x64-Windows系统总结/">x64 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hystrix对比"><span class="toc-number">1.1.</span> <span class="toc-text">Hystrix对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本轮廓"><span class="toc-number">1.2.</span> <span class="toc-text">基本轮廓</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo演示"><span class="toc-number">1.3.</span> <span class="toc-text">demo演示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">1.4.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建SlotChain"><span class="toc-number">1.4.1.</span> <span class="toc-text">创建SlotChain</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SlotChain结构"><span class="toc-number">1.4.2.</span> <span class="toc-text">SlotChain结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SlotChain执行流程"><span class="toc-number">1.4.3.</span> <span class="toc-text">SlotChain执行流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#执行SlotChain的entry方法"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">执行SlotChain的entry方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#执行Slot的entry方法"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">执行Slot的entry方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引入客户端"><span class="toc-number">1.4.4.</span> <span class="toc-text">引入客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#规则"><span class="toc-number">1.4.5.</span> <span class="toc-text">规则</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#持久化-动态化"><span class="toc-number">1.4.5.1.</span> <span class="toc-text">持久化,动态化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DataSource-扩展"><span class="toc-number">1.4.5.2.</span> <span class="toc-text">DataSource 扩展</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#资源调用链原理分析"><span class="toc-number">2.</span> <span class="toc-text">资源调用链原理分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NodeSelectorSlot"><span class="toc-number">2.1.</span> <span class="toc-text">NodeSelectorSlot</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Context的创建与销毁"><span class="toc-number">2.1.1.</span> <span class="toc-text">Context的创建与销毁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调用链树"><span class="toc-number">2.1.2.</span> <span class="toc-text">调用链树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#构造树干-创建context"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">构造树干-创建context</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建Entry"><span class="toc-number">2.1.2.2.</span> <span class="toc-text">创建Entry</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#退出Entry"><span class="toc-number">2.1.2.3.</span> <span class="toc-text">退出Entry</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#构造叶子节点"><span class="toc-number">2.1.2.4.</span> <span class="toc-text">构造叶子节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#保存子节点"><span class="toc-number">2.1.2.5.</span> <span class="toc-text">保存子节点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ClusterBuilderSlot"><span class="toc-number">2.2.</span> <span class="toc-text">ClusterBuilderSlot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#StatistcSlot"><span class="toc-number">2.3.</span> <span class="toc-text">StatistcSlot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SystemSlot"><span class="toc-number">2.4.</span> <span class="toc-text">SystemSlot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AuthoritySlot"><span class="toc-number">2.5.</span> <span class="toc-text">AuthoritySlot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FlowSlot"><span class="toc-number">2.6.</span> <span class="toc-text">FlowSlot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DegradeSlot"><span class="toc-number">2.7.</span> <span class="toc-text">DegradeSlot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">2.8.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Alibaba-Sentinel[笔记篇]
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2020/07/28/sentinel/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-07-28T01:47:13.000Z" itemprop="datePublished">2020-07-28</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/sentinel/">sentinel</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>阿里流量哨兵组件 相关的源码详解笔记<br><a id="more"></a> </p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h2 id="Hystrix对比"><a href="#Hystrix对比" class="headerlink" title="Hystrix对比"></a>Hystrix对比</h2><table>
+<thead>
+<tr>
+<th>对比内容</th>
+<th>Sentinel</th>
+<th>Hystrix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>隔离策略</td>
+<td>信号量隔离</td>
+<td>线程池隔离/信号量隔离</td>
+</tr>
+<tr>
+<td>熔断降级策略</td>
+<td>基于响应时间或失败比率</td>
+<td>基于失败比率</td>
+</tr>
+<tr>
+<td>实时指标实现</td>
+<td>滑动窗口</td>
+<td>滑动窗口(基于 RxJava)</td>
+</tr>
+<tr>
+<td>规则配置</td>
+<td>支持多种数据源</td>
+<td>支持多种数据源</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td>多个扩展点</td>
+<td>插件的形式</td>
+</tr>
+<tr>
+<td>基于注解的支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>限流</td>
+<td>基于 QPS,支持基于调用关系的限流</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>流量整形</td>
+<td>支持慢启动、匀速器模式</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>系统负载保护</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>控制台</td>
+<td>开箱即用，可配置规则、查看秒级监控、机器发现等</td>
+<td>不完善</td>
+</tr>
+<tr>
+<td>常见框架的适配</td>
+<td>Servlet、Spring Cloud、Dubbo、gRPC 等</td>
+<td>Servlet、Spring Cloud Netflix</td>
+</tr>
+</tbody>
+</table>
+<h2 id="基本轮廓"><a href="#基本轮廓" class="headerlink" title="基本轮廓"></a>基本轮廓</h2><p><img src="/2020/07/28/sentinel/image-01.png" width="500px"></p>
+<ul>
+<li>sentinel-core 核心模块，限流、降级、系统保护等都在这里实现</li>
+<li>sentinel-dashboard 控制台模块，可以对连接上的sentinel客户端实现可视化的管理</li>
+<li>sentinel-transport 传输模块，提供了基本的监控服务端和客户端的API接口，以及一些基于不同库的实现</li>
+<li>sentinel-extension 扩展模块，主要对DataSource进行了部分扩展实现</li>
+<li>sentinel-adapter 适配器模块，主要实现了对一些常见框架的适配</li>
+<li>sentinel-demo 样例模块，可参考怎么使用sentinel进行限流、降级等</li>
+<li>sentinel-benchmark 基准测试模块，对核心代码的精确性提供基准测试</li>
+</ul>
+<h2 id="demo演示"><a href="#demo演示" class="headerlink" title="demo演示"></a>demo演示</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Copyright 1999-2018 Alibaba Group Holding Ltd.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></span><br><span class="line"><span class="comment"> * you may not use this file except in compliance with the License.</span></span><br><span class="line"><span class="comment"> * You may obtain a copy of the License at</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *      http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></span><br><span class="line"><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></span><br><span class="line"><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></span><br><span class="line"><span class="comment"> * See the License for the specific language governing permissions and</span></span><br><span class="line"><span class="comment"> * limitations under the License.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">package</span> com.alibaba.csp.sentinel.demo.flow;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.csp.sentinel.util.TimeUtil;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.csp.sentinel.Entry;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.csp.sentinel.SphU;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.csp.sentinel.slots.block.BlockException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.csp.sentinel.slots.block.RuleConstant;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.csp.sentinel.slots.block.flow.FlowRule;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> jialiang.linjl</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlowQpsDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String KEY = <span class="string">"abc"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger pass = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger block = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger total = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> stop = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> threadCount = <span class="number">32</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> seconds = <span class="number">60</span> + <span class="number">40</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        initFlowQpsRule();</span><br><span class="line"></span><br><span class="line">        tick();</span><br><span class="line">        <span class="comment">// first make the system run on a very low condition</span></span><br><span class="line">        simulateTraffic();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"===== begin to do flow control"</span>);</span><br><span class="line">        System.out.println(<span class="string">"only 20 requests per second can pass"</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">initFlowQpsRule</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;FlowRule&gt; rules = <span class="keyword">new</span> ArrayList&lt;FlowRule&gt;();</span><br><span class="line">        FlowRule rule1 = <span class="keyword">new</span> FlowRule();</span><br><span class="line">        rule1.setResource(KEY);</span><br><span class="line">        <span class="comment">// set limit qps to 20</span></span><br><span class="line">        rule1.setCount(<span class="number">20</span>);</span><br><span class="line">        rule1.setGrade(RuleConstant.FLOW_GRADE_QPS);</span><br><span class="line">        rule1.setLimitApp(<span class="string">"default"</span>);</span><br><span class="line">        rules.add(rule1);</span><br><span class="line">        FlowRuleManager.loadRules(rules);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">simulateTraffic</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; threadCount; i++) &#123;</span><br><span class="line">            Thread t = <span class="keyword">new</span> Thread(<span class="keyword">new</span> RunTask());</span><br><span class="line">            t.setName(<span class="string">"simulate-traffic-Task"</span>);</span><br><span class="line">            t.start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tick</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Thread timer = <span class="keyword">new</span> Thread(<span class="keyword">new</span> TimerTask());</span><br><span class="line">        timer.setName(<span class="string">"sentinel-timer-task"</span>);</span><br><span class="line">        timer.start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TimerTask</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">            System.out.println(<span class="string">"begin to statistic!!!"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">long</span> oldTotal = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">long</span> oldPass = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">long</span> oldBlock = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (!stop) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">long</span> globalTotal = total.get();</span><br><span class="line">                <span class="keyword">long</span> oneSecondTotal = globalTotal - oldTotal;</span><br><span class="line">                oldTotal = globalTotal;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">long</span> globalPass = pass.get();</span><br><span class="line">                <span class="keyword">long</span> oneSecondPass = globalPass - oldPass;</span><br><span class="line">                oldPass = globalPass;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">long</span> globalBlock = block.get();</span><br><span class="line">                <span class="keyword">long</span> oneSecondBlock = globalBlock - oldBlock;</span><br><span class="line">                oldBlock = globalBlock;</span><br><span class="line"></span><br><span class="line">                System.out.println(seconds + <span class="string">" send qps is: "</span> + oneSecondTotal);</span><br><span class="line">                System.out.println(TimeUtil.currentTimeMillis() + <span class="string">", total:"</span> + oneSecondTotal</span><br><span class="line">                    + <span class="string">", pass:"</span> + oneSecondPass</span><br><span class="line">                    + <span class="string">", block:"</span> + oneSecondBlock);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (seconds-- &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">                    stop = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">long</span> cost = System.currentTimeMillis() - start;</span><br><span class="line">            System.out.println(<span class="string">"time cost: "</span> + cost + <span class="string">" ms"</span>);</span><br><span class="line">            System.out.println(<span class="string">"total:"</span> + total.get() + <span class="string">", pass:"</span> + pass.get()</span><br><span class="line">                + <span class="string">", block:"</span> + block.get());</span><br><span class="line">            System.exit(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RunTask</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (!stop) &#123;</span><br><span class="line">                Entry entry = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    entry = SphU.entry(KEY);</span><br><span class="line">                    <span class="comment">// token acquired, means pass</span></span><br><span class="line">                    pass.addAndGet(<span class="number">1</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (BlockException e1) &#123;</span><br><span class="line">                    block.incrementAndGet();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e2) &#123;</span><br><span class="line">                    <span class="comment">// biz exception</span></span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    total.incrementAndGet();</span><br><span class="line">                    <span class="keyword">if</span> (entry != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        entry.exit();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                Random random2 = <span class="keyword">new</span> Random();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    TimeUnit.MILLISECONDS.sleep(random2.nextInt(<span class="number">50</span>));</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    <span class="comment">// ignore</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>运行结果 </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">begin to statistic!!!</span><br><span class="line">===== begin to do flow control</span><br><span class="line">only 20 requests per second can pass</span><br><span class="line">100 send qps is: 1064</span><br><span class="line">1595901444029, total:1064, pass:46, block:1018</span><br><span class="line">99 send qps is: 1100</span><br><span class="line">1595901445033, total:1100, pass:20, block:1080</span><br><span class="line">98 send qps is: 1113</span><br><span class="line">1595901446037, total:1113, pass:22, block:1091</span><br><span class="line">97 send qps is: 1110</span><br><span class="line">1595901447040, total:1110, pass:20, block:1090</span><br><span class="line">96 send qps is: 1115</span><br><span class="line">1595901448043, total:1115, pass:21, block:1094</span><br><span class="line">95 send qps is: 1123</span><br><span class="line">1595901449047, total:1123, pass:22, block:1101</span><br><span class="line">94 send qps is: 1137</span><br><span class="line">1595901450049, total:1137, pass:22, block:1115</span><br><span class="line">93 send qps is: 1127</span><br><span class="line">1595901451053, total:1127, pass:20, block:1107</span><br><span class="line">92 send qps is: 1175</span><br><span class="line">1595901452058, total:1175, pass:20, block:1155</span><br><span class="line">91 send qps is: 1150</span><br><span class="line">1595901453062, total:1150, pass:20, block:1130</span><br><span class="line">90 send qps is: 1154</span><br><span class="line">1595901454065, total:1154, pass:22, block:1132</span><br><span class="line">89 send qps is: 1145</span><br><span class="line">1595901455069, total:1145, pass:21, block:1124</span><br><span class="line">88 send qps is: 1147</span><br><span class="line">1595901456071, total:1147, pass:20, block:1127</span><br><span class="line">87 send qps is: 1122</span><br><span class="line">1595901457075, total:1122, pass:21, block:1101</span><br><span class="line">86 send qps is: 1136</span><br><span class="line">1595901458079, total:1136, pass:21, block:1115</span><br><span class="line">85 send qps is: 1138</span><br><span class="line">1595901459081, total:1138, pass:21, block:1117</span><br><span class="line">84 send qps is: 1140</span><br></pre></td></tr></table></figure>
+<p>可以看到上面的结果中，pass的数量和我们的预期并不相同，我们预期的是每秒允许pass的请求数是20个，但是目前有很多pass的请求数是超过20个的。</p>
+<p>原因是我们这里测试的代码使用了多线程,注意看 threadCount 的值,一共有32个线程来模拟,而在RunTask的run方法中执行资源保护时,即在<code>SphU.entry</code>的内部是没有加锁的,所以就会导致在高并发下,pass的数量会高于20。</p>
+<p>可以用下面这个模型来描述下,有一个TimeTicker线程在做统计,每1秒钟做一次。<br>有N个RunTask线程在模拟请求,被访问的business code被资源key保护着,根据规则每秒只允许20个请求通过。</p>
+<p>由于<code>pass</code>、<code>block</code>、<code>total</code>等计数器是全局共享的,而多个RunTask线程在执行SphU.entry申请获取entry时,内部没有锁保护所以会存在pass的个数超过设定的阈值。</p>
+<p>那接下来我把 threadCount 的值改为1，只有一个线程来执行这个方法，看下具体的限流结果，执行上面的代码后打印的结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">INFO: Sentinel log name use pid is: false</span><br><span class="line">begin to statistic!!!</span><br><span class="line">===== begin to do flow control</span><br><span class="line">only 20 requests per second can pass</span><br><span class="line">100 send qps is: 39</span><br><span class="line">1595906689977, total:39, pass:23, block:19</span><br><span class="line">99 send qps is: 42</span><br><span class="line">1595906690981, total:42, pass:20, block:22</span><br><span class="line">98 send qps is: 36</span><br><span class="line">1595906691985, total:36, pass:20, block:16</span><br><span class="line">97 send qps is: 36</span><br><span class="line">1595906692990, total:36, pass:20, block:16</span><br><span class="line">96 send qps is: 42</span><br><span class="line">1595906693990, total:42, pass:20, block:22</span><br><span class="line">95 send qps is: 41</span><br><span class="line">1595906694995, total:41, pass:20, block:21</span><br><span class="line">94 send qps is: 32</span><br><span class="line">1595906695999, total:32, pass:20, block:12</span><br><span class="line">93 send qps is: 34</span><br><span class="line">1595906697001, total:34, pass:20, block:14</span><br></pre></td></tr></table></figure>
+<p>可以看到pass数基本上维持在20，但是第一次统计的pass值还是超过了20。这又是什么原因导致的呢？</p>
+<p>其实仔细看下Demo中的代码可以发现，模拟请求是用的一个线程，统计结果是用的另外一个线程，统计线程每1秒钟统计一次结果，这两个线程之间是有时间上的误差的。从TimeTicker线程打印出来的时间戳可以看出来，虽然每隔一秒进行统计，但是当前打印时的时间和上一次的时间还是有误差的，不完全是1000ms的间隔。</p>
+<p>要真正验证每秒限制20个请求，保证数据的精准性，需要做基准测试，这个不是本篇文章的重点，有兴趣的可以去了解下jmh，sentinel中的基准测试也是通过jmh做的。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>首先从入口开始:<code>SphU.entry()</code>。</p>
+<p>这个方法会去申请一个<code>entry</code>,如果能够申请成功则说明没有被限流,否则会抛出<code>BlockException</code>表面已经被限流了。</p>
+<p>从<code>SphU.entry()</code>方法往下执行会进入到<code>Sph.entry()</code>,Sph的默认实现类是<code>CtSph</code>,在CtSph中最终会执行到<code>entry(ResourceWrapper resourceWrapper, int count, Object... args) throws BlockException</code>这个方法。</p>
+<p>我们来看一下这个方法的具体实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Entry <span class="title">entry</span><span class="params">(ResourceWrapper resourceWrapper, <span class="keyword">int</span> count, Object... args)</span> <span class="keyword">throws</span> BlockException </span>&#123;</span><br><span class="line">    Context context = ContextUtil.getContext();</span><br><span class="line">    <span class="keyword">if</span> (context <span class="keyword">instanceof</span> NullContext) &#123;</span><br><span class="line">        <span class="comment">// Init the entry only. No rule checking will occur.</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CtEntry(resourceWrapper, <span class="keyword">null</span>, context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (context == <span class="keyword">null</span>) &#123;</span><br><span class="line">        context = MyContextUtil.myEnter(Constants.CONTEXT_DEFAULT_NAME, <span class="string">""</span>, resourceWrapper.getType());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Global switch is close, no rule checking will do.</span></span><br><span class="line">    <span class="keyword">if</span> (!Constants.ON) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CtEntry(resourceWrapper, <span class="keyword">null</span>, context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取该资源对应的SlotChain</span></span><br><span class="line">    ProcessorSlot&lt;Object&gt; chain = lookProcessChain(resourceWrapper);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Means processor cache size exceeds &#123;@link Constants.MAX_SLOT_CHAIN_SIZE&#125;, so no</span></span><br><span class="line"><span class="comment">     * rule checking will be done.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (chain == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CtEntry(resourceWrapper, <span class="keyword">null</span>, context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Entry e = <span class="keyword">new</span> CtEntry(resourceWrapper, chain, context);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 执行Slot的entry方法</span></span><br><span class="line">        chain.entry(context, resourceWrapper, <span class="keyword">null</span>, count, args);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (BlockException e1) &#123;</span><br><span class="line">        e.exit(count, args);</span><br><span class="line">        <span class="comment">// 抛出BlockExecption</span></span><br><span class="line">        <span class="keyword">throw</span> e1;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable e1) &#123;</span><br><span class="line">        RecordLog.info(<span class="string">"Sentinel unexpected exception"</span>, e1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>1.对参数和全局配置项做检测，如果不符合要求就直接返回了一个CtEntry对象，不会再进行后面的限流检测，否则进入下面的检测流程。</li>
+<li>2.根据包装过的资源对象获取对应的SlotChain</li>
+<li>3.执行SlotChain的entry方法<ul>
+<li>3.1.如果SlotChain的entry方法抛出了BlockException，则将该异常继续向上抛出</li>
+<li>3.2.如果SlotChain的entry方法正常执行了，则最后会将该entry对象返回</li>
+</ul>
+</li>
+<li>4.如果上层方法捕获了BlockException，则说明请求被限流了，否则请求能正常执行</li>
+</ul>
+<h3 id="创建SlotChain"><a href="#创建SlotChain" class="headerlink" title="创建SlotChain"></a>创建SlotChain</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ProcessorSlot&lt;Object&gt; <span class="title">lookProcessChain</span><span class="params">(ResourceWrapper resourceWrapper)</span> </span>&#123;</span><br><span class="line">    ProcessorSlotChain chain = chainMap.get(resourceWrapper);</span><br><span class="line">    <span class="keyword">if</span> (chain == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (LOCK) &#123;</span><br><span class="line">            chain = chainMap.get(resourceWrapper);</span><br><span class="line">            <span class="keyword">if</span> (chain == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">// Entry size limit.</span></span><br><span class="line">                <span class="keyword">if</span> (chainMap.size() &gt;= Constants.MAX_SLOT_CHAIN_SIZE) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 具体构造chain的方法</span></span><br><span class="line">                chain = SlotChainProvider.newSlotChain();</span><br><span class="line">                Map&lt;ResourceWrapper, ProcessorSlotChain&gt; newMap = <span class="keyword">new</span> HashMap&lt;ResourceWrapper, ProcessorSlotChain&gt;(</span><br><span class="line">                    chainMap.size() + <span class="number">1</span>);</span><br><span class="line">                newMap.putAll(chainMap);</span><br><span class="line">                newMap.put(resourceWrapper, chain);</span><br><span class="line">                chainMap = newMap;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> chain;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ProcessorSlotChain <span class="title">newSlotChain</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (slotChainBuilder != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> slotChainBuilder.build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Resolve the slot chain builder SPI.</span></span><br><span class="line">    slotChainBuilder = SpiLoader.loadFirstInstanceOrDefault(SlotChainBuilder.class, DefaultSlotChainBuilder.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (slotChainBuilder == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// Should not go through here.</span></span><br><span class="line">        RecordLog.warn(<span class="string">"[SlotChainProvider] Wrong state when resolving slot chain builder, using default"</span>);</span><br><span class="line">        slotChainBuilder = <span class="keyword">new</span> DefaultSlotChainBuilder();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        RecordLog.info(<span class="string">"[SlotChainProvider] Global slot chain builder resolved: "</span></span><br><span class="line">            + slotChainBuilder.getClass().getCanonicalName());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> slotChainBuilder.build();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> ProcessorSlotChain <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	ProcessorSlotChain chain = <span class="keyword">new</span> DefaultProcessorSlotChain();</span><br><span class="line"></span><br><span class="line">	List&lt;ProcessorSlot&gt; sortedSlotList = SpiLoader.loadPrototypeInstanceListSorted(ProcessorSlot.class);</span><br><span class="line">	<span class="keyword">for</span> (ProcessorSlot slot : sortedSlotList) &#123;</span><br><span class="line">	    <span class="keyword">if</span> (!(slot <span class="keyword">instanceof</span> AbstractLinkedProcessorSlot)) &#123;</span><br><span class="line">	        RecordLog.warn(<span class="string">"The ProcessorSlot("</span> + slot.getClass().getCanonicalName() + <span class="string">") is not an instance of AbstractLinkedProcessorSlot, can't be added into ProcessorSlotChain"</span>);</span><br><span class="line">	        <span class="keyword">continue</span>;</span><br><span class="line">	    &#125;</span><br><span class="line"></span><br><span class="line">	    chain.addLast((AbstractLinkedProcessorSlot&lt;?&gt;) slot);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> chain;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该方法使用了一个HashMap做了缓存,key是资源对象。<br>这里加了锁并且做了<code>double check</code>。具体构造chain的方法是通过:<code>Env.slotsChainbuilder.build()</code>这句代码创建的。</p>
+<blockquote>
+<p>以上代码翻译</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ProcessorSlotChain chain = <span class="keyword">new</span> DefaultProcessorSlotChain();</span><br><span class="line">chain.addLast(<span class="keyword">new</span> NodeSelectorSlot());</span><br><span class="line">chain.addLast(<span class="keyword">new</span> ClusterBuilderSlot());</span><br><span class="line">chain.addLast(<span class="keyword">new</span> LogSlot());</span><br><span class="line">chain.addLast(<span class="keyword">new</span> StatisticSlot());</span><br><span class="line">chain.addLast(<span class="keyword">new</span> SystemSlot());</span><br><span class="line">chain.addLast(<span class="keyword">new</span> AuthoritySlot());</span><br><span class="line">chain.addLast(<span class="keyword">new</span> FlowSlot());</span><br><span class="line">chain.addLast(<span class="keyword">new</span> DegradeSlot());</span><br><span class="line"><span class="keyword">return</span> chain;</span><br></pre></td></tr></table></figure>
+<h3 id="SlotChain结构"><a href="#SlotChain结构" class="headerlink" title="SlotChain结构"></a>SlotChain结构</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultProcessorSlotChain</span> <span class="keyword">extends</span> <span class="title">ProcessorSlotChain</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    AbstractLinkedProcessorSlot&lt;?&gt; first = <span class="keyword">new</span> AbstractLinkedProcessorSlot&lt;Object&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, Object t, <span class="keyword">int</span> count, Object... args)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.fireEntry(context, resourceWrapper, t, count, args);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exit</span><span class="params">(Context context, ResourceWrapper resourceWrapper, <span class="keyword">int</span> count, Object... args)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.fireExit(context, resourceWrapper, count, args);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    AbstractLinkedProcessorSlot&lt;?&gt; end = first;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFirst</span><span class="params">(AbstractLinkedProcessorSlot&lt;?&gt; protocolProcessor)</span> </span>&#123;</span><br><span class="line">        protocolProcessor.setNext(first.getNext());</span><br><span class="line">        first.setNext(protocolProcessor);</span><br><span class="line">        <span class="keyword">if</span> (end == first) &#123;</span><br><span class="line">            end = protocolProcessor;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addLast</span><span class="params">(AbstractLinkedProcessorSlot&lt;?&gt; protocolProcessor)</span> </span>&#123;</span><br><span class="line">        end.setNext(protocolProcessor);</span><br><span class="line">        end = protocolProcessor;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>DefaultProcessorSlotChain中有两个AbstractLinkedProcessorSlot类型的变量：first和end，这就是链表的头结点和尾节点。</p>
+<p><img src="/2020/07/28/sentinel/image-03.png" width="500px"></p>
+<p>将第一个节点添加到链表中后，整个链表的结构变成了如下图这样：</p>
+<p><img src="/2020/07/28/sentinel/image-04.png" width="500px"></p>
+<p>将所有的节点都加入到链表中后，整个链表的结构变成了如下图所示：</p>
+<p><img src="/2020/07/28/sentinel/image-05.png" width="500px"></p>
+<p>这样就将所有的Slot对象添加到了链表中去了，每一个Slot都是继承自AbstractLinkedProcessorSlot。而AbstractLinkedProcessorSlot是一种责任链的设计，每个对象中都有一个next属性，指向的是另一个AbstractLinkedProcessorSlot对象。其实责任链模式在很多框架中都有，比如Netty中是通过pipeline来实现的。</p>
+<p>知道了SlotChain是如何创建的了，那接下来就要看下是如何执行Slot的entry方法的了。</p>
+<h3 id="SlotChain执行流程"><a href="#SlotChain执行流程" class="headerlink" title="SlotChain执行流程"></a>SlotChain执行流程</h3><h4 id="执行SlotChain的entry方法"><a href="#执行SlotChain的entry方法" class="headerlink" title="执行SlotChain的entry方法"></a>执行SlotChain的entry方法</h4><p>lookProcessChain方法获得的ProcessorSlotChain的实例是DefaultProcessorSlotChain，那么执行chain.entry方法，就会执行DefaultProcessorSlotChain的entry方法，而DefaultProcessorSlotChain的entry方法是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, Object t, <span class="keyword">int</span> count, Object... args)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    first.transformEntry(context, resourceWrapper, t, count, args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是说，DefaultProcessorSlotChain的entry实际是执行的first属性的transformEntry方法。</p>
+<p>而transformEntry方法会执行当前节点的entry方法，在DefaultProcessorSlotChain中first节点重写了entry方法，具体如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, Object t, <span class="keyword">int</span> count, Object... args)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.fireEntry(context, resourceWrapper, t, count, args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>first节点的entry方法，实际又是执行的super的fireEntry方法，那继续把目光转移到fireEntry方法，具体如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fireEntry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, Object obj, <span class="keyword">int</span> count, Object... args)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (next != <span class="keyword">null</span>) &#123;</span><br><span class="line">        next.transformEntry(context, resourceWrapper, obj, count, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从fireEntry方法中就开始传递执行entry了，这里会执行当前节点的下一个节点transformEntry方法，上面已经分析过了，transformEntry方法会触发当前节点的entry,也就是说fireEntry方法实际是触发了下一个节点的entry方法</p>
+<h4 id="执行Slot的entry方法"><a href="#执行Slot的entry方法" class="headerlink" title="执行Slot的entry方法"></a>执行Slot的entry方法</h4><p>现在可以把目光转移到SlotChain中的第一个节点NodeSelectorSlot的entry方法中去了，具体的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, Object obj, <span class="keyword">int</span> count, Object... args)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line"></span><br><span class="line">    DefaultNode node = map.get(context.getName());</span><br><span class="line">    <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            node = map.get(context.getName());</span><br><span class="line">            <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">                node = Env.nodeBuilder.buildTreeNode(resourceWrapper, <span class="keyword">null</span>);</span><br><span class="line">                HashMap&lt;String, DefaultNode&gt; cacheMap = <span class="keyword">new</span> HashMap&lt;String, DefaultNode&gt;(map.size());</span><br><span class="line">                cacheMap.putAll(map);</span><br><span class="line">                cacheMap.put(context.getName(), node);</span><br><span class="line">                map = cacheMap;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Build invocation tree</span></span><br><span class="line">            ((DefaultNode)context.getLastNode()).addChild(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    context.setCurNode(node);</span><br><span class="line">    <span class="comment">// 由此触发下一个节点的entry方法</span></span><br><span class="line">    fireEntry(context, resourceWrapper, node, count, args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从代码中可以看到，NodeSelectorSlot节点做了一些自己的业务逻辑处理，具体的大家可以深入源码继续追踪，这里大概的介绍下每种Slot的功能职责：</p>
+<ul>
+<li>NodeSelectorSlot 负责收集资源的路径，并将这些资源的调用路径，以树状结构存储起来，用于根据调用路径来限流降级；</li>
+<li>ClusterBuilderSlot 则用于存储资源的统计信息以及调用者信息，例如该资源的 RT, QPS, thread count 等等，这些信息将用作为多维度限流，降级的依据；</li>
+<li>StatistcSlot 则用于记录，统计不同纬度的 runtime 信息；</li>
+<li>FlowSlot 则用于根据预设的限流规则，以及前面 slot 统计的状态，来进行限流；</li>
+<li>AuthorizationSlot 则根据黑白名单，来做黑白名单控制；</li>
+<li>DegradeSlot 则通过统计信息，以及预设的规则，来做熔断降级；</li>
+<li>SystemSlot 则通过系统的状态，例如 load1 等，来控制总的入口流量；</li>
+</ul>
+<p>sentinel主要是基于7种不同的Slot形成了一个链表，每个Slot都各司其职，自己做完分内的事之后，会把请求传递给下一个Slot，直到在某一个Slot中命中规则后抛出BlockException而终止。</p>
+<p>前三个Slot负责做统计，后面的Slot负责根据统计的结果结合配置的规则进行具体的控制，是Block该请求还是放行。</p>
+<p>控制的类型也有很多可选项：根据qps、线程数、冷启动等等。</p>
+<p>然后基于这个核心的方法，衍生出了很多其他的功能：</p>
+<ul>
+<li>1、dashboard控制台，可以可视化的对每个连接过来的sentinel客户端 (通过发送heartbeat消息)进行控制，dashboard和客户端之间通过http协议进行通讯。</li>
+<li>2、规则的持久化，通过实现DataSource接口，可以通过不同的方式对配置的规则进行持久化，默认规则是在内存中的</li>
+<li>3、对主流的框架进行适配，包括servlet，dubbo，rRpc等</li>
+</ul>
+<h3 id="引入客户端"><a href="#引入客户端" class="headerlink" title="引入客户端"></a>引入客户端</h3><p>确保客户端有访问量，Sentinel 会在客户端首次调用的时候进行初始化，开始向控制台发送心跳包。</p>
+<p>sentinel-dashboard是一个独立的web应用，可以接受客户端的连接，然后与客户端之间进行通讯，他们之间使用http协议进行通讯。他们之间的关系如下图所示：</p>
+<p><img src="/2020/07/28/sentinel/image-06.png" width="700px"></p>
+<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><h4 id="持久化-动态化"><a href="#持久化-动态化" class="headerlink" title="持久化,动态化"></a>持久化,动态化</h4><p>Sentinel 的理念是开发者只需要关注资源的定义，当资源定义成功，可以动态增加各种流控降级规则。</p>
+<p>Sentinel 提供两种方式修改规则：</p>
+<ul>
+<li>通过 API 直接修改 (loadRules)</li>
+<li>通过DataSource适配不同数据源修改</li>
+</ul>
+<p>通过 API 修改比较直观，可以通过以下三个 API 修改不同的规则:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FlowRuleManager.loadRules(List&lt;FlowRule&gt; rules); <span class="comment">// 修改流控规则</span></span><br><span class="line">DegradeRuleManager.loadRules(List&lt;DegradeRule&gt; rules); <span class="comment">// 修改降级规则</span></span><br><span class="line">SystemRuleManager.loadRules(List&lt;SystemRule&gt; rules); <span class="comment">// 修改系统规则</span></span><br></pre></td></tr></table></figure>
+<h4 id="DataSource-扩展"><a href="#DataSource-扩展" class="headerlink" title="DataSource 扩展"></a>DataSource 扩展</h4><p>上述 loadRules() 方法只接受内存态的规则对象，但应用重启后内存中的规则就会丢失，更多的时候规则最好能够存储在文件、数据库或者配置中心中。</p>
+<p>DataSource 接口给我们提供了对接任意配置源的能力。相比直接通过 API 修改规则，实现 DataSource 接口是更加可靠的做法。</p>
+<p>官方推荐通过控制台设置规则后将规则推送到统一的规则中心，用户只需要实现 DataSource 接口，来监听规则中心的规则变化，以实时获取变更的规则。</p>
+<p>DataSource 拓展常见的实现方式有：</p>
+<ul>
+<li>拉模式：客户端主动向某个规则管理中心定期轮询拉取规则，这个规则中心可以是 SQL、文件，甚至是 VCS 等。这样做的方式是简单，缺点是无法及时获取变更；</li>
+<li>推模式：规则中心统一推送，客户端通过注册监听器的方式时刻监听变化，比如使用 Nacos、Zookeeper 等配置中心。这种方式有更好的实时性和一致性保证。</li>
+</ul>
+<p><br></p>
+<h1 id="资源调用链原理分析"><a href="#资源调用链原理分析" class="headerlink" title="资源调用链原理分析"></a>资源调用链原理分析</h1><p>这里大概的介绍下每种Slot的功能职责：</p>
+<ul>
+<li>NodeSelectorSlot 负责收集资源的路径，并将这些资源的调用路径，以树状结构存储起来，用于根据调用路径来限流降级；</li>
+<li>ClusterBuilderSlot 则用于存储资源的统计信息以及调用者信息，例如该资源的 RT, QPS, thread count 等等，这些信息将用作为多维度限流，降级的依据；</li>
+<li>StatisticsSlot 则用于记录，统计不同维度的 runtime 信息；</li>
+<li>SystemSlot 则通过系统的状态，例如 load1 等，来控制总的入口流量；</li>
+<li>AuthoritySlot 则根据黑白名单，来做黑白名单控制；</li>
+<li>FlowSlot 则用于根据预设的限流规则，以及前面 slot 统计的状态，来进行限流；</li>
+<li>DegradeSlot 则通过统计信息，以及预设的规则，来做熔断降级；</li>
+</ul>
+<p>每个Slot执行完业务逻辑处理后,会调用fireEntry()方法,该方法将会触发下一个节点的entry方法,下一个节点又会调用他的fireEntry,以此类推直到最后一个Slot,由此就形成了sentinel的责任链。</p>
+<p>下面我们就来详细研究下这些Slot的原理。</p>
+<h2 id="NodeSelectorSlot"><a href="#NodeSelectorSlot" class="headerlink" title="NodeSelectorSlot"></a>NodeSelectorSlot</h2><p>NodeSelectorSlot 是用来构造调用链的，具体的是将资源的调用路径，封装成一个一个的节点，再组成一个树状的结构来形成一个完整的调用链，NodeSelectorSlot是所有Slot中最关键也是最复杂的一个Slot，这里涉及到以下几个核心的概念</p>
+<ul>
+<li><p>Resource<br>  资源是 Sentinel 的关键概念。它可以是 Java 应用程序中的任何内容，例如，由应用程序提供的服务，或由应用程序调用的其它服务，甚至可以是一段代码。<br>  只要通过 Sentinel API 定义的代码，就是资源，能够被 Sentinel 保护起来。大部分情况下，可以使用方法签名，URL，甚至服务名称作为资源名来标示资源。<br>  资源就是 Sentinel 用来保护系统的一个媒介。源码中用来包装资源的类是<code>com.alibaba.csp.sentinel.slotchain.ResourceWrapper</code>，他有两个子类:<code>StringResourceWrapper</code>和<code>MethodResourceWrapper</code>,通过名字就知道可以将一段字符串或一个方法包装为一个资源。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">打个比方，我有一个服务A，请求非常多，经常会被陡增的流量冲垮</span><br><span class="line">为了防止这种情况，简单的做法，我们可以定义一个 Sentinel 的资源，通过该资源来对请求进行调整，使得允许通过的请求不会把服务A搞崩溃。</span><br><span class="line">每个资源的状态也是不同的，这取决于资源后端的服务，有的资源可能比较稳定，有的资源可能不太稳定。</span><br><span class="line">那么在整个调用链中，Sentinel 需要对不稳定资源进行控制。当调用链路中某个资源出现不稳定，</span><br><span class="line">例如表现为 timeout，或者异常比例升高的时候，则对这个资源的调用进行限制，并让请求快速失败，避免影响到其它的资源，最终导致雪崩的后果。</span><br></pre></td></tr></table></figure>
+<p>  <img src="/2020/07/28/sentinel/image-07.png" width="500px"></p>
+</li>
+<li>Context<br>  上下文是一个用来保存调用链当前状态的元数据的类，每次进入一个资源时，就会创建一个上下文。相同的资源名可能会创建多个上下文。一个Context中包含了三个核心的对象：<ul>
+<li>当前调用链的根节点：EntranceNode</li>
+<li>当前的入口：Entry</li>
+<li>当前入口所关联的节点：Node<br>上下文中只会保存一个当前正在处理的入口Entry，另外还会保存调用链的根节点。需要注意的是，每次进入一个新的资源时，都会创建一个新的上下文。</li>
+</ul>
+</li>
+<li>Entry<br>  每次调用 SphU#entry() 都会生成一个Entry入口，该入口中会保存了以下数据：入口的创建时间，当前入口所关联的节点，当前入口所关联的调用源对应的节点。<br>  Entry是一个抽象类，他只有一个实现类，在CtSph中的一个静态类：CtEntry</li>
+<li>Node<br>  节点是用来保存某个资源的各种实时统计信息的，他是一个接口，通过访问节点，就可以获取到对应资源的实时状态，以此为依据进行限流和降级操作。<br>  可能看到这里，大家还是比较懵，这么多类到底有什么用，接下来就让我们更进一步，挖掘一下这些类的作用，在这之前，我先给大家展示一下他们之间的关系<br>  <img src="/2020/07/28/sentinel/image-08.png" width="500px"></li>
+</ul>
+<p>这里把几种Node的作用先大概介绍下：</p>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StatisticNode</td>
+<td>执行具体的资源统计操作</td>
+</tr>
+<tr>
+<td>DefaultNode</td>
+<td>该节点持有指定上下文中指定资源的统计信息，当在同一个上下文中多次调用entry方法时，该节点可能下会创建有一系列的子节点。另外每个DefaultNode中会关联一个ClusterNode</td>
+</tr>
+<tr>
+<td>ClusterNode</td>
+<td>该节点中保存了资源的总体的运行时统计信息，包括rt，线程数，qps等等，相同的资源会全局共享同一个ClusterNode，不管他属于哪个上下文</td>
+</tr>
+<tr>
+<td>EntranceNode</td>
+<td>该节点表示一棵调用链树的入口节点，通过他可以获取调用链树中所有的子节点</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h3 id="Context的创建与销毁"><a href="#Context的创建与销毁" class="headerlink" title="Context的创建与销毁"></a>Context的创建与销毁</h3><p>首先我们要清楚的一点就是，每次执行entry()方法，试图冲破一个资源时，都会生成一个上下文。这个上下文中会保存着调用链的根节点和当前的入口。</p>
+<p>Context是通过ContextUtil创建的，具体的方法是trueEntry，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> Context <span class="title">trueEnter</span><span class="params">(String name, String origin)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 先从ThreadLocal中获取</span></span><br><span class="line">    Context context = contextHolder.get();</span><br><span class="line">    <span class="keyword">if</span> (context == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 如果ThreadLocal中获取不到Context</span></span><br><span class="line">        <span class="comment">// 则根据name从map中获取根节点，只要是相同的资源名，就能直接从map中获取到node</span></span><br><span class="line">        Map&lt;String, DefaultNode&gt; localCacheNameMap = contextNameNodeMap;</span><br><span class="line">        DefaultNode node = localCacheNameMap.get(name);</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 省略部分代码</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                LOCK.lock();</span><br><span class="line">                node = contextNameNodeMap.get(name);</span><br><span class="line">                <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// 省略部分代码</span></span><br><span class="line">                    <span class="comment">// 创建一个新的入口节点</span></span><br><span class="line">                    node = <span class="keyword">new</span> EntranceNode(<span class="keyword">new</span> StringResourceWrapper(name, EntryType.IN), <span class="keyword">null</span>);</span><br><span class="line">                    Constants.ROOT.addChild(node);</span><br><span class="line">                    <span class="comment">// 省略部分代码</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                LOCK.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 创建一个新的Context，并设置Context的根节点，即设置EntranceNode</span></span><br><span class="line">        context = <span class="keyword">new</span> Context(node, name);</span><br><span class="line">        context.setOrigin(origin);</span><br><span class="line">        <span class="comment">// 将该Context保存到ThreadLocal中去</span></span><br><span class="line">        contextHolder.set(context);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> context;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码中我省略了部分代码，只保留了核心的部分。从源码中还是可以比较清晰的看出生成Context的过程：</p>
+<ul>
+<li>1.先从ThreadLocal中获取，如果能获取到直接返回，如果获取不到则继续第2步</li>
+<li>2.从一个static的map中根据上下文的名称获取，如果能获取到则直接返回，否则继续第3步</li>
+<li>3.加锁后进行一次double check，如果还是没能从map中获取到，则创建一个EntranceNode，并把该EntranceNode添加到一个全局的ROOT节点中去，然后将该节点添加到map中去(这部分代码在上述代码中省略了)</li>
+<li>4.根据EntranceNode创建一个上下文，并将该上下文保存到ThreadLocal中去，下一个请求可以直接获取<br>那保存在ThreadLocal中的上下文什么时候会清除呢？从代码中可以看到具体的清除工作在ContextUtil的exit方法中，当执行该方法时，会将保存在ThreadLocal中的context对象清除，具体的代码非常简单，这里就不贴代码了。</li>
+</ul>
+<p>那ContextUtil.exit方法什么时候会被调用呢？</p>
+<p>有两种情况：一是主动调用ContextUtil.exit的时候，二是当一个入口Entry要退出，执行该Entry的trueExit方法的时候，此时会触发ContextUtil.exit的方法。<br>但是有一个前提，就是当前Entry的父Entry为null时，此时说明该Entry已经是最顶层的根节点了，可以清除context。</p>
+<h3 id="调用链树"><a href="#调用链树" class="headerlink" title="调用链树"></a>调用链树</h3><p>当在一个上下文中多次调用了 SphU#entry() 方法时，就会创建一棵调用链树。具体的代码在entry方法中创建CtEntry对象时：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CtEntry(ResourceWrapper resourceWrapper, ProcessorSlot&lt;Object&gt; chain, Context context) &#123;</span><br><span class="line">    <span class="keyword">super</span>(resourceWrapper);</span><br><span class="line">    <span class="keyword">this</span>.chain = chain;</span><br><span class="line">    <span class="keyword">this</span>.context = context;</span><br><span class="line">    <span class="comment">// 获取「上下文」中上一次的入口</span></span><br><span class="line">    parent = context.getCurEntry();</span><br><span class="line">    <span class="keyword">if</span> (parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 然后将当前入口设置为上一次入口的子节点</span></span><br><span class="line">        ((CtEntry)parent).child = <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 设置「上下文」的当前入口为该类本身</span></span><br><span class="line">    context.setCurEntry(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="构造树干-创建context"><a href="#构造树干-创建context" class="headerlink" title="构造树干-创建context"></a>构造树干-创建context</h4><p>context的创建在上面已经分析过了，初始化的时候，context中的curEntry属性是没有值的，如下图所示：</p>
+<p><img src="/2020/07/28/sentinel/image-09.png" width="500px"></p>
+<h4 id="创建Entry"><a href="#创建Entry" class="headerlink" title="创建Entry"></a>创建Entry</h4><p>每创建一个新的Entry对象时，都会重新设置context的curEntry，并将context原来的curEntry设置为该新Entry对象的父节点，如下图所示：</p>
+<p><img src="/2020/07/28/sentinel/image-10.png" width="800px"></p>
+<h4 id="退出Entry"><a href="#退出Entry" class="headerlink" title="退出Entry"></a>退出Entry</h4><p>某个Entry退出时，将会重新设置context的curEntry，当该Entry是最顶层的一个入口时，将会把ThreadLocal中保存的context也清除掉，如下图所示：</p>
+<p><img src="/2020/07/28/sentinel/image-11.png" width="800px"></p>
+<h4 id="构造叶子节点"><a href="#构造叶子节点" class="headerlink" title="构造叶子节点"></a>构造叶子节点</h4><p>上面的过程是构造了一棵调用链的树，但是这棵树只有树干，没有叶子，那叶子节点是在什么时候创建的呢？</p>
+<p>DefaultNode就是叶子节点，在叶子节点中保存着目标资源在当前状态下的统计信息。通过分析，我们知道了叶子节点是在NodeSelectorSlot的entry方法中创建的。具体的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, Object obj, <span class="keyword">int</span> count, Object... args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="comment">// 根据「上下文」的名称获取DefaultNode</span></span><br><span class="line">    <span class="comment">// 多线程环境下，每个线程都会创建一个context，</span></span><br><span class="line">    <span class="comment">// 只要资源名相同，则context的名称也相同，那么获取到的节点就相同</span></span><br><span class="line">    DefaultNode node = map.get(context.getName());</span><br><span class="line">    <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            node = map.get(context.getName());</span><br><span class="line">            <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">// 如果当前「上下文」中没有该节点，则创建一个DefaultNode节点</span></span><br><span class="line">                node = Env.nodeBuilder.buildTreeNode(resourceWrapper, <span class="keyword">null</span>);</span><br><span class="line">                <span class="comment">// 省略部分代码</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 将当前node作为「上下文」的最后一个节点的子节点添加进去</span></span><br><span class="line">            <span class="comment">// 如果context的curEntry.parent.curNode为null，则添加到entranceNode中去</span></span><br><span class="line">            <span class="comment">// 否则添加到context的curEntry.parent.curNode中去</span></span><br><span class="line">            ((DefaultNode)context.getLastNode()).addChild(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将该节点设置为「上下文」中的当前节点</span></span><br><span class="line">    <span class="comment">// 实际是将当前节点赋值给context中curEntry的curNode</span></span><br><span class="line">    <span class="comment">// 在Context的getLastNode中会用到在此处设置的curNode</span></span><br><span class="line">    context.setCurNode(node);</span><br><span class="line">    fireEntry(context, resourceWrapper, node, count, args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码可以分解成下面这些步骤：</p>
+<ul>
+<li>1）获取当前上下文对应的DefaultNode，如果没有的话会为当前的调用新生成一个DefaultNode节点，它的作用是对资源进行各种统计度量以便进行流控；</li>
+<li>2）将新创建的DefaultNode节点，添加到context中，作为「entranceNode」或者「curEntry.parent.curNode」的子节点；</li>
+<li>3）将DefaultNode节点，添加到context中，作为「curEntry」的curNode。</li>
+</ul>
+<p>上面的第2步，不是每次都会执行。我们先看第3步，把当前DefaultNode设置为context的curNode，实际上是把当前节点赋值给context中curEntry的curNode，用图形表示就是这样：</p>
+<p><img src="/2020/07/28/sentinel/image-12.png" width="700px"></p>
+<h4 id="保存子节点"><a href="#保存子节点" class="headerlink" title="保存子节点"></a>保存子节点</h4><p>上面已经分析了叶子节点的构造过程,叶子节点是保存在各个Entry的curNode属性中的。</p>
+<p>我们知道context中只保存了入口节点和当前Entry，那子节点是什么时候保存的呢，其实子节点就是上面代码中的第2步中保存的。</p>
+<p>下面我们来分析上面的第2步的情况;</p>
+<p>第一次调用NodeSelectorSlot的entry方法时，map中肯定是没有DefaultNode的，那就会进入第2步中，创建一个node，创建完成后会把该节点加入到context的lastNode的子节点中去。我们先看一下context的getLastNode方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Node <span class="title">getLastNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果curEntry不存在时，返回entranceNode</span></span><br><span class="line">    <span class="comment">// 否则返回curEntry的lastNode，</span></span><br><span class="line">    <span class="comment">// 需要注意的是curEntry的lastNode是获取的parent的curNode，</span></span><br><span class="line">    <span class="comment">// 如果每次进入的资源不同，就会每次都创建一个CtEntry，则parent为null，</span></span><br><span class="line">    <span class="comment">// 所以curEntry.getLastNode()也为null</span></span><br><span class="line">    <span class="keyword">if</span> (curEntry != <span class="keyword">null</span> &amp;&amp; curEntry.getLastNode() != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> curEntry.getLastNode();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> entranceNode;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码中我们可以知道,lastNode的值可能是context中的entranceNode也可能是curEntry.parent.curNode，但是他们都是<code>「DefaultNode」</code>类型的节点,DefaultNode的所有子节点是保存在一个HashSet中的。</p>
+<p>第一次调用getLastNode方法时,context中curEntry是null,因为curEntry是在第3步中才赋值的。<br>所以lastNode最初的值就是context的entranceNode。那么将node添加到entranceNode的子节点中去之后就变成了下面这样：</p>
+<p><img src="/2020/07/28/sentinel/image-13.png" width="600px"></p>
+<p>紧接着再进入一次，资源名不同，会再次生成一个新的Entry，上面的图形就变成下图这样：</p>
+<p><img src="/2020/07/28/sentinel/image-14.png" width="600px"></p>
+<p>此时再次调用context的getLastNode方法，因为此时curEntry的parent不再是null了<br>所以获取到的lastNode是curEntry.parent.curNode，在上图中可以很方便的看出，这个节点就是node0。那么把当前节点node1添加到lastNode的子节点中去，上面的图形就变成下图这样：</p>
+<p><img src="/2020/07/28/sentinel/image-15.png" width="600px"></p>
+<p>然后将当前node设置给context的curNode，上面的图形就变成下图这样：</p>
+<p><img src="/2020/07/28/sentinel/image-16.png" width="600px"></p>
+<p>假如再创建一个Entry，然后再进入一次不同的资源名，上面的图就变成下面这样：</p>
+<p>至此NodeSelectorSlot的基本功能已经大致分析清楚了。</p>
+<h2 id="ClusterBuilderSlot"><a href="#ClusterBuilderSlot" class="headerlink" title="ClusterBuilderSlot"></a>ClusterBuilderSlot</h2><p>NodeSelectorSlot的entry方法执行完之后，会调用fireEntry方法，此时会触发ClusterBuilderSlot的entry方法。</p>
+<p>ClusterBuilderSlot的entry方法比较简单，具体代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, DefaultNode node, <span class="keyword">int</span> count, Object... args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (clusterNode == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">            <span class="keyword">if</span> (clusterNode == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">// Create the cluster node.</span></span><br><span class="line">                clusterNode = Env.nodeBuilder.buildClusterNode();</span><br><span class="line">                <span class="comment">// 将clusterNode保存到全局的map中去</span></span><br><span class="line">                HashMap&lt;ResourceWrapper, ClusterNode&gt; newMap = <span class="keyword">new</span> HashMap&lt;ResourceWrapper, ClusterNode&gt;(<span class="number">16</span>);</span><br><span class="line">                newMap.putAll(clusterNodeMap);</span><br><span class="line">                newMap.put(node.getId(), clusterNode);</span><br><span class="line"></span><br><span class="line">                clusterNodeMap = newMap;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将clusterNode塞到DefaultNode中去</span></span><br><span class="line">    node.setClusterNode(clusterNode);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 省略部分代码</span></span><br><span class="line"></span><br><span class="line">    fireEntry(context, resourceWrapper, node, count, args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>NodeSelectorSlot的职责比较简单，主要做了两件事：</p>
+<ul>
+<li><p>一、为每个资源创建一个clusterNode，然后把clusterNode塞到DefaultNode中去</p>
+</li>
+<li><p>二、将clusterNode保持到全局的map中去，用资源作为map的key</p>
+</li>
+</ul>
+<p>PS：一个资源只有一个ClusterNode，但是可以有多个DefaultNode</p>
+<h2 id="StatistcSlot"><a href="#StatistcSlot" class="headerlink" title="StatistcSlot"></a>StatistcSlot</h2><p>StatisticSlot负责来统计资源的实时状态，具体的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, DefaultNode node, <span class="keyword">int</span> count, Object... args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 触发下一个Slot的entry方法</span></span><br><span class="line">        fireEntry(context, resourceWrapper, node, count, args);</span><br><span class="line">        <span class="comment">// 如果能通过SlotChain中后面的Slot的entry方法，说明没有被限流或降级</span></span><br><span class="line">        <span class="comment">// 统计信息</span></span><br><span class="line">        node.increaseThreadNum();</span><br><span class="line">        node.addPassRequest();</span><br><span class="line">        <span class="comment">// 省略部分代码</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (BlockException e) &#123;</span><br><span class="line">        context.getCurEntry().setError(e);</span><br><span class="line">        <span class="comment">// Add block count.</span></span><br><span class="line">        node.increaseBlockedQps();</span><br><span class="line">        <span class="comment">// 省略部分代码</span></span><br><span class="line">        <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">        context.getCurEntry().setError(e);</span><br><span class="line">        <span class="comment">// Should not happen</span></span><br><span class="line">        node.increaseExceptionQps();</span><br><span class="line">        <span class="comment">// 省略部分代码</span></span><br><span class="line">        <span class="keyword">throw</span> e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exit</span><span class="params">(Context context, ResourceWrapper resourceWrapper, <span class="keyword">int</span> count, Object... args)</span> </span>&#123;</span><br><span class="line">    DefaultNode node = (DefaultNode)context.getCurNode();</span><br><span class="line">    <span class="keyword">if</span> (context.getCurEntry().getError() == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">long</span> rt = TimeUtil.currentTimeMillis() - context.getCurEntry().getCreateTime();</span><br><span class="line">        <span class="keyword">if</span> (rt &gt; Constants.TIME_DROP_VALVE) &#123;</span><br><span class="line">            rt = Constants.TIME_DROP_VALVE;</span><br><span class="line">        &#125;</span><br><span class="line">        node.rt(rt);</span><br><span class="line">        <span class="comment">// 省略部分代码</span></span><br><span class="line">        node.decreaseThreadNum();</span><br><span class="line">        <span class="comment">// 省略部分代码</span></span><br><span class="line">    &#125;</span><br><span class="line">    fireExit(context, resourceWrapper, count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码分成了两部分，第一部分是entry方法，该方法首先会触发后续slot的entry方法，即SystemSlot、FlowSlot、DegradeSlot等的规则，如果规则不通过，就会抛出BlockException，则会在node中统计被block的数量。反之会在node中统计通过的请求数和线程数等信息。第二部分是在exit方法中，当退出该Entry入口时，会统计rt的时间，并减少线程数。</p>
+<p>这些统计的实时数据会被后续的校验规则所使用，具体的统计方式是通过<code>滑动窗口</code>来实现的。</p>
+<h2 id="SystemSlot"><a href="#SystemSlot" class="headerlink" title="SystemSlot"></a>SystemSlot</h2><p>SystemSlot就是根据总的请求统计信息，来做流控，主要是防止系统被搞垮，具体的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, DefaultNode node, <span class="keyword">int</span> count, Object... args)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    SystemRuleManager.checkSystem(resourceWrapper);</span><br><span class="line">    fireEntry(context, resourceWrapper, node, count, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">checkSystem</span><span class="params">(ResourceWrapper resourceWrapper)</span> <span class="keyword">throws</span> BlockException </span>&#123;</span><br><span class="line">    <span class="comment">// 省略部分代码</span></span><br><span class="line">    <span class="comment">// total qps</span></span><br><span class="line">    <span class="keyword">double</span> currentQps = Constants.ENTRY_NODE.successQps();</span><br><span class="line">    <span class="keyword">if</span> (currentQps &gt; qps) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SystemBlockException(resourceWrapper.getName(), <span class="string">"qps"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// total thread</span></span><br><span class="line">    <span class="keyword">int</span> currentThread = Constants.ENTRY_NODE.curThreadNum();</span><br><span class="line">    <span class="keyword">if</span> (currentThread &gt; maxThread) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SystemBlockException(resourceWrapper.getName(), <span class="string">"thread"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">double</span> rt = Constants.ENTRY_NODE.avgRt();</span><br><span class="line">    <span class="keyword">if</span> (rt &gt; maxRt) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SystemBlockException(resourceWrapper.getName(), <span class="string">"rt"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 完全按照RT,BBR算法来</span></span><br><span class="line">    <span class="keyword">if</span> (highestSystemLoadIsSet &amp;&amp; getCurrentSystemAvgLoad() &gt; highestSystemLoad) &#123;</span><br><span class="line">        <span class="keyword">if</span> (currentThread &gt; <span class="number">1</span> &amp;&amp;</span><br><span class="line">            currentThread &gt; Constants.ENTRY_NODE.maxSuccessQps() * Constants.ENTRY_NODE.minRt() / <span class="number">1000</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> SystemBlockException(resourceWrapper.getName(), <span class="string">"load"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中的Constants.ENTRY_NODE是一个全局的ClusterNode，该节点的值是在StatisticsSlot中进行统计的。</p>
+<h2 id="AuthoritySlot"><a href="#AuthoritySlot" class="headerlink" title="AuthoritySlot"></a>AuthoritySlot</h2><p>AuthoritySlot做的事也比较简单，主要是根据黑白名单进行过滤，只要有一条规则校验不通过，就抛出异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, DefaultNode node, <span class="keyword">int</span> count, Object... args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    AuthorityRuleManager.checkAuthority(resourceWrapper, context, node, count);</span><br><span class="line">    fireEntry(context, resourceWrapper, node, count, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">checkAuthority</span><span class="params">(ResourceWrapper resource, Context context, DefaultNode node, <span class="keyword">int</span> count)</span> <span class="keyword">throws</span> BlockException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (authorityRules == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 根据资源名称获取相应的规则</span></span><br><span class="line">    List&lt;AuthorityRule&gt; rules = authorityRules.get(resource.getName());</span><br><span class="line">    <span class="keyword">if</span> (rules == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (AuthorityRule rule : rules) &#123;</span><br><span class="line">        <span class="comment">// 只要有一条规则校验不通过，就抛出AuthorityException</span></span><br><span class="line">        <span class="keyword">if</span> (!rule.passCheck(context, node, count)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AuthorityException(context.getOrigin());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="FlowSlot"><a href="#FlowSlot" class="headerlink" title="FlowSlot"></a>FlowSlot</h2><p>FlowSlot主要是根据前面统计好的信息，与设置的限流规则进行匹配校验，如果规则校验不通过则进行限流，具体的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, DefaultNode node, <span class="keyword">int</span> count, Object... args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    FlowRuleManager.checkFlow(resourceWrapper, context, node, count);</span><br><span class="line">    fireEntry(context, resourceWrapper, node, count, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">checkFlow</span><span class="params">(ResourceWrapper resource, Context context, DefaultNode node, <span class="keyword">int</span> count)</span> <span class="keyword">throws</span> BlockException </span>&#123;</span><br><span class="line">    List&lt;FlowRule&gt; rules = flowRules.get(resource.getName());</span><br><span class="line">    <span class="keyword">if</span> (rules != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (FlowRule rule : rules) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!rule.passCheck(context, node, count)) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> FlowException(rule.getLimitApp());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="DegradeSlot"><a href="#DegradeSlot" class="headerlink" title="DegradeSlot"></a>DegradeSlot</h2><p>DegradeSlot主要是根据前面统计好的信息，与设置的降级规则进行匹配校验，如果规则校验不通过则进行降级，具体的代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">entry</span><span class="params">(Context context, ResourceWrapper resourceWrapper, DefaultNode node, <span class="keyword">int</span> count, Object... args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    DegradeRuleManager.checkDegrade(resourceWrapper, context, node, count);</span><br><span class="line">    fireEntry(context, resourceWrapper, node, count, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">checkDegrade</span><span class="params">(ResourceWrapper resource, Context context, DefaultNode node, <span class="keyword">int</span> count)</span> <span class="keyword">throws</span> BlockException </span>&#123;</span><br><span class="line">    List&lt;DegradeRule&gt; rules = degradeRules.get(resource.getName());</span><br><span class="line">    <span class="keyword">if</span> (rules != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (DegradeRule rule : rules) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!rule.passCheck(context, node, count)) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> DegradeException(rule.getLimitApp());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>sentinel的限流降级等功能，主要是通过一个SlotChain实现的。在链式插槽中，有7个核心的Slot，这些Slot各司其职，可以分为以下几种类型：</p>
+<ul>
+<li><p>一、进行资源调用路径构造的NodeSelectorSlot和ClusterBuilderSlot</p>
+</li>
+<li><p>二、进行资源的实时状态统计的StatisticsSlot</p>
+</li>
+<li><p>三、进行系统保护，限流，降级等规则校验的SystemSlot、AuthoritySlot、FlowSlot、DegradeSlot</p>
+</li>
+</ul>
+<p>后面几个Slot依赖于前面几个Slot统计的结果。至此，每种Slot的功能已经基本分析清楚了。</p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2020/07/28/sentinel/';
+        this.page.title = 'Alibaba-Sentinel[笔记篇]';
+        this.page.identifier = '2020/07/28/sentinel/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
