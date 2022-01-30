@@ -11,15 +11,8 @@
     <meta name="author" content="coder">
     <meta name="version" content="1.0.0">
     <meta name="keywords" content="">
-    <meta name="description" content="安卓相关源码解析笔记
-虚拟机创建及启动
-8.1.0_r33
-
-Java虚拟机是由Zygate进程来创建的(Android中所有的Java进程由Zygote进程fork而来)Zygote进程是Linux系统上init进程通过解析配置脚本启动
-
-/system/core/rootdir/init.zygote32.rc
-
-12345678910111213141   service zygote /system/bin/app_process -Xzygote /system/bin --zygot">
+    <meta name="description" content="
+  413dc5d2f46ae2f3d490bbe04c79083d71740e2845c437c50f9b0eefa68caf9c53e9943fe33e08d57807349ede399cacd0e74648293a93ab3f1a589c7a4ea33c735f2cb8b967a4b83ff41b7ce7b3684971156aec6e57476a299e4cb9e1b4e07a05e71aa8c058395b62304c48950047b3ce958d7e2b274a49c521696">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
     <meta name="baidu-site-verification" content="F0CXvmUgA9">
@@ -163,21 +156,18 @@ Java虚拟机是由Zygate进程来创建的(Android中所有的Java进程由Zygo
     
     <section class="article-body markdown-body">
         
-        <p>安卓相关源码解析笔记<br><a id="more"></a></p>
-<h1 id="虚拟机创建及启动"><a href="#虚拟机创建及启动" class="headerlink" title="虚拟机创建及启动"></a>虚拟机创建及启动</h1><blockquote>
-<p><code>8.1.0_r33</code></p>
-</blockquote>
-<p>Java虚拟机是由Zygate进程来创建的(Android中所有的Java进程由Zygote进程fork而来)<br>Zygote进程是Linux系统上init进程通过解析配置脚本启动</p>
-<blockquote>
-<p><code>/system/core/rootdir/init.zygote32.rc</code></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1   service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server</span><br><span class="line">2    class main</span><br><span class="line">3    priority -20</span><br><span class="line">4    user root</span><br><span class="line">5    group root readproc</span><br><span class="line">6    socket zygote stream 660 root system</span><br><span class="line">7    onrestart write /sys/android_power/request_state wake</span><br><span class="line">8    onrestart write /sys/power/state on</span><br><span class="line">9    onrestart restart audioserver</span><br><span class="line">10    onrestart restart cameraserver</span><br><span class="line">11    onrestart restart media</span><br><span class="line">12    onrestart restart netd</span><br><span class="line">13    onrestart restart wificond</span><br><span class="line">14    writepid /dev/cpuset/foreground/tasks</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>service zygote</code>:告知init进程, 配置一个名为zygote的服务, 服务是init的内部概念 </li>
-<li><code>/system/bin/app_process</code>: 指明zygote服务对应的二进制文件路径, zygote的程序就是<code>app_process</code></li>
-<li><code>-Xzygote /system/bin --zygote --start-system-server</code>:启动参数</li>
-</ul>
-
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="0661ca2f02d4f3cc6d1d378a42f55ec0e3b5417629b996a1e6e4b1020a48cc3b">413dc5d2f46ae2f3d490bbe04c79083d71740e2845c437c50f9b0eefa68caf9c53e9943fe33e08d57807349ede399cacd0e74648293a93ab3f1a589c7a4ea33c735f2cb8b967a4b83ff41b7ce7b3684971156aec6e57476a299e4cb9e1b4e07a05e71aa8c058395b62304c48950047b3ce958d7e2b274a49c521696bf195f2e9093a352f2e23757ebcba81c84f3fbe423551c6a74cfcb8cbcffa44edd93db2b5537c4631f647b15f396f543036657c674b8a9858e698d0ef545ea901e5f87099e26b16917953ce5b4d6e6c13d929e5013072fdfe88621d6d2e889c98bed0c1e3757116e136c46e8bfb68ea4acdd2b4abfe75affa737097255e747de5ad967df052950f5252ec755370ca697f7d0d9212842c08dc75841655447bed3747154ee313126e2fa75e203eb852b9bbbbd40e16f52bbea3a4667591eb421cdb40a0029945a78c24f19e74957610b54dc5fbfa22462c24267dc981cdbf236e6761ec6cb9715da1b2706f28809b4a2702591f458a69d6d4756756d9a01c8019d326804d3a645c7ddaaf995d09744ec8f8b89c30f4d8d70cd78d1507a7b7590347f38b2a01960f18110e29d39bceeeac3e2fd2062e4948001c65572140931d55dcd0ad6fefc0bd4bb48cb3df8c8fcead9876d78ae07afde100ac45222e1b4eab43d4e5cfcdc969260e4ddde550697b1d4d64fcc0030a15aaf31192ec05e42e8aebe8a896fc14078f881d080c16e7d1bbe42e3ae05e5d06e9d53603a65bd1d85e6012222ec97df980b92fbac686eb8f5418bc036f1aeaee067712182115d58ec98729e536b5b2f80dec13690f49def86a23e6c3a960deb69d2aca83ddf480897a0dfdd01fdd680b91d96e8e5ae2c0b909a289d810c202bf9e62d15e6f070d4b2c34c22d42924225a819c991b947e9c06d133440c09a3cd42633bcbffe69b2abe9e3cae16319340fd9bf2d51961e9bd6bc2c367e270ba88bb6e2102e140b88ff2d48c216ad622a191da79a312b50f74719cd012438ab00d16985835cf7089b34ead2a44fc5b7787806a7b85230e09f91e3b5e8f3e67baf165a18c055f56b0a37469f8461c5b8ed0d7ab952879b70b9855c0da74a483bbd918fbd8f4a1b6239692b4b7ebf4ba961db27816894aa587fc1142af0b25402e793c38d0290f9690b26f3602be94bcfc420c8007e1319df3aa237b3ced0e522073d2c82db3c80c6655b0a2979d9457e95e2bcef4d035909c8b00c0c52c45b3d51c25946814a93bf7f4492e641bd66c9fc4ead86d1da075d685a43f5826ae171daaa0b747d37e922cf3974ec5ce7ebac5aa39463dc5b95505a26c4b986d14ed2423a9107580f97c1c5a63187c841cc9930cb2fea09a515f44c9993a6bcaa4f6cf3fe968aab65e010c1c5ef2da71e3bd121c77ec685384c59f57004d7421aa0a5bcf4f8c15dce91c261a183c939991ab3a42d171294aa66bb55d558526f48ac9231a16d29b23cd931f2d06a7e1a3e8404dc57b294b81aff1589799e5af9d04111b1f1f9bdf8463bf64a079270210708e68b65e01ae36e2716f4f828983185c0f5e74caf64bedf427ee86cd0a54fe65174d51c1aa8a2284e7a2d53f0594e199cdad1ff40066f65e75ee60bbc579fbf6b26aa2a176342e41d2ee86f98b7c5b0a09e06c6a5225d6f794be1d999a7fcd5a30d08a9d3c1fb6ced9b77bfd3d38c80ed0f7540acf5e9ca322013fca80c15e811fb9001e3cced505f57b6b174243f94e14f27c3c5e60b2158865725e257ba14aa6abd6c21b2acc13116edf38cb54ec083177756b9bd293cd443968c3bad125cd7dcd405a401cc75e9608290b40cf70c4e6e35b317547dcfefca2610fa46cd625d33f61338454269b57a394b05819034cbd3a1f6cf3b85f63504a2fd00bf9e10bdf4ec73ecaf22052ebe3638d707340790e4306f14c714fbeabf02c92cb4d1b9ae29fe0910f6459fb41dae29abac70a643ee272eab14b930e6fda855c5c50b87927ec98396d76f8d525e3e10364fc71e60cd9b11cbef36252e50a560c5fe2d341f016e9274baec4532155a5b667b7d51cc4597f442298de7c5eed96a6aa3bd612dd8f5d3572ea9f054156c5b131d444ad953932dc9a94feb899eb929abf5ac7e463411cfe2b19965f534fb938938ee194f5c1c82df7b65e079191d0391695f747929466d9865a5e06d3ac5a2743ca7e00413538684ec55be14944f55abc07c2982716337fae7385839304bb6b12f39c7b98631bd233523bfd92fb3864d0c2e6cd3acfec6c694150950ffb93cb70abb6f90a7b6e08925d5143fb398d0c32fe8bb45f1c9a3293314e12137c2e1b01485073069cde20c00217e9b7f88e3f95e5814c4263e683798a186f8357402c3c8a98068965648f571e1b5de6d1b5ce499b564794e760855cea75081412f2d8e4f2485b3883eb9f76a6db9283f06251445c22c1523adc87d4f7c9888d340e849e3e9b2814475a721f9d765543cfdfaf14588346c46fb7793cb28170121c12e44ac563f3e85ab823758fc8932ca3ae4ee85e4db1b9734f73e6b7b96676cbf78a336f398c85fe09f99941ec1e52f69bd32d7492382fd9cf0ab6dd48df1150e89d9700713d77e15e86f00886e8580a5f22fbaf7183f587a4b57806ebf9a353eee7ee23cbecb5d5ddd3ded49d0d2c5576b8d6ba2e2f10f244a0b9cbaba049805582784f455e0f0c542a8fef77c0bf8af92c59f66616779746a784d8ff14b17c4e996385034a7fff38466ef7551a35d210475825c3f9c9385930ec9dc49046de5b59199a8b19ec9ab5c061276bba28eb19f2a424bfdea1c67989a0836b2b8a0585d2f30e0f08c22da6133478ca7e049d967d82a3caad504b0232cf943034ebffa294fb4ee6d942d830fece3ca63af90485144b83312d7e7dc6f7cd5c3fbb67e6a0a0d1b1a1c8e5d89244fb04f620df83c7550d06986a4a945fe094cb832e061579a56778fc130ce1c4f30c9d8a87108ffa29f0d5dc15dda503eb4ab0235869d6cae33c6cf9a3a6bee8df86e9f81d815f2f2bdfed6dea637d4a15457440348863615ba38257297e4c55087f6cdfb9776361c7af4f776259640dc09cb8d68d41ea7c37652e8bf6cadac6daad2a8746d94c95001ad08d3e9aaa146977a212ad3fccd078c874c5df05d237518ea0578da5d0f3a8b0a933628ae7c28f0f191ea3323499d8444a392f12495253e8d5e5314f1a05bacdac5dedc8ee6714e229349cc43e0d36f7670ab8a40b7782fe13be8604e2ebed1b53e23a61a3c6f6e5bd20742e943b2b5de2cf3f45776829fb9d3ba2a7e9fae8b52adb048bba4b11c8522731f6338e2162ec69b448bd8b23c13d3fe17092007c443bc471f922574b4ddfddf939a63e123e14f8d32350a4570a75f745e36f94fefb2210fcd437ca5a243b5749d75ef78d51acff78e77a622b4105251a5a27c7578595f9c6b43</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">您好,这里需要输入密码。</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax="" src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
         
     </section>
 </article>
