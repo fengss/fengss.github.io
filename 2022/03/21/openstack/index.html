@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Openstack原理解析 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="只是为了了解OpenStack是啥? 以及内部组件是啥之用的书籍资料笔记
+
+总体架构图ComputeService-Nova
+
+API
+
+
+nova-api :接收和响应客户的API调用。
+
+
+Compute Core
+
+
+nova-scheduler:虚机调度服务，负责决定在哪个计算节点上运行虚机。
+nova-compute: 管理虚机的核心服务，通过调用Hypervisor API实现虚机生命周期管理。
+hypervisor:计算节点上跑的虚拟化管理程序，虚机管理最底层的程序。(不同虚拟化技">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go/Rust</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">系统内核</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">逆向知识</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">数据库</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#总体架构图"><span class="toc-number">1.</span> <span class="toc-text">总体架构图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ComputeService-Nova"><span class="toc-number">2.</span> <span class="toc-text">ComputeService-Nova</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#工作协同流程"><span class="toc-number">2.1.</span> <span class="toc-text">工作协同流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#API前端服务"><span class="toc-number">2.1.1.</span> <span class="toc-text">API前端服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scheduler调度服务"><span class="toc-number">2.1.2.</span> <span class="toc-text">Scheduler调度服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Worker工作服务"><span class="toc-number">2.1.3.</span> <span class="toc-text">Worker工作服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Driver框架"><span class="toc-number">2.1.4.</span> <span class="toc-text">Driver框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Messaging服务"><span class="toc-number">2.1.5.</span> <span class="toc-text">Messaging服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Database"><span class="toc-number">2.1.6.</span> <span class="toc-text">Database</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nova组件详解"><span class="toc-number">2.2.</span> <span class="toc-text">Nova组件详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nova-api"><span class="toc-number">2.2.1.</span> <span class="toc-text">nova-api</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nova-scheduler"><span class="toc-number">2.2.2.</span> <span class="toc-text">nova-scheduler</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Filter-scheduler"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">Filter scheduler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Filter"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">Filter</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#RetryFilter"><span class="toc-number">2.2.2.2.1.</span> <span class="toc-text">RetryFilter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#AvailabilityZoneFilter"><span class="toc-number">2.2.2.2.2.</span> <span class="toc-text">AvailabilityZoneFilter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RamFilter"><span class="toc-number">2.2.2.2.3.</span> <span class="toc-text">RamFilter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DiskFilter"><span class="toc-number">2.2.2.2.4.</span> <span class="toc-text">DiskFilter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CoreFilter"><span class="toc-number">2.2.2.2.5.</span> <span class="toc-text">CoreFilter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ComputeFilter"><span class="toc-number">2.2.2.2.6.</span> <span class="toc-text">ComputeFilter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ComputeCapabilitiesFilter"><span class="toc-number">2.2.2.2.7.</span> <span class="toc-text">ComputeCapabilitiesFilter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ImagePropertiesFilter"><span class="toc-number">2.2.2.2.8.</span> <span class="toc-text">ImagePropertiesFilter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ServerGroupAntiAffinityFilter"><span class="toc-number">2.2.2.2.9.</span> <span class="toc-text">ServerGroupAntiAffinityFilter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ServerGroupAffinityFilter"><span class="toc-number">2.2.2.2.10.</span> <span class="toc-text">ServerGroupAffinityFilter</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Weight"><span class="toc-number">2.2.2.3.</span> <span class="toc-text">Weight</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#日志"><span class="toc-number">2.2.2.4.</span> <span class="toc-text">日志</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nova-compute"><span class="toc-number">2.2.3.</span> <span class="toc-text">nova-compute</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#通过Driver架构支持多种Hypervisor"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">通过Driver架构支持多种Hypervisor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定期向OpenStack报告计算节点的状态"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">定期向OpenStack报告计算节点的状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现instance生命周期的管理"><span class="toc-number">2.2.3.3.</span> <span class="toc-text">实现instance生命周期的管理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#为instance准备资源"><span class="toc-number">2.2.3.3.1.</span> <span class="toc-text">为instance准备资源</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#创建instance的镜像文件"><span class="toc-number">2.2.3.3.2.</span> <span class="toc-text">创建instance的镜像文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#创建instance的XML定义文件"><span class="toc-number">2.2.3.3.3.</span> <span class="toc-text">创建instance的XML定义文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#创建虚拟网络并启动instance"><span class="toc-number">2.2.3.3.4.</span> <span class="toc-text">创建虚拟网络并启动instance</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nova-conductor"><span class="toc-number">2.2.4.</span> <span class="toc-text">nova-conductor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Neutron"><span class="toc-number">2.3.</span> <span class="toc-text">Neutron</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Neutron功能"><span class="toc-number">2.3.1.</span> <span class="toc-text">Neutron功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二层交换Switching"><span class="toc-number">2.3.1.1.</span> <span class="toc-text">二层交换Switching</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三层路由Routing"><span class="toc-number">2.3.1.2.</span> <span class="toc-text">三层路由Routing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#负载均衡Load-Balancing"><span class="toc-number">2.3.1.3.</span> <span class="toc-text">负载均衡Load Balancing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#防火墙Firewalling"><span class="toc-number">2.3.1.4.</span> <span class="toc-text">防火墙Firewalling</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neutron网络基本概念"><span class="toc-number">2.3.2.</span> <span class="toc-text">Neutron网络基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#network"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">network</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#subnet"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">subnet</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#port"><span class="toc-number">2.3.2.3.</span> <span class="toc-text">port</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neutron架构"><span class="toc-number">2.3.3.</span> <span class="toc-text">Neutron架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neutron-Server"><span class="toc-number">2.3.4.</span> <span class="toc-text">Neutron Server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neutron如何支持各种network-provider"><span class="toc-number">2.3.5.</span> <span class="toc-text">Neutron如何支持各种network provider</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ML2-Core-Plugin"><span class="toc-number">2.3.6.</span> <span class="toc-text">ML2 Core Plugin</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#传统core-plugin的问题"><span class="toc-number">2.3.6.1.</span> <span class="toc-text">传统core plugin的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ML2能解决传统core-plugin的问题"><span class="toc-number">2.3.6.2.</span> <span class="toc-text">ML2能解决传统core plugin的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ML2架构"><span class="toc-number">2.3.6.3.</span> <span class="toc-text">ML2架构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Service-Plugin-Agent"><span class="toc-number">2.3.7.</span> <span class="toc-text">Service Plugin / Agent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-Bridge实现Neutron网络"><span class="toc-number">2.3.8.</span> <span class="toc-text">Linux Bridge实现Neutron网络</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#初始网络状态"><span class="toc-number">2.3.8.1.</span> <span class="toc-text">初始网络状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#了解Linux-Bridge环境中的各种网络设备"><span class="toc-number">2.3.8.2.</span> <span class="toc-text">了解Linux Bridge环境中的各种网络设备</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#local-network"><span class="toc-number">2.3.8.2.1.</span> <span class="toc-text">local network</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#flat-network"><span class="toc-number">2.3.8.2.2.</span> <span class="toc-text">flat network</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#vlan-network"><span class="toc-number">2.3.8.2.3.</span> <span class="toc-text">vlan network</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Routing"><span class="toc-number">2.3.8.2.4.</span> <span class="toc-text">Routing</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#物理router"><span class="toc-number">2.3.8.2.4.1.</span> <span class="toc-text">物理router</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#虚拟router"><span class="toc-number">2.3.8.2.4.2.</span> <span class="toc-text">虚拟router</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#vxlan-network"><span class="toc-number">2.3.8.2.5.</span> <span class="toc-text">vxlan network</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#VXLAN概念"><span class="toc-number">2.3.8.2.5.1.</span> <span class="toc-text">VXLAN概念</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#VXLAN封装和包格式"><span class="toc-number">2.3.8.2.5.2.</span> <span class="toc-text">VXLAN封装和包格式</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#VXLAN-Tunnel-Endpoint"><span class="toc-number">2.3.8.2.5.3.</span> <span class="toc-text">VXLAN Tunnel Endpoint</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#VXLAN包转发流"><span class="toc-number">2.3.8.2.5.4.</span> <span class="toc-text">VXLAN包转发流</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Linux对VXLAN的支持"><span class="toc-number">2.3.8.2.5.5.</span> <span class="toc-text">Linux对VXLAN的支持</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Load-Balancing-as-a-Service"><span class="toc-number">2.3.8.2.6.</span> <span class="toc-text">Load Balancing as a Service</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#理解概念"><span class="toc-number">2.3.8.2.6.1.</span> <span class="toc-text">理解概念</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#启用LBaaS"><span class="toc-number">2.3.8.2.6.2.</span> <span class="toc-text">启用LBaaS</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Open-vSwitch实现Neutron网络"><span class="toc-number">2.3.9.</span> <span class="toc-text">Open vSwitch实现Neutron网络</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#网络拓扑"><span class="toc-number">2.3.9.1.</span> <span class="toc-text">网络拓扑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始网络状态-1"><span class="toc-number">2.3.9.2.</span> <span class="toc-text">初始网络状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#了解Open-vSwitch环境中的各种网络设备"><span class="toc-number">2.3.9.3.</span> <span class="toc-text">了解Open vSwitch环境中的各种网络设备</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#local-network-1"><span class="toc-number">2.3.9.3.1.</span> <span class="toc-text">local network</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#flat-network-1"><span class="toc-number">2.3.9.3.2.</span> <span class="toc-text">flat network</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#vlan-network-1"><span class="toc-number">2.3.9.3.3.</span> <span class="toc-text">vlan network</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Openstack原理解析
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2022/03/21/openstack/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2022-03-21T05:18:43.000Z" itemprop="datePublished">2022-03-21</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/Linux/">Linux</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>只是为了了解OpenStack是啥? 以及内部组件是啥之用的书籍资料笔记</p>
+<a id="more"></a>
+<h1 id="总体架构图"><a href="#总体架构图" class="headerlink" title="总体架构图"></a>总体架构图</h1><h1 id="ComputeService-Nova"><a href="#ComputeService-Nova" class="headerlink" title="ComputeService-Nova"></a>ComputeService-Nova</h1><p><img src="/2022/03/21/openstack/image-01.png" width="400px"></p>
+<blockquote>
+<p>API</p>
+</blockquote>
+<ul>
+<li><code>nova-api</code> :接收和响应客户的API调用。</li>
+</ul>
+<blockquote>
+<p>Compute Core</p>
+</blockquote>
+<ul>
+<li><code>nova-scheduler</code>:虚机调度服务，负责决定在哪个计算节点上运行虚机。</li>
+<li><code>nova-compute</code>: 管理虚机的核心服务，通过调用Hypervisor API实现虚机生命周期管理。</li>
+<li><code>hypervisor</code>:计算节点上跑的虚拟化管理程序，虚机管理最底层的程序。(不同虚拟化技术提供自己的Hypervisor。常用的Hypervisor有KVM、Xen、VMWare等)</li>
+<li><code>nova-conductor</code>:nova-compute经常需要更新数据库，比如更新虚机的状态。出于安全性和伸缩性的考虑，nova-compute并不会直接访问数据库，而是将这个任务委托给nova-conductor</li>
+</ul>
+<blockquote>
+<p>Console Interface</p>
+</blockquote>
+<ul>
+<li><code>nova-console</code>:用户可以通过多种方式访问虚机的控制台<ul>
+<li>nova-novncproxy：基于Web浏览器的VNC访问。</li>
+<li>nova-spicehtml5proxy：基于HTML5浏览器的SPICE访问。</li>
+<li>nova-xvpnvncproxy：基于Java客户端的VNC访问。</li>
+</ul>
+</li>
+<li><code>nova-consoleauth</code>:负责对访问虚机控制台请求提供Token认证。</li>
+<li><code>nova-cert</code>:提供x509证书支持</li>
+</ul>
+<blockquote>
+<p>Database</p>
+</blockquote>
+<p>Nova会有一些数据需要存放到数据库中，一般使用MySQL。<br>数据库安装在控制节点上。<br>Nova使用命名为nova的数据库</p>
+<blockquote>
+<p>Message Queue</p>
+</blockquote>
+<p>在前面我们了解到Nova包含众多的子服务，这些子服务之间需要相互协调和通信。<br>为解耦各个子服务，Nova通过Message Queue作为子服务的信息中转站。<br>所以在架构图上我们看到了子服务之间没有直接的连线，它们都通过Message Queue联系</p>
+<p><br><br><br></p>
+<h2 id="工作协同流程"><a href="#工作协同流程" class="headerlink" title="工作协同流程"></a>工作协同流程</h2><p>从学习Nova的角度看，虚机创建是一个非常好的场景，涉及的<code>nova-*</code>子服务很全</p>
+<p><img src="/2022/03/21/openstack/image-02.png" width="400px"></p>
+<p>客户(可以是OpenStack最终用户，也可以是其他程序)向API(nova-api)发送请求：<code>&quot;帮我创建一个虚机&quot;</code>。<br>API对请求做一些必要处理后，向Messaging(RabbitMQ)发送了一条消息：<code>&quot;让Scheduler创建一个虚机&quot;</code>。<br>Scheduler(nova-scheduler)从Messaging获取到API发给它的消息，然后执行调度算法，从若干计算节点中选出节点A。<br>Scheduler向Messaging发送了一条消息：<code>&quot;在计算节点A上创建这个虚机&quot;</code>。<br>计算节点A的Compute(nova-compute)从Messaging中获取到Scheduler发给它的消息，然后在本节点的Hypervisor上启动虚机。<br>在虚机创建的过程中，Compute如果需要查询或更新数据库信息，会通过Messaging向Conductor(nova-conductor)发送消息，Conductor负责数据库访问。<br>上面是创建虚机最核心的几个步骤，当然也省略了很多细节</p>
+<blockquote>
+<p>OpenStack通用设计思路</p>
+</blockquote>
+<h3 id="API前端服务"><a href="#API前端服务" class="headerlink" title="API前端服务"></a>API前端服务</h3><p>每个OpenStack组件可能包含若干子服务，其中必定有一个API服务负责接收客户请求。以Nova为例，nova-api作为Nova组件对外的唯一窗口，向客户暴露Nova能够提供的功能。当客户需要执行虚机相关的操作，能且只能向nova-api发送REST请求。这里的客户包括终端用户、命令行和OpenStack其他组件。</p>
+<p>设计API前端服务的好处在于</p>
+<ul>
+<li>对外提供统一接口，隐藏实现细节。</li>
+<li>API提供REST标准调用服务，便于与第三方系统集成。</li>
+<li>可以通过运行多个API服务实例轻松实现API的高可用，比如运行多个nova-api进程。</li>
+</ul>
+<h3 id="Scheduler调度服务"><a href="#Scheduler调度服务" class="headerlink" title="Scheduler调度服务"></a>Scheduler调度服务</h3><p>对于某项操作，如果有多个实体都能够完成任务，那么通常会有一个scheduler负责从这些实体中挑选出一个最合适的来执行操作。</p>
+<p>在前面的例子中，Nova有多个计算节点。当需要创建虚机时，nova-scheduler会根据计算节点当时的资源使用情况选择一个最合适的计算节点来运行虚机。<br>调度服务就好比是一个开发团队中的项目经理，当接到新的开发任务时，项目经理会评估任务的难度，考察团队成员目前的工作负荷和技能水平，然后将任务分配给最合适的开发人员。<br>除了Nova，块服务组件Cinder也有scheduler子服务，后面我们会详细讨论。</p>
+<h3 id="Worker工作服务"><a href="#Worker工作服务" class="headerlink" title="Worker工作服务"></a>Worker工作服务</h3><p>调度服务只管分配任务，真正执行任务的是Worker工作服务。在Nova中，这个Worker就是nova-compute了。</p>
+<p>将Scheduler和Worker从职能上进行划分使得OpenStack非常容易扩展</p>
+<p>当计算资源不够了无法创建虚机时，可以增加计算节点（增加Worker）<br>当客户的请求量太大调度不过来时，可以增加Scheduler</p>
+<h3 id="Driver框架"><a href="#Driver框架" class="headerlink" title="Driver框架"></a>Driver框架</h3><p>OpenStack作为开放的Infrastracture as a Service云操作系统，支持业界各种优秀的技术。</p>
+<p>这些技术可能是开源免费的，也可能是商业收费的。这种开放的架构使得OpenStack能够在技术上保持先进性，具有很强的竞争力，同时又不会造成厂商锁定（Lock-in）。</p>
+<blockquote>
+<p>那么OpenStack的这种开放性体现在哪里呢？</p>
+</blockquote>
+<p>一个重要的方面就是采用基于Driver的框架。以Nova为例，OpenStack的计算节点支持多种Hypervisor。<br>包括KVM、Hyper-V、VMWare、Xen、Docker、LXC等。</p>
+<p>nova-compute为这些Hypervisor定义了统一的接口，hypervisor只需要实现这些接口，就可以driver的形式即插即用到OpenStack中。</p>
+<p><img src="/2022/03/21/openstack/image-03.png" width="500px"></p>
+<p>在nova-compute的配置文件/etc/nova/nova.conf中，由compute_driver配置项指定该计算节点使用哪种Hypervisor的driver</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compute_driver = libvirt.LibvirtDriver</span><br></pre></td></tr></table></figure>
+<p>在我们的环境中因为是KVM，所以配置的是Libvirt的driver。<br>不知大家是否还记得我们在学习Glance时谈到：OpenStack支持多种backend来存放image，可以是本地文件系统、Cinder、Ceph、Swift等。<br>其实这也是一个driver架构，只要符合Glance定义的规范，新的存储方式可以很方便地加入到backend支持列表中。</p>
+<h3 id="Messaging服务"><a href="#Messaging服务" class="headerlink" title="Messaging服务"></a>Messaging服务</h3><p>在前面创建虚机的流程示意图中，我们看到<code>nova-*</code>子服务之间的调用严重依赖<code>Messaging</code>。<code>Messaging</code>是<code>nova-*</code>服务交互的中枢</p>
+<p><img src="/2022/03/21/openstack/image-04.png" width="400px"></p>
+<p>以前没接触过分布式系统的同学可能会不太理解，为什么不让API直接调用Scheduler，或是让Scheuler直接调用Compute，而是非要通过Messaging进行中转，这里做一些解释。</p>
+<p>程序之间的调用通常分两种：同步调用和异步调用。</p>
+<ul>
+<li>同步调用API直接调用Scheduler的接口就是同步调用。其特点是API发出请求后需要一直等待，直到Scheduler完成对Compute的调度，将结果返回给API后API才能够继续做后面的工作。</li>
+<li>异步调用API通过Messaging间接调用Scheduler就是异步调用。其特点是API发出请求后不需要等待，直接返回，继续做后面的工作。Scheduler从Messaging接收到请求后执行调度操作，完成后将结果也通过Messaging发送给API。</li>
+</ul>
+<p>在OpenStack这类分布式系统中，通常采用异步调用的方式，其好处是：</p>
+<ul>
+<li>解耦各子服务子服务不需要知道其他服务在哪里运行，只需要发送消息给Messaging就能完成调用。</li>
+<li>提高性能异步调用使得调用者无须等待结果返回。这样可以继续执行更多的工作，提高系统总的吞吐量。</li>
+<li>提高伸缩性子服务可以根据需要进行扩展，启动更多的实例处理更多的请求，在提高可用性的同时也提高了整个系统的伸缩性。而且这种变化不会影响到其他子服务，也就是说变化对别人是透明的。</li>
+</ul>
+<h3 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h3><p>OpenStack各组件都需要维护自己的状态信息。比如Nova中有虚机的规格、状态，这些信息都是在数据库中维护的。<br>每个OpenStack组件在MySQL中有自己的数据库</p>
+<p><br><br><br></p>
+<h2 id="Nova组件详解"><a href="#Nova组件详解" class="headerlink" title="Nova组件详解"></a>Nova组件详解</h2><h3 id="nova-api"><a href="#nova-api" class="headerlink" title="nova-api"></a>nova-api</h3><p>nova-api是整个Nova组件的门户，所有对Nova的请求都首先由nova-api处理。nova-api向外界暴露若干HTTP REST API接口。<br>在keystone中我们可以查询nova-api的endponits</p>
+<p><img src="/2022/03/21/openstack/image-05.png" width="700px"></p>
+<p>客户端就可以将请求发送到endponits指定的地址，向nova-api请求操作。当然，作为最终用户，我们不会直接发送Rest API请求。</p>
+<p>OpenStack CLI、Dashboard和其他需要跟Nova交换的组件会使用这些API。<br>nova-api对接收到的HTTP API请求会做如下处理</p>
+<ul>
+<li>检查客户端传入的参数是否合法有效。</li>
+<li>调用Nova其他子服务的处理客户端HTTP请求。</li>
+<li>格式化Nova其他子服务返回的结果并返回给客户端。</li>
+</ul>
+<p>nova-api接收哪些请求？<br>简单地说，只要是跟虚拟机生命周期相关的操作，nova-api都可以响应。大部分操作都可以在Dashboard上找到。</p>
+<h3 id="nova-scheduler"><a href="#nova-scheduler" class="headerlink" title="nova-scheduler"></a>nova-scheduler</h3><p>创建Instance时，用户会提出资源需求，例如CPU、内存、磁盘各需要多少。<br>OpenStack将这些需求定义在flavor中，用户只需要指定用哪个flavor就可以了</p>
+<p><img src="/2022/03/21/openstack/image-06.png" width="500px"></p>
+<blockquote>
+<p>下面介绍nova-scheduler是如何实现调度的。<br>在<code>/etc/nova/nova.conf</code>中，nova通过schedulerdriver、scheduleravailable_filters和schedulerdefaultfilters这三个参数来配置nova-scheduler。</p>
+</blockquote>
+<h4 id="Filter-scheduler"><a href="#Filter-scheduler" class="headerlink" title="Filter scheduler"></a>Filter scheduler</h4><p>Filter scheduler是nova-scheduler默认的调度器，调度过程分为两步</p>
+<ul>
+<li>通过过滤器（filter）选择满足条件的计算节点（运行nova-compute）</li>
+<li>通过权重计算（weighting）选择在最优（权重值最大）的计算节点上创建Instance。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scheduler_driver=nova.scheduler.filterscheduler.FilterScheduler</span><br></pre></td></tr></table></figure>
+<p>Nova允许使用第三方scheduler，配置scheduler_driver即可。<br>这又一次体现了OpenStack的开放性。<br>Scheduler可以使用多个filter依次进行过滤，过滤之后的节点再通过计算权重选出最适合的节点。</p>
+<blockquote>
+<p>我们来看一个例子</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-07.png" width="500px"></p>
+<p>最开始有6个计算节点Host1～Host6。通过多个filter层层过滤，Host2和Host4没有通过，被刷掉了。<br>Host1、Host3、Host5、Host6计算权重，结果Host5得分最高，最终入选。</p>
+<h4 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h4><p>当Filter scheduler需要执行调度操作时，会让filter对计算节点进行判断，filter返回True或False。Nova.conf中的scheduleravailablefilters选项用于配置scheduler可用的filter，默认是所有nova自带的filter都可以用于滤操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scheduler_availabel_filters = nova.scheduler.filters.all_filters</span><br></pre></td></tr></table></figure>
+<p>另外还有一个选项schedulerdefaultfilters，用于指定scheduler真正使用的filter</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scheduler_default_filters = RetryFilter，AvailabilityZoneFilter,</span><br><span class="line">RamFilter，DiskFilter，ComputeFilter,ComputeCapabilitiesFilter,</span><br><span class="line">ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter</span><br></pre></td></tr></table></figure>
+<p>下面依次介绍每个filter。</p>
+<h5 id="RetryFilter"><a href="#RetryFilter" class="headerlink" title="RetryFilter"></a>RetryFilter</h5><p>RetryFilter的作用是刷掉之前已经调度过的节点。<br>举个例子方便大家理解：假设A、B、C三个节点都通过了过滤，最终A因为权重值最大被选中执行操作。<br>但由于某个原因，操作在A上失败了。<br>默认情况下，nova-scheduler会重新执行过滤操作（重复次数由schedulermaxattempts选项指定，默认是3）。<br>那么这时候RetryFilter就会将A直接刷掉，避免操作再次失败。<br>RetryFilter通常作为第一个filter。</p>
+<h5 id="AvailabilityZoneFilter"><a href="#AvailabilityZoneFilter" class="headerlink" title="AvailabilityZoneFilter"></a>AvailabilityZoneFilter</h5><p>为提高容灾性和提供隔离服务，可以将计算节点划分到不同的Availability Zone中。例如把一个机架上的机器划分在一个Availability Zone中。OpenStack默认有一个命名为Nova的Availability Zone，所有的计算节点初始都放在Nova中。</p>
+<p>用户可以根据需要创建自己的Availability Zone</p>
+<p><img src="/2022/03/21/openstack/image-08.png" width="500px"></p>
+<p>创建Instance时，需要指定将Instance部署到在哪个Availability Zone中<br>nova-scheduler在做filtering时，会使用AvailabilityZoneFilter将不属于指定Availability Zone的计算节点过滤掉。</p>
+<h5 id="RamFilter"><a href="#RamFilter" class="headerlink" title="RamFilter"></a>RamFilter</h5><p>RamFilter将不能满足flavor内存需求的计算节点过滤掉。<br>对于内存有一点需要注意：为了提高系统的资源使用率，OpenStack在计算节点可用内存时允许overcommit，也就是可以超过实际内存大小。<br>超过的程度是通过nova.conf中ramallocationratio这个参数来控制的，默认值为1.5。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ram_allocation_ratio = 1.5</span><br></pre></td></tr></table></figure></p>
+<h5 id="DiskFilter"><a href="#DiskFilter" class="headerlink" title="DiskFilter"></a>DiskFilter</h5><p>DiskFilter将不能满足flavor磁盘需求的计算节点过滤掉。Disk同样允许overcommit，通过nova.conf中diskallocationratio控制，默认值为1。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Disk_allocation_ratio = 1.0</span><br></pre></td></tr></table></figure>
+<h5 id="CoreFilter"><a href="#CoreFilter" class="headerlink" title="CoreFilter"></a>CoreFilter</h5><p>CoreFilter将不能满足flavor vCPU需求的计算节点过滤掉。vCPU同样允许overcommit，通过nova.conf中cpuallocationratio控制，默认值为16。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cpu_allocation_ratio = 16.0</span><br></pre></td></tr></table></figure>
+<p>这意味着一个8 vCPU的计算节点，nova-scheduler在调度时认为它有128个vCPU。<br>需要提醒的是：nova-scheduler默认使用的filter并没有包含CoreFilter。<br>如果要用，可以将CoreFilter添加到nova.conf的schedulerdefaultfilters配置选项中。</p>
+<h5 id="ComputeFilter"><a href="#ComputeFilter" class="headerlink" title="ComputeFilter"></a>ComputeFilter</h5><p>ComputeFilter保证只有nova-compute服务正常工作的计算节点，才能够被nova-scheduler调度。<br>ComputeFilter显然是必选的filter。</p>
+<h5 id="ComputeCapabilitiesFilter"><a href="#ComputeCapabilitiesFilter" class="headerlink" title="ComputeCapabilitiesFilter"></a>ComputeCapabilitiesFilter</h5><p>ComputeCapabilitiesFilter根据计算节点的特性来筛选。</p>
+<p>这个比较高级，我们举例说明。<br>例如，我们的节点有x8664和ARM架构，如果想将Instance指定部署到x8664架构的节点上，就可以利用ComputeCapabilitiesFilter。<br>还记得flavor中有个Metadata吗。Compute的Capabilities就在Metadata中指定</p>
+<h5 id="ImagePropertiesFilter"><a href="#ImagePropertiesFilter" class="headerlink" title="ImagePropertiesFilter"></a>ImagePropertiesFilter</h5><p>ImagePropertiesFilter根据所选image的属性来筛选匹配的计算节点。跟flavor类似，image也有metadata，用于指定其属性</p>
+<h5 id="ServerGroupAntiAffinityFilter"><a href="#ServerGroupAntiAffinityFilter" class="headerlink" title="ServerGroupAntiAffinityFilter"></a>ServerGroupAntiAffinityFilter</h5><p>ServerGroupAntiAffinityFilter可以尽量将Instance分散部署到不同的节点上。<br>例如有inst1、inst2和inst3三个instance，计算节点有A、B和C。<br>为保证分散部署，进行如下操作:创建一个anti-affinity策略的<code>server group“group-1”</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nova server-group-create --policy anti-affinity group-1</span><br><span class="line"></span><br><span class="line">nova boot --iamge IMAGEID --flavor 1 --hint group=group-1 inst1</span><br><span class="line">nova boot --iamge IMAGEID --flavor 1 --hint group=group-1 inst2</span><br><span class="line">nova boot --iamge IMAGEID --flavor 1 --hint group=group-1 inst3</span><br></pre></td></tr></table></figure>
+<p>因为group-1的策略是AntiAffinity，调度时ServerGroupAntiAffinityFilter会将inst1、inst2和inst3部署到不同计算节点A、B和C。<br>目前只能在CLI中指定server group来创建instance。<br>创建instance时，如果没有指定server group，ServerGroupAntiAffinityFilter会直接通过，不做任何过滤。</p>
+<h5 id="ServerGroupAffinityFilter"><a href="#ServerGroupAffinityFilter" class="headerlink" title="ServerGroupAffinityFilter"></a>ServerGroupAffinityFilter</h5><p>与ServerGroupAntiAffinityFilter的作用相反，ServerGroupAffinityFilter会尽量将instance部署到同一个计算节点上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nova server-group-create --policy affinity group-2</span><br><span class="line"></span><br><span class="line">nova boot --iamge IMAGEID --flavor 1 --hint group=group-2 inst1</span><br><span class="line">nova boot --iamge IMAGEID --flavor 1 --hint group=group-2 inst2</span><br><span class="line">nova boot --iamge IMAGEID --flavor 1 --hint group=group-2 inst3</span><br></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<h4 id="Weight"><a href="#Weight" class="headerlink" title="Weight"></a>Weight</h4><p>经过前面一堆filter的过滤，nova-scheduler选出了能够部署instance的计算节点。<br>如果有多个计算节点通过了过滤，那么最终选择哪个节点呢？<br>Scheduler会对每个计算节点打分，得分最高的获胜。<br>打分的过程就是weight，翻译过来就是计算权重值，那么scheduler是根据什么来计算权重值呢？<br>目前nova-scheduler的默认实现是根据计算节点空闲的内存量计算权重值<br>空闲内存越多，权重越大，instance将被部署到当前空闲内存最多的计算节点上。</p>
+<p><br><br><br></p>
+<h4 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h4><p>是时候完整地回顾一下nova-scheduler的工作过程了。<br>整个过程都被记录到nova-scheduler的日志中。<br>比如当我们部署一个instance时，打开nova-scheduler的日志<code>/opt/stack/logs/n-sch.log</code></p>
+<p><br><br><br></p>
+<h3 id="nova-compute"><a href="#nova-compute" class="headerlink" title="nova-compute"></a>nova-compute</h3><p>nova-compute在计算节点上运行，负责管理节点上的instance。<br>OpenStack对instance的操作，最后都是交给nova-compute来完成的。<br>nova-compute与Hypervisor一起实现OpenStack对instance生命周期的管理。</p>
+<h4 id="通过Driver架构支持多种Hypervisor"><a href="#通过Driver架构支持多种Hypervisor" class="headerlink" title="通过Driver架构支持多种Hypervisor"></a>通过Driver架构支持多种Hypervisor</h4><p>接着的问题是：现在市面上有这么多Hypervisor，nova-compute如何与它们配合呢？<br>这就是我们之前讨论过的Driver架构。<br>nova-compute为这些Hypervisor定义了统一的接口，Hypervisor只需要实现这些接口，就可以Driver的形式即插即用到OpenStack系统中。</p>
+<p><img src="/2022/03/21/openstack/image-09.png" width="500px"></p>
+<p>我们可以在<code>/opt/stack/nova/nova/virt/</code>目录下查看到OpenStack源代码中已经自带了上面这几个Hypervisor的Driver</p>
+<p>某个特定的计算节点上只会运行一种Hypervisor，只需在该节点nova-compute的配置文件<code>/etc/nova/nova.conf</code>中配置所对应的<code>compute_driver</code>就可以了。<br>在我们的环境中因为是KVM，所以配置的是Libvirt的driver</p>
+<p>nova-compute的功能可以分为两类:定时向OpenStack报告计算节点的状态。<br>实现instance生命周期的管理。</p>
+<h4 id="定期向OpenStack报告计算节点的状态"><a href="#定期向OpenStack报告计算节点的状态" class="headerlink" title="定期向OpenStack报告计算节点的状态"></a>定期向OpenStack报告计算节点的状态</h4><p>前面我们看到nova-scheduler的很多Filter是根据计算节点的资源使用情况进行过滤的。<br>比如RamFilter要检查计算节点当前可用的内存量:CoreFilter检查可用的vCPU数量;DiskFilter则会检查可用的磁盘空间。</p>
+<p>那这里有个问题：OpenStack是如何得知每个计算节点的这些信息呢？<br>答案就是：nova-compute会定期向OpenStack报告。从nova-compute的日志<code>/opt/stack/logs/n-cpu.log</code>可以发现</p>
+<p>如果我们再深入思考一个问题:nova-compute是如何获得当前计算节点的资源使用信息的？</p>
+<blockquote>
+<p>给大家一分钟自己先思考一下？</p>
+</blockquote>
+<p>好，揭晓答案。要得到计算节点的资源使用详细情况，需要知道当前节点上所有instance的资源占用信息。</p>
+<blockquote>
+<p>这些信息谁最清楚？</p>
+</blockquote>
+<p>当然是Hypervisor。大家还记得之前我们讨论的Nova Driver架构吧，nova-compute可以通过Hypervisor的driver拿到这些信息。</p>
+<p>举例来说，在我们的实验环境下Hypervisor是KVM，用的Driver是LibvirtDriver。<br>LibvirtDriver可以调用相关的API获得资源信息，这些API的作用相当于我们在CLI里执行virshnodeinfo、virsh dominfo等命令。</p>
+<h4 id="实现instance生命周期的管理"><a href="#实现instance生命周期的管理" class="headerlink" title="实现instance生命周期的管理"></a>实现instance生命周期的管理</h4><p>OpenStack对instance最主要的操作都是通过nova-compute实现的，包括instance的launch、shutdown、reboot、suspend、resume、terminate、resize、migration、snapshot等。<br>本小节重点学习nova-compute如何实现instance launch（部署）操作，其他操作将会在后面的章节讨论。<br>当nova-scheduler选定了部署instance的计算节点后，会通过消息中间件rabbitMQ向选定的计算节点发出launch instance的命令。<br>该计算节点上运行的nova-compute收到消息后会执行instance创建操作。</p>
+<p>日志<code>/opt/stack/logs/n-cpu.log</code>记录了整个操作过程。</p>
+<p>nova-compute创建instance的过程可以分为4步：</p>
+<ul>
+<li>为instance准备资源。</li>
+<li>创建instance的镜像文件。</li>
+<li>创建instance的XML定义文件。</li>
+<li>创建虚拟网络并启动虚拟机。</li>
+</ul>
+<p>下面我们依次讨论每个步骤。</p>
+<h5 id="为instance准备资源"><a href="#为instance准备资源" class="headerlink" title="为instance准备资源"></a>为instance准备资源</h5><p>nova-compute首先会根据指定的flavor依次为instance分配内存、磁盘空间和vCPU。</p>
+<h5 id="创建instance的镜像文件"><a href="#创建instance的镜像文件" class="headerlink" title="创建instance的镜像文件"></a>创建instance的镜像文件</h5><p>资源准备好之后，nova-compute会为instance创建镜像文件。OpenStack启动一个instance时，会选择一个image，这个image由Glance管理。</p>
+<p>nova-compute会：首先将该image下载到计算节点。然后将其作为backing file创建instance的镜像文件。从Glance下载image。nova-compute首先会检查image是否已经下载（比如之前已经创建过基于相同image的instance）。如果没有，就从Glance下载image到本地。</p>
+<p>由此可知如果计算节点上要运行多个相同image的instance，只会在启动第一个instance的时候从Glance下载image，后面的instance启动速度就大大加快了。</p>
+<h5 id="创建instance的XML定义文件"><a href="#创建instance的XML定义文件" class="headerlink" title="创建instance的XML定义文件"></a>创建instance的XML定义文件</h5><p>创建instance的XML定义文件</p>
+<h5 id="创建虚拟网络并启动instance"><a href="#创建虚拟网络并启动instance" class="headerlink" title="创建虚拟网络并启动instance"></a>创建虚拟网络并启动instance</h5><p>本环境用的是linux-bridge实现的虚拟网络，在Neutron章节我们会详细讨论OpenStack虚拟网络的不同实现方式。<br>一切就绪接下来可以启动instance了<br>至此，instance已经成功启动</p>
+<p><br></p>
+<h3 id="nova-conductor"><a href="#nova-conductor" class="headerlink" title="nova-conductor"></a>nova-conductor</h3><p>nova-compute需要获取和更新数据库中instance的信息。<br>但nova-compute并不会直接访问数据库，而是通过nova-conductor实现数据的访问</p>
+<p>这样做有两个显著好处:更高的系统安全性。更好的系统伸缩性。</p>
+<ul>
+<li>更高的安全性</li>
+<li>更好的伸缩性</li>
+</ul>
+<p><br><br><br></p>
+<h2 id="Neutron"><a href="#Neutron" class="headerlink" title="Neutron"></a>Neutron</h2><p>传统的网络管理方式很大程度上依赖于管理员手工配置和维护各种网络硬件设备；而云环境下的网络已经变得非常复杂，特别是在多租户场景里，用户随时都可能需要创建、修改和删除网络，网络的连通性和隔离已经太可能通过手工配置来保证了。</p>
+<h3 id="Neutron功能"><a href="#Neutron功能" class="headerlink" title="Neutron功能"></a>Neutron功能</h3><h4 id="二层交换Switching"><a href="#二层交换Switching" class="headerlink" title="二层交换Switching"></a>二层交换Switching</h4><p>Nova的Instance是通过虚拟交换机连接到虚拟二层网络的。<br>Neutron支持多种虚拟交换机，包括Linux原生的Linux Bridge和Open vSwitch。<br>Open vSwitch（OVS）是一个开源的虚拟交换机，它支持标准的管理接口和协议。<br>利用Linux Bridge和OVS，Neutron除了可以创建传统的VLAN网络，还可以创建基于隧道技术的Overlay网络，比如VxLAN和GRE（Linux Bridge目前只支持VxLAN）。</p>
+<h4 id="三层路由Routing"><a href="#三层路由Routing" class="headerlink" title="三层路由Routing"></a>三层路由Routing</h4><p>Instance可以配置不同网段的IP，Neutron的router（虚拟路由器）实现instance跨网段通信。<br>router通过IP forwarding、iptables等技术来实现路由和NAT。<br>我们将在后面讨论如何在Neutron中配置router来实现instance之间，以及与外部网络的通信。</p>
+<h4 id="负载均衡Load-Balancing"><a href="#负载均衡Load-Balancing" class="headerlink" title="负载均衡Load Balancing"></a>负载均衡Load Balancing</h4><p>Openstack在Grizzly版本第一次引入了Load-Balancing-as-a-Service（LBaaS），提供了将负载分发到多个instance的能力。<br>LBaaS支持多种负载均衡产品和方案，不同地实现以Plugin的形式集成到Neutron，目前默认的Plugin是HAProxy。</p>
+<h4 id="防火墙Firewalling"><a href="#防火墙Firewalling" class="headerlink" title="防火墙Firewalling"></a>防火墙Firewalling</h4><p>Neutron通过下面两种方式来保障instance和网络的安全性。<br>Security Group通过iptables限制进出instance的网络包。<br>Firewall-as-a-ServiceFWaaS，限制进出虚拟路由器的网络包，也是通过iptables实现。</p>
+<p><br><br><br></p>
+<h3 id="Neutron网络基本概念"><a href="#Neutron网络基本概念" class="headerlink" title="Neutron网络基本概念"></a>Neutron网络基本概念</h3><h4 id="network"><a href="#network" class="headerlink" title="network"></a>network</h4><p>network是一个隔离的二层广播域。Neutron支持多种类型的network，包括local、fla、VLAN、VxLAN和GRE。</p>
+<blockquote>
+<p>local</p>
+</blockquote>
+<p>local网络与其他网络和节点隔离。local网络中的instance只能与位于同一节点上同一网络的instance通信，local网络主要用于单机测试。</p>
+<blockquote>
+<p>flat</p>
+</blockquote>
+<p>flat网络是无vlan tagging的网络。flat网络中的instance能与位于同一网络的instance通信，并且可以跨多个节点。</p>
+<blockquote>
+<p>vlan</p>
+</blockquote>
+<p>vlan网络是具有802.1q tagging的网络。vlan是一个二层的广播域，同一vlan中的instance可以通信，不同vlan只能通过router通信。vlan网络可以跨节点，是应用最广泛的网络类型。</p>
+<blockquote>
+<p>vxlan</p>
+</blockquote>
+<p>vxlan是基于隧道技术的overlay网络。vxlan网络通过唯一的segmentation ID（也叫VNI）与其他vxlan网络区分。vxlan中数据包会通过VNI封装成UPD包进行传输。因为二层的包通过封装在三层传输，能够克服vlan和物理网络基础设施的限制。</p>
+<blockquote>
+<p>gre</p>
+</blockquote>
+<p>gre是与vxlan类似的一种overlay网络。<br>主要区别在于使用IP包而非UDP进行封装。不同network之间在二层上是隔离的。<br>以vlan网络为例，network A和network B会分配不同的VLAN ID，这样就保证了network A中的广播包不会跑到network B中。<br>当然这里的隔离是指二层上的隔离，借助路由器不同，network是可能在三层上通信的。network必须属于某个Project（Tenant租户），Project中可以创建多个network。network与Project之间是1对多关系。</p>
+<h4 id="subnet"><a href="#subnet" class="headerlink" title="subnet"></a>subnet</h4><p>subnet是一个IPv4或者IPv6地址段。<br>instance的IP从subnet中分配。</p>
+<p>每个subnet需要定义IP地址的范围和掩码。<br>network与subnet是1对多关系。<br>一个subnet只能属于某个network；一个network可以有多个subnet，这些subnet可以是不同的IP段，但不能重叠。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">network A</span><br><span class="line">subnet A-a: 10.10.1.0/24&#123;&quot;start&quot;: &quot;10.10.1.1&quot;, &quot;end&quot;: &quot;10.10.1.50&quot;&#125;</span><br><span class="line">subnet A-b: 10.10.2.0/24&#123;&quot;start&quot;: &quot;10.10.2.1&quot;, &quot;end&quot;: &quot;10.10.2.50&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>但下面的配置则无效，因为subnet有重叠：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">network A</span><br><span class="line">subnet A-a: 10.10.1.0/24 &#123;&quot;start&quot;: &quot;10.10.1.1&quot;， &quot;end&quot;: &quot;10.10.1.50&quot;&#125;</span><br><span class="line">subnet A-b: 10.10.1.0/24 &#123;&quot;start&quot;: &quot;10.10.1.51&quot;, &quot;end&quot;: &quot;10.10.1.100&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>这里不是判断IP是否有重叠，而是subnet的CIDR重叠（都是10.10.1.0/24）。<br>但是如果subnet在不同的network中，CIDR和IP都是可以重叠的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">network A subnet A-a: 10.10.1.0/24&#123;&quot;start&quot;: &quot;10.10.1.1&quot;, &quot;end&quot;:</span><br><span class="line">&quot;10.10.1.50&quot;&#125;</span><br><span class="line">network B subnet B-a: 10.10.1.0/24&#123;&quot;start&quot;: &quot;10.10.1.1&quot;， &quot;end&quot;:</span><br><span class="line">&quot;10.10.1.50&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>如果上面的IP地址是可以重叠的，那么就可能存在具有相同IP的两个instance，这样会不会冲突？<br>简单的回答是：不会！<br>具体原因是：因为Neutron的router是通过Linux network namespace实现的。network namespace是一种网络的隔离机制。<br>通过它，每个router有自己独立的路由表。</p>
+<p>上面的配置有两种结果：如果两个subnet是通过同一个router路由，根据router的配置，只有指定的一个subnet可被路由。<br>如果上面的两个subnet是通过不同router路由，因为router的路由表是独立的，所以两个subnet都可以被路由。<br>这里只是先简单做个说明，我们会在后面三层路由详细分析这种场景。</p>
+<p><br><br><br></p>
+<h4 id="port"><a href="#port" class="headerlink" title="port"></a>port</h4><p>port可以看作虚拟交换机上的一个端口。<br>port上定义了MAC地址和IP地址，当instance的虚拟网卡VIF（Virtual Interface）绑定到port时，port会将MAC和IP分配给VIF。port与subnet是1对多关系。<br>一个port必须属于某个subnet；一个subnet可以有多个port。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Project l : m Network l : m Subnet l : mPort 1 : 1 VIF m : l Instance</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h3 id="Neutron架构"><a href="#Neutron架构" class="headerlink" title="Neutron架构"></a>Neutron架构</h3><p><img src="/2022/03/21/openstack/image-10.png" width="500px"></p>
+<p>Neutron由如下组件构成</p>
+<ul>
+<li>Neutron Server</li>
+</ul>
+<p>对外提供OpenStack网络API，接收请求，并调用Plugin处理请求。</p>
+<ul>
+<li>Plugin</li>
+</ul>
+<p>处理Neutron Server发来的请求，维护OpenStack逻辑网络的状态，并调用Agent处理请求。</p>
+<ul>
+<li>Agent</li>
+</ul>
+<p>处理Plugin的请求，负责在network provider上真正实现各种网络功能。</p>
+<ul>
+<li>network provider</li>
+</ul>
+<p>提供网络服务的虚拟或物理网络设备，例如Linux Bridge，Open vSwitch或者其他支持Neutron的物理交换机。</p>
+<ul>
+<li>Queue</li>
+</ul>
+<p>Neutron Server、Plugin和Agent之间通过Messaging Queue通信和调用。</p>
+<ul>
+<li>Database</li>
+</ul>
+<p>Database用来存放OpenStack的网络状态信息，包括Network、Subnet、Port、Router等</p>
+<p>Neutron架构非常灵活，层次较多，其目的是：为了支持各种现有或者将来会出现的优秀网络技术。<br>支持分布式部署，获得足够的扩展性。通常鱼和熊掌不能兼得，虽然获得了这些优势，但Neutron也变得更复杂，更不容易理解。<br>后面我们会详细讨论Neutron的各个组件，但在这之前，非常有必要先通过一个例子了解这些组件各自的职责以及是如何协同工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">以创建一个VLAN100的network为例</span><br><span class="line">假设network provider是Linux Bridge</span><br><span class="line">流程如下：Neutron Server接收到创建network的请求，通过Message Queue（RabbitMQ）通知已注册的Linux Bridge Plugin。</span><br><span class="line">Plugin将要创建的network的信息（例如名称、VLAN ID等）保存到数据库中，并通过Message Queue通知运行在各节点上的Agent。</span><br><span class="line">Agent收到消息后会在节点上的物理网卡（比如eth2）上创建VLAN设备（比如eth2.100），并创建bridge（比如brqXXX）桥接VLAN设备。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里进行几点说明</p>
+</blockquote>
+<p>plugin解决的是What的问题，即网络要配置成什么样子？而至于如何配置How的工作则交由agent完成。<br>plugin、agent和network provider是配套使用的，比如上例中network provider是Linux Bridge，那么就得使用Linux Bridge的plungin和agent。<br>如果network provider换成了OVS或者物理交换机，plugin和agent也得替换。</p>
+<p>plugin的一个主要的职责是在数据库中维护Neutron网络的状态信息，这就造成一个问题：所有network provider的plugin都要编写一套非常类似的数据库访问代码。</p>
+<p>为了解决这个问题，Neutron在Havana版本实现了一个ML2（Modular Layer 2）plugin，对plgin的功能进行抽象和封装。<br>有了ML2plugin，各种network provider无须开发自己的plugin，只需要针对ML2开发相应的driver就可以了，工作量和难度都大大减少。ML2会在后面详细讨论。</p>
+<p><br><br><br></p>
+<h3 id="Neutron-Server"><a href="#Neutron-Server" class="headerlink" title="Neutron Server"></a>Neutron Server</h3><p><img src="/2022/03/21/openstack/image-11.png" width="500px"></p>
+<p>Neutron Server的分层结构，自上而下依次为</p>
+<ul>
+<li>Core API<br>对外提供管理network、subnet和port的RESTful API。</li>
+<li>Extension API<br>对外提供管理router、load balance、firewall等资源的RESTful API。</li>
+<li>Commnon Service<br>认证和校验API请求。</li>
+<li>Neutron Core<br>Neutron server的核心处理程序，通过调用相应的Plugin处理请求。</li>
+<li>Core Plugin API<br>定义了Core Plgin的抽象功能集合，Neutron Core通过该API调用相应的Core Plgin。</li>
+<li>Extension Plugin API<br>定义了Service Plgin的抽象功能集合，Neutron Core通过该API调用相应的Service Plgin。</li>
+<li>Core Plugin<br>实现了Core Plugin API，在数据库中维护network、subnet和port的状态，并负责调用相应的agent在network provider上执行相关操作，比如创建network。</li>
+<li>Service Plugin<br>实现了Extension Plugin API，在数据库中维护router、load balance、security group等资源的状态，并负责调用相应的agent在network provider上执行相关操作，比如创建router。</li>
+</ul>
+<p>归纳起来，Neutron Server包括两部分功能：提供API服务与运行Plugin，即Neutron Server = API +Plugins</p>
+<p><br></p>
+<h3 id="Neutron如何支持各种network-provider"><a href="#Neutron如何支持各种network-provider" class="headerlink" title="Neutron如何支持各种network provider"></a>Neutron如何支持各种network provider</h3><p>先讨论一个简单的场景：在Neutorn中使用Linux Bridge这一种network provider。<br>根据我们上一节讨论的Neutron Server的分层模型，我们需要实现两个东西：linux bridge coreplugin和linux bridge agent。</p>
+<p>linux bridge core plugin与neutron server一起运行。<br>实现了core plugin API负责维护数据库信息。<br>通知linux bridge agent实现具体的网络功能。<br>linux bridge agent在计算节点和网络节点（或控制节点）上运行。接收来自plugin的请求。<br>通过配置本节点上的linux bridge实现neutron网络功能</p>
+<p><img src="/2022/03/21/openstack/image-12.png" width="500px"></p>
+<p>同样的道理，如果要支持open vswitch，只需要实现open vswitch plugin和open vswitch agent</p>
+<p><img src="/2022/03/21/openstack/image-13.png" width="500px"></p>
+<p>由此可见：Neutron可以通过开发不同的plugin和agent支持不同的网络技术。<br>这是一种相当开放的架构。不过随着支持的network provider数量的增加，开发人员发现了两个突出的问题：只能在OpenStack中使用一种core plugin，多种network provider无法共存。<br>不同plugin之间存在大量重复代码，开发新的plugin工作量大。</p>
+<p><br><br><br></p>
+<h3 id="ML2-Core-Plugin"><a href="#ML2-Core-Plugin" class="headerlink" title="ML2 Core Plugin"></a>ML2 Core Plugin</h3><p>Moduler Layer 2（ML2）是Neutron在Havana版本实现的一个新的core plugin，用于替代原有的linux bridge plugin和open vswitch plugin。</p>
+<h4 id="传统core-plugin的问题"><a href="#传统core-plugin的问题" class="headerlink" title="传统core plugin的问题"></a>传统core plugin的问题</h4><p>之所以要开发ML2，主要是因为传统core plugin存在两个突出的问题。</p>
+<blockquote>
+<p>问题1：无法同时使用多种network provider</p>
+</blockquote>
+<p>Core plugin负责管理和维护Neutron的network、subnet和port的状态信息，这些信息是全局的，只需要也只能由一个core plugin管理。</p>
+<p>只使用一个core plugin本身没有问题。但问题在于传统的core plugin与core plugin agent是一一对应的。也就是说，如果选择了linux bridge plugin，那么linux bridge agent将是唯一选择，就必须在OpenStack的所有节点上使用Linux Bridge作为虚拟交换机（即network provider）。</p>
+<p><img src="/2022/03/21/openstack/image-14.png" width="500px"></p>
+<blockquote>
+<p>问题2：开发新的core plugin工作量大</p>
+</blockquote>
+<p>所有传统的core plugin都需要编写大量重复和类似的数据库访问的代码，大大增加了plugin开发和维护的工作量</p>
+<p><img src="/2022/03/21/openstack/image-15.png" width="500px"></p>
+<p><br></p>
+<h4 id="ML2能解决传统core-plugin的问题"><a href="#ML2能解决传统core-plugin的问题" class="headerlink" title="ML2能解决传统core plugin的问题"></a>ML2能解决传统core plugin的问题</h4><p>ML2作为新一代的core plugin，提供了一个框架，允许在OpenStack网络中同时使用多种Layer 2网络技术，不同的节点可以使用不同的网络实现机制</p>
+<p><img src="/2022/03/21/openstack/image-16.png" width="500px"></p>
+<p>采用ML2 plugin后，可以在不同节点上分别部署linux bridge agent、open vswitchagent、hyper-v agent以及其他第三方agent。</p>
+<p>ML2不但支持异构部署方案，同时能够与现有的agent无缝集成:以前用的agent不需要变，只需要将Neutron Server上的传统core plugin替换为ML2。<br>有了ML2，要支持新的network provider就变得简单多了:无须从头开发core plugin，只需要开发相应的mechanism driver，大大减少了要编写和维护的代码。</p>
+<h4 id="ML2架构"><a href="#ML2架构" class="headerlink" title="ML2架构"></a>ML2架构</h4><p>ML2对二层网络进行抽象和建模，引入了type driver和mechansim driver。<br>这两类driver解耦了Neutron所支持的网络类型（type）与访问这些网络类型的机制（mechanism），其结果就是使得ML2具有非常好的弹性，易于扩展，能够灵活支持多种type和mechanism</p>
+<p><img src="/2022/03/21/openstack/image-17.png" width="400px"></p>
+<ul>
+<li>Type Driver<br>Neutron支持的每一种网络类型都有一个对应的ML2 Type Driver。<br>Type Driver负责维护网络类型的状态，执行验证、创建网络等。<br>ML2支持的网络类型包括local、flat、vlan、vxlan和gre。我们将在后面章节详细讨论每种type。</li>
+<li>Mechansim Driver<br>Neutron支持的每一种网络机制都有一个对应的ML2 Mechansim Driver。<br>Mechanism Driver负责获取由Type Driver维护的网络状态，并确保在相应的网络设备（物理或虚拟）上正确实现这些状态。</li>
+</ul>
+<blockquote>
+<p>type和mechanisim都太抽象，现在我们举一个具体的例子<br>Type Driver为vlan，Mechansim Driver为Linux Bridge，我们要完成的操作是创建networkvlan100，那么vlan type driver会确保将vlan100的信息保存到Neutron数据库中，包括network的名称，vlan ID等。</p>
+</blockquote>
+<p>linux bridge mechanism driver会确保各节点上的linux brige agent在物理网卡上创建ID为100的vlan设备和brige设备，并将两者进行桥接。</p>
+<blockquote>
+<p>Mechanism Driver有三种类型</p>
+</blockquote>
+<ul>
+<li>Agent-based</li>
+</ul>
+<p>包括Linux Bridge、Open Vswitch等。</p>
+<blockquote>
+<p>Controller-based</p>
+</blockquote>
+<p>包括OpenDaylight、VMWare NSX等。</p>
+<blockquote>
+<p>基于物理交换机</p>
+</blockquote>
+<p>包括Cisco Nexus、Arista、Mellanox等。<br>比如前面那个例子如果换成Cisco的Mechanism Driver，则会在Cisco物理交换机的指定trunk端口上添加vlan100。</p>
+<p><br><br><br></p>
+<h3 id="Service-Plugin-Agent"><a href="#Service-Plugin-Agent" class="headerlink" title="Service Plugin / Agent"></a>Service Plugin / Agent</h3><p>Neutorn core plugin及其agent负责将instance连接到OpenStack layer 2虚拟网络，所提供的资源包括network、subnet和port。<br>Service Plugin及其agent则提供更丰富的扩展功能，包括路由、load balance、firewall等</p>
+<p><img src="/2022/03/21/openstack/image-18.png" width="600px"></p>
+<ul>
+<li>DHCP</li>
+</ul>
+<p>DHCP agent通过dnsmasq为instance提供DHCP服务。</p>
+<ul>
+<li>Routing</li>
+</ul>
+<p>L3 Agent可以为project（租户）创建router，提供Neutron subnet之间的路由服务。路由功能默认通过IPtables实现。</p>
+<ul>
+<li>Firewall</li>
+</ul>
+<p>L3 Agent可以在router上配置防火墙策略，提供网络安全防护。另一个与安全相关的功能是Security Group，也是通过IPtables实现。</p>
+<ul>
+<li>Firewall与Security Group的区别在于</li>
+</ul>
+<p>Firewall安全策略位于router，保护的是某个project的所有network。Security Group安全策略位于instance，保护的是单个instance。Firewall与Security Group后面会详细分析。</p>
+<ul>
+<li>Load Balance</li>
+</ul>
+<p>Neutron默认通过HAProxy为project中的多个instance提供load balance服务。<br>后面的章节会结合Linux Bridge和Open Vswitch详细讨论每一种service。</p>
+<p><br></p>
+<h3 id="Linux-Bridge实现Neutron网络"><a href="#Linux-Bridge实现Neutron网络" class="headerlink" title="Linux Bridge实现Neutron网络"></a>Linux Bridge实现Neutron网络</h3><p>Neutorn ML2 plugin默认使用的mechanism driver是Open vSwitch而不是Linux Bridge。</p>
+<blockquote>
+<p>那是否还有研究Linux Bridge的必要呢？</p>
+</blockquote>
+<p>我的答案是：很有必要！</p>
+<p>原因如下：Linux Bridge技术非常成熟，而且高效，所以业界很多OpenStack方案采用的是Linux Bridge，比如Rackspace的private cloud。<br>Open vSwitch实现的Neutron虚拟网络较为复杂，不易理解；而Linux Bridge方案更直观。<br>先理解Linux Bridge方案后再学习Open vSwitch方案会更容易。并且可以通过两种方案的对比更加深入地理解Neutron网络。</p>
+<p><img src="/2022/03/21/openstack/image-19.png" width="400px"></p>
+<p>br0是Linux Bridge，br0充当虚拟交换机的作用，负责将物理网卡eth0和虚拟网卡tap设备vnet0/vent1连接到同一个二层网络，实现虚拟机VM1和VM2，以及虚拟机与外网之间的通信。</p>
+<p><br></p>
+<h4 id="初始网络状态"><a href="#初始网络状态" class="headerlink" title="初始网络状态"></a>初始网络状态</h4><p>我们首先考察实验环境最初始的网络状态。随着学习的深入，我们会对网络不断进行新的配置，大家也将看到网络一步一步发生的变化。<br>在我们的实验环境中，当前节点上只存在物理网卡设备ethX，还没有bridge和tap，状态如下</p>
+<blockquote>
+<p>控制节点及配置</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-20.png" width="700px"></p>
+<blockquote>
+<p>计算节点及配置</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-21.png" width="700px"></p>
+<h4 id="了解Linux-Bridge环境中的各种网络设备"><a href="#了解Linux-Bridge环境中的各种网络设备" class="headerlink" title="了解Linux Bridge环境中的各种网络设备"></a>了解Linux Bridge环境中的各种网络设备</h4><p>在Linux Bridge环境中，一个数据包从instance发送到物理网卡会经过下面几个类型的设备</p>
+<ul>
+<li>tap interface</li>
+</ul>
+<p>命名为tapN（N为0、1、2、3……）。</p>
+<ul>
+<li>Linux Bridge</li>
+</ul>
+<p>命名为brqXXXX。</p>
+<ul>
+<li>vlan interface</li>
+</ul>
+<p>命名为ethX.Y（X为interface的序号，Y为vlan id）。</p>
+<ul>
+<li>vxlan interface</li>
+</ul>
+<p>命名为vxlan-Z（z是VNI）。</p>
+<ul>
+<li>物理interface</li>
+</ul>
+<p>命名为ethX（X为interface的序号）。</p>
+<p>vlan interface会在vlan网络中使用；vxlan interface会在vxlan网络中使用。<br>linux-bridge支持local、flat、vlan和vxlan四种network type，目前不支持gre。<br>有了上面的这些准备，我们可以开始深入学习Linux Bridge如何实现每种network type了。</p>
+<p>首先从最简单的local network开始。</p>
+<p><br></p>
+<h5 id="local-network"><a href="#local-network" class="headerlink" title="local network"></a>local network</h5><p>Local Network的特点是不会与宿主机的任何物理网卡相连，也不关联任何的VLAN ID。<br>对于每个local netwrok，ML2 linux-bridge会创建一个bridge，instance的tap设备会连接到bridge。位于同一个local network的instance会连接到相同的bridge，这样instance之间就可以通信了。</p>
+<p>因为bridge没有与物理网卡连接，所以instance无法与宿主机之外的网络通信。<br>同时因为每个local network有自己的bridge，bridge之间是没有连通的，所以两个local network之间也不能通信，即使它们位于同一宿主机上。</p>
+<blockquote>
+<p>local network的示例</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-22.png" width="700px"></p>
+<p>创建了两个local network，分别对应两个网桥brqXXXX和brqYYYY。<br>VM0和VM1通过tap0和tap1连接到brqXXXX。<br>VM2通过tap0和tap2连接到brqYYYY。<br>VM0与VM1在同一个local network中，它们之间可以通信。<br>VM2位于另一个local network，由于brqXXXX和brqYYYY没有联通，所以VM2无法与VM0和VM1通信。</p>
+<p>下面我们将一步一步实现local network。</p>
+<ul>
+<li>在ML2配置enable local network</li>
+</ul>
+<p>创建local网络之前请先确保ML2已经加载了local type driver。<br>ML2的配置文件位于<code>/etc/neutron/plugins/ml2/ml2_conf.ini</code>。</p>
+<p>type_drivers告诉ML2加载所有5种网络的type driver<br><img src="/2022/03/21/openstack/image-23.png" width="400px"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type_drivers = local,flat, vlan, gre,vxlan</span><br></pre></td></tr></table></figure>
+<p>这样所有类型的网络我们都可以创建（虽然在本节只创建local网络）。</p>
+<p>普通用户和admin都可以通过CLI或者Web GUI创建网络，但只有amdin才能指定网络的type，所以需要用tenant_network_types告诉ML2当普通用户在自己的Tenant（Project）中创建网络时，默认创建哪种type的7F51络，这里type是local。</p>
+<p><br></p>
+<h5 id="flat-network"><a href="#flat-network" class="headerlink" title="flat network"></a>flat network</h5><p><img src="/2022/03/21/openstack/image-24.png" width="700px"></p>
+<p>eth1桥接到brqXXX，为instance提供flat网络。如果需要创建多个flat network，就得准备多个物理网卡</p>
+<p><img src="/2022/03/21/openstack/image-25.png" width="700px"></p>
+<p><br></p>
+<h5 id="vlan-network"><a href="#vlan-network" class="headerlink" title="vlan network"></a>vlan network</h5><p>vlan network是带tag的网络，图是vlan100网络的示例。</p>
+<p><img src="/2022/03/21/openstack/image-26.png" width="700px"></p>
+<p>3个instance通过TAP设备连接到名为<code>“brqXXXX”</code>linux bridge。<br>在物理网卡eth1上创建了eth1.100的vlan interface，eth1.100连接到brqXXXX。这样instance通过eth1.100发送到eth1的数据包就会打上vlan100的tag。</p>
+<p>如果多创建一个network vlan101，eth1上会相应地创建vlan interface eth1.101，并且连接的新的lingux bridge<code>“brqYYYY”</code>。<br>每个vlan network有自己的bridge，从而也就实现了基于vlan的隔离，如图所示。</p>
+<p><img src="/2022/03/21/openstack/image-27.png" width="700px"></p>
+<p><br></p>
+<h5 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h5><p>路由服务提供跨subnet互联互通功能。例如，前面我们搭建了实验环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cirros-vm1，172.16.100.3，vlan100</span><br><span class="line">cirros-vm3，172.16.101.3，vlan101</span><br></pre></td></tr></table></figure></p>
+<p>这两个instance要通信必须借助router，这个router可以是物理router或者虚拟router。</p>
+<h6 id="物理router"><a href="#物理router" class="headerlink" title="物理router"></a>物理router</h6><p><img src="/2022/03/21/openstack/image-28.png" width="700px"></p>
+<p>接入的物理router有两个interface ip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">172.16.100.1对应vlan100的网关。</span><br><span class="line">172.16.101.1对应vlan101的网关。</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>当cirros-vm1要跟cirros-vm3通信时，数据包的流向是这样的</p>
+</blockquote>
+<ul>
+<li>因为cirros-vm1的默认网关指向172.16.100.1，cirros-vm1发送到cirros-vm3的数据包首先通过vlan100的interface进入物理router。</li>
+<li>router发现目的地址是172.16.101.1，则从vlan101的interface发出。</li>
+<li>数据包经过brq1d7040b8-01最终到达cirros-vm3。</li>
+</ul>
+<h6 id="虚拟router"><a href="#虚拟router" class="headerlink" title="虚拟router"></a>虚拟router</h6><p>虚拟router的路由机制与物理router一样，只是由软件实现。<br>Neutron两种方案都支持。如果要使用虚拟router，L3 Agent会在控制节点或者网络节点上运行虚拟router，为subnet提供路由服务。</p>
+<p>下面详细讨论Neutron的虚拟router实现。</p>
+<ul>
+<li>配置L3 Agent</li>
+</ul>
+<p><img src="/2022/03/21/openstack/image-29.png" width="700px"></p>
+<p>L3 Agent需要正确配置才能工作，配置文件为<code>/etc/neutron/l3_agent.ini</code>,位于控制节点或网络节点上</p>
+<ul>
+<li>用虚拟router实现subnet间路由</li>
+<li>当前网络结构</li>
+</ul>
+<p><img src="/2022/03/21/openstack/image-30.png" width="700px"></p>
+<p><br><br><br></p>
+<h5 id="vxlan-network"><a href="#vxlan-network" class="headerlink" title="vxlan network"></a>vxlan network</h5><p>除了前面讨论的local、flat、vlan这几类网络，OpenStack还支持vxlan和gre这两种overlaynetwork。</p>
+<p>overlay network是指建立在其他网络上的网络。该网络中的节点可以看作通过虚拟（或逻辑）链路连接起来的。<br>overlay network在底层可能由若干物理链路组成，但对于节点，不需要关心这些底层实现。<br>例如P2P网络就是overlay network，隧道也是。<br>vxlan和gre都是基于隧道技术实现的，它们也都是overlay network。<br>目前Linux Bridge只支持vxlan，不支持gre。<br>Open Vswitch两者都支持。vxlan与gre实现非常类似，而且vxlan用得较多，所以本教程只介绍vxlan。</p>
+<h6 id="VXLAN概念"><a href="#VXLAN概念" class="headerlink" title="VXLAN概念"></a>VXLAN概念</h6><p>VXLAN全称Virtual eXtensible Local Area Network。正如名字所描述的，VXLAN提供与VLAN相同的以太网二层服务，但是拥有更强的扩展性和灵活性。<br>与VLAN相比，VXLAN有下面几个优势：支持更多的二层网段。</p>
+<p>VLAN使用12-bit标记VLAN ID，最多支持4094个VLAN，这对于大型云部署会成为瓶颈。<br>VXLAN的ID（VNI或者VNID）则用24-bit标记，支持16777216个二层网段。能更好地利用已有的网络路径。<br>VLAN使用Spanning Tree Protocol避免环路，这会导致有一半的网络路径被block掉。VXLAN的数据包是封装到UDP通过三层传输和转发的，可以使用所有的路径。<br>避免物理交换机MAC表耗尽。由于采用隧道机制，TOR (Top on Rack)交换机无须在MAC表中记录虚拟机的信息。</p>
+<h6 id="VXLAN封装和包格式"><a href="#VXLAN封装和包格式" class="headerlink" title="VXLAN封装和包格式"></a>VXLAN封装和包格式</h6><p><img src="/2022/03/21/openstack/image-31.png" width="700px"></p>
+<p>VXLAN引入了8-byte VXLAN header，其中VNI占24-bit。VXLAN和原始的L2frame被封装到UDP包中。<br>这24-bit的VNI用于标示不同的二层网段，能够支持16777216个LAN。</p>
+<h6 id="VXLAN-Tunnel-Endpoint"><a href="#VXLAN-Tunnel-Endpoint" class="headerlink" title="VXLAN Tunnel Endpoint"></a>VXLAN Tunnel Endpoint</h6><p>VXLAN使用VXLAN tunnel endpoint (VTEP)设备处理VXLAN的封装和解封。<br>每个VTEP有一个IP interface，配置了一个IP地址。VTEP使用该IP封装Layer 2 frame，并通过该IPinterface传输和接收封装后的VXLAN数据包。</p>
+<p><img src="/2022/03/21/openstack/image-32.png" width="700px"></p>
+<h6 id="VXLAN包转发流"><a href="#VXLAN包转发流" class="headerlink" title="VXLAN包转发流"></a>VXLAN包转发流</h6><p>VXLAN在VTEP间建立隧道，通过Layer 3网络传输封装后的Layer 2数据。</p>
+<p><img src="/2022/03/21/openstack/image-33.png" width="700px"></p>
+<p>图中Host-A和Host-B位于VNI 10的VXLAN，通过VTEP-1和VTEP-2之间建立的VXLAN隧道通信。数据传输过程如下</p>
+<p>Host-A向Host-B发送数据时，Host-B的MAC和IP作为数据包的目标MAC和IP，Host-A的MAC作为数据包的源MAC和IP，然后通过VTEP-1将数据发送出去。<br>VTEP-1从自己维护的映射表中找到MAC-B对应的VTEP-2，然后执行VXLAN封装，加上VXLAN头，UDP头，以及外层IP和MAC头。<br>此时的外层IP头，目标地址为VTEP-2的IP，源地址为VTEP-1的IP。<br>同时由于下一跳是Router-1，所以外层MAC头中目标地址为Router-1的MAC。<br>数据包从VTEP-1发送出去后，外部网络的路由器会依据外层IP头进行包路由，最后到达与VTEP-2连接的路由器Router-2。<br>Router-2将数据包发送给VTEP-2。VTEP-2负责解封数据包，依次去掉外层MAC头，外层IP头，UPD头和VXLAN头。<br>VTEP-2依据目标MAC地址将数据包发送给Host-B。上面的流程我们看到VTEP是VXLAN的最核心组件，负责数据的封装和解封。</p>
+<p>隧道也是建立在VTEP之间的，VTEP负责数据的传送。</p>
+<h6 id="Linux对VXLAN的支持"><a href="#Linux对VXLAN的支持" class="headerlink" title="Linux对VXLAN的支持"></a>Linux对VXLAN的支持</h6><p>VTEP可以由专有硬件来实现，也可以使用纯软件实现。</p>
+<p>目前比较成熟的VTEP软件实现包括</p>
+<ul>
+<li>带VXLAN内核模块的Linux</li>
+<li>Open vSwitch</li>
+</ul>
+<p>我们先来看Linux如何支持VXLAN，如图所示。<br>Open vSwitch方式将在后面章节讨论。</p>
+<p><img src="/2022/03/21/openstack/image-34.png" width="700px"></p>
+<p>实现方式：Linux vxlan创建一个UDP Socket，默认在8472端口监听。<br>Linux vxlan在UDP socket上接收到vxlan包后，解包<br>然后根据其中的vxlan ID将它转给某个vxlan interface，然后再通过它所连接的linux bridge转给虚机。</p>
+<p>Linux vxlan在收到虚机发来的数据包后，将其封装为多播UDP包，从网卡发出。到这里，相信大家对VXLAN的原理已经有了大致的了解。</p>
+<p><br><br><br></p>
+<h5 id="Load-Balancing-as-a-Service"><a href="#Load-Balancing-as-a-Service" class="headerlink" title="Load Balancing as a Service"></a>Load Balancing as a Service</h5><h6 id="理解概念"><a href="#理解概念" class="headerlink" title="理解概念"></a>理解概念</h6><p>Load Balance as a Service（LBaaS）是Neutron提供的一项高级网络服务。<br>LBaaS允许租户动态地在自己的网络中创建和管理Load Balancer。</p>
+<p>Load Balancer可以说是分布式系统中比较基础的组件。它接收前端发来的请求，然后将请求按照某种均衡策略转发给后端资源池中的某个处理单元，以完成处理。Load Balancer可以实现系统高可用和横向的扩展性。</p>
+<p>LBaaS有三个主要的概念：Pool Member、Pool和Virtual IP。</p>
+<ul>
+<li>Pool Member</li>
+</ul>
+<p>Pool Member是layer 4的实体，拥有IP地址并通过监听端口对外提供服务。<br>例如，Pool Member可以是一个Web Server，它通过172.16.100.9：80提供HTTP服务。</p>
+<ul>
+<li>Pool</li>
+</ul>
+<p>Pool由一组Pool Member组成。<br>这些Pool Member通常提供同一类服务。例如，有一个web server pool，包含<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">web1：172.16.100.9：80</span><br><span class="line">web2：172.16.100.10：80</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>Virtual IP</li>
+</ul>
+<p>Virtual IP也称作VIP，是定义在Load Balancer上的IP地址。每个Pool Member都有自己的IP，但对外服务则是通过VIP。Load Balancer负责监听外部的连接，并将连接分发到Pool Member。<br>外部Client只知道VIP，不知道也不需要关心是否有Pool或者有多少个Pool Member。</p>
+<p>OpenStack Neutron目前默认通过HAProxy软件来实现LBaaS。HAProxy是一个流行的开源LoadBalancer。</p>
+<p>Neutron也支持其他一些第三方Load Balancer。</p>
+<p><img src="/2022/03/21/openstack/image-35.png" width="700px"></p>
+<p>图所示左图是Client发送请求到Web Server的数据流：</p>
+<ul>
+<li>Load Balancer接收到Client的请求。</li>
+<li>Load Balancer选择Pool Member Web1，将数据包的目的IP设为Web1的地址172.16.100.9。</li>
+<li>在将数据包转发给Web1之前，Load Balancer将数据包的源IP修改为自己的VIP地址172.16.100.11，其目的是保证Web1能够将应答数据发送回Load Balancer。</li>
+<li>将数据包发送给Web1。</li>
+</ul>
+<p>图所示右图是Web Server应答的数据流：</p>
+<ul>
+<li>Web1将数据包发送给Load Balancer。</li>
+<li>Load Balancer收到Web1发回的数据后，将目的IP修改为Client的地址。</li>
+<li>Load Balancer将数据包的源IP修改为VIP地址172.16.100.11，保证Client能够将后续的数据发送给自己。</li>
+<li>Load Balancer将数据发送给Client。</li>
+</ul>
+<p><br></p>
+<h6 id="启用LBaaS"><a href="#启用LBaaS" class="headerlink" title="启用LBaaS"></a>启用LBaaS</h6><p>Neutron通过lbaas plugin和lbaas agent提供LBaaS服务，如图所示。</p>
+<p><img src="/2022/03/21/openstack/image-36.png" width="400px"></p>
+<p>lbaas plugin与Neutron Server一起运行在控制节点上。<br>lbaas agent运行在网络节点上。</p>
+<p><br><br><br></p>
+<h3 id="Open-vSwitch实现Neutron网络"><a href="#Open-vSwitch实现Neutron网络" class="headerlink" title="Open vSwitch实现Neutron网络"></a>Open vSwitch实现Neutron网络</h3><p>Linux Bridge和Open vSwitch是目前OpenStack中使用最广泛的两种虚机交换机技术。<br>前面各章节我们已经学习了如何用Linux Bridge作为ML2 mechanism driver实现Neutron网络。<br>本节我们将详细讨论如何用Open vSwitch实现Neutron。</p>
+<blockquote>
+<p>实验环境中两节点的网卡分配方式与Linux Bridge一致</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-37.png" width="450px"></p>
+<p>控制节点三个网卡（eth0, eth1, eth2），计算节点两网卡（eth0, eth1）。<br>合并Management和API网络，使用eth0，IP段为192.168.104.0/24。<br>VM网络使用eht1。<br>控制节点的eth2与External网络连接，IP段为10.10.10.0/24。</p>
+<h4 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h4><p>实验环境的网络拓扑如图所示。</p>
+<p><img src="/2022/03/21/openstack/image-38.png" width="650px"></p>
+<p>这个图在Linux Bridge实现中也看到过，唯一的区别是:对于节点中的<code>“Virtual Network Switch”</code>我们将用Open vSwitch替换掉Linux Bridge。</p>
+<p><br></p>
+<h4 id="初始网络状态-1"><a href="#初始网络状态-1" class="headerlink" title="初始网络状态"></a>初始网络状态</h4><p>控制节点ifconfig显示控制节点上有三个网桥br-ex、br-int和br-tun，如图所示。</p>
+<p><img src="/2022/03/21/openstack/image-39.png" width="550px"></p>
+<p>从命名上看我们大致能猜出他们的用途</p>
+<ul>
+<li>br-ex</li>
+</ul>
+<p>连接外部（external）网络的网桥。</p>
+<ul>
+<li>br-int</li>
+</ul>
+<p>集成（integration）网桥，所有instance的虚拟网卡和其他虚拟网络设备都将连接到该网桥。</p>
+<ul>
+<li>br-tun</li>
+</ul>
+<p>隧道（tunnel）网桥，基于隧道技术的VxLAN和GRE网络将使用该网桥进行通信。</p>
+<p>这些网桥都是Neutron自动为我们创建的，但是通过brctl show命令却看不到它们。<br>这是因为我们使用的是Open vSwitch而非Linux Bridge，需要用Open vSwitch的命令ovs-vsctlshow查看，如图所示。</p>
+<p><img src="/2022/03/21/openstack/image-40.png" width="450px"></p>
+<p>计算节点计算节点上也有br-int和br-tun，但没有br-ext。<br>这是合理的，因为发送到外网的流量是通过网络节点上的虚拟路由器转发出去的，所以br-ext只会放在网络节点（devstack-controller）上</p>
+<p><img src="/2022/03/21/openstack/image-41.png" width="550px"><br><img src="/2022/03/21/openstack/image-42.png" width="350px"></p>
+<p><br></p>
+<h4 id="了解Open-vSwitch环境中的各种网络设备"><a href="#了解Open-vSwitch环境中的各种网络设备" class="headerlink" title="了解Open vSwitch环境中的各种网络设备"></a>了解Open vSwitch环境中的各种网络设备</h4><ul>
+<li>tap interface，命名为tapXXXX。</li>
+<li>linux bridge，命名为qbrXXXX。</li>
+<li>veth pair，命名为qvbXXXX，qvoXXXX。</li>
+<li>OVS integration bridge，命名为br-int。</li>
+<li>OVS patch ports，命名为int-br-ethX和phy-br-ethX（X为interface的序号）。</li>
+<li>OVS provider bridge，命名为br-ethX（X为interface的序号）。</li>
+<li>物理interface，命名为ethX（X为interface的序号）。</li>
+<li>OVS tunnel bridge，命名为br-tun。</li>
+</ul>
+<p>OVS provider bridge会在flat和vlan网络中使用；OVS tunnel bridge则会在vxlan和gre网络中使用。后面会通过实例详细讨论这些设备。<br>Open vSwitch支持local、flat、vlan、vxlan和gre五种network type。<br>vxlan和gre非常类似，接下来我们将深入学习Open vSwitch是如何实现local、flat、vlan和vlxan的。</p>
+<p><br></p>
+<h5 id="local-network-1"><a href="#local-network-1" class="headerlink" title="local network"></a>local network</h5><p>打开控制节点的shell终端，用ovs-vsctl show查看当前Open vSwitch的状态</p>
+<blockquote>
+<p>创建第一个local network</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-43.png" width="550px"></p>
+<blockquote>
+<p>将instance连接到first_local_net</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-44.png" width="550px"></p>
+<p>那问题来了，为什么tapfc1c6ebb-71不能像左边的DHCP设备tap7970bdcd-f2那样直接连接到br-int呢？<br>其原因是：Open vSwitch目前还不支持将iptables规则放在与它直接相连的tap设备上。<br>如果做不到这一点，就无法实现Security Group功能。为了支持Security Group，不得不多引入一个Linux Bridge支持iptables。</p>
+<blockquote>
+<p>连接第二个instance到first_local_net</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-45.png" width="550px"></p>
+<blockquote>
+<p>创建第二个local network</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-46.png" width="550px"></p>
+<p>这次我们注意到，虚拟网卡和DHCP对应的port都有一个特殊的tag属性。<br>first_local_net相关port其tag为1。second_local_net相关port其tag为2。<br>玄机就在这里了：Open vSwitch的每个网桥都可以看作一个真正的交换机，可以支持VLAN，这里的tag就是VLAN ID。<br>br-int中标记tag 1的port和标记tag 2的port分别属于不同的VLAN，它们之间是隔离的。<br>需要特别说明的是：Open vSwitch中的tag是内部VLAN，用于隔离网桥中的port，与物理网络中的VLAN没有关系。</p>
+<p><img src="/2022/03/21/openstack/image-47.png" width="650px"></p>
+<p><br></p>
+<h5 id="flat-network-1"><a href="#flat-network-1" class="headerlink" title="flat network"></a>flat network</h5><p>目前控制节点网络结构如图所示。</p>
+<p><img src="/2022/03/21/openstack/image-48.png" width="550px"></p>
+<p>veth pair VS patch port在前面local network我们看到，br-int与Linux Bridge之间可以通过veth pair连接。</p>
+<p>而这里两个ovs bridge之间是用patch port连接的。<br>看来veth pair和patch port都可以连接网桥，使用的时候如何选择呢？<br>patch port是ovs bridge自己特有的port类型，只能在ovs中使用。如果是连接两个ovs bridge，优先使用patch port，因为性能更好。所以</p>
+<ul>
+<li>连接两个ovs bridge，优先使用patch port。技术上veth pair也能实现，但性能不如patchport。</li>
+<li>连接ovs bridge和Linux Bridge，只能使用veth pair。</li>
+<li>连接两个Linux Bridge，只能使用veth pair。</li>
+</ul>
+<blockquote>
+<p>创建flat network“flat_net”</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-49.png" width="550px"></p>
+<blockquote>
+<p>将instance连接到flat_net</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-50.png" width="550px"></p>
+<blockquote>
+<p>继续用同样的方式launch instance </p>
+</blockquote>
+<p>cirros-vm2被schedule到计算节点，虚拟网卡已经连接到br-int</p>
+<p><img src="/2022/03/21/openstack/image-51.png" width="700px"></p>
+<h5 id="vlan-network-1"><a href="#vlan-network-1" class="headerlink" title="vlan network"></a>vlan network</h5><p>vlan network是带tag的网络。在Open vSwitch实现方式下，不同vlan instance的虚拟网卡都接到br-int上。</p>
+<p>这一点与Linux Bridge非常不同，Linux Bridge是不同vlan接到不同的网桥上。<br>在我们的实验环境中，收发vlan数据的物理网卡为eth1，上面可以走多个vlan，所以物理交换机上与eth1相连的port要设置成trunk模式，而不是access模式。</p>
+<blockquote>
+<p>创建第一个vlan network“vlan100”</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-52.png" width="600px"></p>
+<blockquote>
+<p>将instance连接到vlan100</p>
+</blockquote>
+<p><img src="/2022/03/21/openstack/image-53.png" width="600px"></p>
+<blockquote>
+<p>继续用同样的方式launch instance </p>
+</blockquote>
+<p>cirros-vm2被schedule到计算节点，虚拟网卡已经连接到br-int</p>
+<p><img src="/2022/03/21/openstack/image-54.png" width="700px"></p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2022/03/21/openstack/';
+        this.page.title = 'Openstack原理解析';
+        this.page.identifier = '2022/03/21/openstack/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

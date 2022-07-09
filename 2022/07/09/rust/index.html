@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Rust基础语法 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Rust 语法体系
+Trait静态方法12345678910111213141516// 静态方法struct T(i32);impl T&amp;#123;	fn func(this:&amp;amp;Self)&amp;#123;		println!(&#34;value:&amp;#123;&amp;#125;&#34;, this.0);	&amp;#125;&amp;#125;fn main()&amp;#123;	let x = T(66);	T::func(&amp;amp;x);&amp;#125;
+trait中也可以定义静态函数
+123pub trait Default&amp;">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go/Rust</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">系统内核</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">逆向知识</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">数据库</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Trait"><span class="toc-number">1.</span> <span class="toc-text">Trait</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#静态方法"><span class="toc-number">1.1.</span> <span class="toc-text">静态方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展方法"><span class="toc-number">1.2.</span> <span class="toc-text">扩展方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整函数调用语法"><span class="toc-number">1.3.</span> <span class="toc-text">完整函数调用语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#trait约束和继承"><span class="toc-number">1.4.</span> <span class="toc-text">trait约束和继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Derive"><span class="toc-number">1.5.</span> <span class="toc-text">Derive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#trait别名"><span class="toc-number">1.6.</span> <span class="toc-text">trait别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.7.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数组和字符串"><span class="toc-number">2.</span> <span class="toc-text">数组和字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数组"><span class="toc-number">2.1.</span> <span class="toc-text">数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#内置方法"><span class="toc-number">2.1.1.</span> <span class="toc-text">内置方法</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Rust基础语法
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2022/07/09/rust/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2022-07-09T04:15:20.000Z" itemprop="datePublished">2022-07-09</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/go/">go</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Rust 语法体系<br><a id="more"></a></p>
+<h1 id="Trait"><a href="#Trait" class="headerlink" title="Trait"></a>Trait</h1><h2 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 静态方法</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">T</span></span>(<span class="built_in">i32</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> T&#123;</span><br><span class="line">	<span class="function"><span class="keyword">fn</span> <span class="title">func</span></span>(this:&amp;<span class="keyword">Self</span>)&#123;</span><br><span class="line">		<span class="built_in">println!</span>(<span class="string">"value:&#123;&#125;"</span>, this.<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">	<span class="keyword">let</span> x = T(<span class="number">66</span>);</span><br><span class="line">	T::func(&amp;x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>trait中也可以定义静态函数</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Default</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">fn</span> <span class="title">default</span></span>() -&gt; <span class="keyword">Self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>trait包含default函数,无参数的函数,返回的类型是实现该trait的具体类型<br>Rust中没有构造函数的概念, Default trait实际上可以看作一个针对无参数构造函数的统一抽象</p>
+<p>与C+相比, Rust定义静态函数无需使用Static关键字,因为它把self参数显式在参数列表中列出来了</p>
+<p><br></p>
+<h2 id="扩展方法"><a href="#扩展方法" class="headerlink" title="扩展方法"></a>扩展方法</h2><p>trait给其他类型添加成员方法, 哪怕这个类型不是自己写的</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Double</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">fn</span> <span class="title">double</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="keyword">Self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Double <span class="keyword">for</span> <span class="built_in">i32</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">fn</span> <span class="title">double</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">i32</span>&#123;</span><br><span class="line">		*<span class="keyword">self</span> * <span class="number">2</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">	<span class="keyword">let</span> x:<span class="built_in">i32</span> = <span class="number">10</span>.double();</span><br><span class="line">	<span class="built_in">println!</span>(<span class="string">"&#123;&#125;"</span>, x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="完整函数调用语法"><a href="#完整函数调用语法" class="headerlink" title="完整函数调用语法"></a>完整函数调用语法</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Chef</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Cook <span class="keyword">for</span> Chef&#123;</span><br><span class="line">	<span class="function"><span class="keyword">fn</span> <span class="title">start</span></span>(&amp;<span class="keyword">self</span>)&#123;</span><br><span class="line">		<span class="built_in">println!</span>(<span class="string">"Cook::start"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Wash <span class="keyword">for</span> Chef&#123;</span><br><span class="line">	<span class="function"><span class="keyword">fn</span> <span class="title">start</span></span>(&amp;<span class="keyword">self</span>)&#123;</span><br><span class="line">		<span class="built_in">println!</span>(<span class="string">"Wash::start"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">	<span class="keyword">let</span> me = Chef;</span><br><span class="line">	<span class="comment">// me.start();</span></span><br><span class="line">	<span class="comment">// 定义两个trait start()函数有同样方法签名</span></span><br><span class="line">	<span class="comment">// 会出现编译错误 multiple applicable items in scope</span></span><br><span class="line">	<span class="comment">// 这个时候有必要使用完整的函数调用语法进行方法调用</span></span><br><span class="line">	<span class="comment">// 只有这样才能清晰明白无歧义表达清楚期望调用哪个函数</span></span><br><span class="line">	&lt;Cook&gt;::start(&amp;me);</span><br><span class="line">	&lt;Chef <span class="keyword">as</span> Wash&gt;::start(&amp;me);</span><br><span class="line">	<span class="comment">// 或者</span></span><br><span class="line">	<span class="comment">//&lt;Wash&gt;::start(&amp;me);</span></span><br><span class="line">	<span class="comment">//&lt;Cook&gt;::start(&amp;me);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<p>成员方法和普通函数没本质区别</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">T</span></span>(<span class="built_in">usize</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> T&#123;</span><br><span class="line">	<span class="function"><span class="keyword">fn</span> <span class="title">get1</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">usize</span> &#123;<span class="keyword">self</span>.<span class="number">0</span>&#125;</span><br><span class="line">	<span class="function"><span class="keyword">fn</span> <span class="title">get2</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">usize</span> &#123;<span class="keyword">self</span>.<span class="number">0</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">get3</span></span>(t: &amp;T) -&gt; <span class="built_in">usize</span> &#123;t.<span class="number">0</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">check_type</span></span>(_:<span class="function"><span class="keyword">fn</span></span>(&amp;T)-&gt;<span class="built_in">usize</span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">	check_type(T::get1);</span><br><span class="line">	check_type(T::get2);</span><br><span class="line">	check_type(get3)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="trait约束和继承"><a href="#trait约束和继承" class="headerlink" title="trait约束和继承"></a>trait约束和继承</h2><p>Rust的trait另一个用处是作为泛型约束使用</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt::<span class="built_in">Debug</span>;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">my_print</span></span>&lt;T:<span class="built_in">Debug</span>&gt;(x:T)&#123;</span><br><span class="line">	<span class="built_in">println!</span>(<span class="string">"The value is &#123;:?&#125;"</span>, x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">	my_print(<span class="string">"China"</span>);</span><br><span class="line">	my_print(<span class="number">41_i32</span>);</span><br><span class="line">	my_print(<span class="literal">true</span>);</span><br><span class="line">	my_print([<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>my_print函数引入一个泛型T, 所以参数不是具体的类型, 而是一组类型<br>冒号后面加trait名字,就是泛型参数约束条件, 要求T类型实现Debug这个trait</p>
+<p>泛型约束另一种写法是where子句<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt::<span class="built_in">Debug</span>;</span><br><span class="line"><span class="comment">// fn my_print&lt;T:Debug&gt;(x:T)&#123;</span></span><br><span class="line"><span class="comment">// 	println!("The value is &#123;:?&#125;", x);</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">my_print</span></span>&lt;T&gt;(x:T) <span class="keyword">where</span> T:<span class="built_in">Debug</span>&#123;</span><br><span class="line">	<span class="built_in">println!</span>(<span class="string">"&#123;:?&#125;"</span>, x);	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">	my_print(<span class="string">"China"</span>);</span><br><span class="line">	my_print(<span class="number">41_i32</span>);</span><br><span class="line">	my_print(<span class="literal">true</span>);</span><br><span class="line">	my_print([<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>trait允许继承,类似这样</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Base</span></span> &#123;</span><br><span class="line">	<span class="comment">// add code here</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Derived</span></span>:Base &#123;</span><br><span class="line">	<span class="comment">// add code here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后impl满足的时候两个都需要</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Base</span></span> &#123;</span><br><span class="line">	<span class="comment">// add code here</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Derived</span></span>:Base &#123;</span><br><span class="line">	<span class="comment">// add code here</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">T</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Derived <span class="keyword">for</span> T&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Base <span class="keyword">for</span> T&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实trait Derived:Base{}等同于trait Derived where Slef:Base{}</p>
+<p><br></p>
+<h2 id="Derive"><a href="#Derive" class="headerlink" title="Derive"></a>Derive</h2><p>Rust里面为类型impl某些trait的时候,逻辑是非常机械化的<br>许多类型重复而单调地impl某些trait是非常鼓噪地<br>为此Rust提供了特殊的attribute,自动impl某些trait</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Copy,Clone,Default, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Foo</span></span>&#123;</span><br><span class="line">	data: <span class="built_in">i32</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">let</span> v1 = Foo&#123;data:<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">let</span> v2 = v1;</span><br><span class="line">	<span class="built_in">println!</span>(<span class="string">"&#123;:?&#125;"</span>, v2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它的语法是在你希望impl trait类型前面写#[derive(…)], 括号里面是你希望impl地trait地名字<br>这样写了之后,编译器就帮你自动加上impl块,类似如下</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> <span class="built_in">Copy</span> <span class="keyword">for</span> Foo&#123;&#125;</span><br><span class="line"><span class="keyword">impl</span> <span class="built_in">Clone</span> <span class="keyword">for</span> Foo&#123;&#125;</span><br><span class="line"><span class="keyword">impl</span> <span class="built_in">Debug</span> <span class="keyword">for</span> Foo&#123;&#125;</span><br><span class="line"><span class="keyword">impl</span> <span class="built_in">Default</span> <span class="keyword">for</span> Foo&#123;&#125;</span><br><span class="line"><span class="keyword">impl</span> Hash <span class="keyword">for</span> Foo&#123;&#125;</span><br><span class="line"><span class="keyword">impl</span> <span class="built_in">PartialEq</span> <span class="keyword">for</span> Foo&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>这些都是特殊地trait,帮我们自动实现默认的逻辑</p>
+<p><br></p>
+<h2 id="trait别名"><a href="#trait别名" class="headerlink" title="trait别名"></a>trait别名</h2><p>跟type alias类似,trait也可以起别名 trait alias</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Service</span></span> &#123;</span><br><span class="line">	<span class="class"><span class="keyword">type</span> <span class="title">Request</span></span>;</span><br><span class="line">	<span class="class"><span class="keyword">type</span> <span class="title">Response</span></span>;</span><br><span class="line">	<span class="class"><span class="keyword">type</span> <span class="title">Error</span></span>;</span><br><span class="line">	<span class="class"><span class="keyword">type</span> <span class="title">Future</span></span>:Future&lt;Item=Slef::Response, Error=Self::Error&gt;;</span><br><span class="line">	<span class="function"><span class="keyword">fn</span> <span class="title">call</span></span>(&amp;<span class="keyword">self</span>, req:Self::Request) -&gt; Self::Future;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">HttpService</span></span> = Service&lt;Request=http::Request,</span><br><span class="line">	Response=http::Response,</span><br><span class="line">	Error=http::Error&gt;;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>trait本身可以携带泛型参数；</li>
+<li>trait可以用在泛型参数的约束中；</li>
+<li>trait可以为一组类型impl，也可以单独为某一个具体类型impl，而且它们可以同时存在；</li>
+<li>trait可以为某个trait impl，而不是为某个具体类型impl；</li>
+<li>trait可以包含关联类型，而且还可以包含类型构造器，实现高阶类型的某些功能；</li>
+<li>trait可以实现泛型代码的静态分派，也可以通过trait object实现动态分派；</li>
+<li>trait可以不包含任何方法，用于给类型做标签（marker），以此来描述类型的一些重要特性；</li>
+<li>trait可以包含常量。</li>
+</ul>
+<p><br><br><br></p>
+<h1 id="数组和字符串"><a href="#数组和字符串" class="headerlink" title="数组和字符串"></a>数组和字符串</h1><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组是一个容器，它在一块连续空间内存中，存储了一系列的同样类型的数据。<br>数组中元素的占用空间大小必须是编译期确定的。数组本身所容纳的元素个数也必须是编译期确定的，执行阶段不可变。<br>如果需要使用变长的容器，可以使用标准库中的Vec/LinkedList等</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定长数组</span></span><br><span class="line"><span class="keyword">let</span> xs:[<span class="built_in">i32</span>, <span class="number">5</span>] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="comment">// 所有元素,如果初始化为同样数据,可以使用如下语法</span></span><br><span class="line"><span class="keyword">let</span> ys:[<span class="built_in">i32</span>, <span class="number">500</span>] = [<span class="number">0</span>;<span class="number">500</span>];</span><br></pre></td></tr></table></figure>
+<p>在Rust中，对于两个数组类型，只有元素类型和元素个数都完全相同，这两个数组才是同类型的。<br>数组与指针之间不能隐式转换。同类型的数组之间可以互相赋值</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> xs:[<span class="built_in">i32</span>; <span class="number">5</span>] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> ys:[<span class="built_in">i32</span>; <span class="number">5</span>] = [<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>];</span><br><span class="line">xs = ys;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">"arry &#123;:?&#125;"</span>, xs);</span><br></pre></td></tr></table></figure>
+<p>把数组xs作为参数传给一个函数，这个数组并不会退化成一个指针。<br>而是会将这个数组完整复制进这个函数。<br>函数体内对数组的改动不会影响到外面的数组。</p>
+<p>对数组内部元素的访问，可以使用中括号索引的方式</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> xs:[<span class="built_in">i32</span>; <span class="number">5</span>] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> ys:[<span class="built_in">i32</span>; <span class="number">5</span>] = [<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>];</span><br><span class="line">xs = ys;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">"arry &#123;:?&#125;"</span>, xs);</span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">"index item:&#123;:?&#125;"</span>, xs[<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+<h3 id="内置方法"><a href="#内置方法" class="headerlink" title="内置方法"></a>内置方法</h3><blockquote>
+<p>比较</p>
+</blockquote>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2022/07/09/rust/';
+        this.page.title = 'Rust基础语法';
+        this.page.identifier = '2022/07/09/rust/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
