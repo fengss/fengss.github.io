@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>ATT&amp;CK笔记 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="ATT&amp;amp;CK相关详解笔记  
+什么是网络威胁情报具体来说以下主题 
+
+网络威胁情报。
+情报周期。
+定义情报需求。
+收集过程。
+处理与利用。
+偏见与分析。
+
+网络威胁情报威胁猎杀区分: 网络威胁情报（Cyber Threat Intelligence，CTI）驱动的和数据驱动
+CTI以及如何利用CTI流程了解
+
+CTI专注于数据收集和信息分析，能够让我们更好地了解组织面临的威胁，这有助于我们保护资产, 汇总所有相关数据产生的信息，通过分析将其转化为情报
+
+将情报分为长期情报和短期情报，也可">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go/Rust</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">系统内核</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">威胁追踪</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">数据库</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是网络威胁情报"><span class="toc-number">1.</span> <span class="toc-text">什么是网络威胁情报</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络威胁情报"><span class="toc-number">1.1.</span> <span class="toc-text">网络威胁情报</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#战略情报"><span class="toc-number">1.1.1.</span> <span class="toc-text">战略情报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运营情报"><span class="toc-number">1.1.2.</span> <span class="toc-text">运营情报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#战术情报"><span class="toc-number">1.1.3.</span> <span class="toc-text">战术情报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.1.4.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#STIX"><span class="toc-number">1.1.5.</span> <span class="toc-text">STIX</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#情报周期"><span class="toc-number">1.2.</span> <span class="toc-text">情报周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#计划与确定目标"><span class="toc-number">1.2.1.</span> <span class="toc-text">计划与确定目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#准备与收集"><span class="toc-number">1.2.2.</span> <span class="toc-text">准备与收集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#处理与利用"><span class="toc-number">1.2.3.</span> <span class="toc-text">处理与利用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析与生产"><span class="toc-number">1.2.4.</span> <span class="toc-text">分析与生产</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#传播与融合"><span class="toc-number">1.2.5.</span> <span class="toc-text">传播与融合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#评价与反馈"><span class="toc-number">1.2.6.</span> <span class="toc-text">评价与反馈</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义情报需求"><span class="toc-number">1.3.</span> <span class="toc-text">定义情报需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#收集过程"><span class="toc-number">1.4.</span> <span class="toc-text">收集过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#危害指标"><span class="toc-number">1.4.1.</span> <span class="toc-text">危害指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#了解恶意软件"><span class="toc-number">1.4.2.</span> <span class="toc-text">了解恶意软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用公共资源进行收集：OSINT"><span class="toc-number">1.4.3.</span> <span class="toc-text">使用公共资源进行收集：OSINT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#蜜罐"><span class="toc-number">1.4.4.</span> <span class="toc-text">蜜罐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恶意软件分析和沙箱"><span class="toc-number">1.4.5.</span> <span class="toc-text">恶意软件分析和沙箱</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#处理与利用-1"><span class="toc-number">1.5.</span> <span class="toc-text">处理与利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#网络杀伤链"><span class="toc-number">1.5.1.</span> <span class="toc-text">网络杀伤链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#钻石模型"><span class="toc-number">1.5.2.</span> <span class="toc-text">钻石模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MITRE-ATT-amp-CK框架"><span class="toc-number">1.5.3.</span> <span class="toc-text">MITRE ATT&amp;CK框架</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#偏见与分析"><span class="toc-number">1.6.</span> <span class="toc-text">偏见与分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是威胁猎杀"><span class="toc-number">2.</span> <span class="toc-text">什么是威胁猎杀</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#威胁猎杀的定义"><span class="toc-number">2.1.</span> <span class="toc-text">威胁猎杀的定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁猎杀类型"><span class="toc-number">2.1.1.</span> <span class="toc-text">威胁猎杀类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁猎人技能"><span class="toc-number">2.1.2.</span> <span class="toc-text">威胁猎人技能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#威胁猎杀成熟度模型"><span class="toc-number">2.2.</span> <span class="toc-text">威胁猎杀成熟度模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#威胁猎杀过程"><span class="toc-number">2.3.</span> <span class="toc-text">威胁猎杀过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁猎杀循环"><span class="toc-number">2.3.1.</span> <span class="toc-text">威胁猎杀循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁猎杀模型"><span class="toc-number">2.3.2.</span> <span class="toc-text">威胁猎杀模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建假说"><span class="toc-number">2.4.</span> <span class="toc-text">构建假说</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据来源"><span class="toc-number">3.</span> <span class="toc-text">数据来源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows本机工具"><span class="toc-number">3.1.</span> <span class="toc-text">Windows本机工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-Event-Viewer"><span class="toc-number">3.1.1.</span> <span class="toc-text">Windows Event Viewer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WMI"><span class="toc-number">3.1.2.</span> <span class="toc-text">WMI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ETW"><span class="toc-number">3.1.3.</span> <span class="toc-text">ETW</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据源"><span class="toc-number">3.2.</span> <span class="toc-text">数据源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#终端数据"><span class="toc-number">3.2.1.</span> <span class="toc-text">终端数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#系统日志"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">系统日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#应用程序日志"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">应用程序日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PowerShell日志"><span class="toc-number">3.2.1.3.</span> <span class="toc-text">PowerShell日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sysmon日志"><span class="toc-number">3.2.1.4.</span> <span class="toc-text">Sysmon日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件和注册表完整性监控"><span class="toc-number">3.2.1.5.</span> <span class="toc-text">文件和注册表完整性监控</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件服务器"><span class="toc-number">3.2.1.6.</span> <span class="toc-text">文件服务器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络数据"><span class="toc-number">3.2.2.</span> <span class="toc-text">网络数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#防火墙日志"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">防火墙日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS日志"><span class="toc-number">3.2.2.2.</span> <span class="toc-text">DNS日志</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全数据"><span class="toc-number">3.2.3.</span> <span class="toc-text">安全数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#活动目录日志"><span class="toc-number">3.2.3.1.</span> <span class="toc-text">活动目录日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Kerberos日志"><span class="toc-number">3.2.3.2.</span> <span class="toc-text">Kerberos日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IAM"><span class="toc-number">3.2.3.3.</span> <span class="toc-text">IAM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特权访问管理"><span class="toc-number">3.2.3.4.</span> <span class="toc-text">特权访问管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#入侵检测与防御"><span class="toc-number">3.2.3.5.</span> <span class="toc-text">入侵检测与防御</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#开始攻击"><span class="toc-number">4.</span> <span class="toc-text">开始攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#调查威胁情报"><span class="toc-number">4.1.</span> <span class="toc-text">调查威胁情报</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ATT-amp-CK框架"><span class="toc-number">4.1.1.</span> <span class="toc-text">ATT&amp;CK框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#战术、技术、子技术和程序"><span class="toc-number">4.1.1.1.</span> <span class="toc-text">战术、技术、子技术和程序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ATT-amp-CK矩阵"><span class="toc-number">4.1.2.</span> <span class="toc-text">ATT&amp;CK矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用ATT-amp-CK进行映射"><span class="toc-number">4.1.3.</span> <span class="toc-text">利用ATT&amp;CK进行映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自我测试"><span class="toc-number">4.1.4.</span> <span class="toc-text">自我测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用数据"><span class="toc-number">4.2.</span> <span class="toc-text">使用数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用OSSEM数据字典"><span class="toc-number">4.2.1.</span> <span class="toc-text">使用OSSEM数据字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用MITRE-CAR数据字典"><span class="toc-number">4.2.2.</span> <span class="toc-text">使用MITRE CAR数据字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Sigma规则"><span class="toc-number">4.2.3.</span> <span class="toc-text">使用Sigma规则</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            ATT&amp;CK笔记
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2022/08/12/attack/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2022-08-12T01:46:26.000Z" itemprop="datePublished">2022-08-12</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>ATT&amp;CK相关详解笔记<br><a id="more"></a>  </p>
+<h1 id="什么是网络威胁情报"><a href="#什么是网络威胁情报" class="headerlink" title="什么是网络威胁情报"></a>什么是网络威胁情报</h1><p>具体来说以下主题 </p>
+<ul>
+<li>网络威胁情报。</li>
+<li>情报周期。</li>
+<li>定义情报需求。</li>
+<li>收集过程。</li>
+<li>处理与利用。</li>
+<li>偏见与分析。</li>
+</ul>
+<h2 id="网络威胁情报"><a href="#网络威胁情报" class="headerlink" title="网络威胁情报"></a>网络威胁情报</h2><p>威胁猎杀区分: 网络威胁情报（Cyber Threat Intelligence，CTI）驱动的和数据驱动</p>
+<p>CTI以及如何利用CTI流程了解</p>
+<ul>
+<li><p>CTI专注于数据收集和信息分析，能够让我们更好地了解组织面临的威胁，这有助于我们保护资产, 汇总所有相关数据产生的信息，通过分析将其转化为情报</p>
+</li>
+<li><p>将情报分为长期情报和短期情报，也可以根据情报的形式将情报分为战略情报、战术情报或者运营情报。</p>
+</li>
+</ul>
+<h3 id="战略情报"><a href="#战略情报" class="headerlink" title="战略情报"></a>战略情报</h3><p>战略情报为最高决策者提供信息，最高决策者包括CEO（首席执行官）、CFO（首席财务官）、COO（首席运营官）、CIO（首席信息官）、CSO（首席安全官）、CISO（首席信息安全官），以及需要这些信息的其他高管。<br>战略情报必须帮助决策者了解他们面临的威胁。决策者应该正确地认识到威胁的主要能力和动机（中断、窃取专有信息、经济收益等），自身成为目标的可能性，以及由此可能产生的后果。</p>
+<h3 id="运营情报"><a href="#运营情报" class="headerlink" title="运营情报"></a>运营情报</h3><p>运营情报主要提供给那些负责日常决策的人，也就是那些负责确定优先事项和分配资源的人。<br>为了让他们更有效地完成这些任务，情报团队应该向他们提供有关哪些组织可能针对该组织以及哪些组织最近最活跃的信息。<br>可交付信息可能包括CVE和有关潜在威胁使用的策略以及技术的信息。</p>
+<h3 id="战术情报"><a href="#战术情报" class="headerlink" title="战术情报"></a>战术情报</h3><blockquote>
+<p>战术情报应该交付给那些需要即时信息的人。接收者应该完全了解他们需要注意对手的哪些行为，才能识别可能针对组织的威胁。</p>
+</blockquote>
+<p>可交付信息可能包括IP地址、域和URL、散列值、注册表键、电子邮件工件等。<br>例如这些信息可用于为告警提供上下文，并评估是否值得让事件响应（Incident Response,IR）团队参与。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>威胁行为体（threat actor）和高级持续性威胁（Advanced Persistent Threat，APT）这两个术语可以互换使用，但事实是尽管我们可以说每个APT都是威胁行为体，但并不是每个威胁行为体都是高级的或持续性的。</p>
+<p>APT与威胁行为体的不同之处在于其高度的操作安全（OPerational SECurity，OPSEC），以及低检测率和高成功率。</p>
+<h3 id="STIX"><a href="#STIX" class="headerlink" title="STIX"></a>STIX</h3><p>要生成有价值的情报，重要的是使用明确定义的概念，方便你组织数据和生成信息。选择现有术语并非强制性要求，但为了促进威胁情报的标准化和共享，MITRE公司已经开发出结构化威胁信息表达式（Structured Threat Information eXpression，STIX）（<a href="https://oasis-open.github.io/cti-documentation/）。" target="_blank" rel="noopener">https://oasis-open.github.io/cti-documentation/）。</a></p>
+<p>任何威胁行为体都可以根据以下任意一项定义</p>
+<ul>
+<li>类型（<a href="https://stixproject.github.io/data-model/1.1/stixVocabs/ThreatActorTypeVocab-1.0/）。" target="_blank" rel="noopener">https://stixproject.github.io/data-model/1.1/stixVocabs/ThreatActorTypeVocab-1.0/）。</a></li>
+<li>动机（<a href="https://stixproject.github.io/data-model/1.1/stixVocabs/MotivationVocab-1.1/）。" target="_blank" rel="noopener">https://stixproject.github.io/data-model/1.1/stixVocabs/MotivationVocab-1.1/）。</a></li>
+<li>复杂度（<a href="https://stixproject.github.io/data-model/1.1/stixVocabs/ThreatActorSophistication-Vocab-1.0/）。" target="_blank" rel="noopener">https://stixproject.github.io/data-model/1.1/stixVocabs/ThreatActorSophistication-Vocab-1.0/）。</a></li>
+<li>预期效果（<a href="https://stixproject.github.io/data-model/1.1/stixVocabs/IntendedEffectVocab-1.0/）。" target="_blank" rel="noopener">https://stixproject.github.io/data-model/1.1/stixVocabs/IntendedEffectVocab-1.0/）。</a></li>
+<li>参与的行动。</li>
+<li>战术、技术和程序（Tactics，Techniques，Procedures，TTP），见<a href="https://stixproject.github.io/data-model/1.2/ttp/TTPType/。" target="_blank" rel="noopener">https://stixproject.github.io/data-model/1.2/ttp/TTPType/。</a></li>
+</ul>
+<p><br><br><br></p>
+<h2 id="情报周期"><a href="#情报周期" class="headerlink" title="情报周期"></a>情报周期</h2><p>传统上认为情报流程是由分为六个阶段的周期组成，<br>这六个阶段分别为计划与确定目标、准备与收集、处理与利用、分析与生产、传播与融合、评价与反馈。<br>每个阶段都有其自身的特殊性和所面临的挑战。</p>
+<h3 id="计划与确定目标"><a href="#计划与确定目标" class="headerlink" title="计划与确定目标"></a>计划与确定目标</h3><p>第一步是确定情报需求（Intelligence Requirement，IR）。<br>决策者需要但又不够了解的任何信息都属于这一类。<br>在此阶段，重要的是确定组织的关键资产、为什么组织可能成为被关注的目标，以及决策人员的安全顾虑是什么。<br>识别潜在的威胁、可以优先采取哪些缓解措施（通过称为威胁建模的过程），以及建立收集框架和确定收集优先级也很重要。</p>
+<h3 id="准备与收集"><a href="#准备与收集" class="headerlink" title="准备与收集"></a>准备与收集</h3><p>在此阶段可以定义和开发收集方法，以获取有关前一阶段建立的需求的信息。<br>重要的是要记住，我们不可能回答所有问题并满足所有的情报需求。</p>
+<h3 id="处理与利用"><a href="#处理与利用" class="headerlink" title="处理与利用"></a>处理与利用</h3><p>一旦收集了计划中的数据，下一步就是对其进行处理以生成信息。<br>处理方法通常并不完美，情报团队能够处理的数据量总是低于已收集的数据量。<br>数据没有经过处理就相当于没有收集，因为它们没有起到情报作用。</p>
+<h3 id="分析与生产"><a href="#分析与生产" class="headerlink" title="分析与生产"></a>分析与生产</h3><p>收集到的信息必须经过分析才能生成情报。<br>有几种技术可用于情报分析和防止因分析师的偏见而导致的偏差。<br>网络威胁情报分析师必须学会如何在分析时过滤其个人观点和意见。</p>
+<h3 id="传播与融合"><a href="#传播与融合" class="headerlink" title="传播与融合"></a>传播与融合</h3><p>在这个阶段，已经生产的情报被分发到必要的部门。<br>在分发之前分析师必须考虑各种情况，比如收集到的情报中最紧迫的问题是什么，谁应该收到报告，情报有多紧急，接收者需要多少细节，报告是否应该包括预防建议等。<br>有时可能需要针对不同的受众创建不同的报告。</p>
+<h3 id="评价与反馈"><a href="#评价与反馈" class="headerlink" title="评价与反馈"></a>评价与反馈</h3><p>最后一个阶段，也可能是最难实现的阶段，主要原因是通常缺乏情报接收者的反馈。<br>通过建立良好的反馈机制，可以帮助情报生产者评价已经生成的情报的有效性，以免他们一次又一次地重复这个流程，而不做出必要的调整来使产生的情报与接收者更加相关。</p>
+<p>作为情报生产者，我们希望自己的情报是相关的，即能帮助决策者做出明智的决策。<br>如果不收集反馈信息，我们将不知道是否正在实现自己的目标，也不知道应该采取哪些步骤来进行改进。</p>
+<p><br><br><br></p>
+<h2 id="定义情报需求"><a href="#定义情报需求" class="headerlink" title="定义情报需求"></a>定义情报需求</h2><p>美国国防部对情报需求（IR）定义如下</p>
+<ul>
+<li>1.任何需要收集信息或生成情报的一般或特定主体；</li>
+<li>2.需要情报来填补指挥部对战场空间或威胁力量的知识或理解的空白。</li>
+</ul>
+<p>情报周期的第一个阶段是确定决策者需要的信息。这些需求应该是情报团队在收集、处理和分析阶段的驱动因素。</p>
+<p>确定这些情报需求时出现的主要问题在于，决策者通常不知道自己想要什么信息，直到他们需要它时才能发现。此外还可能会出现其他问题，如资源和预算短缺或遇到社会政治事件，以及确定和满足情报需求任务出现困难等。</p>
+<p><br><br><br></p>
+<h2 id="收集过程"><a href="#收集过程" class="headerlink" title="收集过程"></a>收集过程</h2><p>一旦定义了情报需求，我们就可以着手收集满足这些需求所需的原始数据。对于这一过程，我们可以借助于两类消息源：内部来源（如网络和终端）和外部来源（如博客、威胁情报馈送、威胁报告、公共数据库、论坛等）。</p>
+<p>进行收集过程最有效的方式是使用收集管理框架（Collection Management Framework，CMF）。<br>通过使用CMF，你可以发现数据源，并轻松跟踪要收集的信息类型。<br>它还可以用来对从源处获得的数据进行评级，了解该数据存储了多长时间，以及跟踪源的可信度和完整性。<br>建议你使用CMF跟踪外部来源和内部来源。</p>
+<h3 id="危害指标"><a href="#危害指标" class="headerlink" title="危害指标"></a>危害指标</h3><p>顾名思义，危害指标（IOC）是在网络或操作系统中观察到的一种工件，它高度可靠地表明目标已失陷。<br>这些数据可用于了解发生了什么，但如果收集得当，它还可以用来防止或检测持续的破坏行为。<br>典型的IOC可能包括恶意文件的散列值、URL、域、IP、路径、文件名、注册表键和恶意软件文件本身。</p>
+<p>重要的是要记住，为了保证数据真正有用，有必要提供收集到的IOC的上下文信息。<br>在这里，我们可以遵循质量重于数量的原则——大量的IOC并不总是意味着更好的数据。</p>
+<h3 id="了解恶意软件"><a href="#了解恶意软件" class="headerlink" title="了解恶意软件"></a>了解恶意软件</h3><p>我们需要介绍两个概念: 释放器<code>（Dropper）</code>和命令与控制<code>（Command and Control，C2或C2C）</code>。</p>
+<p>根据其功能，恶意软件可以分为不同的类型，有时，一款恶意软件可以被归类为多个类型。<br>以下是最常见的类型</p>
+<ul>
+<li>蠕虫：能够通过网络自我复制和传播的自主程序。</li>
+<li>特洛伊木马：一个看似服务于指定目的的程序，但也有一种隐藏的恶意能力，可以绕过安全机制，从而滥用给予它的授权。</li>
+<li>Rootkit：一组具有管理员权限的软件工具，旨在隐藏其他工具及其活动。</li>
+<li>勒索软件：一种在支付赎金之前拒绝用户访问系统或其信息的计算机程序。</li>
+<li>键盘记录器：在用户不知情的情况下记录键盘事件的软件或硬件。</li>
+<li>广告软件：向用户提供特定广告的恶意软件。</li>
+<li>间谍软件：在所有者或用户不知情的情况下安装到系统中的软件，目的是收集有关用户的信息并监控其活动。</li>
+<li>恐吓软件：诱骗计算机用户访问失陷网站的恶意软件。</li>
+<li>后门：让某些人可以在计算机系统、网络或软件应用程序中获得管理员用户访问权限的方法。</li>
+<li>擦除器：擦除其感染的计算机硬盘的恶意软件。</li>
+<li>攻击套件：用于管理可能将恶意软件用作有效载荷的漏洞集合的包。当受害者访问失陷网站时，它会评估受害者系统中的漏洞，以便利用某些漏洞。</li>
+</ul>
+<h3 id="使用公共资源进行收集：OSINT"><a href="#使用公共资源进行收集：OSINT" class="headerlink" title="使用公共资源进行收集：OSINT"></a>使用公共资源进行收集：OSINT</h3><p>开源情报（Open Source INTelligence，OSINT）收集是收集公开数据的过程。<br>当谈及OSINT时人们脑海中浮现的最常见来源是社交媒体、博客、新闻和暗网。<br>从本质上讲，任何公开可用的数据都可以用于OSINT。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">对于那些希望开始收集信息的人来说，有很多很好的资源</span><br><span class="line">VirusTotal（https://www.virustotal.com/）、CCSS论坛（https://www.ccssforum.org/）和URLHaus（https://urlhaus.abuse.ch/）都是开始收集过程的好地方。</span><br><span class="line">另外请访问OSINTCurio.us（https://osintcurio.us/）以了解有关OSINT资源和技术的更多信息。</span><br></pre></td></tr></table></figure>
+<h3 id="蜜罐"><a href="#蜜罐" class="headerlink" title="蜜罐"></a>蜜罐</h3><p>蜜罐是模仿可能的攻击目标的诱饵系统。<br>我们可以设置一个蜜罐来检测、转移或对抗攻击者。<br>所有收到的流量都被认为是恶意的，与蜜罐的每一次交互都可以用来研究攻击者的技术。</p>
+<p>蜜罐有很多种（详见<a href="https://hack2interesting.com/honeypots-lets-collect-it-all/），" target="_blank" rel="noopener">https://hack2interesting.com/honeypots-lets-collect-it-all/），</a></p>
+<p>它们大致可以分为三类：低交互、中等交互和高交互蜜罐。</p>
+<ul>
+<li>低交互蜜罐模拟传输层，提供的对操作系统的访问非常有限。</li>
+<li>中等交互蜜罐模拟应用层，以引诱攻击者发送有效载荷。</li>
+<li>高交互蜜罐通常涉及真实的操作系统和应用程序。</li>
+</ul>
+<p>蜜罐更适合揭露未知漏洞的滥用问题。</p>
+<h3 id="恶意软件分析和沙箱"><a href="#恶意软件分析和沙箱" class="headerlink" title="恶意软件分析和沙箱"></a>恶意软件分析和沙箱</h3><p>恶意软件分析是研究恶意软件功能的过程。<br>通常我们可以将恶意软件分析分为两种类型：动态和静态。</p>
+<p>静态恶意软件分析是指在不执行软件的情况下分析正在使用的软件。<br>逆向工程是静态恶意软件分析的一种形式，使用反汇编程序（如IDA或最近的NSA工具Ghidra等）来执行。</p>
+<p>动态恶意软件分析是通过观察恶意软件在执行后的行为来实现的。<br>这类分析通常在受控环境中进行，以避免感染生产系统。<br>在恶意软件分析的上下文中，沙箱是用于自动动态分析恶意软件片段的隔离且受控的环境。<br>在沙箱中，执行可疑恶意软件片段并记录其行为。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">有一些很棒的在线沙箱解决方案</span><br><span class="line">比如Any Run（https://any.run）和Hybrid Analysis（https://www.hybrid-analysis.com/）。</span><br><span class="line">Cuckoo Sandbox（https://cuckoosandbox.org/）是一个适用于Windows、Linux、macOS和Android的开源离线沙箱系统。</span><br></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<h2 id="处理与利用-1"><a href="#处理与利用-1" class="headerlink" title="处理与利用"></a>处理与利用</h2><p>一旦收集到数据，就必须对其进行处理和利用，以将其转化为情报。<br>提供的IOC必须带有上下文信息，其相关性和可靠性也必须得到评估。解决这一问题的一种方法是将数据拆分成桶（bucket），并利用可用的框架来寻找模式。<br>我们将快速回顾三个最常用的情报框架：Cyber Kill Chain®（网络杀伤链）、钻石模型和MITRE ATT&amp;CK框架</p>
+<h3 id="网络杀伤链"><a href="#网络杀伤链" class="headerlink" title="网络杀伤链"></a>网络杀伤链</h3><p>由洛克希德·马丁（Lockheed Martin）公司开发的Cyber Kill Chain®是一种识别威胁行为体为实现其目标应遵循的步骤的方法。<br>它有七个不同的步骤：</p>
+<ul>
+<li>1）侦察：使用非侵入性技术了解受害者。</li>
+<li>2）武器化：生成要交付的恶意有效载荷。</li>
+<li>3）交付：交付武器化的工件。</li>
+<li>4）利用：利用漏洞在受害者系统上执行代码。</li>
+<li>5）安装：安装最终的恶意软件。</li>
+<li>6）命令与控制（C2）：在受害者系统上建立与恶意软件通信的通道。</li>
+<li>7）对目标采取行动：通过完全访问和通信，攻击者可以实现其目标。</li>
+</ul>
+<h3 id="钻石模型"><a href="#钻石模型" class="headerlink" title="钻石模型"></a>钻石模型</h3><p>钻石模型为我们提供了一种跟踪入侵事件的简单方法，因为它能帮助我们确定入侵事件所涉及的原子元素。<br>它包括四个主要特征：对手、基础设施、能力和受害者。<br>这些特征通过社会政治和技术轴线联系在一起</p>
+<p><img src="/2022/08/12/attack/image-01.png" width="500px"></p>
+<h3 id="MITRE-ATT-amp-CK框架"><a href="#MITRE-ATT-amp-CK框架" class="headerlink" title="MITRE ATT&amp;CK框架"></a>MITRE ATT&amp;CK框架</h3><p>MITRE ATT&amp;CK框架是一个描述性模型，用于标记和研究威胁行为体为了在企业环境、云环境、智能手机甚至工业控制系统中站稳脚跟和操作而能够执行的活动。</p>
+<p>ATT&amp;CK框架的魔力在于它为网络安全社区提供了一个通用的分类法来描述对手的行为。<br>它可以作为一种共同语言，进攻性和防御性研究人员都可以使用它来更好地理解对方，并与该领域的非专业人员进行交流。<br>最重要的是，你不仅可以在你认为合适的时候使用它，而且还可以在它的基础上自己构建一套战术、技术和程序（TTP）。</p>
+<p>14种战术被用来涵盖不同的技术集。每种战术都代表一个战术目标，也就是威胁行为体表现出特定行为的原因。<br>每种战术都由一组描述特定威胁行为体行为的技术和子技术组成。<br>程序是威胁行为体实现特定技术或子技术的具体方式。一个程序可以扩展为多种技术和子技术</p>
+<p><img src="/2022/08/12/attack/image-03.jpg" width="1500px"></p>
+<p><br><br><br></p>
+<h2 id="偏见与分析"><a href="#偏见与分析" class="headerlink" title="偏见与分析"></a>偏见与分析</h2><p>一旦处理完所有必要的信息，就需要让它们变得有意义。<br>也就是说搜索安全问题，并将此情报提供给满足计划步骤中确定的情报需求的不同战略层。</p>
+<p>关于情报分析应该如何做，已经有很多文章，特别是有许多优秀的书籍，如Structured Analytic Techniques for Intelligence Analysis（Heuer &amp; Pherson，2014）、Critical Thinking for Strategic Intelligence（Pherson &amp; Pherson，2016）和Psychology of Intelligence Analysis（Heuer，1999）等。这些书中使用了许多隐喻来描述情报分析的过程。</p>
+<p>我个人最喜欢的是将情报分析艺术与马赛克艺术作比：情报分析就像试图把马赛克的碎片拼在一起，其模式不明确，碎片的大小、形状和颜色都在不断变化。<br>情报分析师不能忘记的一件事是，在情报分析实践中不断挑战自己的先入为主和偏见。避免确认偏误，不仅是为了交付收集的数据，而且要避免陷入镜像、客户主义、分层和线性思维。<br>分析师不应该影响分析，使其符合自己的需要或观点。</p>
+<p>有许多技术可以用来减轻分析师的偏见。<br>好的情报分析师有一些共同的特点：必须拥有一个以上领域的特定知识，必须有良好的口头和书面表达能力，而且最重要的是，必须有凭直觉整合情况背景的能力。<br>总而言之，我们可以断言，为了生成有效且相关的情报，必须有一个持续的情报流程，不断收集、处理和分析来自内部和外部来源的信息。</p>
+<p><br><br><br></p>
+<h1 id="什么是威胁猎杀"><a href="#什么是威胁猎杀" class="headerlink" title="什么是威胁猎杀"></a>什么是威胁猎杀</h1><p>本章将介绍威胁猎杀的基础：威胁猎杀是什么，需要什么技能才能成为一名威胁猎人，应该遵循哪些步骤才能成功地进行猎杀？<br>这些问题的答案将帮助我们建立一个研究环境，并利用它在接下来的章节中进行猎杀练习。</p>
+<h2 id="威胁猎杀的定义"><a href="#威胁猎杀的定义" class="headerlink" title="威胁猎杀的定义"></a>威胁猎杀的定义</h2><p>首先威胁猎杀与网络威胁情报（CTI）或事件响应不同，尽管它与它们密切相关。<br>CTI可能是一个很好的猎杀起点。事件响应可能是该组织在成功猎杀后采取的下一步行动。</p>
+<p>威胁猎杀也不是指安装检测工具，尽管安装检测工具可以提高它们的检测能力。<br>此外它并不是在组织的环境中搜索IOC，相反将寻找绕过检测系统的工件，而这些系统已馈送有IOC。<br>威胁猎杀既不等同于监控，也不等同于在监控工具上随机运行查询。<br>最重要的是威胁猎杀并不是一项只能由选定的专家小组完成的任务。当然专业知识很重要，但这并不意味着只有专家才能进行威胁猎杀。<br>有些威胁猎杀技巧需要更长时间才能掌握，有些则是与事件响应和分类共享的。</p>
+<p>威胁猎杀实践本身已经存在多年了，早在它被叫作“威胁猎杀”之前就已经存在了。</p>
+<blockquote>
+<p>进行猎杀的主要条件是知道该问什么，从哪里挖出答案。那么威胁猎杀是什么呢？</p>
+</blockquote>
+<p>首先我们需要声明，威胁猎杀是一种由人驱动的活动。<br>将威胁情报应用于猎杀实践是一种主动的安全方法，因为它是在为时已晚之前做一些事情，也就是说它不是一种被动的措施。<br>威胁猎杀也是为了在组织的环境中不断寻找危害的迹象。它是一种迭代过程，因为它从其他安全活动中获取信息，也为其他安全活动提供信息。<br>此外威胁猎杀的前提是已经发生了入侵。</p>
+<p>在威胁猎杀中我们假设对手已经在我们的环境中，猎人的工作是尽快发现入侵，以便将其损害降至最低。<br>这一过程涉及人的分析能力，因为能否找到绕过可能已经部署就位的自动检测系统的入侵迹象取决于猎人。<br>总而言之，威胁猎人的目标是缩短威胁的驻留时间。</p>
+<h3 id="威胁猎杀类型"><a href="#威胁猎杀类型" class="headerlink" title="威胁猎杀类型"></a>威胁猎杀类型</h3><p>Sqrrl Team（<a href="https://www.cybersecurity-insiders.com/5-types-of-Threat-Hunting/）" target="_blank" rel="noopener">https://www.cybersecurity-insiders.com/5-types-of-Threat-Hunting/）</a><br>将威胁猎杀划分为五种不同类型：数据驱动、情报驱动、实体驱动、TTP驱动和混合驱动。<br>同时这五种不同的类型又可以分为结构化（基于假设）和非结构化（基于数据中观察到的异常）类型</p>
+<p><img src="/2022/08/12/attack/image-04.jpg" width="700px"></p>
+<h3 id="威胁猎人技能"><a href="#威胁猎人技能" class="headerlink" title="威胁猎人技能"></a>威胁猎人技能</h3><p>由于威胁情报是猎杀的触发因素之一，因此称职的威胁猎杀分析师至少要对网络威胁情报的核心主题:高级持续性威胁、恶意软件类型、危害指标、威胁行为体动机和意图等有基本的了解。</p>
+<p>此外威胁猎人还需要了解攻击者将如何实施攻击。<br>熟悉网络杀伤链和ATT&amp;CK框架将会对此有所帮助。<br>尤其需要指出的是如果我们希望熟悉在不同的技术环境（Linux、macOS、Windows、云、移动和工业控制系统）中实施攻击的方式，那么ATT&amp;CK框架将非常有用，并且这些技术（和子技术）提供的粒度能够让分析师更好地了解攻击的设计过程和随后的执行方式。</p>
+<p><br><br><br></p>
+<h2 id="威胁猎杀成熟度模型"><a href="#威胁猎杀成熟度模型" class="headerlink" title="威胁猎杀成熟度模型"></a>威胁猎杀成熟度模型</h2><p>威胁猎杀成熟度模型定义了五个等级，用于对团队的检测能力进行分类：初始级、极低级、程序级、创新级和领先级。<br>该模型可用于确定组织所处的阶段，以及组织需要采取哪些步骤才能升级，同时可评估已建立的自动化程度、数据收集例程和数据分析程序</p>
+<p><img src="/2022/08/12/attack/image-05.jpg" width="700px"></p>
+<p>初始级和极低级都严重依赖自动检测工具，但在初始级，有些网络威胁情报可用于执行猎杀。</p>
+<p>可用于威胁猎杀的威胁情报来源有两种类型：内部威胁情报来源和外部威胁情报来源。</p>
+<ul>
+<li>内部来源可以是历史事件或针对组织基础设施的侦察尝试的记录。</li>
+<li>外部来源可以是威胁情报团队使用OSINT或付费供应商报告或馈送进行的分析。</li>
+</ul>
+<p>任何有关组织环境可能受到威胁的信息，如果不是来自组织自身，都被视为外部信息。程序级、创新级和领先级的等级都由高级的数据收集例程决定，彼此差异取决于团队是否能够创建自己的数据分析程序，以及它们是否能够为这些自动化程序提供反馈，以避免重复相同的猎杀。</p>
+<p><br><br><br></p>
+<h2 id="威胁猎杀过程"><a href="#威胁猎杀过程" class="headerlink" title="威胁猎杀过程"></a>威胁猎杀过程</h2><p>安全信息和事件管理（Security Information and Event Management，SIEM）解决方案可供选择<br>我们将使用一些基于Elastic SIEM开发的开源解决方案。<br>你应该使用这种类型的解决方案来集中从系统收集的所有日志，以帮助分析数据。<br>确保收集到的数据的质量至关重要，低质量的数据很难带来成功的猎杀。</p>
+<h3 id="威胁猎杀循环"><a href="#威胁猎杀循环" class="headerlink" title="威胁猎杀循环"></a>威胁猎杀循环</h3><p>Sqrrl对威胁猎杀过程的最早定义之一出现在他们称之为威胁猎杀循环的过程中</p>
+<p><img src="/2022/08/12/attack/image-06.jpg" width="400px"></p>
+<p>第一步是构建假设，即猎杀所依赖的假设。之后就可以使用我们掌握的技能和工具开始调查。<br>在进行分析时，威胁猎人会尝试发现组织环境中的新模式或异常。这一步的目标是试图证明（或反驳）这一假设。<br>循环的最后一步是尽可能地将成功猎杀的过程自动化。这将防止团队重复相同的流程，并使团队能够将精力集中在发现新的入侵上。<br>在这一步中记录这些发现结果是一个重要的阶段，因为形成的文档将帮助团队更好地了解组织的网络。<br>掌握在组织环境中什么是正常的、什么是不正常的将有助于团队进行更好的猎杀。</p>
+<h3 id="威胁猎杀模型"><a href="#威胁猎杀模型" class="headerlink" title="威胁猎杀模型"></a>威胁猎杀模型</h3><p>Dan Gunter和Marc Setiz在论文“A Practical Model for Conducting Cyber Threat Hunting”[1]（<code>https://pdfs.semanticscholar.org/4900/b5c4d87b5719340f3ebbff84fbbd4a1a3fa1.pdf</code>）中, 给出了一个更详细的模型，该模型分了六个不同的阶段</p>
+<ul>
+<li>目的：进行威胁猎杀时应牢记组织的目标<br>  例如猎杀可能以长期业务目标为条件。在这一阶段，我们需要说明猎杀的目的，包括执行猎杀需要哪些数据以及期望的结果是什么。</li>
+<li>范围：此阶段涉及定义假设，并确定我们要从中提取数据的网络、系统、子网或主机。<br>  这个范围应该事先确定好，以减少可能干扰猎杀成功的“噪音”的数量。它不能过于具体，因为过于具体可能会忽略环境中攻击者的存在。定义的假设应该可以防止我们偏离猎杀的方向，从而帮助猎人在从一条数据转向另一条数据时保持专注。</li>
+<li>装备：在这一阶段，重点将放在“如何”上。如何收集这些数据呢？收集得够详尽吗？要如何做分析呢？如何才能避免分析员偏见呢？<br>  在此阶段结束时，威胁猎人应该对这些问题都有一个深入的回答。收集管理框架（CMF）可以帮助我们跟踪正在收集什么数据以及这些数据来自哪里。[2]</li>
+<li>计划审查：顾名思义，团队或猎杀的负责人将审查到目前为止所做的所有计划，以确保猎杀与组织的目标一致，并且团队拥有成功执行猎杀所需的所有资源（人员、数据、工具和时间）。</li>
+<li>执行：执行阶段指的是计划获得批准后的猎杀过程。</li>
+<li>反馈：此阶段与前面的所有阶段相关联。<br>  分析结果将有助于团队以更高的效率执行未来的猎杀。反馈阶段的目的是改进之前的所有阶段。它不仅应该帮助我们确定目标是否已经实现，还应该帮助我们确定团队可能存在的认知偏见、可能的需要修正的数据可见性和收集的数据的差距、资源分配是否正确等。</li>
+</ul>
+<p><img src="/2022/08/12/attack/image-07.jpg" width="400px"></p>
+<p><br><br><br></p>
+<h2 id="构建假说"><a href="#构建假说" class="headerlink" title="构建假说"></a>构建假说</h2><p>Robert M.Lee和David Bianco写了一篇论文“Generating Hypotheses for Successful Threat Hunting”，内容是为成功的威胁猎杀生成假设（<code>https://www.sans.org/reading-room/whitepapers/threats/paper/37172</code>）。<br>在论文中，他们给出了三种主要类型的假设</p>
+<ul>
+<li>基于威胁情报<br>  这种类型的假设考虑了良好的IOC，也就是说，适当地结合了危害指标、威胁情况和地缘政治背景。<br>  这类假设的主要危险是过于关注IOC，所以最终会产生低质量的匹配结果。最好关注威胁行为体的TTP，而不是包含数百个指标的馈送源。</li>
+<li>基于态势感知<br>  这种类型的假设依赖于我们确定组织内最重要的资产的过程，这也被称为皇冠宝石分析。<br>  猎人试图弄清楚对手可能在组织环境中寻找什么，包括其目标。从这个角度来看，威胁猎人必须思考要寻找的数据需求和活动的类型。重要的是要记住，并不是所有的事情都应该局限于网络领域。在设计态势感知假设时，还应该考虑人员、流程和业务需求。</li>
+<li>基于领域专业知识<br>  这类假设依赖威胁猎人的专业知识。猎人产生的假设取决于他们自己的背景和经历。<br>  猎人过去进行的猎杀也将影响所做的假设。在这里文档流程对于记录已学到的经验教训并与团队中其他成员分享这些经验教训尤为重要。<br>  有经验的猎人必须非常清楚地意识到认知偏见。尽量避免不良的分析习惯，并采用预防偏见的方法。</li>
+</ul>
+<p><br><br><br></p>
+<h1 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h1><p>为了进行有效的威胁猎杀，需要清楚几个基本概念。威胁猎杀的主要数据源是系统日志和网络日志。<br>本章将介绍操作系统基础知识、网络基础知识以及威胁猎杀平台的主要数据源。具体来说，本章将介绍以下主题</p>
+<ul>
+<li>了解已收集的数据。</li>
+<li>Windows本机工具。</li>
+<li>数据源。</li>
+</ul>
+<h2 id="Windows本机工具"><a href="#Windows本机工具" class="headerlink" title="Windows本机工具"></a>Windows本机工具</h2><h3 id="Windows-Event-Viewer"><a href="#Windows-Event-Viewer" class="headerlink" title="Windows Event Viewer"></a>Windows Event Viewer</h3><p>Windows Event Viewer是一种Windows本机工具，你可以在其中找到有关Windows应用程序事件和系统上发生的其他事件的详细信息。<br>它在系统启动时自动启动。有些私有应用程序利用Windows Event Log功能，而有些则生成自己的日志。<br>它既是排除操作系统和应用程序错误的好工具，也是执行威胁猎杀的好工具。<br>你可以通过Control Panel\System and Security\Administrative Tools并选择应用程序来访问Event Viewer。<br>你还可以在主搜索（home search）中输入Event Viewer，或者打开Run对话框（&lt;Windows+R&gt;）并输入eventvwr。</p>
+<p>两个主要日志类别是Windows Logs和Applications and Services Logs，<br>在Windows Logs中，有五种不同的日志类型：</p>
+<ul>
+<li>Application：来自本地计算机上托管的应用程序的应用程序日志。</li>
+<li>Security：与账户、登录、审核和其他安全系统事件相关的安全日志。</li>
+<li>Setup：包含与Windows更新和升级相关信息的安装日志。</li>
+<li>System：操作系统生成的消息的系统日志。</li>
+<li>Forwarded Events：转发从其他计算机发送到中央订阅者消息的事件日志。如果设备未作为中央订阅者工作，则此部分为空。</li>
+</ul>
+<p>在Applications and Services Logs中,我们可以看到一个Microsoft文件夹,其中有一个Windows文件夹，它包含按字母顺序排列的完整应用程序列表。我们可以选择其中的应用程序，查看它们的日志。<br>其中包括Windows Defender、Sysmon、Windows Firewall和WMI等。</p>
+<p>Event Viewer按五个等级对事件进行分类：严重、错误、警告、信息和详细。<br>Details选项卡为该事件提供了两种可能的视图</p>
+<p><img src="/2022/08/12/attack/image-03.png" width="900px"></p>
+<h3 id="WMI"><a href="#WMI" class="headerlink" title="WMI"></a>WMI</h3><p>Windows Management Instrumentation（WMI）是“在基于Windows的操作系统上管理数据和操作的基础结构”。<br>使用WMI可以对来自其他Windows系统的管理数据进行本地和远程访问。<br>远程连接通过分布式组件对象模型（Distributed Component Object Model，DCOM）或Windows远程管理（Windows Remote Management，WinRM）建立。</p>
+<p>WMI如此强大，以至于一些APT开始将其用作在失陷系统上执行命令、收集信息、实现持久化，甚至在网络上横向移动的手段。<br>在MITRE ATT&amp;CK框架中，它被定义为一种技术<code>（https://attack.mitre.org/techniques/T1047/）</code>。<br>使用Windows Event Viewer可以跟踪WMI活动，但要监控WMI活动细节，建议使用Windows事件跟踪（Event Tracing for Windows，ETW）工具。</p>
+<h3 id="ETW"><a href="#ETW" class="headerlink" title="ETW"></a>ETW</h3><p>ETW是Windows的一种调试和诊断功能，它提供了<code>“一种高效的内核级跟踪工具，通过它可以将内核或应用程序定义的事件记录到日志文件中。”</code><br>ETW可在不重新启动计算机或应用程序的情况下跟踪生产环境中的事件。</p>
+<p>根据Microsoft的说法，事件跟踪API分为三个组件：</p>
+<ul>
+<li>事件控制器（启动和停止跟踪会话并启用提供者）。</li>
+<li>事件提供者。</li>
+<li>事件消费者。</li>
+</ul>
+<p><img src="/2022/08/12/attack/image-08.jpg" width="700px"></p>
+<p>除了上述调试和诊断功能之外，ETW还提供了有助于检测和调查威胁行为体活动的指标和数据，不过将这些指标和数据收集起来并非易事。</p>
+<p>Ruben Boonen开发了一款名为SilkETW的工具，它有助于完成这个过程，并允许下载JSON格式的ETW数据。<br>这种功能使得将提取的数据与第三方SIEM（如Elasticsearch和Splunk）集成变得非常容易。<br>此外JSON还可以转换并导出到PowerShell中，同时将Yara Rules与SilkETW结合使用可以深化研究。</p>
+<p>你可以访问SilkETW的官方GitHub资源库<code>（https://github.com/fireeye/SilkETW）</code>下载和阅读更多关于SilkETW的信息</p>
+<p><br><br><br></p>
+<h2 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h2><p>我们主要将数据源分为三种类型：终端数据源、网络数据源和安全数据源。</p>
+<p>每个数据源都提供活动日志。日志文件记录特定环境中或软件执行期间发生的事件。日志由条目组成，每个条目对应一个事件。<br>虽然在监控和进行取证分析时，日志是非常有用的信息来源，但处理它们时涉及处理关于不同格式和存储容量的一整套问题。<br>Karen Kent和Murugiah Souppaya撰写的Guide to Computer Security Log Management（<code>https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-92.pdf</code>）对最常见的问题以及如何解决这些问题提供了一个很好的见解。</p>
+<p>以下各小节中的大多数示例都收集自Windows Event Log Viewer。<br>如果你在阅读本节时打开Event Log Viewer并尝试查找类似的示例，这将是一个很好的实践。</p>
+<h3 id="终端数据"><a href="#终端数据" class="headerlink" title="终端数据"></a>终端数据</h3><p>当使用术语“终端”时，我们将其理解为处于网络“终点”的设备。<br>通常这个术语用来指计算机（包括笔记本电脑和台式机）和移动设备，但也可以指服务器或物联网设备。</p>
+<h4 id="系统日志"><a href="#系统日志" class="headerlink" title="系统日志"></a>系统日志</h4><p>系统日志是指记录操作系统组件生成的系统事件的日志文件，其中包含的信息可能有所不同，从系统更改、错误和更新到设备更改、启动服务、关闭等皆可能有。</p>
+<h4 id="应用程序日志"><a href="#应用程序日志" class="headerlink" title="应用程序日志"></a>应用程序日志</h4><p>应用程序是为帮助用户执行某项活动（例如编程、写作、编辑照片等）而设计的计算机软件。<br>应用程序的类型和应用程序开发人员有很多。因此应用程序日志可能会有很大差异，不仅在格式方面而且在记录的信息类型方面也是如此。<br>有些应用程序拥有自己的日志记录系统，有些应用程序则会利用操作系统的日志记录功能。<br>Guide to Computer Security Log Management确定了通常包含的四种类型的日志信息：</p>
+<ul>
+<li>使用信息（例如，事件何时发生、事件是什么、文件大小等）。</li>
+<li>客户端请求和服务器响应（例如，当浏览器客户端向Web服务器发出HTTPS请求的时间）。</li>
+<li>账户信息（如身份验证尝试或执行用户权限、用户账户更改等）。</li>
+<li>操作活动（如关闭、配置变更、错误和警告）。</li>
+</ul>
+<h4 id="PowerShell日志"><a href="#PowerShell日志" class="headerlink" title="PowerShell日志"></a>PowerShell日志</h4><p>越来越多的恶意软件使用PowerShell在受害者的计算机上执行命令。<br>PowerShell是一种非常强大的Windows命令环境和脚本语言。<br>如今Windows 10默认激活PowerShell增强的日志记录功能，但以前的Windows版本必须通过软件更新手动激活该功能。<br>Windows Server 2012和以前版本的用户也面临同样的问题。这个增强功能使我们能够查看PowerShell执行了哪些命令和脚本</p>
+<h4 id="Sysmon日志"><a href="#Sysmon日志" class="headerlink" title="Sysmon日志"></a>Sysmon日志</h4><p>如果近来一直在关注威胁猎杀的消息，你可能已经看到Sysmon似乎是每个人的最爱。<br>系统监控（System Monitoring，Sysmon）是Mark Russinovich的Sysinternals套件（<code>https://docs.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite</code>）的一部分。<br>之所以获得如此多的关注，是因为事实证明，这是一种在不影响系统性能的情况下实现终端可见性的好方法。</p>
+<p>Sysmon是一项系统服务和设备驱动程序，用于监控系统活动并将其记录到Windows事件日志中。<br>根据实际情况可以调整Sysmon配置以更好地满足数据收集需求，因为它提供了可以包括和排除不感兴趣项的XML规则。<br>每次Sysmon升级时可用筛选器选项都会增加。Sysmon提供有关进程创建、文件创建和修改、网络连接、驱动程序或DLL加载的信息，以及其他有趣的功能，例如为系统上运行的所有二进制文件生成散列值。</p>
+<h4 id="文件和注册表完整性监控"><a href="#文件和注册表完整性监控" class="headerlink" title="文件和注册表完整性监控"></a>文件和注册表完整性监控</h4><p>文件和注册表完整性监控（File and Registry Integrity Monitoring，FIM）是指通过将文件或注册表与基线进行比较来尝试检测文件或注册表更改的做法。<br>这通常通过第三方安全解决方案来实现，当某些文件、目录或注册表变更时，这些解决方案会向用户发出告警。<br>如果处理不当，作为安全控制机制的FIM可能会适得其反，而产生大量“噪音”，因为操作系统中的文件可以有一定程度的变更。<br>因此有必要为这些变更提供必要的环境信息以使FIM更加有效。</p>
+<h4 id="文件服务器"><a href="#文件服务器" class="headerlink" title="文件服务器"></a>文件服务器</h4><p>审核文件服务器是跟踪访问组织文件的对象的有效机制。<br>Windows Server自带一个名为“审核对象访问”（Audit Object Access）的内置审核策略。<br>确定要监控的文件或目录后，可以通过Windows Event Viewer查看对这些文件或目录的访问。<br>如果你或你的组织是网络攻击的受害者，并且需要跟踪可能已被访问、更改甚至被盗的文件，则此功能特别有用。</p>
+<h3 id="网络数据"><a href="#网络数据" class="headerlink" title="网络数据"></a>网络数据</h3><h4 id="防火墙日志"><a href="#防火墙日志" class="headerlink" title="防火墙日志"></a>防火墙日志</h4><p>防火墙是监控传入和传出流量的网络安全系统。防火墙的有效性通常取决于告诉它要阻止哪些连接的规则。<br>网络防火墙在两个或多个网络之间工作，而基于主机的防火墙仅在主机上运行。<br>防火墙将检查连接是向哪个地址发出的，来自哪里以及从哪个端口发出。</p>
+<p>使用一套配置好的规则，防火墙将确定该连接是否可以信任，或者是否会阻止它。<br>防火墙日志的一个重要功能是，可以使用它们来识别网络中的恶意活动，检查是否发生了不应该发生的出站连接，甚至检查是否正在尝试访问防火墙或组织内的其他重要系统。<br>防火墙日志还可以帮助IR团队了解安全威胁是如何绕过防火墙的。</p>
+<p>默认情况下，Microsoft的内置Windows防火墙不记录任何流量。<br>要激活它需要访问Windows Firewall Properties窗口，并在提示窗口中访问Private Profile选项卡，然后单击Logging部分的Customize按钮,你可以在其中更改默认值，以及记录丢弃的数据包、成功的连接以及日志文件的位置和名称</p>
+<p><img src="/2022/08/12/attack/image-04.png" width="1300px"></p>
+<h4 id="DNS日志"><a href="#DNS日志" class="headerlink" title="DNS日志"></a>DNS日志</h4><p>DNS协议是大多数其他网络服务功能的实际依赖项。因为它必须可用，所以攻击者常用它来部署恶意软件、发送在受害者计算机上执行的命令或窃取信息。<br>这是记录和监控DNS流量如此重要的原因之一<br>可以从Event Log Viewer Microsoft→Windows→DNS Client Events→Operation激活Windows DNS日志记录</p>
+<h3 id="安全数据"><a href="#安全数据" class="headerlink" title="安全数据"></a>安全数据</h3><p>本地安全授权子系统服务（Local Security Authority Subsystem Service，LSASS）将事件写入Security Log窗口，该窗口可以从Windows Event Viewer访问，它主要用于故障排除和调查未经授权的活动。<br>该日志及其审核策略是那些试图隐藏其恶意行为的威胁行为体的主要目标。</p>
+<h4 id="活动目录日志"><a href="#活动目录日志" class="headerlink" title="活动目录日志"></a>活动目录日志</h4><p>所有Windows Server操作系统均包含活动目录（Active Directory，AD），它是Windows域网络的域控制器。在Windows域网络中，所有账户和设备都在域控制器的数据库中注册。<br>域控制器是运行活动目录的服务器（或服务器组），它管理客户端对目录中信息的访问。<br>域控制器负责对网络中的所有设备和用户进行身份验证，安装软件更新以及实施安全策略。<br>轻型目录访问协议（Lightweight Directory Access Protocol，LDAP）是控制AD域服务中的互联网目录访问的协议。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">威胁行为体一般通过滥用活动目录来规避防御机制，提升权限或获得凭据访问权限。</span><br><span class="line">通过记录活动目录的活动，可以更好地了解谁做了什么。</span><br><span class="line">如果配置正确（https://community.spiceworks.com/how_to/166859-view-ad-logs-in-eventviewer）</span><br><span class="line">你可以在Windows Event Log Viewer中查看活动目录活动。</span><br></pre></td></tr></table></figure>
+<h4 id="Kerberos日志"><a href="#Kerberos日志" class="headerlink" title="Kerberos日志"></a>Kerberos日志</h4><p>在Windows中，Kerberos协议也由AD提供，当提供凭据时，Windows将在直接颁发Kerberos身份验证票证之前在LDAP目录中检查凭据。<br>在Linux系统中，这一“预身份验证”步骤被省略。<br>Kerberos协议是单点登录协议的变体，允许用户使用用户名和密码登录，从而访问多个相关系统。<br>Kerberos生成加密的身份验证票证，该票证将用于授予用户对系统的访问权限。<br>Kerberos身份验证功能将检查客户端是否有能力解密与票据一起发送的会话密钥。<br>如果是合法的访问尝试，客户端将获得会话密钥并被授予对系统的访问权限。然后客户端可以保存票证以便访问系统内的其他应用程序，而无须再次登录。</p>
+<p>在Windows中可以通过Windows Event Log Viewer查看Kerberos日志</p>
+<h4 id="IAM"><a href="#IAM" class="headerlink" title="IAM"></a>IAM</h4><p>IAM的目标是确保每个用户都可以访问正确的资产，或者在需要时将其访问权限从这些资产中删除，旨在设置角色和访问权限，以防止用户拥有超越其在组织中角色所需的访问权限。</p>
+<p>部署IAM系统是为了帮助修改和监控这些权限，实施恰当的IAM可以成为防止凭据泄露的保障，既可以减弱泄露后可能产生的影响，又可以帮助识别用户的权限变化。加强对用户访问的控制意味着内部和外部违规行为的影响较小。<br>IAM系统上发生的事件也应审核和监控。</p>
+<h4 id="特权访问管理"><a href="#特权访问管理" class="headerlink" title="特权访问管理"></a>特权访问管理</h4><p>特权访问管理（Privileged Access Management，PAM）是对组织环境中的账户、应用程序和系统进行特权访问控制的称呼。<br>在计算机系统中，特权账户有权绕过安全机制，从根本上更改系统的程序和配置。<br>攻击者总是试图提升其在系统的权限，以获得并保持对系统的控制。</p>
+<p>PAM和IAM有助于提供对用户和访问的可见性和监控。<br>正确监控特权用户和进程可以帮助我们检测系统内的恶意活动。<br>此外对于需要遵守SOX或HIPAA等国家或地区法规的组织来说，这种类型的监控势在必行。</p>
+<h4 id="入侵检测与防御"><a href="#入侵检测与防御" class="headerlink" title="入侵检测与防御"></a>入侵检测与防御</h4><p>有许多提供IDS和IPS安全解决方案的供应商，每个供应商的日志事件都会有所不同。<br>Snort是一个非常流行的开源多平台入侵检测系统解决方案，可以从<code>https://www.snort.org/</code>免费下载。</p>
+<p>另外两个非常流行的入侵检测系统是Suricata和Bro/Zeek。两者都以各自的方式提供额外的功能。<br>Suricata（<code>https://suricata-ids.org/</code>）是多线程的，可以捕获恶意软件样本、记录证书、HTTP和DNS请求等。<br>Bro/Zeek（<code>https://www.zeek.org/</code>）将捕获的流量转换为可通过事件驱动脚本语言进行研究的事件。</p>
+<p><br><br><br><br><br></p>
+<h1 id="开始攻击"><a href="#开始攻击" class="headerlink" title="开始攻击"></a>开始攻击</h1><h2 id="调查威胁情报"><a href="#调查威胁情报" class="headerlink" title="调查威胁情报"></a>调查威胁情报</h2><p>根据组织结构和资源，你可能已经有一些处理过的威胁情报报告。<br>但是无论是因为没有专门的情报团队，还是因为想自己进行一些调查，你都需要知道如何使用MITRE ATT&amp;CK框架以便制作自己的情报报告。</p>
+<h3 id="ATT-amp-CK框架"><a href="#ATT-amp-CK框架" class="headerlink" title="ATT&amp;CK框架"></a>ATT&amp;CK框架</h3><p>ATT&amp;CK框架是一个描述性模型，用于标记和研究威胁行为体为了在企业环境、云环境、智能手机甚至工业控制系统中站稳脚跟和操作而能够执行的活动。</p>
+<p>ATT&amp;CK框架背后的魔力在于它为网络安全社区提供了一个通用的分类法来描述对手行为。<br>它可以作为一种共同语言，攻击性和防御性研究人员都可以使用它来更好地理解对方，并与该领域的非专业人员进行交流。<br>最重要的是你不仅可以在你认为合适的时候使用它，而且还可以在它的基础上自己构建一套战术、技术和程序（TTP）。<br>稍后你可以按照ATT&amp;CK团队的指南（<code>https://attack.mitre.org/resources/contribute/</code>）与其共同分享。<br>现在我们通过它使用的14种战术来详细地介绍一下这个框架，然后再介绍如何通过ATT&amp;CK矩阵进行浏览。</p>
+<h4 id="战术、技术、子技术和程序"><a href="#战术、技术、子技术和程序" class="headerlink" title="战术、技术、子技术和程序"></a>战术、技术、子技术和程序</h4><p>ATT&amp;CK矩阵包含14种战术，分别涵盖了不同的技术。<br>每种战术都代表一个战术目标，也就是威胁行为体表现出特定行为的原因。</p>
+<ul>
+<li>侦察：描述的是尽可能收集关于对手攻击目标的信息的行为。</li>
+<li>资源开发：试图覆盖评估对手所得资源的过程，可能是购买、开发，甚至是窃取的资源，这些资源将被用来支持对手的行动。</li>
+</ul>
+<p>上述两种战术是ATT&amp;CK团队最近添加的，该团队将Pre-ATT&amp;CK矩阵与企业矩阵融合在了一起。这两种战术都涉及对手在攻击准备时可以执行的步骤，攻击者将利用这些步骤在未来阶段帮助自己。本书将重点关注其他12种战术，这些战术都与对手侵入受害者的环境后看到的行为有关。</p>
+<ul>
+<li>初始访问：描述威胁行为体如何使用不同的入口向量在网络中站稳脚跟。我们可以认为这将是威胁行为体进入受害者环境的第一步。</li>
+<li>执行：在受害者的环境中运行恶意代码的行为，通常用于实现其他目标，例如提升权限或渗出信息。</li>
+<li>持久化：使用它，即使在系统关闭或重启之后，威胁行为体也能够留在系统内部。一旦威胁行为体渗透到系统中，实现持久化是其主要目标之一。</li>
+<li>权限提升：威胁行为体通过非特权账户进入企业网络后，为了执行进一步操作，行为体必须提高访问权限等级。</li>
+<li>防御规避：指为避免被受害者的防御系统发现而采取的所有行动。这可能涉及广泛的技术，包括安装和卸载软件或尝试从系统中删除痕迹。</li>
+<li>凭据访问：有时，威胁行为体会试图窃取合法用户凭据，以便访问系统，创建更多账户或将其活动伪装成合法用户执行的合法活动。</li>
+<li>发现：被用来对威胁行为体为获得关于受害者环境构成的知识所做的所有活动进行分组。</li>
+<li>横向移动：为实现横向移动，威胁行为体通常必须了解网络和系统的配置方式。之后，威胁行为体将尝试从一个系统转向另一个系统，直到其到达目标。</li>
+<li>收集：指从受害者环境中收集信息的行为，以便以后将其渗出。</li>
+<li>命令与控制：描述任何涉及威胁行为体与其控制下的系统进行通信的方法。</li>
+<li>渗出：指窃取信息，同时试图保持不被发现的行为。可能包括加密、不同类型的渗出介质和协议等防御方法。</li>
+<li>影响：所有阻止受害者访问其系统的尝试，包括操控或破坏系统，都属于这一战术。</li>
+</ul>
+<p><br></p>
+<h3 id="ATT-amp-CK矩阵"><a href="#ATT-amp-CK矩阵" class="headerlink" title="ATT&amp;CK矩阵"></a>ATT&amp;CK矩阵</h3><p>现在我们来看以交互方式使用ATT&amp;CK矩阵的最佳工具之一：ATT&amp;CK Navigator。</p>
+<p><img src="/2022/08/12/attack/image-09.jpg" width="1300px"></p>
+<blockquote>
+<p>子技术示例（ATT&amp;CK矩阵，2020年4月7日）</p>
+</blockquote>
+<p><img src="/2022/08/12/attack/image-10.jpg" width="500px"></p>
+<p><br></p>
+<h3 id="利用ATT-amp-CK进行映射"><a href="#利用ATT-amp-CK进行映射" class="headerlink" title="利用ATT&amp;CK进行映射"></a>利用ATT&amp;CK进行映射</h3><p>Formbook是一个信息窃取工具，早在2016年就出现了，用户ng-Coder在黑客论坛对其进行了扩散。<br>它的代码是通过在C代码（ASM C）中内联汇编语言指令编写的，已经应用于几个对美国和韩国颇有影响的行动中，也与一些威胁行为体（比如SWEED和Cobalt）有关。</p>
+<p>本节将介绍如何使用ATT&amp;CK映射Formbook的信息窃取行为。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Formbook[1]是信息窃取程序……比键盘记录器更先进，因为它可以在信息到达安全服务器之前从Web数据表单获取授权和登录凭据，绕过HTTPS加密。</span><br><span class="line">即使受害者使用虚拟键盘、自动填充，或者通过复制、粘贴信息来填写表格，Formbook也是有效的。</span><br><span class="line">Formbook的作者确认它是“浏览器记录器软件”，也被称为表单抓取软件。</span><br><span class="line">Formbook提供了一个PHP面板，买家可以在其中跟踪受害者的信息，包括屏幕截图、密钥记录数据和被盗凭据。</span><br></pre></td></tr></table></figure>
+<p>我们把这些整理成一个列表，试着找出它们属于哪种ATT&amp;CK战术：</p>
+<ul>
+<li>窃取授权和登录凭据：凭据访问。</li>
+<li>键盘日志信息，即使受害者使用虚拟键盘，自动填充，或者复制、粘贴：收集。</li>
+<li>截图：收集。</li>
+</ul>
+<p>一旦确定了战术，接下来要做的就是查找哪种技术或子技术最能贴切地描述这种行为。<br>你可以对照ATT&amp;CK矩阵来查找。</p>
+<p>有两种可能有助于描述此行为的技术</p>
+<ul>
+<li>T1555——密码存储中的凭据（Credentials from Password Stores）——及其子技术T1555.003——Web浏览器中的凭据（Credentials from Web Browsers）</li>
+<li>T1056——输入捕获（Input Capture）——及其子技术T1056.001——键盘记录（Keylogging）。</li>
+</ul>
+<p>现在我们已经讨论了如何确定威胁行为体的行为和相关的ATT&amp;CK技术，接下来进行以下练习来测试一下自己吧！</p>
+<p><br></p>
+<h3 id="自我测试"><a href="#自我测试" class="headerlink" title="自我测试"></a>自我测试</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Formbook[1]是信息窃取程序……比键盘记录器更先进，因为它可以在信息到达安全服务器之前从Web数据表单获取授权和登录凭据，绕过HTTPS加密。</span><br><span class="line">即使受害者使用虚拟键盘、自动填充，或者通过复制、粘贴信息来填写表格，Formbook也是有效的。</span><br><span class="line">Formbook的作者确认它是“浏览器记录器软件”，也被称为表单抓取软件。</span><br><span class="line">Formbook提供了一个PHP面板，买家可以在其中跟踪受害者的信息，包括屏幕截图、密钥记录数据和被盗凭据。</span><br></pre></td></tr></table></figure>
+<p>对照ATT&amp;CK矩阵，找出相应的战术、技术和子技术。<br>表单抓取器将动态链接库（Dynamic Link Library，DLL）注入浏览器，并监控WININET.DLL中对HttpSendRequest API的调用，以便在加密之前拦截数据并在转发数据之前将所有请求发送到自己的代码。<br>Andromeda（又称Gamarue）、Tinba和Weyland-Yutani BOT是一些使用此技术的恶意软件家族。</p>
+<p>据用户ng-Coder介绍，Formbook有以下特点：</p>
+<ul>
+<li>ASM/C编码（X86_X64）。</li>
+<li>启动（隐藏）。</li>
+<li>完全PE注入（无DLL、无释放、x86和x64）。</li>
+<li>Ring3套件。</li>
+<li>二进制文件是“热气球可执行文件（Balloon Executable[1]）（MPIE+MEE）”类型。</li>
+<li>不使用可疑的Windows API。</li>
+<li>没有盲钩，所有钩子都是线程安全的，包括x64，所以不太可能崩溃。</li>
+<li>与控制面板的所有通信都加密。</li>
+<li>安装管理器。</li>
+<li>文件浏览（FB Connect）。</li>
+</ul>
+<p>Formbook充当僵尸网络，感染Web面板中显示的受害者，以便管理从其获取的信息……<br>每个“僵尸”都可以从命令与控制服务器接收以下命令：</p>
+<ul>
+<li>下载并执行。</li>
+<li>更新。</li>
+<li>卸载。</li>
+<li>访问URL。</li>
+<li>清除cookie。</li>
+<li>重启系统。</li>
+<li>关闭系统。</li>
+<li>强制上传击键。</li>
+<li>截图。</li>
+<li>FB Connect（文件浏览）。</li>
+<li>从FB Connect下载并执行。</li>
+</ul>
+<p>在下面的列表中，你会发现我为此报告找到的所有TTP都按出现顺序排列——即使它们会重复出现。此外，映射技术存在争议时，我会添加一个<code>“*”</code>号。<br>你可以随时进一步调查Formbook恶意软件，以澄清那些项。以下是映射的TTP：</p>
+<ul>
+<li>1）防御规避和权限提升：T1055.001——进程注入：动态链接库注入。</li>
+<li>2）收集和凭据访问：T1056.004——输入捕获：凭据API挂钩。</li>
+<li>3）防御规避和权限提升：T1055.002——进程注入：PE（Portable Executable）注入。</li>
+<li>4）收集和凭据访问：T1056.004——输入捕获：凭据API挂钩*。</li>
+<li>a）参考行：“没有盲钩，所有钩子都是线程安全的，包括x64，所以不太可能崩溃。”</li>
+<li>5）命令与控制：T1573——加密通道。</li>
+<li>6）发现：T1083——文件目录发现。</li>
+<li>7）执行：T1059——命令与脚本解释器*。</li>
+<li>a）参考行：“从C&amp;C服务器接收以下命令。”没有明确说明这些命令是如何执行的。</li>
+<li>8）防御规避：T1551——删除主机上危害指标。</li>
+<li>9）命令与控制：T1102——Web服务*。</li>
+<li>a）参考要点：“访问URL”。如果调用的URL是C2，则可以应用此技术。</li>
+<li>10）影响：T1529——系统关机/重启*。</li>
+<li>a）虽然Formbook能够关闭和重新启动系统，但此功能可能不是用于制造影响，而是出于其他原因。</li>
+<li>11）收集：T1513——屏幕捕获。</li>
+</ul>
+<p>接下来的将介绍如何计划和执行猎杀，若你熟悉ATT&amp;CK框架，则学起来会更容易</p>
+<p><br><br><br></p>
+<h2 id="使用数据"><a href="#使用数据" class="headerlink" title="使用数据"></a>使用数据</h2><p>介绍两个有助于理解数据源的数据模型：OSSEM数据字典和MITRE CAR。<br>然后将介绍Sigma规则，Sigma规则是一种可应用于任何日志文件的开放签名格式，同时还可用于描述和共享检测结果。</p>
+<ul>
+<li>安装有Python 3<code>（https://www.python.org/downloads/）</code>的计算机。</li>
+<li>访问MITRE ATT&amp;CK框架<code>（http://attack.mitre.org/）</code>。</li>
+<li>访问OSSEM项目<code>（https://bit.ly/2IWXdYx）</code>。</li>
+<li>访问MITRE CAR<code>（https://car.mitre.org/）</code>。</li>
+</ul>
+<h3 id="使用OSSEM数据字典"><a href="#使用OSSEM数据字典" class="headerlink" title="使用OSSEM数据字典"></a>使用OSSEM数据字典</h3><p>在数据来源中，我们讨论了一些可以收集数据的数据源，同时指出数据日志源通常可以分为三种类型：终端数据源、网络数据源和安全数据源。</p>
+<p>开源安全事件元数据（Open Source Security Events Metadata，OSSEM）项目为安全事件提供了一个开源的标准化模型。</p>
+<p>这些事件以字典的形式被记录，以方便你将数据源与要使用的数据分析联系起来。<br>这将帮助你检测环境中的对手，无论是Windows、macOS还是Linux环境。<br>数据字典将赋予事件具体的含义，以帮助我们理解它们。将解析数据的方式标准化，不仅可以让我们查询和关联数据，而且可以让我们共享检测结果。</p>
+<p>OSSEM项目分为四类</p>
+<ul>
+<li>ATT&amp;CK数据源：数据源的描述详见MITRE ATT&amp;CK企业矩阵。</li>
+<li>公共信息模型（Common Information Model，CIM）：这为我们提供了解析安全事件的标准方法。在这里，你可以找到在安全事件中可能出现的每个实体的模型或模板。</li>
+<li>数据字典：这些文件包含根据相关操作系统组织的有关安全事件的特定信息。每个字典代表一个事件日志。数据字典的最终目标是避免使用来自不同数据源集的数据时可能出现的歧义。</li>
+<li>数据检测模型：该模型的目标是建立ATT&amp;CK与次级数据源之间的关系，使之能够与威胁行为体技术相关联。</li>
+</ul>
+<p>OSSEM真正有用的组件之一是数据字典部分，它旨在为通过终端检测与响应（Endpoint Detection and Response，EDR）等安全监控工具可获得的事件提供文档。</p>
+<p>我们通过一个使用MITRE ATT&amp;CK技术T1574.002——DLL侧载（Dll Side-Loading）——的小例子来看一下这是如何工作的。<br>考虑一个.exe文件形式的恶意工件，一旦执行该文件，将加载恶意动态链接库（DLL）。<br>只需查看ATT&amp;CK框架，就可以看到该技术关联了三种类型的数据源：加载的DLL（Loaded DLLs）、进程监控（Process monitoring）和进程使用网络情况（Process use of network）</p>
+<p>如图所示。由于执行了.exe文件，因此会创建一个进程。尽管在撰写本书期间，项目发生了重大变化，但如果检查OSSEM检测数据模型<code>（http://bit.ly/3rvjhvj）</code>并搜索这些数据源，我们仍将发现类似于图所示的内容。</p>
+<blockquote>
+<p>MITRE ATT&amp;CK T1574.002的DLL侧载记分卡</p>
+</blockquote>
+<p><img src="/2022/08/12/attack/image-12.jpg" width="300px"></p>
+<blockquote>
+<p>检测数据模型与进程对象关系</p>
+</blockquote>
+<p><img src="/2022/08/12/attack/image-13.jpg" width="900px"></p>
+<p>在这里，我们可以看到进程创建与Sysmon EventID 7和WMI EventID 4688相关，而加载的DLL与Sysmon EventID 7相关。<br>我们也可以检查进程使用网络情况，但出于本例的考虑，我们将假设DLL包含在恶意软件中。</p>
+<h3 id="使用MITRE-CAR数据字典"><a href="#使用MITRE-CAR数据字典" class="headerlink" title="使用MITRE CAR数据字典"></a>使用MITRE CAR数据字典</h3><p>由MITRE网络分析知识库（MITRE Cyber Analytics Repository，MITRE CAR）（<code>https://car.mitre.org/</code>）实现的数据模型的灵感来自STIX的网络可观察表达式<code>（Cyber Observable eXpression，CybOXTM）</code>，是一个“可以从基于主机或基于网络的视角监控的对象的组织”。<br>每个对象都由可能发生在其上的操作和传感器可以捕获的可观察属性（称为字段）定义。</p>
+<h3 id="使用Sigma规则"><a href="#使用Sigma规则" class="headerlink" title="使用Sigma规则"></a>使用Sigma规则</h3><p>简单地说，Sigma规则就是日志文件的YARA规则，由Florian Roth（<code>https://github.com/Neo23x0/sigma</code>）创建。</p>
+<p>Sigma是一种开放签名格式，可应用于任何日志文件，同时还可用于描述和共享检测结果。<br>自2007年首次提出以来，Sigma规则已被网络安全社区广泛采用，并可转换为多种SIEM格式。<br>如果熟悉SIEM，就可能知道每个供应商都会使用自己的专有格式。再加上前面提到的数据源之间的差异，你就会意识到，拥有一种共享检测结果的公共语言非常有用，可以解决很多问题。但是如何使用呢？<br>首先我们创建Sigma规则文件，这是一个通用的基于YAML的格式化文件。<br>然后填写完规则的所有信息，我们就以两种不同的方式转换文件：一种是针对SIEM产品所需的特定格式；另一种是针对环境正在使用的字段的特定映射。</p>
+<p>第一个文件由社区编写，而其他文件则从可用的配置文件列表（/sigma/tool/config）中收集。你也可以自己设置规则，以确保规则转换为兼容的映射。</p>
+<p>Sigma规则基本上分为四个部分</p>
+<ul>
+<li>元数据（Metadata）：标题（title）后的所有可选信息。</li>
+<li>日志源（Log source）：应检测的日志数据。</li>
+<li>检测（Detection）：搜索器的标识符。</li>
+<li>条件（Condition）：定义触发告警必须满足的要求的逻辑表达式。</li>
+</ul>
+<p><br><br><br></p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2022/08/12/attack/';
+        this.page.title = 'ATT&amp;CK笔记';
+        this.page.identifier = '2022/08/12/attack/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
