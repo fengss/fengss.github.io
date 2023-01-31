@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Spectrum-JvmTI探针 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Spectrum相关详解笔记  
+运行效果命令
+运行结果123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go/Rust</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">系统内核</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">威胁追踪</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">数据库</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#运行效果"><span class="toc-number">1.</span> <span class="toc-text">运行效果</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#命令"><span class="toc-number">1.1.</span> <span class="toc-text">命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行结果"><span class="toc-number">1.2.</span> <span class="toc-text">运行结果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#源码流程"><span class="toc-number">2.</span> <span class="toc-text">源码流程</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Spectrum-JvmTI探针
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2022/08/22/Spectrum/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2022-08-22T08:58:38.000Z" itemprop="datePublished">2022-08-22</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Spectrum相关详解笔记<br><a id="more"></a>  </p>
+<h1 id="运行效果"><a href="#运行效果" class="headerlink" title="运行效果"></a>运行效果</h1><h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p><img src="/2022/08/22/Spectrum/image-01.png" width="700px"></p>
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br></pre></td><td class="code"><pre><span class="line">2022-08-22 17:04:10,066 [main] WARN  [com.example.demo.DemoApplication] DemoApplication.java:19 - asd</span><br><span class="line">jvas-v1.0.0: &lt;&lt;&lt; on library loading, lib_ref:0 &lt;&lt;&lt;</span><br><span class="line">libcTask initiate ok</span><br><span class="line">XML document correct, ./conf/JVASconf.xml</span><br><span class="line">RUN:&#123;</span><br><span class="line">	NONTRIVIAL:Auto,</span><br><span class="line">	MODE:&#123;behavior:IAST, independent:False, silent:False, quiet:True, distribute:False, auto:True&#125;</span><br><span class="line">	JAVA:&#123;classpath:, libpath:/usr/local/lib/&#125;</span><br><span class="line">	SENTRY-LIBPATH:&#123;jvas:/usr/local/lib/libSentry.so, jvas_swi:/usr/local/lib/libSentry.so&#125;</span><br><span class="line">&#125;</span><br><span class="line">ESSENTIAL-JAVA-CLASSES:&#123;</span><br><span class="line">	package:jsentry/, </span><br><span class="line">	class_count:3, </span><br><span class="line">	classes:[</span><br><span class="line">		&#123;name:jvas_swi, must:True, sabi:True, main:True, define-if-possible:True&#125;,</span><br><span class="line">		&#123;name:jvas_swi$jvas_init, must:True, sabi:False, main:False, define-if-possible:True&#125;,</span><br><span class="line">		&#123;name:sabi, must:True, sabi:False, main:False, define-if-possible:True&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br><span class="line">CLASS-LOADER-SEARCH:&#123;JAR_COUNT:1, JAR:[</span><br><span class="line">	&#123;name:jsentry.jar, bootstrap:False, system:False&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br><span class="line">CLASS-TRANSFORM:&#123;preload:True, define-home:"conf/tc/"&#125;</span><br><span class="line">jvas-v1.0.0: daemon task 31389 enter</span><br><span class="line">jvas-v1.0.0: try to establish necessary JVM environments</span><br><span class="line">jvas-v1.0.0: be loaded successfully</span><br><span class="line">JVMTI Capabilities&#123;</span><br><span class="line">	can_tag_objects=1;</span><br><span class="line">	can_generate_field_modification_events=0;</span><br><span class="line">	can_generate_field_access_events=0;</span><br><span class="line">	can_get_bytecodes=1;</span><br><span class="line">	can_get_synthetic_attribute=1;</span><br><span class="line">	can_get_owned_monitor_info=0;</span><br><span class="line">	can_get_current_contended_monitor=0;</span><br><span class="line">	can_get_monitor_info=1;</span><br><span class="line">	can_pop_frame=0;</span><br><span class="line">	can_redefine_classes=1;</span><br><span class="line">	can_signal_thread=1;</span><br><span class="line">	can_get_source_file_name=1;</span><br><span class="line">	can_get_line_numbers=1;</span><br><span class="line">	can_get_source_debug_extension=0;</span><br><span class="line">	can_access_local_variables=0;</span><br><span class="line">	can_maintain_original_method_order=0;</span><br><span class="line">	can_generate_single_step_events=0;</span><br><span class="line">	can_generate_exception_events=0;</span><br><span class="line">	can_generate_frame_pop_events=0;</span><br><span class="line">	can_generate_breakpoint_events=0;</span><br><span class="line">	can_suspend=1;</span><br><span class="line">	can_redefine_any_class=1;</span><br><span class="line">	can_get_current_thread_cpu_time=1;</span><br><span class="line">	can_get_thread_cpu_time=1;</span><br><span class="line">	can_generate_method_entry_events=0;</span><br><span class="line">	can_generate_method_exit_events=0;</span><br><span class="line">	can_generate_all_class_hook_events=1;</span><br><span class="line">	can_generate_compiled_method_load_events=1;</span><br><span class="line">	can_generate_monitor_events=1;</span><br><span class="line">	can_generate_vm_object_alloc_events=1;</span><br><span class="line">	can_generate_native_method_bind_events=1;</span><br><span class="line">	can_generate_garbage_collection_events=1;</span><br><span class="line">	can_generate_object_free_events=1;</span><br><span class="line">	can_force_early_return=0;</span><br><span class="line">	can_get_owned_monitor_stack_depth_info=0;</span><br><span class="line">	can_get_constant_pool=1;</span><br><span class="line">	can_set_native_method_prefix=1;</span><br><span class="line">	can_retransform_classes=1;</span><br><span class="line">	can_retransform_any_class=1;</span><br><span class="line">	can_generate_resource_exhaustion_heap_events=1;</span><br><span class="line">	can_generate_resource_exhaustion_threads_events=1;</span><br><span class="line">&#125;</span><br><span class="line">jvas-v1.0.0: The JVM phase is "Live" now</span><br><span class="line">jvas-v1.0.0: add class loader search if possible</span><br><span class="line">System Property: java.vm.compressedOopsMode = 32-bit</span><br><span class="line">System Property: sun.java.launcher = SUN_STANDARD</span><br><span class="line">System Property: sun.java.command = autoVerify.war</span><br><span class="line">System Property: java.vm.vendor = Red Hat, Inc.</span><br><span class="line">System Property: java.vm.specification.version = 11</span><br><span class="line">System Property: java.vm.specification.vendor = Oracle Corporation</span><br><span class="line">System Property: java.vm.info = mixed mode, sharing</span><br><span class="line">System Property: jdk.boot.class.path.append = </span><br><span class="line">System Property: java.class.path = autoVerify.war</span><br><span class="line">System Property: java.home = /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64</span><br><span class="line">System Property: java.library.path = /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib/server:/usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib:/usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/../lib::/usr/local/lib:/usr/lib/jvm/jre-11-openjdk/lib/server/:/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib</span><br><span class="line">System Property: sun.boot.library.path = /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib</span><br><span class="line">System Property: jdk.debug = release</span><br><span class="line">System Property: java.vm.name = OpenJDK 64-Bit Server VM</span><br><span class="line">System Property: java.vm.version = 11.0.15+9-LTS</span><br><span class="line">System Property: java.vm.specification.name = Java Virtual Machine Specification</span><br><span class="line">jvas-v1.0.0: try to refer to or load necessary JAVA classes which serves for sentry</span><br><span class="line">jvas-v1.0.0: failed to locate the class "jsentry/sabi"</span><br><span class="line">Exception in thread "Thread-9" java.lang.NoClassDefFoundError: jsentry/sabi</span><br><span class="line">Caused by: java.lang.ClassNotFoundException: jsentry.sabi</span><br><span class="line">	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581)</span><br><span class="line">	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178)</span><br><span class="line">	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522)</span><br><span class="line">jvas-v1.0.0: succeed to define class 0x7f422c3e6f90 of "jsentry/sabi.class"</span><br><span class="line">jvas-v1.0.0: failed to locate the class "jsentry/jvas_swi$jvas_init"</span><br><span class="line">Exception in thread "Thread-9" java.lang.NoClassDefFoundError: jsentry/jvas_swi$jvas_init</span><br><span class="line">Caused by: java.lang.ClassNotFoundException: jsentry.jvas_swi$jvas_init</span><br><span class="line">	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581)</span><br><span class="line">	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178)</span><br><span class="line">	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522)</span><br><span class="line">jvas-v1.0.0: succeed to define class 0x7f422c3e6f98 of "jsentry/jvas_swi$jvas_init.class"</span><br><span class="line">jvas-v1.0.0: failed to locate the class "jsentry/jvas_swi"</span><br><span class="line">Exception in thread "Thread-9" java.lang.NoClassDefFoundError: jsentry/jvas_swi</span><br><span class="line">Caused by: java.lang.ClassNotFoundException: jsentry.jvas_swi</span><br><span class="line">	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581)</span><br><span class="line">	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178)</span><br><span class="line">	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522)</span><br><span class="line">jvas-v1.0.0: succeed to define class 0x7f422c3e6fa0 of "jsentry/jvas_swi.class"</span><br><span class="line">begin(JLjava/lang/String;Ljava/lang/String;)I =&gt; 0x7f422cf15b18</span><br><span class="line">end()V =&gt; 0x7f422cf15b20</span><br><span class="line">setmode(I)I =&gt; 0x7f422cf15b28</span><br><span class="line">getstatus()J =&gt; 0x7f422cf15b30</span><br><span class="line">jvas-v1.0.0: succeed to self checking in the class "jsentry/jvas_swi"</span><br><span class="line">XML document correct, conf/tc//TransformClasses.xml</span><br><span class="line">jvas-v1.0.0: succeed to load 1 definitions of class-transformation</span><br><span class="line">jvas-v1.0.0: succeed to setup JVM events handlers</span><br><span class="line">jvas-v1.0.0: JVAS_SWI_SetMode OK</span><br><span class="line">jvas-v1.0.0: succeed to enable sentry automatically</span><br><span class="line"></span><br><span class="line">        _____                 __                                ___    _____   _____</span><br><span class="line">  __/|_/ ___/____  ___  _____/ /________  ______ ___           / / |  / /   | / ___/</span><br><span class="line"> |    /\__ \/ __ \/ _ \/ ___/ __/ ___/ / / / __ `__ \     __  / /| | / / /| | \__ \ </span><br><span class="line">/_ __|___/ / /_/ /  __/ /__/ /_/ /  / /_/ / / / / / /    / /_/ / | |/ / ___ |___/ / </span><br><span class="line"> |/  /____/ .___/\___/\___/\__/_/   \__,_/_/ /_/ /_/     \____/  |___/_/  |_/____/  </span><br><span class="line">         /_/</span><br><span class="line"><span class="meta">&gt;</span>&gt;&gt; jvas-v1.0.0 Created by CXX &lt;&lt;&lt;</span><br><span class="line">jvas-v1.0.0: begin to re-transforming</span><br><span class="line">==================== In Thread jvas_init ====================</span><br><span class="line">jvas_swi: try to load "/usr/local/lib/libSentry.so"</span><br><span class="line">jvas-v1.0.0: JNI_OnLoad, agent reference count is 1</span><br><span class="line">jvas_jni_test: 65536, jvas_swi initiation complete finished with 10000</span><br><span class="line">jvas_swi: initiation finished</span><br><span class="line">jvas_tc_retransform_classes: can not find the class "com/example/demo/Print"</span><br><span class="line">jvas-v1.0.0: enter into daemon loop</span><br><span class="line">jvas-v1.0.0: sentry_library_initiate(4, 0x7f42365c0010)</span><br><span class="line">jvas_ehr_ClassFileLoadHook: (nil), 0x7f41bc000958, com/example/demo/Print, 0x7f41bc000960, 716, 0x7f4198000dc0, 0x7f41e44c09e0, 0x7f41e44c09f0</span><br><span class="line">jvas_tc_transform: succeed to transform the class file "com/example/demo/Print", with the stub "jsentry/__Print", new class file size=2238</span><br><span class="line">9999</span><br><span class="line">1661159051068 9986</span><br><span class="line">8888</span><br><span class="line">9999</span><br><span class="line">1661159056069 9986</span><br><span class="line">8888</span><br><span class="line">jvas daemon, 31389, 0x7f418f5c9f7a, 0</span><br><span class="line">9999</span><br><span class="line">1661159057069 9986</span><br><span class="line">8888</span><br><span class="line">jvas_ehr_ClassFileLoadHook: (nil), 0x7f41bc00c7f8, org/apache/catalina/webresources/Cache$EvictionOrder, 0x7f41bc00c800, 1375, 0x7f41bc6b6e70, 0x7f4214187570, 0x7f4214187580</span><br><span class="line">jvas_ehr_ClassFileLoadHook: (nil), 0x7f41bc00c7f8, org/apache/tomcat/PeriodicEventListener, 0x7f41bc00c800, 171, 0x7f41bc38d2a0, 0x7f42141875a0, 0x7f42141875b0</span><br><span class="line">9999</span><br><span class="line">1661159058069 9986</span><br><span class="line">8888</span><br><span class="line">9999</span><br><span class="line">1661159059069 9986</span><br><span class="line">8888</span><br><span class="line">jvas daemon, 31389, 0x7f418f5c9f7a, 0</span><br></pre></td></tr></table></figure>
+<h1 id="源码流程"><a href="#源码流程" class="headerlink" title="源码流程"></a>源码流程</h1><img src="http://www.plantuml.com/plantuml/svg/bLDjJzfG5FxUNt5_m2eQzeb4amPP9a5DAFCJ2RbW9TLwQzeEtJv9j0XEN1ESowRen3ZCalcIE3_0a1-ptjloBtPAqQbpGviqlJttFFSvvxdFuN36K3N4AcMxjMit6Xnti-H7PdDOJoboEgMeU3g41WABybiaarafOo1U6GwyrhM0ecQm4e0axnKbOcXl1dGLyVhmuDBGeFSWVc4uE1GCFaU8MgTq_PYxSoxYHz0z8lyNbgcCIcRaRCSiEwqJMgpI-ZkwiSqHrP2GcfCqfCxSnxhrGxPdHQS4qSCEBCqhR7lDRbuc2RtwI8jdj61sLewTpwiP1Ujw332IzcivB-awr2vZ9OfpkBlbV2_vl7RxWELF0T-giQ95pMDwlfnDTMaz2Z-fRq_8iGfqhK5R5LegnrzD06T452CJYJ4XnaU5AO4FnmG8YB3HNV6nIM4q4kV5Y10Flxo99kB2XFXYCZxkb_LVBO0cvBOjzs33sJobjPKaUPWoHDkc-pKFeeIzpfFaWG92pDfrBcfTQUZw5xVLIf9_D6rWVIurZQLvbVJkCYrbPU9V_cWtde0Kxdvopt1tuFuNUR6UUVvk-0w0_bm6bx1I7Rh-mmMjsSqcNJ_eUqz-R_JaDhXPOTNz7hul_-O-DOlErhcG1KEb9ebdCQ2dvX5zV_ZCRUUTUXDywBO_TTOsMFN8RXGUfKHqQZmnXi9u0QTbHJPaIOTJsOSByDKJy94SL1N6YfB6cRcd7U2sTq1JJKfecEWpgZQFkcQGTEvHy0U0rrEO9A03QrXsO_FMOFcJveyNIDMfrY3_PaxvMHXK_hg2nnImY44raaLG0PAMP2D94Btw1fF1IXLQFlC0FRl1wDChqxzskhF7jYxT7wjG7yVz1W00">
+<p>提取运行环境识别组成 :  </p>
+<pre><code>- 当前设备: /etc/machine-id
+- 当前设备机器号: /sys/class/dmi/id/product_uuid  [需要root]
+- 部分云产品id: /var/lib/cloud/data/instance-id [私有云可能不存在]
+- 当前网卡的mac地址集
+</code></pre><img src="http://www.plantuml.com/plantuml/svg/fPBRIXj16CVlzoa62jvKVG0BGYaKj3T2Uod8aenXSPrPTbSXTwqsf-PWMcrYJAojpOccSIDMZGdflinyCvktwDXPqwYNlHfcllzt-lr7ZxZKHdm_pqOrDXXeMeGIrwOcUktgjhjbhPXRCODezsveRX6ze9kRb2o4vnCRnmp7nNRWLuDlkUSnJ5n-qOPaJbNMb6nkyIuDYXvyQ8Ctv9dV9eqvh9z5Jv7usOHY6aRxaCdhjpNMTClQm74P5TK-92x4qNjHFOFHPurG5oEwZMr4roV3X9LugJSHGZ4lMhq5D2dt2iUHRANkb9ZnDSUrLqdWDLJ2k59dW-JVyBnbKmlRhe6Tm3_ajOmip0OjSN1YRv5vouZoKeeDhsRHE9KR7vz2iWA9XfgUZNnnq0xy2XkEnecy69t9YMH626AQ83Ht-9UQGW7f7YGJuzqs53koNzZchbXLjBD6T9L0kWBfEYzrLIzHyE1qbnzwK6pU3jcjAwcccowQVbWnecXc1YthstgeU6JBtiVWyZhmQwBZXVvTlfF2MMbOGGoxwYOIBLvkJIMJTIEsj6cP2yYHlmchXvU6YRL_iViwgBMXS0A9jCJ2-hzu-KgnXFgD132BsB31Qs-LaOfVq4oAQkcXBnes7OpuqGulVvtUyz5cFEl3Nid14OiQn5sAmgUS7ebWntb3Dp21colMFs3zVE1Ty_ETwTLveG5xtn-JwYM3r0-uFfS3Jhg6Fo3T2utxBqHoUHWEH2VxW0_pZw5xgEWeDCyqJAAQzWS0">
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2022/08/22/Spectrum/';
+        this.page.title = 'Spectrum-JvmTI探针';
+        this.page.identifier = '2022/08/22/Spectrum/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

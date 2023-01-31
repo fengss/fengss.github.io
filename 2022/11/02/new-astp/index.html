@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>新版Astp | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="新版Astp
+
+
+ConfigCluster: Nacos作为注册&amp;amp;发现&amp;amp;配置中心
+Astp: 原业务单元
+Gateway: 网关应用, 作为DubboRpc的媒介
+
+创建应用原版
+新版
+
+
+桑老师细化标准
+
+
+下载原版
+新版
+报道原版
+新版去掉报道环节
+注册原版
+新流程
+主流程
+
+
+
+余下注册后获取配置/心跳等简约情况
+
+
+三方组件上报https://10.1.2.8/confluence/pages/viewpage.action?pageId=114229353
+
+全量上报">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go/Rust</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">系统内核</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">威胁追踪</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">数据库</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#创建应用"><span class="toc-number">1.</span> <span class="toc-text">创建应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原版"><span class="toc-number">1.1.</span> <span class="toc-text">原版</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新版"><span class="toc-number">1.2.</span> <span class="toc-text">新版</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下载"><span class="toc-number">2.</span> <span class="toc-text">下载</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原版-1"><span class="toc-number">2.1.</span> <span class="toc-text">原版</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新版-1"><span class="toc-number">2.2.</span> <span class="toc-text">新版</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报道"><span class="toc-number">3.</span> <span class="toc-text">报道</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原版-2"><span class="toc-number">3.1.</span> <span class="toc-text">原版</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新版-2"><span class="toc-number">3.2.</span> <span class="toc-text">新版</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注册"><span class="toc-number">4.</span> <span class="toc-text">注册</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原版-3"><span class="toc-number">4.1.</span> <span class="toc-text">原版</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新流程"><span class="toc-number">4.2.</span> <span class="toc-text">新流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三方组件上报"><span class="toc-number">5.</span> <span class="toc-text">三方组件上报</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原版-4"><span class="toc-number">5.1.</span> <span class="toc-text">原版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据流入端"><span class="toc-number">5.1.1.</span> <span class="toc-text">数据流入端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#三方组件流入"><span class="toc-number">5.1.1.1.</span> <span class="toc-text">三方组件流入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#许可-amp-漏洞库更新"><span class="toc-number">5.1.1.2.</span> <span class="toc-text">许可&amp;漏洞库更新</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据展示端"><span class="toc-number">5.1.2.</span> <span class="toc-text">数据展示端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#三方组件列表"><span class="toc-number">5.1.2.1.</span> <span class="toc-text">三方组件列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三方组件其余查询"><span class="toc-number">5.1.2.2.</span> <span class="toc-text">三方组件其余查询</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新版-3"><span class="toc-number">5.2.</span> <span class="toc-text">新版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据流入端-1"><span class="toc-number">5.2.1.</span> <span class="toc-text">数据流入端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#三方组件流入-通道"><span class="toc-number">5.2.1.1.</span> <span class="toc-text">三方组件流入 - 通道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三方组件流入-处理"><span class="toc-number">5.2.1.2.</span> <span class="toc-text">三方组件流入 - 处理</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Api发现"><span class="toc-number">6.</span> <span class="toc-text">Api发现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原版-5"><span class="toc-number">6.1.</span> <span class="toc-text">原版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据流入端-2"><span class="toc-number">6.1.1.</span> <span class="toc-text">数据流入端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Api上报处理器"><span class="toc-number">6.1.1.1.</span> <span class="toc-text">Api上报处理器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#流量上报"><span class="toc-number">6.1.1.2.</span> <span class="toc-text">流量上报</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#漏洞上报"><span class="toc-number">6.1.1.3.</span> <span class="toc-text">漏洞上报</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据展示端-1"><span class="toc-number">6.1.2.</span> <span class="toc-text">数据展示端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Api列表树结构查询"><span class="toc-number">6.1.2.1.</span> <span class="toc-text">Api列表树结构查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Api覆盖率其余查询"><span class="toc-number">6.1.2.2.</span> <span class="toc-text">Api覆盖率其余查询</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新版-4"><span class="toc-number">6.2.</span> <span class="toc-text">新版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据流入端-3"><span class="toc-number">6.2.1.</span> <span class="toc-text">数据流入端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Api流入"><span class="toc-number">6.2.1.1.</span> <span class="toc-text">Api流入</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Api流入-通道"><span class="toc-number">6.2.1.1.1.</span> <span class="toc-text">Api流入- 通道</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Api数据-流入业务通道"><span class="toc-number">6.2.1.1.2.</span> <span class="toc-text">Api数据-流入业务通道</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Api流入-处理"><span class="toc-number">6.2.1.1.3.</span> <span class="toc-text">Api流入- 处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Api整理"><span class="toc-number">6.2.1.1.4.</span> <span class="toc-text">Api整理</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞上报-1"><span class="toc-number">7.</span> <span class="toc-text">漏洞上报</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原流程"><span class="toc-number">7.1.</span> <span class="toc-text">原流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#全链路"><span class="toc-number">7.1.1.</span> <span class="toc-text">全链路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据流入端-4"><span class="toc-number">7.1.2.</span> <span class="toc-text">数据流入端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据展示端-2"><span class="toc-number">7.1.3.</span> <span class="toc-text">数据展示端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#漏洞列表"><span class="toc-number">7.1.3.1.</span> <span class="toc-text">漏洞列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#漏洞详情"><span class="toc-number">7.1.3.2.</span> <span class="toc-text">漏洞详情</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新流程-1"><span class="toc-number">7.2.</span> <span class="toc-text">新流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞流入"><span class="toc-number">7.2.1.</span> <span class="toc-text">漏洞流入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#漏洞流入-通道"><span class="toc-number">7.2.1.1.</span> <span class="toc-text">漏洞流入- 通道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#漏洞流入-处理"><span class="toc-number">7.2.1.2.</span> <span class="toc-text">漏洞流入 - 处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#漏洞流入-存储"><span class="toc-number">7.2.1.3.</span> <span class="toc-text">漏洞流入 - 存储</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据展示端-3"><span class="toc-number">7.2.2.</span> <span class="toc-text">数据展示端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据展示流程"><span class="toc-number">7.2.2.1.</span> <span class="toc-text">数据展示流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据存储-查询"><span class="toc-number">7.2.2.2.</span> <span class="toc-text">数据存储-查询</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Rasp"><span class="toc-number">8.</span> <span class="toc-text">Rasp</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#表结构"><span class="toc-number">8.1.</span> <span class="toc-text">表结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据流入流程"><span class="toc-number">8.1.1.</span> <span class="toc-text">数据流入流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#事件管理"><span class="toc-number">9.</span> <span class="toc-text">事件管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报表管理"><span class="toc-number">10.</span> <span class="toc-text">报表管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#报表导出流程"><span class="toc-number">10.1.</span> <span class="toc-text">报表导出流程</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            新版Astp
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2022/11/02/new-astp/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2022-11-02T06:59:09.000Z" itemprop="datePublished">2022-11-02</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>新版Astp</p>
+<a id="more"></a>
+<ul>
+<li>ConfigCluster: Nacos作为注册&amp;发现&amp;配置中心</li>
+<li>Astp: 原业务单元</li>
+<li>Gateway: 网关应用, 作为DubboRpc的媒介</li>
+</ul>
+<h1 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h1><h2 id="原版"><a href="#原版" class="headerlink" title="原版"></a>原版</h2><img src="http://www.plantuml.com/plantuml/svg/TL7BJiCm4BpxAtpYnWzmu5TG5OKJgb68EFT5vT92Af6-H81Mj6g4Q18GK9I0yZ5aryvVO0YAACZ7tPcTsTcj63QpA5wSPUzU5iV4O5NROWUqScGVxXdCCWafmUtTihj3PRZ6XmRmIqXYY5tX-gH4DuZWD70GuNIMt_Kq53MCV8rNpNpI_qkacs8tCNhtXL-Mph0URa7aYAGbWrTmGeq-lZduT0syhOZ5b6xNR-4y6SjWBbP3CLYGAhDDoevDYx9z-blpjeRFNRbi0PzyrEeGTE34n_Cby1TLvkD7F9qNgCRhnwN3LI0DHKRDhzDCkLAKgIVyBeuMa8vqPsoxE5pzDoqVg086FUJz8cRnE_89">
+<h2 id="新版"><a href="#新版" class="headerlink" title="新版"></a>新版</h2><img src="http://www.plantuml.com/plantuml/svg/dLPRKzjM47wEViKPfzDffuHBQFlWPfZ9X2J3T9hGq3vr-g08cIWZ94UIIJoTp3WElk0BTWWOjpY08GOt3TWfX1WRuXyJdIFfgN-XAntvHWYJH0-spfxTR_VRtRD7BAV92Y9Fq_fnGQ_N6KwMD4KMqNLMu--pmVOQrnUDnJ8ff76YoDoM7o3F5Ldo2LDNn82gyOg7yREA9d22dvKqT8FbP7NeVT55XfSc4LW3h2Zod2R8aeekJ_6IfZ8CquxYmeZhtelCoXloAepZAxXHfp4mxbwNqcM_WBDnihT4relMYzIxqADVLLxf5Z6IhF58dk4L9FlQv6mjStkJh6QliAAervAaLYFBwqRYW8GU6N_DkdHjul4tL8ghKRrHiWt79a437s_WeyoOT1V8aBqoZfJqetKhjC0mbu0YPFRyjMl3WyE38wE1sxVbMtxEYsPaOH9flAfzDIPf_1H4573GllxXqe1ZCtBIbW5-exnF4YJUYvW_c7CU3iBrUE7jd6UQr-x8apVOQTxZHHuRrzDdomK0LtminxUs7i3pSu1NWkEAF2DCGiqSFKY92cMmDORw1_i7gLGJfdave3dIGNWypBc7iA7mzmBWmVkRuvhr2-Ei0l3WgUNb2qg6ed0YgwgjdRli3Dilij9KlylRzHJqEzij8JZwdNdeD8fTiqwrkplGYrhvFAK_UahTqxTkNddVjqF3tu-GWpcSIJX0hPISh82hQQVkSrGOirB2iNMhUDZQiiDTAnc5P4j0vaiuiqboCLBSnB4wD13EXCbw3CUYdHnCANB0ZyncdkGhvkigdb_3aRWLQfXldp3T1D79BE6rEYcyf3AzMIIFAb_YQiPep9gxDPofz1YVj2L76RA_YkDHKAUsPwhJbTN8cxlFZPsSiLJwS240V3D4NYVDxLaS_nEEAzwTmv4ocT_6yGDOMlb_IU8vtJtJgUjkBWuiprGqgu_jrNeSqCrcmIWdoN89DvVFD3AYYoItGyF0yMTuEubJEQSgJa4eFqMOkgDzLAVTulsoAi2u3HgDg9a8jzl4xfsk7wThTl8uN2Rb8dws33q33TEnfit2KD2hjsobrII5XD44iXkoUaz4ep8Nc8R9QiynHwNJJsv3aLmLRwpIFZB2XoToGOSu53QR8ZibVFmKpwMfXh5Imv4zAv8sZdVDs9wZoD1iYBpFIOPx0upBgeO697inC3CqmAb0sRurG7qKfWQdqKi45Zu8pbrC1E56cMujU0KQo5rSvoLUOKLtTLExqzxfKEijYXl7QUMWbfGTFN2VLX3ANw_juEPZ5wMxC5H4dTWbMAgIzEvxXQ3nkSc-w4KJGOcZmekT2jX2D17WE5vLVG4HRieFLAghHjIzimDbxjnb7r4bIHs06JuZS10V_RT7-7aAWBDfTE7226fvITDUSZJeh6XhE8F6rf1WK_N3LJGsUHu_EGQHyNVTMjuV6wMAaGEzaKDTMVdCjFHcfVqr0OdPJP5urWtPkIgOhcFSDQSeT9_xiNBY6eP93WojXJMSdUzpFbhqMiAeDzjjqo4Woh8VMKjD4mv8PSCV44NQBGpzrkaG8qdebPpRIdJ8zanDDvBhLt_vm36ojdBaPT6SVmCmC4AjM0PdP_NQYyj-_uzyq3slZNrSt_g6Rb1VC2viBiN3Jj2jzD8GOROwYjP6593xS3HYFIuRYsjaAVuU2MFb2Sw-XAmOZHsSoSEGxAD_C3SfmLD9ZT-SE9tLW2Z0182ZpjYVLD4KnRTYCPiBT7A-We_2qDt87WuYho6I2952vLqet6C0TuAvNyRLLxP1RSju5gAKy4BAVGaT0HpwQVGx1AyW1WeuKyMLGr9PjD7mLfYi5beAUYsjrq9cRF-_enIW6lyaSNhFR2xYbTNs5k1Hx8wvOzbbjZE7tqRqummQ7aJ6zW8eKWn7hmudmpPbA0M0eyN3XR9Ud__qeiBB_m00">
+<p><br><br><br></p>
+<blockquote>
+<p>桑老师细化标准</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/bLTBRzfO55wNNs5r1QfJjLkaH1ffDft5R6QJHQJ89MvAIu01jrKKLNAIeI4yauQyQP9cGeKw0o6JY10CuSUCxxMzwb-OSnyO6-nMiyA-zvvpldFEzvrhf8YII0ceUOwpju588gwa4Z71-dJoIdehIOjoNB4NoSfFhfL5IP7VISlsE-fMZ4eTLuiezzbUZ4kHHDf-IowcVuy50jFJ0ieU8wtBJ8JfwK20OPYQuLx3hXC1lZerummoTiQvDJL3GuK5lDl2nIRgxg3IgTuvWYrBrSpxRMOPeAUylUBi5igTZdbb-S2HhG9kr22j5z55ArCq-atOavB9r_BoF5kTZxoKuelousLfAIOAR8s-1AYBgHdkoMosK7yNdPzO6-L0FA78GkAjd18IBtZf7lXw3NFJBsjw9myONwKJSNmyqBK_wUuAEph_9BoYH9VayEpixFlt0Jc-890eRXJSKwRk1yA1Ny2RAgvk6aT_iCH7BgMOmXCLs5PwEHv1pG9KCl20nnkhD2tZy8YxrED4O8VaM5hs279nPTxKlX-47t47SP-aRD2xUNX1noTOE_eH9kOJ2k0WAEKndDZE6QSrGzl19rN6UEh9QEmPkpLyV8FtMjwyDozlyTMQyvmV-_dk64CPyVrupsqyUS_sUA4zUMyE-YXtvi_pkRY0xjhuj6PUdbCBD5WtRw_rJWFeWfed-dsUFsVM6SAOb5QuY_de0gwgg5L6QYzeZvlGjrvXBWvrH5lPbBmGJOC3jv4ew9qBKyrOwtrTgp5mXdQ3kb_056NFhCCBM7J3PIZCmGQkdkATejwlUWg2gfBJV2IB7mapyC1BUo9VUpfQ4r_AKafvBajAU6L1VW4yOix2Az4a7vdX5QhRzxxI5PpQdO3ges3QQ5yTUwg8Q-uteZQdQdq4ukBIX3XSkrGScRQkxPcN3REkqhRZwphwKA0ASLv7OwZOAL7lvFJUMJGffkKKPFshj2IBh3kYG6gTLgIbP93DncGYfOJ4CTZE466OfgYydPOZoKGqhZnR2CA41H53rdf77KKWjVkY6Tq1eNFv4bqKmM68I825VZGw-YYQV6JZG1yBGzzezGXSMWUWK1Myu8Cpr09fN1lN6l6JbZa2s3DoRQokekm7lTF5rQ-GCKGc_BxzntvcS8Bi1ssLKEiALzfWC8BthxesbZfZaN6yZRR-dW3E90kkzK4JL-w6k1cO8CczdjSr3Ho5FAzVitIBodk4c-jrpZAlwCatiPXzUph62JDtg_rxdKEj3yvOKEcHBPX27hXo3vFTq0wfWIZCnPtkzC4dO_SGNvRrpbTtL5Ij3uSFdKUuiCdmGdMNfAI86WTehSuigUlWY3yXQ9yBnnYZXvg12yNuA_zEVfvEH5xBYgKUMQix8-tmHbNge_O058OYk9XAl4a--paa0jCUFduuOXj9aQc4zL94pIEytmQ2iz4SVFea3ICsopbEryn11Og4Uckeqo4KepUPZGllDL1FDGSdk5I3NMkZI6O93V6jjqdYkOvkbOYBrIfkdDj18PwJEs16U6bdwkefNyLdTnEt1RJRTmRZKdtOPK0a17Mjn4Z1r8soBNDm25CCL0pYWw8G_UsthVqRTDk4WTA09qPwUq0I-fJgbhewT4p4JX_OEBE7EMVwMEUitO7PRyB5wDGQWyo_2oUdDkiAO4Jb0vIh4mIq3eoqZAu4-8XtBgwH8l5yQTqPi37TscEVpE5VeEwGolW8jc_ZYKy6tdUuPrjss_MxFDeiakkueveRDqvhVcVXF6IqvxYIUCayJZguIy9uiDVpkcDV7upKr9WPiDaeea76-gmvgSiEUTZ1jbLHsPy14TWC7mo6rc3Uc1jql-_XoIwhN_PUrBKRF36ts8Nfw28TG_-JrPJFZDisgzbd8Idjnm9dh76bwRrUCEG1tOV4avz0t_idOrC-R3ERt02YC9cboF-jZMFpeR0VJz7ncT7VDhIgqTY43s9uXOJDTeRMfccT7v3ylMQVix4me_u3">
+<h1 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h1><h2 id="原版-1"><a href="#原版-1" class="headerlink" title="原版"></a>原版</h2><img src="http://www.plantuml.com/plantuml/svg/LP1FIiD058VtSuevGFK0MNY6GhS52M6KICaCqo1s9zW4sgej_gaqaKAHG5oq2cAHQCXbyYRZBKmQCscsxttlDxzla6xOb6DnVvF6psaK8ODQDgSzt246ewPbgu7UjzcnGJbfJXYd5mE4B6eJJCy9n_IaHZKCcv5ySJ9lA9wsSBc0ZIVMtsdazl_Z3yzqBfEbk0rsGJbeCgJQu8EZ_R3qQoBZkBDtYjIsGDMTXcNo0FwoWJPIgus6goOoyUNgMdo4u0GbseBP6up3lAsOtedLAop2fcSTKZQJdqCHpPIZoLhmxgO_dfYCO3e7FyfNxK8pntFJ4aTLYfBT_KHT35pdzoeiNo3MgMcHRY7SPRHd6eDiFSyU0_G7">
+<h2 id="新版-1"><a href="#新版-1" class="headerlink" title="新版"></a>新版</h2><img src="http://www.plantuml.com/plantuml/svg/RL91Rn9153uxls92h-31H0zxuEHHUq4zzR9PfheDpcoMZT8OaqOB1Q5bOrjgWH29GT5Oe56hBkB-cPstmxzmO9O5rEEyxtlV-xxt1kc6msmCnuV1f1ru7Z8OTMoMmviFJLg8NnbYMCoa3aAKEGIp9yJ6R3iYyK55l2k6pNquk-9xvtpGX8jnu9NoKTFr7TqMVWUEUdJ6bqJJGeHcyKmBnQDnAgq4DHpyg8h99BFIZ-R8Z1BpDIpy4zxghD7Mr1Q8XXTMXDyItHfywVDYJr6Jt1toLtrf5-gleVkHd_VNCov5b2lnRHyyDmwfV9bMaezAmQycL2kytk0jJnBca6oIWLKJMcYjH5quuwNYz6LV3B_3vGirYCosHROCPfCjY-LCOpUyQ8IdlV-S0ADdw5eYyqY_SVDMGiE5GY4ftxVPKvfZUlQ-dKjeKMrJVqpKOoCAuXw67qOIkRThhIFXvPXtgX9vGEoyoUWSb6XOAKFxiwpVqVFENPOrjqsILLCteBt7tQF07y39J_aRfcTVqVFbgUTUK-dbHiNlOtxWGUCW65z1lIxyqKwUqNXDgNIq97KsjPP_LLIT3sfGTbTw_oR4Pu2ttUcd6hmPSlSzTykXMq9_0000">
+<h1 id="报道"><a href="#报道" class="headerlink" title="报道"></a>报道</h1><h2 id="原版-2"><a href="#原版-2" class="headerlink" title="原版"></a>原版</h2><img src="http://www.plantuml.com/plantuml/svg/uqfCBialKdWskVV9tZbFTktYIixFAodApr48JaqkoC_CAu4B91QN5CGdvnUbSd5nmPKhwDh1LLef54DPB_RFVh6mvzdc5KzRbqAKSi4KWJJ0JR9IUDQrz6NZv6VT-v_iQ7YoOrLcWOx2qtMpdgtT_NnMIq5HVaKbaCuiu8BhGBNlwRxfJpisWDKfWBLkcFjY_LI8xKzsz84bNkoVzwnlgG8N0000">
+<h2 id="新版-2"><a href="#新版-2" class="headerlink" title="新版"></a>新版</h2><p>去掉报道环节</p>
+<h1 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h1><h2 id="原版-3"><a href="#原版-3" class="headerlink" title="原版"></a>原版</h2><img src="http://www.plantuml.com/plantuml/svg/ZLHHRz9G67tlhxZlil1EuXATYH8VJDmFCBLSe67sDhTN8s-Wu1XQO1leOBWvuxQwP8M8BgL8zcVwtT9_uMKKS4JS-jAUxvvxldFFrrQI5KOeuhkcDsnxhYifH6EKRA1rhEX4rTYi81jCVwPJyZehYMksOMLroemXthEWU6m8B604QXqeMxowmu--GzEIfhoLrRbK3AKPqurODAhgCPrG5fLJM6FHX2nfX654Nc6AIFBlvhAkFyPPSEj-tShWR2H5oSkhIhVg3mhZIe8e6Kn5IJ3uv-C91BilJ21fZP2CYZtdtFlT0kU4jxUWs0lgjXn1CfWzpt6XSWZ5aX6wZISah2NGsCt44bLJQRRWQKxs71FEzw1j-Qq2Vrk4Txyyv_suLMaV1Yx_s1NrVqdFnQx7SsySXzW6Nmz6jI6ukxpHvQRzVxxdL2RvYAEDylNRR-JxFqKluHYgstxvWkVoIySG5yzWY_2iqMa1Ias9LtQ2vhSGUCv0p3uu-p3gvAyj18Djlpc4cWbcGmhsVl3oT4LCYhirNZc5qeL4PKFtxK-yrv16csTWjxp-rYCnEVzDN-ADAYySUfT7FDy99OAYwG_jMmpgje5VvJ2UedkvbCaF2a7kInhBb3t7CbkQr8JdEJcHwumTJkC1PbXXQqHBgYa1ai9U2DQp1iClfW1JeHk2XrZ3LDu8qHEMdgtSU3ZnWVY3pQSufGfnUbzMCd4jIPOwNoIYksXs07G7CPB1chZVz3wZ-Hy2gcPmKbhK_GC0">
+<h2 id="新流程"><a href="#新流程" class="headerlink" title="新流程"></a>新流程</h2><blockquote>
+<p>主流程</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/dLPjJo9N5FxC_8hvhjkcQTCFP6FIrARPD6cQxIz06AsHSYdYLh-XBY-225PyOraH1Kgxmc1t5NPcaJypvyxbN_JCt66umxh6bXZYdJclppdFSv42mJY9oVGWRmmgXgP9GHA9nqXO_ba9Hibo9Eu--3uGLtuFRBXdq4fcgKKhUSZMt8UZPDuST8n-6uRR4dxSk4_cnW7zCdtRWcHZ5Szud8MY2jaMBVn1Qt_1QKiQsuaUPkUOfVzcsXlyC_J1iv0K8N559Y-KsAHGTbgc5OssQl2XOFHpVjdh0fawTCfOSY0KYiapSfJ4ucpuYjLssJ1DzRhPVZLAx70hAAb6Fy4z9UYynxg4k6RfUbw9Xid6hqeaJajtsB5PVZckW_S3XIrws9L39BYYn7vGDYIejCIeR7X2ApjGBqFdpBZBiU4PtMjW5BgTX8jjJ3DhV2WxnTJpMBNPr4rjoE76Sg3t3pq-TnnID-WWyMP0rymtENhK_MR9gcviJy_JJ4qv7IcHa6m1A63jJDSloqpjqUij61p0Jjvr_ob65XIEfpMzrAum0B8ucG5ls-z5VZOGZI84V65M40in1RPW3lOX-NPIbLEBK9Jp3wIIe-qMr5-QnTIi3CcUWI7i4qOqAxdrpzRDFPLbjoOXn2trExqv7VWyBNZMsVSqIC982sNngo--_7gEtkv08Jk_jh1048WNoo4bzlHpss9ksdGTF__BHl8njG7fyr7j_VYTLMsrWNsD7-2AGE6I7gLfxHBI6fB8mliy3UcKv7FX2uJZCcyHwjViNKCIMnD0zTYuW7bfwhxtXGc9semQT9Xw0TtNJ3qSfVEuQ6CuxoFk8ntScfpDIENfLMrivhoKdyp9tcbwpR1_QuLGT9PYP2qgSy9myiXJ67ZZqDrzPBvvrOHYPaepRCRYxbfRwYMWmpOx_8Eh99xG3oE9ENW6YnG-Io5igS4TvXf0JrJK6kXSq4mFDHHw3RgRHaN0JH4426KWUqiJcpm5nkV4c4YFpnYaCDJ41GegsnwWm8WI1AYTfogMaJarzCRef0gPOnXSeEX1CeFTuZVk7DAkcuAzAfuuO6wQJq54IxSqTp46okZdeLwrYhJJMJth6klSuLfy741OQZxPXwR8KRLLpnZMwAPg33kqVScA0z0E7ktPt-FlK93OPibnjgSRMrxw9VxHUEyJYkTAbAmkuxMwOUefL2ENunRnXI_9Odpx1BRio-NrCHUnYJSdkiI3VlVSCZhByP0u8Nps8rdzBIpFa-2QDLNhCh1D9ahgxLgyd94znLtQRjXTEozirCHTzjpcFinfMpyBcVexq9hyvdDWEy1LmWAyaTmwyEF5q1FvFWo_9P75vILU8rUu_uQYcC298gB97_4a5cw7NPhlJACdFQoSD5E4R5MozHQQM_Iimc-qiQmXvQojtidGojN32h6VDQlsxo7B3N_S26iVNbK-5PmbDdbmIDuQ-X5JswoLU4IYE5bH8ZEJT3EZvX7gAEeD5FOH33uz3Wdw2C4jsXPKt0DJ_zFKs-ocEqgKwSscsSfDKVMUwuGdzq3tBm00">
+<blockquote>
+<p>余下注册后获取配置/心跳等简约情况</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/pLZTJnDP57-U-IjctpIMRVRL19ED6aDs8sPrio--b3AoH9WXjEgQZKaHQ4jBeGWY8F9Tg6W_H3vAnz9_PkwTcV_2S-TCftVQ3aBMJUnJvywvlti-V_US4KFXg3egqVcCNblLgrKnh2hHKNL8kY-7HzH19Uekt0b5vMUXv-upgIuO2tcwcY6fJNVHcimOjQ9UAP3wkBjuAoGFgygl0pAWYTtT4bqiDz3fvpo9JmT1sZpvB7LtYsBZJTSD7kkwX99qFOidwfKqm93YcdwM5XKrAalgKtdKU_wztliFfA0I2gkHuDDVWaeaEAX4eY4bB8koqY-nNIA_eUj6ut3tk6IMfDP5KHnIrH79UbqtQqMpj6LeXtHw39KMXT1GLA87ctHrYipE6GlhvCjBKgc8Wk1d2cv4413pqLuGxltfetwmJmv5GS2rGf278h9qSGteUWxCC1FxvEIJiJA1RYIhULuAqD0gOrSpgdL0y_CLcKiPwpaKCxHvkhOAmimhkAHNu_3CwU9aqdN9qFOChM0UbVLAZ0KKVNuqPkJJ0GIboJa4GHMjH0QYZd8Cqq7gki4dOoDuFzi_9iQ_vOvN7timcWRXYmk6pt7zlkkc2szK-WMMY6tf9NL993jD2pcIdK3LtG312NHyaiIFHAzDdS9BQlDaAWCOUcNVWQc-Pcwszv3b_9LssAij1U7rAod7pr79IGDj6GLQD6o9qDj3MjWcyKbhF6yJ0trTffbYhp8qgCYEXRPhMkWYNKVz65NukTcAhPZr15flO_VqcwKJ-kcbEND2PXVj9GW2gUv2wkDMNnemwmlaxPhpjhv9nqeSsQYFl1LxvpPVh-5840ZmqU10HFnN57vNbG4f50e5dBzzVNq1yKMJXovapCZ8R_9ptXPqwWzd3Fj1u3ZUTx2jhJXe7SIiOJ7aHBZ2v5Q1esWgHuh7rfjyWBxPi5PZF4qyL20bZ7Sn43Eh7y05UaMZgzMU_W2wYMXLitWsyCT8c5LNVOtEv4ItuDtpwCOf91-JGX5mkZKsZtl9gscwM21VOcGsXGMCgHfWARnOvbHbHCfNg7iE9tDTidNXy9qhneV9iAOm_1mCdgDhEL3AuPtpgerHJce7gwqD1Srfl-FUpf7iHpx1dEnoDVLFL6OZMeUMOjYvanjHUgZWjiOpVPVpFVTYbtmpKOD3Wv6ehCYZVfUz6tvS9hDB4D80dJeZYIe-aD8fKsHbefaQ3OsRXi9hV4LdybPih4tRxrbOdLCA3wPG6OjbqEQcEZmSKlflFUW5BlRqNenHFHNdWI4x4qOs3XS4QoAWaZIDNHEsdPsCuf7rqxJZ3Ngm3Wvg0Q5B9UFWpDW45yJenyqhj_-1hdFeULSlz39NpL91FvqIRzfUW2tWIJAPWwj6_xAYr-fayfZKjg1Am3v3ImA2cJYaiJtcTjp9iqLzsKfCmqQx5M8Xj6AQUJPdl3priXEZ9q3MjKK0CVEn1adwyLI7viLfKBW-aMHd0aX7KVMnh605F9Fx8chuiHp5Kl1b7v2xRyjTce8QkldoJ_C6-Ckhp6KPg07q7-Z72_4_S8_hxtO2mlkpKS7uzACo3geJz3OhdIZ8jRSp3md-H2JuCf40LCHp4KT6mWjHQASZRcxYkCYf9LlPbiopgQXPLDmiOPEGXtN43bsWMQoGsP8zC7fJ1ryutOrVKuKHHr5Hj2SLp85a6HT9AKuN4n0LOwOi-lTJA8jI7OqfdTBIWjE7pq0A7W2XGLZ17onQt570a2IxQsvzW0c7x6H8yZtheBs4wqxaS5kQksFMqW4jRC4MO-FGtDiEaC8INJZ3On0QgijApB8pYYkTEatEahrjfiV6fhKFSySsC3KmR02LCZxkacpICSBEIYnyvo9FkvP0BsPl9SdbXfdBkbPpt6oFIHtTJ8-JPEVJDxpi27NqCXY-kOs68s900d5hUGVYmgROxHWzIWF5cUCrPzxw3fLj0tMYhNCdCnHfViAmFSnqR7pBq2ifuCMVBb6t_7S1fgOeHEJHfuDX-MveM1QSOI-R4OM1KVN9YBr8ad53cx0N5NYEZ8J2Sa-_GEPgi6Qyhrfl3djkSNMEtpZSuBKeAmhdpOmTZRFnd1pOMMyVqLlk3-3blJ7hLOwaDY30VEwqR_Nw-zwJoDzI8ocGyL7y6awTZL7u6e8Yq-9ixdnKwMHrsXdqprCQ9YswSEpokLC5tr2N93SWRU-oq39VmJLWguv2bp70paxCzQy0">
+<h1 id="三方组件上报"><a href="#三方组件上报" class="headerlink" title="三方组件上报"></a>三方组件上报</h1><p><a href="https://10.1.2.8/confluence/pages/viewpage.action?pageId=114229353" target="_blank" rel="noopener">https://10.1.2.8/confluence/pages/viewpage.action?pageId=114229353</a></p>
+<ul>
+<li>全量上报: 发现md5变了,或者此次上报缺失了就成了自动修复了, 成就了修复的逻辑了</li>
+<li><p>非全量上报: Agent什么时候搜集到就什么时候上报</p>
+</li>
+<li><p>通过AgentId获取语言</p>
+</li>
+<li>通过AgentId获取应用AppId</li>
+<li>通过AgentId获取版本Id</li>
+<li>根据语言获取处理类</li>
+<li>isNew判定是否第一次上传还是覆盖上传</li>
+<li>获取最近一次,非当前Agent上传的三方组件信息: 对比应用维度之前的三方组件信息</li>
+<li>遍历上传的三方组件信息doHandler<ul>
+<li>生成三方组件BuildAssemlby</li>
+<li>处理三方组件的插入和更新 doHandlerDb</li>
+</ul>
+</li>
+</ul>
+<p>每次来每次改</p>
+<p>已发现-&gt;已修复-&gt;再次发现-&gt;已修复</p>
+<p>tb_library 导入的检测库 应对的各类版本<br>tb_assembly_hole 组件漏洞库<br>tc_assembly_hole_cve\tc_assembly_hole_cnvd\tc_assembly_hole_cnnvd 漏洞详情</p>
+<blockquote>
+<p>潜在的问题</p>
+<ul>
+<li>批量的改/增, 会有大量的锁</li>
+<li>我需要你再给我</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>自动修复<br>逻辑要不要变</p>
+</blockquote>
+<blockquote>
+<p>代码片段</p>
+</blockquote>
+<ul>
+<li>AssemblyHandler代码片段</li>
+</ul>
+<blockquote>
+<p>问题代码</p>
+</blockquote>
+<ul>
+<li>AssmblyService里面查询各个组件应用版本,效率特别慢</li>
+</ul>
+<blockquote>
+<p>痛点数据<br>//检测漏洞<br>detectVulne(1, “检测漏洞数据”),   — 可无<br>//攻击<br>defendVulne(2, “攻击数据”),  — 重点<br>//流量<br>flow(3, “流量数据”),   — 重点<br>//agent请求量<br>agentClick(4, “请求量数据”), — 重点<br>//心跳<br>heartbeat(5, “心跳脉冲”), — 重点<br>//报文<br>response(6, “报文信息”), — 可无<br>//状态<br>status(7, “异常信息”), — 发错误码<br>//配置反馈<br>feedback(8, “配置反馈”),  — Hook点<br>//系统信息 b<br>systemInfo(9, “系统信息”),<br>//框架信息 k<br>frameInfo(10, “框架信息”),<br>//升级反馈 y<br>promotion(11, “升级反馈”),<br>//hook 信息 e<br>hookInfo(12, “hook信息”),<br>//三方组件  d<br>thirdInfo(13, “三方组件信息”),<br>//api  l<br>apiInfo(14, “api信息”),<br>//主动验证 j<br>verify(15, “主动验证”),<br>//自动版本管理 r<br>authVersion(16, “自动版本管理”),<br>//流量重放响应内容 w<br>replyResponse(17, “流量重放响应”),<br>//日志收集 n<br>uploadLog(18, “日志收集”),<br>//上报漏洞存在标志  n<br>vulnSing(19, “上报漏洞存在标志”),<br>//流量重放下发消息<br>replyInfo(20, “流量重放下发消息”),<br>//hook点信息返回<br>hookInfoBack(21, “hook点信息反馈”),<br>//熔断状态点信息<br>fuseState(22, “熔断状态上报”),<br>// 诊断功能上报下发<br>diagnosisConfig(23, “诊断功能上报和下发”),<br>// 安全插件管理<br>securityPluginManager(24, “安全插件管理”),<br>// 3.8版本新增的 漏洞上报接口<br>holeUpload(25, “3.8版本新增的 漏洞上报接口”),<br>// 3.8版本新增的 日志收集上报<br>newLogCollect(26, “3.8版本新增的 日志收集上报”),<br>// 安全函数自动检测发现上报<br>securityFunctionDetect(27, “安全函数自动检测发现上报”),</p>
+</blockquote>
+<h2 id="原版-4"><a href="#原版-4" class="headerlink" title="原版"></a>原版</h2><h3 id="数据流入端"><a href="#数据流入端" class="headerlink" title="数据流入端"></a>数据流入端</h3><h4 id="三方组件流入"><a href="#三方组件流入" class="headerlink" title="三方组件流入"></a>三方组件流入</h4><img src="http://www.plantuml.com/plantuml/svg/lLPBJ-DM55udly9IDumcgA1sL6bK8R4hxRIgDCkggani89qGfuvJbOg5UOK4ycB803C9X3048Xv9Ml780v8VCpxNpgf_eUVc67169EfikhElp_FxldEkHQ-cgC9BsHjKV07DxLK2cghu1J6a1Ny9gieVSxr7NaMLtUuxy-6n1xldWb5ROsj5bivriX68Lirtoz-AAiHNZ7Q1BLJSqweI3WfMyXfIMv1lc0MTFfX_DTskXpYzCJlwEwkzAaxB0Mr28b-hScwLz4zoWKR6p9J6Wq6Vz4b-PYpAScSJ0vpOVfqbobIIdUjs4s89F36F4t2uRAOZl44v8BdTDWH6BSQswcPpsMXUaGMyBNtGqvs512GZYA9niu_WeHb48sJ6OiTM8IuftuW1oI-h7_ID_YMPcJoBffr9CFPasEUNnaCXUNRIFzTr3oYQBAY-wHbDKAOSV0kVIL-DVl7bCxVBzQYV2m6ILL6JaTo9m9H2V7Ecymq4ooRRvMAv69plGAxqgwY-y8KqQ9sOoGhr-F8tFyiNhSg1t-UL0o7PAjSWXKw8ai3h6e3ttZ8q6onMxwocs5OL3lRWTTnebrccZf2nDrLam-vD-LrMUrl3gboIB8M3c5RKV4hWEtcEUnqjGllokO3wc924fmBsyhtq31-eKx_lJrdwKTHcy6GgxFV_8CxApbBx0kb0acH2qh0PxPRAYsyMeQKx3wrsbfFzKQ5GgRDA1cCXf8G2R9uOZMmdfrj72uJ5vonxWKyE91xZiBEAmapmQJqhiCs4SPlxdrXrksW0dFGfAh67iGUm1fcAKTDVzT25RqCqs8ZE4oHdKfaTWbeDG_CtOGYIULY98XATWzsdeqympWDfBj6lsNNOq7UhuRdwIIyaQtSWOaAht39lopHh-3h8aJD2mvxQC9DLA2rOImiUcxUhA0ABgyVC5n-DmHSkXlZ8R01Kd29xCjRiDNA_23oqurHPyeMm68egTBru7lEq0fi9n9G-U4Y8vjaPOezQeV8xUjDgyJtWHBDlxr0uXPKYH7VXUDrSksBwmZ1S_qsHE27-aDn3mxqO-aP42rGlf7OGU8WaxkiYUhjgwzcsX8LDydOHsji_ISeTaI-KwP-ToqOO7XDwok-kP_PUPvVhLhaAjsy6BHUSRnfq73gwEdpIFpTn-qhXJtPQdqIh5CV5g2NmhdHcW6f4KqNlAvINKMjeQbXc-wji9_ymI8ApY9uA138rwkjmk8MXhQiLvFlPY8VfpQuMx9FHaH77NFPSJaZ0-NkYodavgU70U6Wku8MRHNPUH5bWRTZ4iBLw0cib8cKWDdUiOomulBYdZO1mpPC9nU4cNMPPxeIivkS9JqvxziBfur00kTagtIvt3dR8gL-AL7HG_Fzm5-MB38UulT7PtQFLtcMwvtf_7NTymHNE5rRlJE9IjrfB_REW7EpHQ1QjwmgqbY6TeCcatuElWtWtUUwaDIRWAKHFeRMDkWefOTKhysQJUReISAjZUm8MfedgjAnngIQhpcy3_f2wQvvY2jWNHJ1gvxm2Crk3T9plvwKLY5mQjVNGZ3WAHujiByT5devx8FhMAfJCmmOaLit6CUgGHRSiVOKemLTIuhy0">
+<h4 id="许可-amp-漏洞库更新"><a href="#许可-amp-漏洞库更新" class="headerlink" title="许可&amp;漏洞库更新"></a>许可&amp;漏洞库更新</h4><img src="http://www.plantuml.com/plantuml/svg/ZLDTRz9G6BvkVqKJByKOZV72c2NpnaIzC1fkZ0afS8PDQjkSdYtfNOcm3yR731CDOqCKOJ4wfa67XScFuNoKVs7FpYZWPF6YwJbvt-SZx_CUDO5CgD1o0P_MiEV92TD0qDGLrKPMB6528Ck6YO1YhW6ec2ipdQImmRmsxctHoY_Mp-3-JpeeqUu1ySgqjaMQLTOkZDrTyZiZtnYvwIZKwLwNLeuZoitWEdQh_d23jVhC6v9yLfHaO2GLBYVBAMYkMe4B6xoCwqxKIa4r2KRkZb0DbKRkQpcqT6qfT7tdRwW_tFCRUO6MfN-oFrQXpINyzaVIMP-JaAIG-JAHCmObmDE3YT4tnxHmj12V10deM2XgwQQQlESW8BHnBuS7xqFiD81fAf8a2PsuQeFRjyZNj-nB2_U-yy8JMxqIT6ihpbCjPOm_v_rEchxha9qMBTJ9VYco3Eo7m9bekRYt7S32sVFJT4IEaOXQIHNnoOYK_ciozvzfLXHfEXSfRaSUsAOX_3xIR7HtEPmRPrvQoB8gvZffdmzn0MRM91usQBeJh1ifrabsStPPTR06pZVokI7-97k2JykicX5WDgYGqecWc4iXU0PpGLnKHF6OhiMX2XrU5xopf45ziZgn5wP-nhB076zD0GE50Dux_h1FcXNMxz9SyrnzSuVawi7AN2NDRtxtKt2AiDr3x1LPl-uVDSHBkqvgX_p1YTrybINhFoua7tn_0000">
+<h3 id="数据展示端"><a href="#数据展示端" class="headerlink" title="数据展示端"></a>数据展示端</h3><h4 id="三方组件列表"><a href="#三方组件列表" class="headerlink" title="三方组件列表"></a>三方组件列表</h4><img src="http://www.plantuml.com/plantuml/svg/XLDHQzDG57xE_HKNzgAW3w8Y31HyySd_KDBahWjakUNcRb94I64okwscibROd7MrYWhIzc4RNRBI7zFSc-HVUB8ROpesV0dtdFkTxtpdkoUwmId3yg0TpOwZ8406TJYZDjPTNgyOb164YilxpuhiAfP-9mg-oI_Va_5N-NaGXUVtKi-7E9gsvCUBEDo65Aenkbd7DSAVkoxPgDgDbvRBCIfubYYhcvPjlh1iJjZ2wyZ-jWY3SeE5z-6MIi2ctacEzS9qnnV-RZeuYq-QjrHa3LeN05H5G2rc1wBLXY8HTEFkJz5fnpyc2wzfMrMcimQSZ2q2tsGq5Vuu7RvF3tz1gD2oDm4k2EMbBq_xyUwvz9f8SoWdc6uHXkbQoL9DuzMANYCEh-YvBnZCKrHB_bqXSmKPHAMZ-K0snpbDlVwlDa_bd9LrQfFiKea2ZR8zkWQnBOCuxXLA3LP6WN3NeWwEM-_ayM-a4SV4sKZevhdmYldamSD7Zv6Mp0_JdVteyaWEFNcsbumcOjQBmruqzQBf7bYk6F_EuHAR61oRi1kM0uT2dMNYDKOty99YMiElrWcqo-LbgATOTnftLbxdgJTtKQ7rF-yFZYR3jshgyXQeZBBrXYqelpE4QfvY2wujHNbbodgAFsiL9_Ek-DGNettPEysVu0y0">
+<h4 id="三方组件其余查询"><a href="#三方组件其余查询" class="headerlink" title="三方组件其余查询"></a>三方组件其余查询</h4><img src="http://www.plantuml.com/plantuml/svg/rLFBRjD055rxlcAaRa2Y2mG8gPAHsB3Y7oB7dgQMN4zaJuiYXEI8LYMqmK5Dg0ebLGdb8Q4aYxGAJgDyJ3nZ-oyOPwR6gPg2sB6nVCTdZi-vzrnD9zY1RByUZe_2800wjec3BQYvf5pGiOC0K5KO3clitSzej1MEpbd7OsUxSUyBUxczJ8y3TlH3551L0SYObXzb52kG-Oqm-CoEJ-FU9_RnXBFSIJoVrtbYK7BmHXcM47dikcYzQ5MUcYw18EEPeonkc9RnnBG8SgPUWxMtw2Z8_s3glLrmCuNFW1n2n_kqLfV6MdrMxzAW6JM_qKOz-jgVUbNBB3gQK-5l-YRYpxWxf7ulwRn93h_pKg3vpMJ7voMxyDcW7Rq-PruLA3Oc2E9Dv42ycckeef1YGIiXcnGqQHJoRWYgkORCa5912X77uUI4LNkIfbp-VLSUISx26hPG-b684kwkG2nJHxOxGmbZUHGNxfhOXb7j5PynK91jmDGIkDuNN38Uthrt_m5GuibXihCNNhoNKUdswRWLZLhXq0k7kxptWl7IXuiif1Dey66RDd_9r9a6N7NmEfnJZ4lmsHhYlvFoKfGADRjoQ-cvF7fn6sHQ5qQ0zpBkRDyGWMk6dnylBuMDRFXNif1FIbv6jY4hC9uqwOSsxUwnra1s_iPjo_Vplz-scHTsS4ed1y8HEwko_k0FQvFFWQIGrxAjWlbjc0_nPUJ-DHwBDF_rU7y1">
+<h2 id="新版-3"><a href="#新版-3" class="headerlink" title="新版"></a>新版</h2><h3 id="数据流入端-1"><a href="#数据流入端-1" class="headerlink" title="数据流入端"></a>数据流入端</h3><h4 id="三方组件流入-通道"><a href="#三方组件流入-通道" class="headerlink" title="三方组件流入 - 通道"></a>三方组件流入 - 通道</h4><img src="http://www.plantuml.com/plantuml/svg/lLPTJzjM6BwsVuMbthGQ36tjEWa9f9H9qrIfazhkgkf5b1g4cYKif5rxbv0cX7pXb40Io0Y1GB9M42WV2macFwP-Zu__HL_xEEOO0jkaQHS4-vptVTwlvpp7Nbyu69AUoBwPu7GWBFg2WN0ew9T-yCg_1WEUAPbR-z4Rbd_tldNU7tedNtgTDxAyJx9xf9A5LCrPd0W69gUd9lolPiDoI1G3mR0i1L_B8IauUH5Jw3-HuoZ4j_j02rgxhhK_695L8xea2XxsC2enAov1VUq8zwniZBM4VbuNXGUEyUuMjDlCvT7KTE0D_eV5hU5nknZRGGwyaCpanB4noGuaZOs9_SI6nxbmen8QqDxyJzxPC5byhtLFMCRCZOMIHCvXUBoFCof1FgLNjqbIWLILvBP9uKJhrKYqDQIfFOYVmDaSsTs6-ZjTIRWX1YJm19-d0xBVA2jcr7AJLBVrIXhK9LZ8SlRqg4fLbSJYa3WMlVwmv3Z0MGIKbYXS7ucLPjerqYIr1cSnKVRFoXn4_D0exbw2S8qTYrRohXK6gkTQi1c3NfpkH8ruLbVtM2j4mKKJdec2e9sdOMSEEWMzq1on5aUOhxwxq7SNq8AiLunA196rzYeIqYuZMOR55esfR0lxhNLNM09sIgllIA55Cb44eNj_ee6RPZWn-bVLNSl2ajQfMmmLiFyC3N7ukBItHciPK79wTnUtzEuxkXKN1OTqWWlnqWHehm1hwvWAMOXWtWpnff7HnXPPL-1zXiKPw60T5XnClM7CBzgrM-LfxKsah-iikQPXxKYtlFBz-_U-5R1cuMbmPjfdLNK4dHr8paCoCIezu-lN3xgmddukVIKzyupOHzDwOzlQMGdYIRtJUCxtn8fqcOqdIPomP-AXUM35wsWYtNhn_JTtxtqd2f2h8ZAtHKejPuoFWhE_-LcHpX2n3lHISkIFRHg9qN8Ualj6h8absGoowAEripXIo_-srYwGJpLBhSo2yJZGQ8546dU6U1R2UH6H-4Hicl77j5V2zEZnFkk-rIL6GfCv7rjCMXcNgA921obd-fYX8_hSAUmVeBzH-aHsDw_GbgHIxdf9Paxh98OaZ635qy-MRDdXjV3182sqfNDKqjeBPEKKQUPe85C_SIeKV3KZwMeUs-6PcKQf3xtso-6xNx-n1IwpOWSJR30ErN4R-MLM3h533agI72vZMyb6pVYGuTpuQmS9dQp3tkebMea2RyH5iiNORItnZBTD-umIcBXewl8rWGJZOybvxPyyOLWYHLI68b4gs7zhmPZFaiAvzGZrB3bEuupmNc8BULNhujMNXiMysUGkf9fiZG7mRHzXIzWjDDPp-rS0-YuffBGfR_sSD3LtDL6ZNESBq4xJK5ynPL8j6p4LsJN8w-B8cdVBG5ndMhRkS2hpEQAuwk7zwL4JvUbp98yG_wiASJNrTSWXZQr1lfTyNHSNF0Fx6NVPFJc83rSvp-XqSP6NMg3iz6_dc_aeiFDowKx7La3YqAHef05h6_hHXcaAbQRMoR4F1DgheAWydl7fXrszMsKV2UZs-EbjMChY3KkA9qRnw0xBXPx4ORvZb98GEJEHwFmX8h5tTA9xvnZBXaVvh5HnhZIQGR5afmw72F4c74JqlHh9DTmj7lXDygzOmxUPiSRKiyKyuyxVaUU_PWzVsutykPb0mk0lBU4wyVFClWtu99metO_Xvv7hWnozhX51LpwkHbsmqn9jXWhPGxm4_q7kU45RF-RV5m00">
+<h4 id="三方组件流入-处理"><a href="#三方组件流入-处理" class="headerlink" title="三方组件流入 - 处理"></a>三方组件流入 - 处理</h4><ul>
+<li>Load（仅对 Linux/Unix-like 机器生效）：当系统 load1 超过阈值，且系统当前的并发线程数超过系统容量时才会触发系统保护。系统容量由系统的 maxQps <em> minRt 计算得出。设定参考值一般是 CPU cores </em> 2.5。</li>
+<li>CPU usage（1.5.0+ 版本）：当系统 CPU 使用率超过阈值即触发系统保护（取值范围 0.0-1.0）。</li>
+<li>RT：当单台机器上所有入口流量的平均 RT 达到阈值即触发系统保护，单位是毫秒。</li>
+<li>线程数：当单台机器上所有入口流量的并发线程数达到阈值即触发系统保护。</li>
+<li>入口 QPS：当单台机器上所有入口流量的 QPS 达到阈值即触发系统保护。</li>
+</ul>
+<img src="http://www.plantuml.com/plantuml/svg/xLXBSzfM55vBlq8JBuEBcoQTnWlFq6IQITEcdROpNRHTo20xJ0Wm6BTnL_Y1UTXW4cE37mcn0pMJc4TY1_CmuSzmhwH_qNDr9La2OSCYcqwpo9XpTRvxxdU_yv2SFcymuFDmz_YWy1U_m3hLtm_ucSSyE-rxobt3MrMSAEFz18eVN6FzV23eThhzl3V8uLfKEcsWdQB9AhPMkgqQoZN5Wr2tSu0NAnRBT05ldOgfLVDol8P3YzrE6PTUMoFZro7yOGrd2gYJOGMlYuCezRZl-Bmpxjaxdlcve13GhNVv8DzhanRNfUKsFHRBiYe1urFzuKzotNeCRpVKxIaT7nPHkC1wVK61y_qf13ZVZCOXDoRCt9g-xMGPt4n9aJTVow5TUN5pJ7wRxPvdKJWgDe-aqw8SsHYJTr84QAU8zz-Wyn1ALPG34LIMOWVSiu-21DmghBlpqzE-Nts1nsAp8nRNniNZusuzf6_2pWPyy_uhds9CX-ZVXnjptVw2ltcROHb6FDz4-HMuiycV1M_GxHKyd7ZI4bkvRkS5ZkT_2jg_y_4k5ArA7p_AsIWAdKj7_w2DPyQ7M4O_8zE_c_K5eFOcYYKe2ivMK4e1JUV4rJJUBh4Cxm5rA7zJEmbrM6Y5TmejPzz3W3OS2-7z6BteRZs1LXDIPqywMAT77u2jPCma1xTCBrTpFmITA6lotghuCJ_0swX6ehSuZXUwzLtuHN5iw5bSp1M0LY2NccWqucPDFem2fvuvGQM0Y6ba5X8d-4K1_jVE27T4j0YPeGG_FgKd-x3feFXfoS2CaWrgAlHuTDl97e-1oMA8LOcYH_tDzTuSkUefHaSq4O6YULJUrPD2B6sBMmLLd-ePJ9JehfyofvHSq32rC8m76Eh-XrOEpXNaI48g7qB1nh46KVvs5Hs-HC_NKVILl9Ed2W54QofWWS6l6aH4jIWW_kBpkvtYxWfrenSjlckXw5jRjrNGhuJw4sTgeh-Dgh91tbAhKJdWSK4LJHgTg_29d2aDpLMh9dLoK4c90Y3SJ4tEdEhi3JuhzLCVD-i77vDibsfXgHEXDusYEt3e6u3_a2n2qXqz1sxbhOw-4mFXt02pJUfa0OayHxUG8YStYPspMFWA5ZuZ_yGz2ABw9NcmMs_Yqg697oCJerKenK-lJLej6RBJG5zOBebB3RIn1DYqBDY1Sb8FoXqvKwOcG_eJpLCZpK5DzgCr0Og0as_mTji6pE1a0SVtqFcoUaBe1T08w6Yaf9dw9-FmkrK9zHG8A5t0YSFvsCobrYikLXKbQaDOBw1gdnHRHsAhHA9Aro39G1LARvSgP_ZTaehnG_0H33cz28hrIdzoJGJ3nAIQ54EN0nZRwdNYNbnJDKhR22sqnjQXnyUDMmsDbbkQvZk5GSWLnomKplikkyFlVo0iICapjB6DccanNRIBiIZUFxPBbP9K3CdXXDWkQ_0cg067MUk0cA-EoieN-Y-EfepdfIk_JS-xFIx7t9pmPDgpy8V2pc1CuvmyoJdc5hnETBw4ImMfkWpdusZZjPYfXmspssf12gFokjZQj1cbOMhi1h5R0Lih_ZB1c_LkXJbOz9G0sYq-oOpYe1F7HNqPQRgenowQpINZXV6n_-1uOHPk_tWvPEUrXFc_yuxSUTb-EWUaxMLPErGHDvKXncfVm-kuLi9TWclUxt4x-Q3RvuKY3hNExx_lkluj7_ZUTUlwFS4h17YF-s_XHpxuwFetynxFG_w9yBiNf_R5TWObS_tvpZA6VQpr97NIQEyblEx9-w4165RnMqgpqi2LDBMXixADmozNKAjfd8ZjvAj6kg7NrW7WvWyW5DdIdthGvpLHqWlg_OW2LS1iiTY6xa6HEMvyV8f3P-z97KXMX_AdmHdzEJA0W_I7nu0xq5wRa-2ZlkUUbU7LcKQKY42v93oWVC8IqU9cJ0-Lrt5bYvQpo-xM-8s9o8Iy_Hjjq4XGSrEZ-_9yC7slqjwhZ4RhJL7-b1GUnIQLgwYzHMONg1Il8ZYR6m585KizJEgSudnhmax7jCyd9a1DCEx9XoykHJGpsi-4WTSHKYPSL5_oKct29d7-5m00">
+<h1 id="Api发现"><a href="#Api发现" class="headerlink" title="Api发现"></a>Api发现</h1><ul>
+<li>先搜Path后搜方法, 查询会友好</li>
+<li>Api覆盖率有总和(但是去重), 应用维度覆盖率(Api发现那边服务器)，应用内部覆盖率(内部指的是应用维度)</li>
+<li>Api发现里面的ServerName: 服务器名称+服务器版本号</li>
+<li>目录树是按层级进行获取,未来修正: 通过parentId获取底下二次层级数据</li>
+<li>每个接口的Url, 单独获取, 通过Method又可以获取漏洞/应用版本/检测时间</li>
+<li>泛化的概念</li>
+</ul>
+<blockquote>
+<p>表结构</p>
+</blockquote>
+<ul>
+<li>tb_url_find_load<br>load:节点的描述<br>type: 类型<br>clickable: 是否是叶子节点<br>directory_type: 是否目录,叶子节点等<br>method: GET/POST<br>template: 全路径Url</li>
+</ul>
+<ul>
+<li>tb_url_find_load_version<br>header<br>paremeter<br>应用版本<br>path路径<br>方法签名<br>最后检测时间</li>
+</ul>
+<blockquote>
+<p>Core 查询Api情况<br>鉴权的Api:rejectionWithInfo</p>
+</blockquote>
+<ul>
+<li><p>getOverviewMerge 获取覆盖率</p>
+</li>
+<li><p>UrlFindApi#getAppTreeRootMerge 获取根目录<br>子sql的计算可能没有必要算一些没有用到的字段,可以忽略</p>
+</li>
+<li><p>UrlFindApi#getAppTreeLeaf<br>获取叶子节点<br>UrlFind遍历叶子节点和非叶子节点可以通过clickable/directory, 但是他for循环每次都去查了<br>apiFuse: 熔断-由当前Api带来的熔断限额, 所以要在当前Api上要标识出来熔断的情况<br>目录节点 + 叶子节点 两大部分进行返回<br>array_agg无法distinct去重</p>
+</li>
+</ul>
+<p>点击叶子节点获取ApiInfo-getApiInfo + 点击Method获取ApiInfo-getMethodInfo</p>
+<p>没有代码全路径签名signature,默认给Method放进去</p>
+<blockquote>
+<p>Proxy Api上报</p>
+<ul>
+<li>ApiInfoHandler<br>Api上报(主要),流量上报(补充),漏洞上报(补充), 同一份数据批量的改只是为了改最近检测时间、当前漏洞检测状态、当前Api覆盖情况</li>
+</ul>
+</blockquote>
+<p>14号接口:Api信息上报</p>
+<p>pathList: 路径一直都是一个,但是这里是一个List<br>produces: 是不是和header冲突<br>isUsed： 是不是很无语</p>
+<p>AgentService#addUrlInfo 添加Url信息<br>一整个Url进行拆分路径,落多个数据,而且partentId要单独先去pgsql划分好,所以强同步</p>
+<blockquote>
+<p>期望<br>存Api  -&gt; Api基本信息<br>存检测日志 –&gt; 功能界面Api发现旁边的检测日志<br>存主动式流量相关的  –&gt; 主动式流量</p>
+</blockquote>
+<p>流量和漏洞处理ApiInfo的流程</p>
+<blockquote>
+<p>流量</p>
+<ul>
+<li>FlowService#addAgentUrlInfo<br>reportRequest需要转换到Api专有的形式<br>主动式流量<br>tsecpointIndependentMapper#insertUrlInfoList就是插入检测日志</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>漏洞处理<br>数据来源不一样的,其实底层处理也还是差不多的</p>
+</blockquote>
+<h2 id="原版-5"><a href="#原版-5" class="headerlink" title="原版"></a>原版</h2><h3 id="数据流入端-2"><a href="#数据流入端-2" class="headerlink" title="数据流入端"></a>数据流入端</h3><ul>
+<li>Api上报最主要的入口:ApiInfoHandler</li>
+<li>流量上报: 主要做覆盖,以及会做Api补充</li>
+<li>漏洞上报: 主要做覆盖,以及会做Api补充</li>
+</ul>
+<h4 id="Api上报处理器"><a href="#Api上报处理器" class="headerlink" title="Api上报处理器"></a>Api上报处理器</h4><img src="http://www.plantuml.com/plantuml/svg/VLJBJjjG45tRNs6fcrQ2HbLRLUgY4XjKr7P5ssrbuWjOf7RacBJid438WmG723Iy2g41ehP9WF88UP2FmNDz_HSTrqc1I67dEpFdd9ap8_EYNrSr8KJyGLLMTDwlAhgc1WGnf0S_1JNrwmpFTvE3hswYBmLnWYZwAD72ifyy5YNfWnOOKSPLUj60r2wqLY2PwOHu_WPtbwDJC2g6oNinD6NNstPfWHxlGZDAo_jGdBEpytt1LWEL2f3OX4QT9hAGshbJskswMsWtLkZs3Z-XgTF1Nc6UwoV25Y_0N8DwpiwLV4Fko7Ghuygkby1CER6CtQfOxGADL7bEKNKYg66Y2UhuBGE51zAB9q-VFUTuZgDc5dsnQYbdUy_UcFEGLgt13Y9MhMxLvo6o0JcC66_8p03TlQIPoXIPOUrDLaWxkGYarpgkS1p61PglUaLUXuDsCa6tVhDgcPKCExU3jg0ArhBskbNxYGG8SF8djBpd_Ch3vJcOItJr2F5EF0D5jp6QseTgayLF4NWxHHDhp8WX7Fl7vkb9mMi4Acd8Bc84p4GFdEU88Wd_NEblS53KGaJhx2C4JGCE5-ZgAJ9xwZpdRUnk7OxKpsrCkUCwyRHTCI2poggdS7ICZTkDEVOZXWp3iY9vpiDosdsFAD97eeLaLV72BDk2-efBPDKoh1r7BdV0-PWpMuBYeMCqsDMI7RtqUA-Dx51Gfdys_o_dsbYo6lju7vX2VaZ48NdYaMBAvUq1e0mKDvnybhMFt7GFo3iGbFA9lZ6VNy27cquWBaahPrxH0CJEhLfP71XpTxpz7SnpA6TPAegD3lZTnTqAk28qQM2NVjREmzKtg1tWzhppmSPPzO8UHrdrWCx6l3qy_4pqILNouHv4_2IQRvA84j4UsUKaidKtZP_zDYq6vNT4co2lHKKA45-F1VS0nwRbWFHM3kcEiGojvHvpxW6YRv0gGTEaPn4dRdg3UCVrxpRxNoN-5UKm6GweNteuEfek-2y0">
+<h4 id="流量上报"><a href="#流量上报" class="headerlink" title="流量上报"></a>流量上报</h4><img src="http://www.plantuml.com/plantuml/svg/ZLJVJzDG57vk_uec9huGMOmQ4nzCI0o1w1D4dqnCQI-pIUcjxTtKjssPRAihHORZrvoWGFOWWwW8R93zCUpSTl-5zwxR68iRljmqFUTyvtpdVEU8iaAm9Tb8CR5c45711h6mBiasCL-P5dxtNXIxnZkFh_u-akPr_7OMMN5DGUEogav4aK6UM_gqCO_fIHsSRRWeGCxj_1AZ5ewPqe2ZA5mXNaSFbax0Aq9jrL-jHDeXjEI2imCR5V2SrWVNlwZwkImj_V0FSit63aqUYeA12P9m75aIdkzZ8DrI7zwzT_-180e2FKwsCbxprA7ENlDy4_8ro2w6bVgRQN2ze5gbwuTFOdDpE1ATCPN8526cA213bThmeX0oQILTM5haJNYcsQG3sww3VZwYRhMrjSZI3Q57jy-O2m--5bXEGxrc8HDRP0QzYI6RC8WXf9X5kEOAfKf8QyBK0YVbfyv2r9YfOrbb3P_K39KtdV6aQtyWiT4g9OBz90FgaXjUiEJNqtuz4xFqAQmZZi9PNoQM6MxpT8cUU_HtESntcVWq0kV_IcG0OPV_PRcXHeRTrSFGvl4wwenxZrKN_dRVzmjasHesHcM4tRI_t95FBo-pASYs1ueUCKO1ihkjZFiKCKJso5pjqweq9cacUmXQC7MP1Oz92uYynjmWAmeokJZwHpUyolqKBPTO1jZbIU1WlQqLDwn-L6ImV06r0YqUmRTofDceqjMpKDqt1_LK1busQ6m5E_dEpi_ASJI5T1DPutCnJLUva5uQFHV8PY3ta-quwoVzjGNvOYXGhYcTIFHxWXv_f6jxq5Y3yyJDSe2LF2USgh13fyNHP6TXsVp1gG3JRNi1kpdQpsXY0piW3jVOW6SeEUfvGUE84rt9zwyDlnSyUt_oxk5b8ooux1Q6lG_7vjSBzClNlm00">
+<h4 id="漏洞上报"><a href="#漏洞上报" class="headerlink" title="漏洞上报"></a>漏洞上报</h4><img src="http://www.plantuml.com/plantuml/svg/bLJBRjD055rxli8IMnvx5aZTe29rLQbhP3dJo9Bn63ygsDbjQ5ehiLCQYDAuf4QaZH0bYnOmSHuVKy-C_HUCuuQ4Ih6ADsEDppttpBbdB8W6qdWTYYgI50E8I34q9FE2RgWlLGszUGl0_EEZPulTf_mwak6MAYEXj2ue9HbgPEIHwqznwCIZC_obGXlxkDq72Z8WZtQWngFjPLOkcRRJQYqlok6aPTEh23lTP6ySZqvevvguFUhRz4CFSDZlBsDJAqecH-Jp5NkF9nV9j9C4jIHeiWe0bHAVjGMBTlzAVoL8oWOgIo8v2_5qB-VAUK5PGwQwG01k5Kakx35xLcFO8a9Ttz9aITb6WCl9x-wkB4_SNzZxY8TDskm_MIj3nI1-7Ji1ynLxJlgkJiVVwU41yR_HoyDu6X1xKC269r-fEqZjEdRtRmtF9pOhn0Uj9EZlcBBoWedQa7H3B-1Yis7AvkWulAGdbKse8itOXAzDg1kiTkNaEKvRXhB9ij0GfxUcIecpItT_vuhCMRYOIyybfPIrOJr8woUssgbl9USs8_exwGAbKOL6LLEJixpEZtPZDHXl7BhB3jnOHmKyzvDOVEoiuGyxhNevsODxSt9vH6adn8tQG-mDyFXz70vfr8r3wpQu2pVueaWrndXuVCSEa9N-VzBd_mKMhPa46XsJqsvs_Vu0">
+<h3 id="数据展示端-1"><a href="#数据展示端-1" class="headerlink" title="数据展示端"></a>数据展示端</h3><h4 id="Api列表树结构查询"><a href="#Api列表树结构查询" class="headerlink" title="Api列表树结构查询"></a>Api列表树结构查询</h4><img src="http://www.plantuml.com/plantuml/svg/hLRVJnfP67s6lsAIJSnki0-RtSqc9ZRXmJGcjZ6DtQTD6i9Sgmbbo3YQxDk02AWWM1MsW0fRHD8LqQA8Cmf_Z7D_p7-ntt1n7AqMtVH5PyRlddE-xvvphpw_8ia2sKWPbqL3qzn-AQZ8Ka3mpIcXjtv9HcwtUtHKO6jdE9trXcPfuH1VRf7IEYcTivK8ZPmBewDGOoCyUsul7H78xXvh_7EbPiXk1ckRTBDsfQu_UmuV00gdr-dQ4Nm0DAfla9qeOBg3ae84QG793WaSXcoN3Rqrmd66w7A250_SA2WArXBtErcQ3mashD7MSIB7ohKR2QKsxYwQgiuwwq0gk5qsmMtDnt4Mpbj07vBmymyapyrAGKvdTCiatC2Tt2qHHdkLvgDG-sSGLk9C0Xx7HPnUCVHFj1IczGxEf1waAvsJrA6XxndjbTuKO8X9Sb3cCZZUrDZBoGdlr9ZdDk3DgAHfnxHShkjwaepZomsyd09vR-J0f4-PSRliYJrQ48wbxWYQGpBGllAzHvu9xwiNRxmlnhuXXrS7eNg455DufOm_rdeDkAuNZmZq8ajhgwnHPpNLgV5-KE47yVUVV_drDu1WyIQfLooXsxjStB1WRL3YY1HLizookiX7kMsXd7S1NyZM4RJ9kd5SoG_J-ZBi6TzTewsoM8qjgiFswjUIfE1Eminto6eNGB2kiSD37DV0Q1De0GNmSOHg-wGQmTrJ-BlbjcQDHDFWCzRzQCQJrXxyss3LC3cE02pKMvYikuaBEq1ej3-R-JGfQkDYh_clziUEruZ05t7vPY5c9O1dr5Jpq0uFvQp84ylVk47jwFOI-tq2kvkn6Q0DQ8k_FZ75GpT-6k80C8U7alqGvvE3_Wufhr70fq2w-R1Wim7J1iHBJThK1rdG1VljGEAqVJmjXfTgPZnD3whWomL-ahoT5Js-K0X-mPxWT0lN-_tO3WH47dGpdC9hCTpGoNA7O_0uy_f9duo2ohW5qvz0pnF3v4kP59Tn_MzSh55zd-frM0wztUmEEFWShBq91P0TKjypFrTe9cOP-W4MuF3Fp0R4AHaXE1S3o3TjFHhj2gxiu-sSBTp68wq4KtCujWH2s6cKQ1dMMOJYmGUGJTHtOq_h4MuapUqTvxokEUz7kPPu5sG0mlyDcdNa1wUbxnejfrJxnEfh7XWmi039bSX5cfpiNAbX_iggCLh8mkjBfCn88ZpWfJFZSWFGhSk1dS7T5hsRl3jA-67Y7E2zcHkS6bme6MsDUyr9mFkaNpvWhOgh4U23OaWCvAOV8S-y7F2yxxNW2ScIEEz7ye_MVoxWrAc_GkWd3ycUa-OMloWzv9DAJbT9hcNcJYpUnWMBdpXPMAk9AxjKZmsRHHKEQPpQegi7_3Q1K93iaNLy3XBav1piyhvXR98UC5ou9q3oRMVZmoJEHllhGHWVnDnZonrpUlIQ6UGJaUmDYd0Qm26j8Fa9eVaF">
+<h4 id="Api覆盖率其余查询"><a href="#Api覆盖率其余查询" class="headerlink" title="Api覆盖率其余查询"></a>Api覆盖率其余查询</h4><img src="http://www.plantuml.com/plantuml/svg/PP31IiD048RFsQVO1sWFNWij-03Y8qX9rrAGR4dNUbrQZLH8iy6qWWa61SMBiHT54reVfjdPxLkuKeWLRyFt_pFppw2spQYBuTelbqcPvyYc3dFf2MuFMF_8fYv1g1BhhOesCAIF-lLXpGMaGkQHYfxNFAot3DZlzsGGgkd205Fh9q_5SpMzHCYXZ60w92wcnxyRB6HjUA5NeLwDouzSPLpwing8H2rlOC8XcSZWNRu8VJLIeqzagIBLsVqk0rx0R56JdlzVEnsG3cusyPwwFJScy3CONqZl3H6dWty2eIh8d_kwX1sQfCCUEJiWRfT086GmtqxORQc-qy3wAvBntTQoYRrl">
+<h2 id="新版-4"><a href="#新版-4" class="headerlink" title="新版"></a>新版</h2><h3 id="数据流入端-3"><a href="#数据流入端-3" class="headerlink" title="数据流入端"></a>数据流入端</h3><h4 id="Api流入"><a href="#Api流入" class="headerlink" title="Api流入"></a>Api流入</h4><p>存Api  -&gt; Api基本信息<br>存检测日志 –&gt; 功能界面Api发现旁边的检测日志<br>存主动式流量相关的  –&gt; 主动式流量</p>
+<h5 id="Api流入-通道"><a href="#Api流入-通道" class="headerlink" title="Api流入- 通道"></a>Api流入- 通道</h5><img src="http://www.plantuml.com/plantuml/svg/lLPTJzjM6BwsVuMbthGQ36tjEWa9f9H9qrIfazhkgkf5b1g4cYKif5rxbv0cX7pXb40Io0Y1GB9M42WV2macFwP-Zu__HL_xEEOO0jkaQHS4-vppFk_NSvxNNbyu69AUoBwPu7GWBFg2WN0ew9T-yCg_1WEUAPbR-z4Rbd_tldNU7tedNtgTDxAyJx9xf9A5LCrPd0W69gUd9lolPiDoI1G3mR0i1L_B8IauUU5Jw3-HuoZ4j_j02rgxhhK_695L8xea2XxsC2gnKro0-jeHxbdH66i9_Rmk2W-SmxjRq6upaqTJqu4t-1yMjuR7xMHi0pdmGZA34yV69DkHD3OczWCR7kVSZKfuWFRcV_BEXidYUwrxmY9cPioL9786m-Dzd549yYczkasI2gIg9BTD2YTQhqQYhI5DxK7y1CxcoEusrD_fIi8DCI209_Wy7P3zHbanlPQRfBgjLzAWBi52bZjFZwfKLKai3ebZqUiFIuu1d4L0QOd2zPvOQkQvHfgark0i9ih-MPc3Y1yQnTrB4AwsOz9AthN2GFLS2pPZq8lJdQWHp-hg7Yk5ABXemZDH4BJpDEpCGQUW5veZrk88izLt5_hc0fuWwnMZ4a5ahRsAXBJJI9PXiKLZAjl2UclT5HQ07TBgEr9eaKmKGUZUdtZ0JJFi6FshwivbOKdhr2s62bX_XeOul5_QMwEr32WvlRkBMtht7TsAYu93Ei65UAa3j5U0jNKCXIn4C6w6U5FBQ6EBh2lmFiFy33ImBWisfjumvXVjtAtqjFOcqjTrbrpTi7QaMrxv_lrxtmgOio0y3SvC-woqZg2p0ybvI2P6fMTy0VI3BgoddqjVISyy8_RTjDxOjdPMWdXIxpIUyqMnN5scuqaIM-oPU6ZUMF4wdaYtNdp_pTrxtua2vAg8p6sHKilfuwFWx6z-bgNJHSm3hPGS-MERHcAqd8ValX5hOaesXIp-QEqizjIolwsr2-HJpP8hCs6y3pHQ8976dI6UXd1UH2G-49jd_3tjbJ0yUhpFoczLYR7GfCx75jDMHYQggD11pfasfkk8FdSA-mTeRvG-aTtDAxmbgPGxNvAPqpg98GazMFxqioLRTtWnV31836tj79MqzW9PEKMUEIB8v4-S2WLVpKYwciToU6QcKUj3h_ro-ExNRso5owpOpWGRZ4Drp4P-cPL3x9Q3aYI7orXMib4pFcGuCtxk8AEJTTXRlKGhKU0FSPviDNQVbdZAsqVxZ1AOkcZgyZME1EDZoNdjNprXM295b8OYKIfOVsl1cC-Imhdr2FKiEKvZZt0miOMygdLnzgLXCMyMkGkf9bjZ07pPHzWILWiFwxdzAm1zanHIsjItVaoQchiQg56kymbefscehvWwgPQDc8hi6cHrSMNDuJ8Gr-cMBJoSp7oEAAvyU7jwr4Hz-Xp98yJVoD1_gq9SJdqTSaXZQv3l9P_NnOHdO3_ZBXkKW_XmbVECJXUJlDG2PQS_dc_cey3kowMXZgM0nA59qKW3rZRqemtpA5IQMYV7lX1ehuAYydZ6fnzszMwLVIMWsUEdjs4fYoEM54-Cuj4T5WizYSDynoWb8N9c8j7vGqHYxsX4zyxHbmsFybcfObzfD8DYoMuTDX7YJJY8w7irackuIppme-HViOOlCsEDgMUBUSQT_tc6kNAxaJyt4qWO_AabN2T-djct0P-47QNxCVm-SdsHezKr8kYAnrMe2tPQeirG8Nk8G_0Vn8u3slen_xu0">
+<h5 id="Api数据-流入业务通道"><a href="#Api数据-流入业务通道" class="headerlink" title="Api数据-流入业务通道"></a>Api数据-流入业务通道</h5><img src="http://www.plantuml.com/plantuml/svg/IyglK51wDdN3izvrp-RqFkrQgCHLa5XKafcSMP2OLwBmR6lZo_R-fqjQdazeUpfp1QhSdlvdM-PXbtCio4H8fEQbA2JbLt010PeUNJiq0Ii521CY_6J_mcUDw_L005CdiXLM2i_cjJpTlGie1j6Z1d6ushF53S-sTZ-RllJf_kb0sr5z0xGTLG1kErWOQY-w7fBj1G00">
+<h5 id="Api流入-处理"><a href="#Api流入-处理" class="headerlink" title="Api流入- 处理"></a>Api流入- 处理</h5><p>存Api  -&gt; Api基本信息<br>存检测日志 –&gt; 功能界面Api发现旁边的检测日志<br>存主动式流量相关的  –&gt; 主动式流量</p>
+<img src="http://www.plantuml.com/plantuml/svg/xLbRKnl95NwMViNKyXWvoZhhEARAws9lYMkzoHPnAYz-4J1uLLP9HCZUtJS94182NRXO4Y03aX7MOai20xAG4FendkwP-HSvtMTc60te0bkRgbHbgxm5FNrEdtFw-xu-tOpxl06_poFynHKGVtJzR1_NVl_MDVdCPH_p_IHyGbyUq7Y5vk8abl_4FkNo1zpZxYcNDo3GMbGvFYNhfOxHaIatsPsJK_FM3_Hra9uiqaoHj3DNpv3gJH8haRCaFGcfaUJLa_uU-47qsqNlX03X6G5_wVDEkfz-wNa-7O2l-kXNhe3BEgQ4bfJP5kPZjzlltsSHI_KOZHM5-_VjTgqKjput9pBC9ccLE0cHSD7kzGL4mVT2z0k-IRrymf0uUMVithZTHXif9RB_XHhSK4EhG-hRh7IM9U6et7YZ79SWjI5rFSKShPTeRf-S1KcgobDYNkqymskjpos4eSbFxxXktxR1yb32uot3-cCmPAaepOJaewRLfn41UlUxd_uGOEux8_dg-TYOxry-_pEvqPPBYxVaT--aUj18qFxKxti-rNUMhIC1ymh2qCIzFxe-kmTvsEIpLHmV_eVe3RYzeaU0kENcjjH-HMExem7d8vzhWaGFbFDpDHibmJFbpHv9BfidsMr6NZRpEjOAazOgMOYZ9SrMIOexMjkMvzTekcotkJm10N_6SGYlfpk-g-XEpRw7G1nq8KXp2rXogHudyt6blQdabz3gaZzEGd1qC0y0GjpejWNOBlvPtPoNptSlcPf1FYmWkgNw1lo67XnaEIPl5w5gK3iSGcjvjQOMeb0opxIePSiGEb32yIFwgWZ_rzE1iZD80SbugBS-DmIZ3vpvT9rCjkkmIQEInK9g9ImMNQ5k2f57OK5mOycAytwpR8R7Zln9T9TKDWnuo-Mq_BAeeKxBeQCaXkbloOuBX3iDrteqvZpwx7kNoE63ZUwSiZslHMce-jWtvHwND-OG1xWlyc6JHDywf6RHg23QCsCSmj_D8700aN3KlD5WSP6P2SwcrC97QgOyG6hDcjBU1lLYEmRnPcfgvdY0PD5Eczwvt_GT8w9I2olj2EuCYQv3rhV1_z_On_If_6Q55BRKbsrZ9Hk4Snk67Kex2vxOF5n2YHnzniQ5Apxy6JxydlqdRq8G1tzY4wLwWvOB7GKor-1wui7j3DdGATzNtUqsUROipvoIv0nuHG8xeTYCkPMscgdWa8ce39quY6pHaTbVXD6A9lPfkkM0Ej14aSOsoTcibWzeCGWnzZoS1DgF5jSc-eAmG0L6nfzrLavJRDDN3Zozkx8wrCQ7vUORkLbcKQtLQFe0CC1FJwNwWHxEQ3wmxR5wuADzxTccC1yTrTF0twjwjFoQrElCfBIeeH3r7AMlezEpEEhentX50EaZJq6c7auuHwQclXL_LX8VI39D6cloMiafBqHfxfrJgPQLKb0Dn-LMHMhdGINijWvNbq9SR0C8oNP3pWTrWrufGISvBVxJxtdedVHDqvV7d5azQt2qIPRI_BZgFnaSasY4BBpNpZRD1Cj5McMWDSr7RrccEN4DVNRF5KR52VUqt3m6vIQx6r9zd-uiFn9VY1voE0EYzvrhoYf9dUGRltjN7Bl3n8Hx8k53gV6MoL8vAzNBw1YKJYraEhs2vaHeJXUptJTqRuRaIf_-WKJdrPNj1myUS7NFr4WZIJRFoNbKtJXNyYNG2AMzpiASO-CEajmdnHPDHqWvGvD9fNt0xDIzD1Dsa9Hg0RimHCNl41M0vyvWj7Eod8KG-C40lHJ_XUS4UIYLS_dj8erlQQrDOnNk5L8h1vxKjP23jMFb0XmqKgCXdMvZ4sPC1JE6o-I-cWigUq2N1H9S9mU7C8SdoJzVE4ubz5L9im4B3v80zvC0KLranmk70lY1QO0CwNoHxCquNSunvxXpWij-kCQyh-vBZKqbDWEYQIGCOU6UAISVm9LbpyXfZOGs63zuJ1WpEy6IAz1pqMYQWXQ2NiHgD1ZgF0vwOH3hTT71QRX5QT30Jjz71mCxarkbMjHSPQl6PGnbX-K_81zOG3lB_Gow13yWQMmC5YjHKZsL6WaZL2WfoJNeUfKr7qjfXs3-maWHNAVLDULy5hfrs4dko58MO0nDRG4U7GBi8p2GBfng4MuNsN8u0lUJV0KQ2VYPtGRuFiAX3tMJsXMwnjia6vqzqhdGWz-ZhWdtJu_zeZWGjM_CxG78RKHYvVL_bzWtPBOHFVeOcDNNeBMn1DIRlZu1b5-RscPkz-I7mGmidf9gGIcODh06manKV6FGk0hhyGS6_BNV6jWCusxp4hDRySuo94wtvg3MJxnGAxgLWs5eYn5asCp0ffBw7gGD2y6WHIn8eechFF6oIW4fwWsfCO-em02TsjF8ojB8zswIMW9OemUdLrrRXtQH8GcQpq9Mw9S5tcLW34mUV_tTzuz67d-DCCVCeFpGm4DfBgXveyA3h5gqDR_ywni9m9fSoGEu66ZqtNHYaL1HN7fndtYP93NcjSuP4RQpp5GlMIFb588NPl4lXkHXppSgJdbSu-93Ry17DziqNb228LRZI9oaeXWsHAfrI6Spj5oKcasuQYW7iwInfzsakcepw_1Vmg9c6vgVfrirk0nLVW6A0KlKLrlcG8qh9qsKIFMixpupg492YQQSMuGzDR8q-tG8KZF1YCzTQlkVMu3wmL5iMVz2ttgkoXbWCRqG24OB3fDyKQaTzNLcEWQqvh7OqkGCtnywqv5Qh05_ucNtyFCsomkkfFm-YDSByrp1Z57shsSWaNco6m67x0pArcZbnFpuPE_zL4GgIoHS0k7LW3Zmoz48lWDTt2MlzUPJNxXuK-Znw6EUzZ_twFDhNdjwQkHs4PYkL0fmbSIU1SKGz5VJ4Kq1y87c_oypl_tBp61d49u-31kQc9c9f6-QvNdagh_lG9HdEn2Frg1mue9pUJCB9BdAu1A2z7Z0X4PJ9BPjNRVRNurwBTtDPe3LELBDHVdY1aMvF6ob_bLsmj2aotNtpXqc0nqJLjY5vfk7tWdsh86niGDsDywxzmiiQVt3bN-8mwkOfaQ5BHBRCSzZeW_Q43vwSEayxfPYT5dhi_M6G6hji9VQL0wkGVm6VFN-T_Ed7wfu0lh5APy_C2h--xau7VWOJ6430tm02dmCyciWoyTqcRZUSd9pJcv6dlizV_LvH5PM_NLfeFJvD9l9UXWKWbq3wWaCbDKpVAI4rankpItwTOk3moRk2bhJRpwT1sJSvKcL9G0_Qq07PjvLNtJyTVqpxuqXs3sG_YZiBWNTlSBjGaxymkwz1uUiUSxiA7FBW1ZbTTWr7d2_4B_n-7uqcjiRBM7rS_a-CB28NJqFznGl5gOtxq6Ul7kzU7S-UD_alTlyt7tzrswMq7y0">
+<p>数据优先级敲定?<br>数据协议通道标识优先级</p>
+<p>Rpc数据包过大?</p>
+<ul>
+<li>Nginx配大小,防止打爆下游</li>
+<li>Gateway接一下,发现过大,报警数据量大–&gt;职能服务</li>
+</ul>
+<p>高优先级数据</p>
+<ul>
+<li>日志搜集</li>
+<li>重放</li>
+<li>复测接口</li>
+<li>命令下发: 主动命令搜集三方组件/搜集Api发现</li>
+<li>命令下发搜集上来的数据</li>
+</ul>
+<p>检测日志50/100限额</p>
+<h5 id="Api整理"><a href="#Api整理" class="headerlink" title="Api整理"></a>Api整理</h5><img src="http://www.plantuml.com/plantuml/svg/jLPBRnfN55wRNp7AeflO8cdLZIkxSY9LZP9AKQfsbSq4ZnEK4KC1Lysc6kpmcfYdSO9Z_C05stM28Id6m1ZuCPbpvyw_o9cvmtZiG9D5AraMS-zvd-zyv_A-Y1JYme8lAFa34SyZwG-ER3H9-eIKqw1KF44-5F7x_44-4E4MIBa7cqUNpcwDEIFj96rrpLCXiCYXIOzF2aH2aiXfgef6QNCLUWUa4YSxRUVgWR3e3zyMbyCH8UGStkMNdlAZGuzd5ERCl1tAx2ZOqwYHo7fvxoF1wtiO8Dirqij1ja5N-wJK8ETPqjhnsa8BGR_MKOXISvcxDS6SpxlunTOyZqFISf3JjreaKoFP0iHg47kdzTxev-jGBq6s3VKSLLRqbQvdoexVbGWqutRyfd2iPjKZx9S2MgV-u2S-U9ltFH4U1koV_1C1OcUad8BOgjxQeyC4AU-Iin9vrmHb5mDz681U4HfT_JWAsJnKd-kvkDP9Qxsu_levYvsinY1-EakIUKrzInF7SF9QwwP88qlULaXnm2oRqg_Q86-ItPfUVe7vG-u0aaqw662jq8fHIe9yxfaAI161atuNGfoqv21bQafJPQsRPAwqpWkdN7eoJYkcmCqFSXIwRGoIdBwWZOqFSixOp-kPXDRFi6v0C_j1pgFeHUvO4mnCt-f0Rksky0mDu-UllBWiw6gBA5Mj8skTOmpSUDKY9wUe2mShPATCsp4i5HrkNjocqX2BqfCEnDDctjYzbqqcu1XcOQ0H_FiQmpMsulgWIbxjwKgROFIzebuyWkeXFNnEZYf68WsvXjVv_l7-0adz3ITT9pFZJSdEh7h8CaEVw0STaaQH3bQX-dgQCw89hBFJUdH7_jaWgI7jzo6vQKq6IPMWju7wL8wYihxV98KTR37UipgmV9qwaBBCF5cbckOkZ3FOooes5542sHBBzXlC5ZKm7r2EM9vZ-lEVPF7T_vI6IK4cDYSYrD5sEerEaP-Wi8PX8GACOjG4s_i27fgGovzZ9KneMo1pr3NrBqGqErm81kyiNh_71nulyuy5Xg9VGY9dmdzO8T66EovUHCfysSJCPsRcnutM1Lku-N2MCrDinksapO6jNUJ2M4ZPm4DB2QsubTqCgcmOSe4aSqWS69OO5fnePkP9-VZV8tBCwEgXhjRrs25qEbfdtnsCRPLrTwmoevNHT5fSPZLxchDRRusbtMwCoJvLjk1y5Vhha4fZPMrMiuSLw-kPkZNov12y_GDv0mdHt4-uLaH92d9QRysSVwiOhiYTM9sbDii59L74SF34wgHpuqx8Ob5Jq25GI5QHOTremy51RdDortePLb_8Agm3T5Z2sr7TBk74hi3dkiB442WiI5AlClnDw_KKNa1YJpyi8FNHuHQjhDt7UAz0OFwYsf_pTTM5WqrDpR11juhhfeClGCPLerOLBIHC18rHbkb1bAN4aCFWmBezDyV1-GgfrzoF4MvkRhJ0FxrastC4h36h-nCDCfJDXRQBhuQc3RYCoinS8QjnzfpLJvHzIE-vtICNFRWd-PvEPZFprcOiHcFb8mGMRn8ITvsxDdFD_2_Qp7JjAWzPwipjY14cpZezovlikBrlo2eTvErUkYn0zHrjrSPQ20cHvL203ekmjMFFAfl2ZepK1ODZFTE0xCkl9jHi752iYKEeESAeZnEczmw-lV7dpHito7RbUtCtJJR1dE5BDYo4aAtl19QaCDQHDHOr63ukt-Fn64kFbltYuZr_E6BYlLz0OKWc8FMUvlhGMn-lWmyisjY7p2x4acnT_E37thZVZLvZUyVzFTebutk404YGLDVaHEirwjM6k2QwF_ycqaOTihNnUlROiFVhMKthbr7E1CduaiNJJhCkCU-degoCkhfEjdUv9N-05yLdd95GS7FPa3O7z2C0">
+<h1 id="漏洞上报-1"><a href="#漏洞上报-1" class="headerlink" title="漏洞上报"></a>漏洞上报</h1><blockquote>
+<p>数据结构</p>
+</blockquote>
+<ul>
+<li>tp_app_hole: 漏洞主表</li>
+<li>tp_app_hole_log: 检测记录</li>
+<li>tb_hole_share: 漏洞分享模块</li>
+<li>tb_app_hole_sub:漏洞描述/总览/调用栈: 用在导出报表侧</li>
+<li>tb_holedetail: 漏洞细节-&gt;概述-&gt;细节: 页面上的堆栈信息</li>
+<li>tb_holedetail_overview: 漏洞细节-&gt;概述</li>
+<li>tb_app_hole_log_link: 全链路的记录</li>
+<li>tb_app_hole_http: 漏洞细节-&gt;请求信息</li>
+</ul>
+<blockquote>
+<p>漏洞来源</p>
+</blockquote>
+<ul>
+<li>tb_hole_template: 漏洞模板: 展示在漏洞概述-&gt;模板</li>
+<li>tb_hole_type: 漏洞类型</li>
+<li>tb_hole_type_language: 漏洞语言/ 安全代码描述|不安全代码描述|引用连接</li>
+<li>tb_hole_deduplication: 后端漏洞聚合</li>
+</ul>
+<blockquote>
+<p>其他</p>
+</blockquote>
+<ul>
+<li>tb_hole_reply_http: 重放:记录下发的重放记录</li>
+<li>tb_security_policy: 安全控制</li>
+<li>tb_agent_delete: 删除,只是蒋数据放到这张表代表删除</li>
+</ul>
+<blockquote>
+<p>复测</p>
+</blockquote>
+<p>复测在漏洞列表页, 批量选择漏洞, 选择服务器, 进行流量重放下发</p>
+<h2 id="原流程"><a href="#原流程" class="headerlink" title="原流程"></a>原流程</h2><ul>
+<li>检测数量直查</li>
+<li>细微操作<ul>
+<li>排除规则</li>
+<li>安全函数: 联动漏洞列表的状态[已发现]-&gt;[关闭-内部安全控制]经过安全控制函数<br>隐藏的Tab</li>
+<li>修复依据(经过安全控制函数)</li>
+<li>验证信息(经过主动验证)</li>
+</ul>
+</li>
+</ul>
+<h3 id="全链路"><a href="#全链路" class="headerlink" title="全链路"></a>全链路</h3><p>漏洞描述的模板要修正:<a href="https://192.168.2.2:27921/app/52/vuln?vulnId=58#1603" target="_blank" rel="noopener">https://192.168.2.2:27921/app/52/vuln?vulnId=58#1603</a></p>
+<p>LinkUploadService</p>
+<ul>
+<li>processAppHoleHttp: 处理流量信息\ 如果调用下游就报, 没有下游调用且没有漏洞就进过滤规则</li>
+<li>processAppDistributeNode: 处理漏洞信息\ appHoleHttp直接进库<ul>
+<li>中间节点: 我有父、也有子, 还有自身</li>
+<li>尾部节点&amp;头节点: 我有自身和尾/头部节点</li>
+</ul>
+</li>
+<li>uploadHoleLinke: 定时三十秒进行组织全链路漏洞处理、批量的修正之前写入的数据</li>
+</ul>
+<p>span:节点信息<br>ObjectMode:参数对象模型</p>
+<p>AppHoleLogLink:每个数据节点内部内容</p>
+<h3 id="数据流入端-4"><a href="#数据流入端-4" class="headerlink" title="数据流入端"></a>数据流入端</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HoleInfo&#123;</span><br><span class="line">	AppHole;</span><br><span class="line">	AppHoleLog;</span><br><span class="line">	Language;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HoleUploadService#mainLogic </p>
+<ul>
+<li>processEntity 转换DTO<ul>
+<li>getPackage获取包名(自己/第三方)</li>
+<li>获取Agent和缓存的配置信息: 单模块缓存, 拿数据后放缓存</li>
+<li>遍历reportList组装singleVulnInfo<ul>
+<li>225的漏洞强关</li>
+<li>组装包</li>
+<li>vulnerabilityPlugin: 拿漏洞类型</li>
+<li>设定模板</li>
+<li>设置去重规则</li>
+<li>调用模板生成generateHoleInfo<ul>
+<li>generateAppHoleLog:实现点(HttpSpotHole污点跟踪),Description尽量少用JSONText去模板化处理<ul>
+<li>HttpSpotHole(各个子类设定死templateId,根据不同的处理类运用不同的template)<ul>
+<li>【generateAppHoleLog】 HoleBase实现</li>
+<li>【generateAppHoleDetail】<ul>
+<li>HoleDetailInfo: 生成漏洞细节</li>
+<li>HoleDetailOverView: 漏洞阶段&amp;语言</li>
+</ul>
+</li>
+<li>initMarkKey: 污染源片段<ul>
+<li>encodeShorRange 获取片段关键, encodeName/encodeMode名称与模式</li>
+</ul>
+</li>
+<li>getPullutionOrigin: 污染源</li>
+<li>【generateHoleHttp】: 生成漏洞细节-&gt;请求信息</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>generateAppHole:生成AppHole漏洞信息</li>
+<li>generateDeduplicationKey: 去重Key生成</li>
+</ul>
+</li>
+<li>互相关联hole和vuln</li>
+<li>去重并插入</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>processAppHole 存AppHole</li>
+<li>processAppHoleSub: 处理报表</li>
+<li>processAppHoleLog: 存检测日志</li>
+<li>processHoleSafeControl: 处理安全控制<ul>
+<li>上报的reportList-&gt;Phase: Rule阶段(isSec是否经过安全控制函数)\n在外层state=1的情况下内部isSec是经过安全控制</li>
+<li>经过安全控制, 状态变为【关闭-内部安全控制】/【系统自动修复】</li>
+<li>模糊/模式匹配, 除方法名,其他都可以模糊化匹配</li>
+</ul>
+</li>
+<li>processHoleVersion: 漏洞版本 tb_hole_version</li>
+<li>processAppHoleFlow: 处理流量</li>
+<li>processUrlInfo: 检测日志【新流程砍掉】</li>
+<li>processAppHoleDetail: 处理holeDetai和holeDetailOverview</li>
+<li>asyncFuture: 异步通知新发现的漏洞</li>
+<li>删除检测日志: 定时删除漏洞检测记录信息</li>
+</ul>
+<p>重复利用/所有漏洞检测记录归一化</p>
+<blockquote>
+<p>问题</p>
+<ul>
+<li>流量和漏洞对应关系(一个流量对应一份漏洞)</li>
+<li>url的decode问题(各处decode)</li>
+</ul>
+</blockquote>
+<p>标星:保留4~5条</p>
+<img src="http://www.plantuml.com/plantuml/svg/fLPRRzD857wEVuKbf5MHKbMmYrQgj4XS5i4kKDG2hvNh38c5iIrdKk0jlQJfBHSWlL0kRPSM8fQcgKhRj6d9Zy4pTlx5dl7On6cRD6WVeYGpvvmvvvllV7Ca6Ukc64UoeIiQ5cHTmwQkYb8S6uE6gJzxBWZ-PlVbncglU5DNqGD3rQN803A75HcTUo8fscqzgiX2mwxP1xva58__gM45FnU5gAadZEP58TJALumYV4-I7qjHv6JtI6wUpAP8FjFbf3-JlQqU-yiNgp95v_VFjmd17Qz4aOR9ordxy1NPMBINnkkfZ7rKicghT6IpLoIPELfS9UyM-7vOf3CrEbUccHB9PsdX6rzkSqfz94Eo4oOoT1FVLkBOheux7r9nHOkgw652rMvfZtGXn8i_VQzrx8iNBq72z317lxudXmSajTtEcaS7eDeP3SEno9I651NmlwSceehMosg-ZvuOgeGHW47VrTf5S4hVI6cf8pl0cMIhzNJ6-JHE9byB8R6DUNdCBXHvMBkmJ2VpS76GAKQCUnmfqSFnj9sMaNtZAuR1x86phdbpf6ER8Kt7IDI7aIdgZuBj4N9tIUczdItRe_jTDp4s1WmTCsUwjGfBpjwoK_byFdmTnMLJCR2YQwHyL4_dIFa55FZNGD_T--WP1bnuhMHsdgoDs_a9BtOmOXV9ZrkLpsGZRszLFTmtgjYxgbkHC5tP1wPQbGp9pm9JU21cMyl3MJ_MVO_p_0oaHKHM8F_N2hVloVn9TBudNxXQS5MA8uu23z82B_5SvFSBl_vsAUGLrmW4f7DfJJyawSwCKogJexd_bzrrX2L5XGH_AgE69oDIhyYfntEpgnFEz2WdHC2m3u8-LD1JluJwuYujxVpYR6uunUJFrA1e2huZcO__Hl07s4ENNz63l3sLXd1jY_1oHvgiHz10J3Vx9IsAFC7Z_g0LzK8fB7ARkz8JrCD_te4FAAdzgMnLiapw3dC_apFJvOIg9XYl-qo5ouUVEeUgWojZO3AYmssT1ddtPMTpZswDSf5ksv61-tIloIC32-xV3_lD8uNFEgI1GRj2VgZ6LGdBiNw4KHnV0rYXGBAM0JhJbJJZePjGgojqDqFS_YQI8iWaQr_hOqVMuHAfVBGgqqxjDVG-uyOGEsRGTCyPZBcstBqfNVZJLWTFQHa6FqVVM-3u110v4_KWwF2Q7XIOY0UZ164LsoVePtSTHHA6giWI8nblZgbzK52QUqbIwo99JV9NXKNpgcuPqpfuQR-fG3Su8uKOv0YJ07i21TUHVSwONhpIH1W2l9yTUWmaXW0FLv3fzBgpMXJEPd3GbJi1clLaGMW0sDdXhi12obnTwS8wgIsSvUgUB3r2r_XGw2TFIbCaLQJPJsHojtc6E-OWj54he3FK0ozHOqxgldml1ez8hzYVK16Nq2ubFe1akhX9yX_jQiwffOE7a_GH36Ri2IDlYsHjdcoDnZ6mvOyBR4OQIv697QioGoPIzR6Y7-Xa527GDAq0EUaL5ktfNPeS8Rb5gtB0-XpaTM6ZcvyMj8IMwe5zUxjgLvVPj3fTj6ebQ7FtOMfr8kYmlJtTm-MOpEx3Z1eMww_NOCAbstCWrs6IshMgyw0F9BTfLTUv0viTN6EN868dD_mGcN7eAbyRxQb9-lQBY8S6MNCC3lFT3gXwpACvNe2ld36WPVNqB2bFWBev__nBvylSaBwfMTKF7PBwXge__T5IEoCW26SvFZ2zLptO1t0xS3u4i8ipzag6PgVOrNGk1Nm8y1E9-IiWBB6c4M4OHeIM8QNuSqs-aS09awdcuIZTMAydb-pbTKYDv5wmwT8V_5l689ChZ2A1qc0D9iI5NM_dn83bIRBm7m00">
+<blockquote>
+<p>改进项</p>
+</blockquote>
+<p>重复利用/所有漏洞检测记录归一化</p>
+<h3 id="数据展示端-2"><a href="#数据展示端-2" class="headerlink" title="数据展示端"></a>数据展示端</h3><h4 id="漏洞列表"><a href="#漏洞列表" class="headerlink" title="漏洞列表"></a>漏洞列表</h4><blockquote>
+<p>筛选条件有联动效果</p>
+</blockquote>
+<ul>
+<li>listFilterName: 查询过滤名称<ul>
+<li>内部带有commonPermission公共权限</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>漏洞列表查询</p>
+</blockquote>
+<p>列表查询部分的表可以冗余字段\可以删减字段</p>
+<p>/api/app-hole 漏洞列表</p>
+<img src="http://www.plantuml.com/plantuml/svg/XPFVRz9G5CUVsx_Y97kc3cRsi0IVT0d-8Z5xRofq4oMz23TJtfXC1apeb9dv0uTe28IeGE8sKiR-6NjkyR_mjhSoPY3Uf4rxxZdtSxxVdAl5A4c3SzXXnJCvHWoQ9adGCZIbfjBaULQMnLRWncLi3QvfgGH_Ke579AcpQWlDhvFU6HkyOESc-tcCnQD9iyFUzbdbXtnPT_KCUvYpXzt79650vccIDLgyH3O8rO5iwsaWcxDTIEiFelTay1Tzg7AuwiA1XgRXkxVMD-1sD7BVJm1w7QBy9wIusOauX7b4YTnqSoLlBQ7PjOUMRHNiSSsfzd5Smr85hKCkslcmAnIm_4iid0H450yglt8xulkEddM-bnRYlVvKhYMJ80RG5N3V8KNqiQ9CCtX0ajm3vdVZMxfdkP5w1sjTs_heb8gi_cq-sZkKPbFScrMFkUepGyfqIq250UnTRvOgUCvWXCVxt0Cks6dtuJygasGBQ73PmmMNPxM5XMJfNuciNi5o4zztGDlI3Hg9ktxp8UXzOP-QzkZK0qfNQJ6QsDRLJ4mpLAfbdgYRIVBCdu9WKB23obzFmxxPi6GFHrZk8DTrilDxpxGlsh31ooDnGBCtoO_HQk1vNjQDEBZpjt1YdTrJFAXYV-0vbiFF1LPzWvRfDxoep9tkKdlIV8KNHrZipxaMuegj0RukEutMx1tw0m00">
+<h4 id="漏洞详情"><a href="#漏洞详情" class="headerlink" title="漏洞详情"></a>漏洞详情</h4><blockquote>
+<p>meshmap</p>
+</blockquote>
+<p>图表的数据</p>
+<blockquote>
+<p>overview</p>
+</blockquote>
+<p>漏洞细节-&gt;右侧大流程</p>
+<blockquote>
+<p>hole-detail</p>
+</blockquote>
+<p>漏洞细节-&gt;右侧内容细节</p>
+<blockquote>
+<p>app-hole</p>
+</blockquote>
+<p>漏洞-&gt;属性,基本的漏洞数据</p>
+<blockquote>
+<p>app-hole/assigned</p>
+</blockquote>
+<p>漏洞处理状态</p>
+<blockquote>
+<p>app-hole/harm</p>
+</blockquote>
+<p>危害描述</p>
+<blockquote>
+<p>app-hole-log</p>
+</blockquote>
+<p>检测记录</p>
+<p>httpId迁出请求信息</p>
+<blockquote>
+<p>hole-type</p>
+</blockquote>
+<p>修复建议/合规信息</p>
+<img src="http://www.plantuml.com/plantuml/svg/xLPTRzfc5Bx6l-ALUcsdf5ClAf6hjH9RjqXJxoqNky6hWrcmgAfg4lcY92iuNP9cMxDch4j0sHQ8j2R4vEF7rCVs_iNEwsC8913QgXUxg2KGx_7vVFmynoWfovnX_bhTAnqAAJDZpPW6Kt9MLawPCveW919iJCdg-CcAQTFGc2Wo5bGEmNxX7TlUFw-2neutlyXO8Y48b4QSwCRVwWyUUyA_a-htNcKRxDT1uz3RdwCqNg4Tr4gKZEuAtInz2TrMmMtjVclg6PRxpl2sjeDgNSYObiRCl3R3p0SztSVkV3FvbS2YoxelOoDoE8KrtZNVlNtd7ljYClbrvC2ipzWa7iObxgshB84MAVavzus5rpMmTzsMupf5zsJLhpJXP1MMok2iuVp-BmlUUjChx-4SK7mZaXLMocyBi_JxI-sn__VIqF9XVpAEajFD3BDkCFuzBb4VDwIk1nfYCPvWS3U4AZnrk6Mp3gkxhlFINofvctyDBXqcjHvd4PkROSsRKSrngNkBYX80ta-DtgfKpzzlmwiV40CSsAyrsOWf3NEAMV7hORduzTxP4ZHoxEA8tcOPbglmSvqfKrh6IgeSR-H0utVlrwhRFWWBnlghfImzhycvb9AHBINtK7vWc8yY5iJZL3ikTJ1DH62pQswh3SjrmBdUpFxxr7PFQ-mUXYTL1dOZc3y1PmkEvwcW94dqmz2dTOl5CHo9Me7I1hAJ-eCrnAl0eNdcGEbFV2QkKudS1IsZCixX8Ppt5mvWfGBD_H3q0lnMz2e_WcD7CmyEukfOgWNLPt2w0QKciRBNbzHwYy7pPNzhkwjclrsCV2-hNyGdHYA-QqwXZlase6K0vNMKPQJbZMqusy1HAPjxLlLc6-66k4hI5uW1VzG8k67Yxb2BQ_mIgvIqqNLWLvCmRLbPz4zpqMCOiHxFKcz2fCQ8VDnJrIn5DsJUQrxN7h6qoPEcpHvsKOKHkJhgptTwYWoK8ZywGIWEfd1oArAtRcYLtorOLZL3GzmjHGspz8HpZIWgRs84RJ-8WGF9qy-1w6s50WrsPb4Idcq7PystXPKeGtHyZdgzVzxZEPlFNqN4uh7k0xk2pk94jEBQnM1vJfoWzg2u27j7xyBj0VmWVdTEmHwkxlMF2IMrYb1-08WKEm34FXH5ccZiIMU84JlX8eYzVo6mJpA_7ve4uldvVmgZA4wWaKWp7DlX58s0djPowMab-puOm_uw71VWvIc-Ygw0zi86bGqzyv2mzTiBK2f2QnxVXHo8kQDFU_pJ7eUZ0oH6y7fnb7o8UHz5Fd2uWt_3A25bkoIY_m00">
+<h2 id="新流程-1"><a href="#新流程-1" class="headerlink" title="新流程"></a>新流程</h2><h3 id="漏洞流入"><a href="#漏洞流入" class="headerlink" title="漏洞流入"></a>漏洞流入</h3><h4 id="漏洞流入-通道"><a href="#漏洞流入-通道" class="headerlink" title="漏洞流入- 通道"></a>漏洞流入- 通道</h4><img src="http://www.plantuml.com/plantuml/svg/lLPTJzjM6BwsVuMbthGQ36tjEWa99CgaQQhKIMrtLVKYIWsAcYKiIRlspY4DX7mw9K0W6U4ZaAnLI6W22qbCVapz7jl_egzzd70CWMtIj0k2VSvvd_VhESzhbpla3mXFHFU2t-CByMw_BnJmUuKVNEAlVj_ClCYi_UWAYR-xtWxV7xhcNhg6RsIjGL97f9Y2-EvmSTRlc_FCptfV1KDYWETz_f0e-5-B0S4_T-6J6poHap143mP0AsgxhBO_6DAM4LxbkHdwC2dGKqo0Mg65UrOqHc59Eo_pt8FXuTe-jDlKvD6yn_S6_qDcVtpQJiOs47ql13CuVcfAi1q9KrFy8B3nQSRTf807zFxoJwvWY6JUgzrJ6Z4rewu4dZ4OdnxWJ0gGZMkb0nAJ8LuYwGEIErNxkoHS7rELFaHFeRT8QWTGVgV9Iqw84G4ymMUFJ_GQcxBfTRDAIWTQCG7AAgoacFDwgwGh2eb4OUc4Ttb3mj00UXB8TPwxtXDDpJnNIP1u0NeHNlG6HGOYsZGsQfSW76t7fEMiOuM2Qkawx4MW7zKFmqOqfIb7j1Gyvw09oqIEKyyJSBW8dPoMgqvOYnFKLgkj3CmvF46sYqPHGcIrlOM4jDE8RKAchaSKkeNrLhlhD00xfArt95SdoJ22w4T_uW4dpR1Z-bybPouhgsgdR36Km_fJDCHX_UhzWhwR13cjTMkufNNVwVjHdXkIZdCWNkg0tiz1OHj38IiInaqHRsgPNjadspAyJr8_8msiouADALUCvOoTkvMUsjv3-ZhkagCRrevmooNUlt_lMmvpvhYd_WMFsqgh1Pr3Y2r3R6bIUCOMG3lkmdRYkV2Ly6ncmhwRrXlTLdjvYCQqJkKvMnJBrMKwdiQmnJEp3yqRor_74-7MY--_kNllEvw3T0cHcIsIhm_x-CWV_CrBinns4VD0ApbD_ZZGfOY-cOLOmuXKCIMRGXP_r7OAUshPtrRREV9frv8hCs6y3teuHwJAdJ6MXd2-WKXi83RFs7lQpsDu-ac3bj-g4cMXIPsFTQgjb4owh407EMVQcAubRV4C6iTeR-G_aThU5TwIUDoPBqakgfsbCG4zMFwqtggjEwmOFXWbXhPsOZjw6TBQjWNR4Zv-Fk1_jI1eIXOBCRFWGPKFlFQAeRjVlx6rBRbkk-5i60PlQ3RnIr0CqFiDSemqrx2WP6VN-91apDY9WroEbU5ewnAXU8uzn7YoTTXvMc39RXyTS8cZkg8gQzSuueoF-U7huD9numBPG57O878HAsyj6CifaZkt7g6S8YS9x0wE9BgGLTGkJhq4PBAJWjhkGhnAroY0sbuXwsTuiN7gJD0bh1OUrjADAm03apYIsLIsGKogahuQgB5PPXDGpn9GNZSLKjaq8WhoQfJLnMKrnyf8t66tRCbX1EQp9BC4cc3jzLOLbUcpb4M8ln6W_rP_c9m62dH1Twe-xfTiNXUpdOBzZBjqH8xYmrNEKpfTpF1y7UJ3mM2-cOySlI-NnZcM0fQQ9aMb2XHsjDQEUHIALRMJfjy6Uh-8Sl9umQqrkrgtHByFqEpnqzkmciBXIZPEZOtM7HgBVXg5vOwHZu7KCv7qvIOYqNSqqe_EqPSDZy9PB65VzN0IPPBUEcmYHAjmB6b7koHTSPPuvEV8ls8DMsRA6bF9CbdAdVzvUZbokv4_DnE86_sHnLqdVZF1jpwtW1tL6n7yCd9yYwFLDIBeYCTHg0jsMg9DKI7LnF7t3sB7qMpzc7zV0000">
+<h4 id="漏洞流入-处理"><a href="#漏洞流入-处理" class="headerlink" title="漏洞流入 - 处理"></a>漏洞流入 - 处理</h4><img src="http://www.plantuml.com/plantuml/svg/tLdhSzDM5lzi_nMQyWLc7LmAfIKjx51ejsnfom3J_T8PHd6KH8DhkRPCo-piZFFm8qxye0b9I80yY1DFm8wp0UDOIVp7L5UI_uizL-VAbfm42sRtosOojdplFUUUn-yyxbL02iaHASZzZPU5t_Y7tW3x_Hq_T9_t3aY_SnzfZwjQjg8zpPBCwaVUC1-HnO0OvaCofzNInkizygJa7DtFQw-Va_K9lP2aSq9ea0D6oEmwB_FNWh6eB4ISl6uDHtyDEaP-aEY8HMq9HXgp-cm9fMaF6gFJnlX1r-0rAJGa3hFDl5ulKx7lIfU0_KnYfkURKP8eUaEIB73I0o72IKEMSRXJmj2d0vS2Ne_MA1YfhQzQySNMwCofrii5TN-19D9wOzDuNMgbygTQJmgKqHCGT8linqbXsrI4SlKYxuWuF29JvaUakHuR693-8KNkwuscNfhgqr-zKklnzWxUuOWK2_TSvN5eqBK9Tshmqdd-mYMFr-FHzsTmlF-E49B5a13az5r5LvRLvZCjitvRzj-K-46IhXg7Xws5D8dl6viR9F_8liZhQMldwThg67EJWnaocKLwRM6R54nsiyjwSbQRAtizV53cy1d7GKWNJ4qh8zFMmhz1A9ys6TUUJg9RrNgM9BD6SybOdKQguxYQg0TUrIJu55rfaQy1Aipfrb9IFrm_ZjgEmdvEhMUqJ56jBy8lPE8ZZpBwSX7i2DR48QJMPsgjjJGOCHWLcEOKD--XV7PNUrQ4JqirS0S57A3Ub1b8h53jZNQJmiAwvtt0pf3UHQ4UvBeeJew5ZfIc55tuRantHq6lLPusHuS9I7gTL1RRoDVBS_hZ8eCYqy4PFXRf_p9mEh3tjrbRqZZqwEdz4uI72O-siaVTNajhezjtfR0Oq1Sd40he6dr78UcNFbKfjes8z9GOX_2t7GS-22qSjViQA3hAsQ1jqownsvelkzDEgHdDPSXmr6yWydojDV_QXRv8nvOxlQwzed5fr196CuN-8UadeFWdmFy7EZctfs_-GTQUjnutspjvG9nFODXdD1U04rs7MnYftGjqd3jcudEOE4l_z2KGedgHBbJh3Qsyvh2HtGplbqjCkdOMiMBVJGNmUlJniZwsH_9Zm1WZsG_sfY5SQRRcApXaYrWAKnp4i6a7lSiKZRHQRakRE_21GRHSKSiiaVrnfXXaQaZJs7-OCS4UZzcW4z2GQi0QLmFtdLPa-TmsQ-BGQdQEuScc-dLbKrVALBRPcZPN1KYO1TVOVgljZ34RKrOEIp0uzxQ4Ldv1wdLAM9fYqEhfCU-N0IaeHJXXwCAvynT1-KcIprov6Wv_AmM5Mn7fWJWeHBxqcukkU8tjeZL6PLukwa-dh07GYkHVQ7CfRVK5IJMW053lhwH8Ajdny-NBffJxUUgrpId4NYkk68UFK2JkycMljxUgl_1YwAOqB0Rwa96sKYVDSMJ4adXxYHlJGNS7zf6lt_sn3wivFEdAXF4Y0UOm3bvfMGWgv4iDymqVaAN8mxCTCgwFiwydqtCugEvDqQvaSI8SaG92DFerv7JvONToEH97N2UI847M5MDZL5-g01iokiWIgoaKULjK3vxweBNuAHOCtGWDIJV5g8npMhf0PRK6AIVxRtL_4Q12PKrNrVfKwzaQPMz9G79AEplPSqbFImuByYq-S9yV5epSMvAV8zC9KiYUXifDtkxupNvo4dBWcUEOENfho4zAhfN8wWVG9vN1kzfK4_XT7OQoIFwOPZFDLIWvmCj1UboMo6TR6-aJY6a-S330hSZwZl6wQDQtRadjvuL-3ZKzWRd7llOuoSoKUm8nZL-tVUhcL6iqItB9Y12M8Z9ryP_n0clBCaNOvi_u8yHeL0mD1mKBCR11K9B2t0bpBdQ7XXB01Xe84KXqruN1M3We1dXPb4BV2HJixpmsU3qSjL9EQQMoi1pBXDh8zLEqEfYPAsreT24QLUGRCGW-vLYXCrT0STQKTTg-jqimHhUDW0wwsC7qt8t1lxGL0AiVaHnCZpsIcJrCzhTZGG5fp8tURI7wHmev_UKso0peK1N5t1SQWzGMv0SQhf0PaAp3r0E9mLm7eOtLddOvvYeVXuW4bkqZ33H2jC7eqDjjxGQ5rIHruEmXG1YoocrXK8n6GNijNr0Fbs3hx_dmps0BQ08EeMV2ZR2Bel-BizGjJvVLnfIgrC1aA1MQ2prc2aB35NzgkKdKqrM6Xsuw9k0G93ogxBDLL9FMNBUCi8PtSCDYrFhgpG1JeQgyq5T68UBRAH4o9GuQRxV9uGIKJcCxwP9bnJJvSaDVZNSIJuzExRDpvozywZ5Li5EgXrDaOwmVMe0RWt_6HncyuUac7ngEGLw7nv-42FMhEMmoWEmf2xz3vfT7OCZvwxRmQqo8odSVXWMlvttZzm648sIL0J48PVDMC3OiXbXAo_y1844WkJOIhDLAgzgpfakAwZZDt2Q5bTsi4eev3qbq9MbanZf9f7kjo_2no5Zt1SsBIUZasJNfWYt4sr5YY2waVoT8x5q8XKdbkPwhGbz_-bjP3jy9IpBbfksimf3nTjceRvtnNHUYWOWOfacFL0_Wx4UgZy28Vx_pumzt0HCGysXFw91iCGIjYOtZQLA0TBL5oWKuE3AtbHLP-2KS12Lk3FembzBqNPXkTorqRRC0UxN7BOepk8SZctsGuQuBCYy6sxRhpK8CYVBtVEG-f4NeptTMjUKPA6xwP4ghl77BWtPKiM0mHatwOqI42B2n-W1Tg2BKsg26LRhjC8PJedaSwUGHAxLzaCdeBhW96q0Q6tVtWV4LBmT6RWioP9DhqY2mBf3rhFO6kl-KvHCNPTGa-LRWuSn2rb-tnW-W4oRr3QYFHlC9m8xwQe3kT2zYRdLln5pBTLT4pbsrcD2Lb3Qv1v5WxxwnYU_K3VFJ_733Cm_bhtFsm7R_vn0vd8UgUpKIuH_IBRwqzhlYxHdbxLfWqVoJYiOynl7u_GNN1z8ih93gX3nm3mRlZT1PnW-wa8vJEud68eR7u-dl1M6HzY8EJZ4gLNBmcDBVW08o3D86MStvWgEqx8wNNRGWPXSdZEsoKOe3rR_izrwODTkRiECNSEaMz-HxMtnxO3NNnfigAI-GiH8Ui870dEwxOgt2IJm5unayFsR4n_jlGpyU5Ubv4IVxM04prtpHcZcamnjZq99q7mjDplOSF09X6-tt-yzzVFRSsK_EVWxdyj1GC2Q40e8_36QA-X-8mc_qwIoSK25V_9K-tnYyVEx2nKy_kt3-qiUSyppNsGxVbD3uIEmQexFCWHtPdNHCzHCECz9zrrXcVc7RtOaD00zqRwPeh9RSlN00WUo0YW8Ngqc0IAdwjRXYRARzh9olf6dQAv6d9RAzJr8Dt4azt7m7V02ZHo64-V9a_31WlDF_VG0R1BysNoJD-VypFDWDnUuj2WUaCKCgqr0H64hGrioy9Wpu8U4QUzz6pQrdQbfybFRDcP9HMQCtIEpUsIs-khXQ82ELIPA0cDqawPexVkrJLEUK3OuUuQC2E1fETAs56fJsdqEdnUWT8O2N_vYlxNkHr05OumoaR03X-XpP6OlAKDykdwF7i_44IRu1xvDaeZLUilWSPUBoR7w4piViIV8BQhr1YwXvmzY7-zbNGb7rmpo-Ma3pgyqA551MRLrSIPPMzTsC7xxedT_qNYkHzN6j9-jmtD5s7vD2raSIDLMPWofCyjkgKaG2sXoQYu_TnLLSCSnOQEcEgnw1zL-AB4VB-LwnvQ0yCRhCY79e2d6r_TWHLs0Fw3tyLyCYks65W2Bv3VfQjxx5Bc3NacJvs7U2RIfsopIcbOlM2Le1E81NaJ_9PxIvAbs--f8a4bxQ0eZllh7gyC8BSSm9xFBUQCwIfUTEHUQgo0KltbtTY_7HXw70Dp4v5X6iBP4QcD6NPhbg-qB4tJrRUeMYrvQmOGnE9_CrDeCGj7KpLazalJ_v3m00">
+<h4 id="漏洞流入-存储"><a href="#漏洞流入-存储" class="headerlink" title="漏洞流入 - 存储"></a>漏洞流入 - 存储</h4><blockquote>
+<p>类图</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/oymhIIrAIqnELN0iAF38pqaDIYt8ByuioI-ghERYVBfkrfETdSyw6vxDwNowTiRJfXLF9_Kycx_qnVf5pwRjVBPvAXTdSM9PQaH411TdOMbgKIMObPvQ0gOB4jF1KhLSN5p9EOd5nGemInoJYakA4fDBK2nxicFtYsMDpwRiUxAZuScksKzRrpnjtVXyLWirB8RQ6v0UN9Y3OYdSke3quiAS9picFzqu3x-T87CyyzBoVJABIn0YFldf487IWfJ44h1GS4bYIManMBGMpHr--K3BS3e5B4knKpXnkuKB8wuLT5Foo_DqxN1741TE6NIzQ85Cl4RCKE7Y0W00">
+<p>原先AppHole以及AppHoleLog存在的查询太多太散列,可以开始归拢起来<br>归拢规则参考</p>
+<ul>
+<li>定义公共取数据:list列表/page分页/get单个/count计数</li>
+<li>定义公共写数据:save写入(插入+修改)/delete删除</li>
+<li>查询尽量归一填充大的QueryDTO: 让QueryDTO覆盖很多查询条件, Repository底下的各个List/page/get/count入参QueryDTO可以填充各种查询条件及排序条件, 满足单一Mehtod的多样化查询</li>
+<li>返回数据如果不符合,非必要就不开新接口<ul>
+<li>比如我只想要聚合结果集, 聚合底下的某几个count数量,但是返回一堆的BaseInfo信息需要利用代码级别Lambda进行groupBy(可能的确会浪费Jvm内存,但是只要数据量可控且不是热点查询尽量少起头写GroupBySql【全在数据库做GroupBy,数据库单点问题凸显出来, 但是Jvm机器是可以水平扩展的】)</li>
+<li>又比如我想要多个数据一起聚合的结果, 衡量代码里面写还是直接Sql groupBy还是看数据量可控且不是热点数据尽量代码里面做groupBy</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>流程图</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/xLXRRnD757xs_eeHaQfMJK0KgWgZH4958b5fGUMnhQ9Dl0GBrsli3IL5I0uaSPp4SO1S8Gau5t1fVOcurB4JycFOcLt_YvwTsLtFhjV6ST8N109ipvphDtE-cJC3yXr45eeabIUhAJoL4I9YL0aE1YDYM45aBqtUhEEjCMrk0gza1IaSG0Fo7G7-eHCNHKNyFZGSKwJe2OVMrQ7OhP1Zv2VP6B6qXUvk9eEwkuMXg3mSCHsffOfwa26Z1UOHTNMX2v58hnoIhWvTknNwMOh8iQ0YHqS4dokohXvgq8zkW71V-BfyEHXJSFe-PAQMDl3ujk0Boug4vDjI5CdNJVUe8_3TwJDdl_K9Fb-lgNWNlljChqXad-SXaXwo_1mNnvI1VXZiDzmWTzISvcLvo5A6hzxw_I4G8fjnydPQpnVn_eAXtnTMf268CII6XuR58N1jw2Ay_nWdKonTvbLxCgONSdes3bht19-1hP6XW7mqDnkGc7XRwkL00G46kSU4InMd5_7xfMe2_AR0tG_IY3yWNHoEX8A3eXAKmp0GCxJgaJL6VNYs0heWHDQsINbEBS_w3NyNfK3DX278XUuAW3pRrWiRwkuqv0u1MDXw1rlO9OLvXXF8uaSpNdg_Xid26mF3v6uraIRfHx0rG9GyVKCMYu0dJczxceRWRTESEIqvILR_WJ1XJVJCjhPNXh-u-12a08vWJ0vxEUJt08Z500Tcg5409FbIpymm4r07DR46oFFEp6Zf-8Vu7AI9DzRnn9Awlu9pIoJ_5k7ol3QVrPwMyFXhjf7zR0ZFfJx4HzbtMCRpviRZ1SsXdGfUdmPPiohdKjhBueVuGwzWBWn9OOKM5nUIdibs8lW4tBJA6rn-mHYf4sbxZ_MNcsOE-DyiM39ZIqynleBYnwjbib9GIzEWphPCTIbVtLYs8k32K0_oP7xt58i6yU4q4xBcFNQgYuVywCfDc3K43ReJ7FIcLIRqgVl7psteQpfrIGh_A0UaJvtfV5ok24zkaSMSll4tdihYlJGwZVI3PR8Ccw5YZdo3v2Y2dxRCcHR84ZBnvChQk9iYth_IPWlLqHIUdS352GlYhfuQIcnB6voQA0jkVQq26p_1GSfIvp7ZwqZmAdrOutDdnBFd372LY0Dylnjz6u6wH2R6gm-oU2B5PrIBgwld1gLmHGo6x8F3RQFwz9K-jKFISyP2bXv0OLw1E6y7fJ_8Y_lwGR4lq23_NjkshK3JDGdleqaFq8G3r4A_R9hmEweFTYUDuPWnuCUis9jW0mIgZyxZkJ4zyOefcTpmQCO95HDi0R3sWVB6fwk7_OQ8Cs-hQnjgQSeuLPzFaEUJDWSqERcFVc81qescd3WtbwApZeJLKWvIYIdYu4q-7oZRIty68tXsMjlx2-UMyVricvmlk6X_wXs9Zng7IcxpyvNs6Awqmv60g50-lgQ8od3CGTNkoPQvkbwm6d-Y7oI2iQjHAIOfSDJW_1CuMu0UjFqyEsUWVc5GtKtYV1AFPt5Y7vQdGR5QqCxoigp06TZy7hOhsLrNL8HULyrrSMuoSz4-gcKSI7L7ZAtkKQMrZS0xP7fmS0BMZebJqXte2yDYg9zELJVMyDQYSJ_ZPSHXHMRp1evJMPASDlwdSJftNdsiVgJdDw2YeAwWFL7Vhy7XAhHNhj2EqWRLQ4U55XjIgj2qUgb4ozNB0lWqgvVcPWDog8RKgTfMGyhU7jfjI9q1D6z8NS4UPqDQP_gu6bBgnze0-i6AMdfrKHuaYmcIsVHmJFj6qUYP-WA6Fxi7wmlWoIB9RTdAdOYFeg4fy1o4zMPDdLbhXpF4NpKC9PhH5muMRRmbhCplqb--aoTFeWwpaf-LjKpSh2CwYMZU_S50VmWozzEwHEQV3hsmRN9KCaxU9Q4zDSZEGkS2GypIk6TzCRj_Qh05Usnrwwo4W41ZYlMK005saDMuVl2GYGTjjnROVdINEU5HvxrJmG3YXMh1Mm9XyNU94s1DlrlefZJ2Mu7QgqLlW7glGRqTGrjzP8PksbP_Sdnzl6srD-Mtq5QxIEBGRRLJdrsy77ZPl0853jLXKixQqfTNh-3ykWem5NRrdSnNGZrXjTCPEssqr1bxfM0rizMLCRop3Wo9Pv_XyKbOG-_ae5qx5LRtLzLI6UVc83t1YmBvdl0mxVAHWMdIBdi1rawxx8KYnOarWVL0MW0S1KJEmJ6rrQsVTIsSSdIFr8uwEEnOZ8mz-89WCYSiJ4xuVp7LV9oQYNcTcW_nEDYQg5wtos9wSpthJTtxZNqnFzizBrfhoJzVwjkzr1-w9M-9vnjTmAqN51bkxIDQRb5RQB3xNOzUDYOHgccNABLG_pPQv_q83m9UTDJUWq3pBE4ANqtC6FSnQ97cizhaEssdGXPtoUk5JgI_DSnhholiq5HBAHXXDC40YegnI7zC6XoE1fKH6oKZjfsu2oKBJoRKx7pWEmsRMv6r5fxF5uSnO6pmLfyox5ozlF-_RndDmstXDQCrfliF">
+<h3 id="数据展示端-3"><a href="#数据展示端-3" class="headerlink" title="数据展示端"></a>数据展示端</h3><h4 id="数据展示流程"><a href="#数据展示流程" class="headerlink" title="数据展示流程"></a>数据展示流程</h4><img src="http://www.plantuml.com/plantuml/svg/tLLTJnf157tU-HKR-wgkLAqj3MrCJQf9qnZxqESLLYLks2qiMjCqGLIAw0f6_A1-43yGQYfhgwq8Ad-6cPtz5vrbK96I5eXzg0-xsToTS-wzvzoP0NR9fRWbaNt9Ay8uFm46fVTi4re-GceQRQWmjDq4PDwjEErEcNSfB3eFevCjk3UjHm8mbWA2oy4I28Nry0h_GlHw5C5z6zK_x7adtegybip85HgKihSyg-2tiXmlEyaZjun8ei1zCDzzZeze8G73krWxHT_y589yEPmCOcqVJStGls3OBNbbjiSxE2YzbToZUZQlf-O0uv8KWPN613Sh3LNsmpvmT5dQEpePm33w-HADMzy8BiNf4aHMFyxfkNWXlub2UmCAzqhY7J1uX2ylZRKWz9tZv3uCBvOl0epPefaHC1MfglGABvRWh4hnQ4s3aI9TDAu7ecZb432ygB3qcyP9aJMGdljWHAEanjftKbGpclMXZLbgSY6Zme2Ay-juUnx54rZRgOcL0E1CmeYfUZQ95WxGoaKpYKNX-fOHZM5DQoRUw2aLHXPmEc-ifgkHuibvF7L1fupKkHZIumdaIv8OKPJegY_zD7Q2X5SxnKTJEEJlxUz6irzW-gmQMsc4h7yfGn0zGab4j75GZuxgCTfCa3UD5PsjOvYc3dN_6GpxYUf6B89-J7A43MKZj2uQAfyMqsiQfGRMuJM5bLpHrq_8TYYtwwh-sYLCq8qsA4hsKS5Hqh2KXMXOUtteS1TcCWH6DcAvZEO3RBOh0OEhU3l5jh1q7bcR3Vn6NJnHhEo084iUfoAv9-YURw4GkhoGoH6UGduRJMfFZQLBSyc-lv2P0pUk5NbkZ1fH5DbZvJXBMwkbzM7hOuuSZqEYLt3P1KxcXmKFD-OKnislLjwkE2NNS_Exps6pT3pgxEfeVz86hYsiI0BWp36UZ7RBSYyvmsuAlm4KbrLHJL_F4EnrJxGXmnSclHQ8dP-oPThH0v1eXnTEONW5nhDeusifsB2GbEL-2LdUKurQgik5p47fjbbDmFog_dcQhD5p0KhJkC1LwVvdfV_GLgDYNsKXHEGg8BT7aHC6PiXzqBZobEr-ZJRjwQvqBeSHAscuSS4hYEfIdlcNqZDtedtLzcvR0Nu1">
+<h4 id="数据存储-查询"><a href="#数据存储-查询" class="headerlink" title="数据存储-查询"></a>数据存储-查询</h4><img src="http://www.plantuml.com/plantuml/svg/xLPhQzDG6FwS_8h3zjKEH4KeJ13tmHlUlucKkCGQZ3bTcwbZ5BgvjNPRZU8kJkUqQcSHNIjuwSNH7sFEIVOlF9SaJTFDhHDKr4BRz3tlvNdVztcINeLt05weui8wNYcWcQAOa9A6Egmc9Dq0-Ak9FwwYrrFsWonQBekABeEhy8v8tg1lI3AaOzfeob2IVHrHv-Af4Qt3SWPIYnSj3Wvo7p0uA8PAH8wmaoYmQXdq8ekVbvpAI_oiQ3K_MxMNQBeanfDmDE4YisfDgrN44nKU3o8HS3IHE0urvLpyueXsGKd0b6h0v9WeiBH-ThivPJTphkyngCkgeKBz_AYI71kwT5OKT6We0DvIaW1USx62Vldm_WC73mcY86mNE4xE1DIOj-VBzeUc_MIA_kPGsx_j_3syyYvmpkPEUc-RKDKa29tAbBFUyArfKQ0JfD148F0nn1M3OD7KOOd2e9XEgoc378VwHJdJ_lhe95HrFb6t0S-vkrrg5QpwBCeNK7QPp1r_ch3BivkvkSrdNhHJBAFiahMnR3MoP5rMuobV1eiDJk5RPi8V0bgTfUqm5_EjipPXrGfulexCnvo5TlCZQgpjS-vkyDp4cL-WbJ8jKdlh-atMhTeCpHCOIgXhd7_Z5ES84PpAUsIM0WuXraM1qvf7JrSxnq8JKz8omZ8AKyBkae1dO8Y0NKHd6Nz0T84v-7uzKPQZ_ICfEq8BRqFQxXuOKQH48dQTk84XE4oMZb_K2G781Q4YgTCz2qQkR06_Ar98hwRnOWuNNw6vHJxbhfWmYxQ0uMDWyneO603zxaAVD-nYnYK-nHfNT2EcoZ6Dz1Hbte2y-frAYGVWV0P_pYDpXi3mvtYKHfsGgNUQVf3QAOAE9TaX1z-D7wb9Xf8oObu2LUx7AncdzP2xgQm4xKNLhy4e60SiCTz_kmbgP4uo23fmWDwXBjrK0eVeGS5-Kmqwt536Wj6db34FPJeyyKwgutnzCsTsxeYlBk3ReuGxTUjKrknczcUbEqu9SK9E4y6wjoRcICVqwxJhWTZr4s8xXlUki_yo-zTbHfaIafchC-V-5sGkeiA2BmkyL4Aj9IyZaPypCnavmfM8ijDelRvd3Pw6yMuPydexY954xbcFMyMs9SanxVv_6uoV9GLlgSfjiBD2OngC_pwLWZ2ISMQYUYMATU-mwrMqiK1aI-GG-5iez46toxxePJTC28JXjKcdLUqE4m0h9Yk6f6hjID0T6-bas1QfqbVuXVlz2nv6V5cTGkbD9lvZ2z-TfdSZPjwJNhpv1mNJjlq6iGG0zQAM8Ke5LVklbRzVAzy1">
+<p><br><br><br></p>
+<h1 id="Rasp"><a href="#Rasp" class="headerlink" title="Rasp"></a>Rasp</h1><h2 id="表结构"><a href="#表结构" class="headerlink" title="表结构"></a>表结构</h2><ul>
+<li>tb_rasp_attack_event: 攻击事件表</li>
+<li>tb_rasp_attack_event_detail: 攻击事件详情表</li>
+<li>tb_rasp_attack_log: 攻击日志表</li>
+<li>tb_rasp_hole_type: 攻击漏洞类别</li>
+<li>tb_rasp_plugin: 系统管理中心-&gt;插件管理</li>
+<li>tb_rasp_plugin_algorithm: 插件算法: Js脚本算法</li>
+<li>tb_rasp_plugin_attribute: 插件算法属性:策略管理-防护规则-Rasp算法规则的属性</li>
+</ul>
+<h3 id="数据流入流程"><a href="#数据流入流程" class="headerlink" title="数据流入流程"></a>数据流入流程</h3><p>注册的时候会拿取Rasp配置</p>
+<p>再去拿防护许可</p>
+<p>开启防护后拦截住了进行上报<br>Rasp的攻击日志-执行数据和内部是不一样的字段和取法,其实是一致的</p>
+<blockquote>
+<p>流量做成一份, Rasp和Iast:归一</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/XLDDIyD043qtloBWMHIyUH04XHwywL48QxAqnPXTqcsnDwlsmrP9gTA2OgLAr9DjeDHYbFwPx3Rz5-RJ6Z7j9M5dtynxysOMY0IfV1QA66KKmeb88IgIUP0bMC0gEYvmN7Yvl36BhlERX03nC0aKIORgKjhxinkJLancL5XDvsRWQA8rEc7tEkqRJ6lIaauE11LaiP2NSuf0Zh0r6h3sqEw-nXPmuJienQLKbCC_fqGS74YIhzL1-PI1pBPEn-tulEbZcMejj_nU0KFsgR51PsAOj5EFpt7Hstde69cOgGi2iKdqwvfUN6MSpkjhgxHQdZOVQBaqkJttTLeVTSiSsiLRsgZEgUAtjiBk1gpLvqDNWTUv05q9-yf_KK6216HaduLgDRltpCvAN08g4iyvdxbZI1A2Vyt1EyOgj5-UMAVXOkpUEpDEhN6N5Nln-51j6ibGIBkbFKqBrcBBQoUw745i8PECKe4TllM15ujSS1XsGHv6ERt8GiPW4WvnP2d_CePFq5cMjqjMRLYZclF4lW40">
+<p>AttackHandler#handle</p>
+<ul>
+<li>tb_rasp_vlun_tmp: 一来就插临时表</li>
+<li>raspLog: 解析临时数据<ul>
+<li>addAttackLog: 插入攻击日志<ul>
+<li>领取raspType:漏洞类型</li>
+<li>开始解析raspEvent<ul>
+<li>当前ip下30分钟内的攻击事件聚合</li>
+<li>插入/更新 tb_rasp_attack_event/tb_rasp_attack_event_detail 事件及详情</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>raspHttp: 解析Http: 请求信息<ul>
+<li>tb_rasp_hole_http</li>
+</ul>
+</li>
+<li>raspLogDetail: tb_rasp_log_detail: 攻击详情</li>
+<li>raspLogSave: tb_rasp_attack_log: </li>
+</ul>
+<h1 id="事件管理"><a href="#事件管理" class="headerlink" title="事件管理"></a>事件管理</h1><p>模板规则: 它和全局的区别在于它不能编辑小组,且不影响之前建立的小组规则,它会影响所有新建小组<br>事件的类型 –&gt; ActionEnum或者–&gt;EventEnum<br>全局规则: 全局可以编辑小组, 且影响之前建立的小组规则<br>小组规则</p>
+<p>tb_notification_rule【时间触发规则】</p>
+<ul>
+<li>事件规则名称</li>
+<li>事件</li>
+<li>事件触发条件-&gt;事件、应用、漏洞验证、危害等级、检测规则</li>
+<li>动作</li>
+<li><p>动作触发条件 -&gt;发邮件 还是创建Jira任务 ActionEnum</p>
+<p>SeenFirstVulnPollEmailActionExecutor</p>
+</li>
+<li><p>notification:vuln 漏洞<br>jms-&gt;MessageEnum</p>
+</li>
+</ul>
+<p>VulnerabilityConsumer 漏洞消费器<br>matchEventOptions –&gt; 事件过滤<br>matchActionOptions –&gt; 动作过滤</p>
+<p>定时器走法<br>NotificationTask -&gt; task()</p>
+<h1 id="报表管理"><a href="#报表管理" class="headerlink" title="报表管理"></a>报表管理</h1><h2 id="报表导出流程"><a href="#报表导出流程" class="headerlink" title="报表导出流程"></a>报表导出流程</h2><p>报告列表-&gt;全局</p>
+<p>应用漏洞-&gt;漏洞详情-&gt;下载【Exce报告】 –&gt; /api/app-hole/export</p>
+<p>详细报告,概要报告, 这两个基本的模板</p>
+<p>模板不满足可以自己进行模板建设<br>自定义模块里面有模块</p>
+<p>模块就是代码的处理块<br>单独的可以导出的</p>
+<blockquote>
+<p>表结构</p>
+</blockquote>
+<ul>
+<li>tb_report_template_module 报表模板模块拆分表 —&gt; 模块</li>
+<li>tb_report_template_configuration 报表模板自定义配置</li>
+<li>tb_report_record 生产的报表记录</li>
+</ul>
+<p>点击生成报告-&gt;点击模板-&gt;选择应用<br>生成报告<br>后端异步去做报告</p>
+<p>有Bug一直在正在生成<br>前端一直在刷拿到【报告】的【最新状态】</p>
+<p>ReportService#export真正的导出口子<br>内部会有mergeReport合并报告的操作<br>以版本进行遍历</p>
+<p>template.buildWord真正具体的内容实施点</p>
+<img src="http://www.plantuml.com/plantuml/svg/fLTRSzf657v6lq8_m0nDEjE7pAGpQTDfwNWc7STzwdGw2jxOcX198sItVWFVm60kZh59V2CuO3jD0xWXlY07VaoqA_4lSbOhADJ8WFq2QBNdstE-yvsp1o6WoIflPez9x8mBo9Acoa5U26dA7m5PHHnt_pwFAvSuMiUfFFaOCOyJF2nn7BFmVjlPUe-tgekmwXCKqQSYHLOr7_gBVbdD7QkmHk8bgt1iPlCabk4wLZq09D74iIfinEjn_zGOtmflMyre-ncdjy0DzaHMmtXj6MVUcTjBvBX0zfh-AJVGrIo0clKck4vENhUYQwsz0tovGDwNS4h7aUtFuGppytDudOLgw3gE5pX9rX0lpo6LbvzsKU8nz2r3_yUgrN1pqQYla6m3Fetpi77-TmWz5vGPs6Kq2pXzregcnqXuitCuSvvnm0w1-71nc_FWmmMolzkzDiPRpLVWBLl3rHDSFB5g9JXgZ3SkyiPvaiGFoEQwVN22Gz8KJntkPe7bw1xF84WwOzIBkBn64p2johCAp-BcFFsPiyeDyrDv0as9eLOs0c724uDiHPEuc6Hnz53cWkGaqabKws25vjAsOskSnurh3v00l7Pl7hCE8v0soBnHJv35PQlvagpLRHOzTpw78_mqaf0gQEYXe0dt85cGPh9w11B4nQEVPL72B-1NakmjuDYAgIyvyjoiacIPv4jMvG20xbAW6K6Q2YArZKFYSVOUDt9KKY0zsyW1s8gImXloeefNNk6BKwkn0HvpdavU-bDZDCla_Hko6yQP55C7OzACdv9mX6RLBa5Jprlb0lXBzZDGVqxwQAM5D44JGveOyCt8GUJJL33nUgtK6L3SRKLs_WKPufq6vt4jNJSyXiQ2vJpiRFi54EKY7MQHEstbQd2i9Zv7uwA4ViENONoK63Fr3RAN_ztTFBADCp7mtIpdG02a_B43XLUMoMMQrFQ1VlFzgba_WdI2Qr1g42W-NmH5u9MFjuAsAeU0qexNZhDFLU5qidKOSp3ONZjThhcXyfuJqP_zqiDxUNOs2UlMKOm-sZz6orRxX2lPQhyOYfOx-ABckqi_le7I8xinibN51_kEVwnE7997vSQT76WocYe-cTL4MRh253lQoUyDUEaBVYr9GOtNvXL4xxhlvXye2govzhPLadWBMt0z2wSp8aszXkk7xaRTOJ7nqXPGNGTHCvXHJOlRGvksthrilKcrNhrrM4s-9fKiO1YVKhV6WFKEXWT0K324keZyaV9yCrQgQMZLDsDbADC1hDmAms6bZM4NpSYLGmUnuX4-IV_N_tsXW8gGv5E5aE9JnT0pduBK05AepBrUnvMbl9alCSjhYkOwg2k5CW6R9c3FBvqjapCg4jolWscaFT0q8V3CBpsLlvTd9UtXvADsph8wZkeiPzS2ACg48Da8ZYMJ6Kcze5VxQjAePzjk3d9ZN9vkdxuRjfhhNtz5zWgE8xaIRkQkW_W9EieaIBhB4sPgdkXuF-70X6b8DEj3EZQEvb3m2YHEdk3o1tRF3H4S965Iffys49lFQ4QxfK1zsgt2862SmwoHWl7HNBY0SGQd3zblkg5o0UJYvG_c1tragVRJ9We8mQ3NwmIriq_gbH4bQIFqLwBzQcWj1k4k02tvftWSoy68PbLAp8NkvjVVL7wY2Q8q3gDbI9k4aSP1S3BEPZWsJ2nSt98sK8Ea-GH92Cw7n52REHXu3VsKJGn3CDSBqfSyLWyJA8Zc12c0Hgde7oZw0mSS69sKbHxjCcTXTG2hLw1ibsY5zO5ZDJOqbj_TAzwl30tpIA5_A6Jr_s2jZOPrLg6hGqFzgWRxkmGlF4EZF9Pd8L7zWQpA4YZanhDPMpmmCob1OTxh5G43PolG78OksG72yuFXOtldGtR8ABAphmyxx4PkyAr1cxNTMjiMxB-3tL07sT7hfiSChXgSIGuoUqoVUko0DEZ00-yK-e-gnyuwJU1uqpFCPTGRdbCa8ohW2m00">
+<p>一阶段任务情况   精确里程碑120人日<br>目前推进deadline 120人力日/5个人 = 24个工作日 满打满算年前不请假,客户支持不多的情况正好可以到1月20日</p>
+<p>基建设施建设 (沈) 【总体完成】 【7人力日】</p>
+<ul>
+<li>Jenkins CI/CD建设(沈)</li>
+<li>Harbor仓库建设(沈)</li>
+<li>Kafka建设(沈)</li>
+<li>Mongodb建设(沈)</li>
+<li>Pgsql建设(沈)</li>
+<li>Nacos建设(沈)</li>
+</ul>
+<p>Gateway建设(桑、沈)  【部分完成】 【35人力日】</p>
+<ul>
+<li>Api接口搜集(桑)</li>
+<li>Api列表(桑)</li>
+<li>Api编辑及ApiDefine定义(桑)</li>
+<li>Api接口测试(沈)</li>
+<li>错误码及错误子码(桑)</li>
+<li>Api文档搜集(沈)</li>
+<li>Api文档列表(桑)</li>
+<li>Api文档详情查阅(桑)</li>
+<li>Pipeline-下游Call接入Dubbo及Kafka(桑)</li>
+<li>Pipeline-区分数据质量等级(桑)</li>
+<li>Pipeline-$UserId注入(沈)                        ########    完成 </li>
+<li>gRPc-数据下行DubboCall(沈)</li>
+<li>gRpc-数据上行配置Push(沈)</li>
+<li>gRpc-维护心跳(沈)</li>
+<li>WebSocket-数据下行DubboCall(桑)                ########    完成百分之82%</li>
+<li>WebSocket-数据上行配置Push(桑)</li>
+<li>WebSocket-维护Nacos心跳(桑)</li>
+</ul>
+<p>数据服务建设-三方组件(张汇龙) 【刚开始】【17人力日】</p>
+<ul>
+<li>三方组件列表</li>
+<li>三方组件列表-查询条件</li>
+<li>三方组件列表-图表</li>
+<li>三方组件列表-汇总信息</li>
+<li>三方组件列表-指派信息</li>
+<li>三方组件列表-评论信息</li>
+<li>三方组件列表-状态信息</li>
+<li>三方组件列表-漏洞标准</li>
+<li>三方组件列表-检测日志</li>
+<li>三方组件漏洞库升级-升级状态</li>
+<li>三方组件漏洞库升级-在线升级配置查询</li>
+<li>三方组件漏洞库升级-在线升级配置更改保存</li>
+<li>三方组件漏洞库升级-是否自动升级</li>
+<li>三方组件漏洞库升级-升级进度查询</li>
+<li>三方组件漏洞库升级-升级时间查询</li>
+<li>三方组件漏洞库升级-最后一次更新状态</li>
+<li>三方组件-数据流入</li>
+<li>三方组件-漏洞库升级-上传升级包</li>
+<li>三方组件-漏洞库升级-在线升级</li>
+</ul>
+<p>数据服务建设-Api(蔡博瀚) 【刚开始】【13人力日】</p>
+<ul>
+<li>Api处理-写入流程</li>
+<li>Api处理-Api列表树结构查询</li>
+<li>Api处理-覆盖率查询</li>
+<li>Api处理-Http流量存档</li>
+</ul>
+<p>数据服务建设-安全威胁(曹高俊) 【刚开始】【6人力日】</p>
+<ul>
+<li>安全威胁-攻击事件列表</li>
+<li>安全威胁-攻击日志列表</li>
+<li>安全威胁-攻击事件详情</li>
+<li>安全威胁-攻击日志详情</li>
+<li>安全威胁-攻击写入</li>
+</ul>
+<p>数据服务建设-漏洞核心(黄老师带队+曹+蔡)【未开始】【19人力日】</p>
+<ul>
+<li>漏洞上报-基础漏洞上报</li>
+<li>漏洞上报-全链路漏洞上报</li>
+<li>漏洞展示-漏洞列表</li>
+<li>漏洞展示-漏洞详情</li>
+<li>漏洞展示-漏洞检测日志列表</li>
+<li>漏洞展示-漏洞检测日志详情</li>
+<li>漏洞展示-漏洞检测日志-细节概要</li>
+<li>漏洞展示-漏洞检测日志-细节详情</li>
+<li>漏洞展示-部分图表支持</li>
+<li>漏洞展示-漏洞描述-节点流程图</li>
+<li>漏洞操作-安全控制</li>
+<li>漏洞操作-评论信息</li>
+<li>漏洞操作-指派信息</li>
+<li>漏洞操作-状态信息</li>
+</ul>
+<p>应用服务建设-应用模块(黄老师带队+桑)【未开始】【14人力日】</p>
+<ul>
+<li>应用创建</li>
+<li>应用列表-查询</li>
+<li>应用列表-设置应用</li>
+<li>应用列表-删除</li>
+<li>Agent-注册</li>
+<li>Agent-探活</li>
+<li>DaemonAgent-注册</li>
+<li>DaemonAgent-探活</li>
+</ul>
+<p>职能服务建设-用户授权(桑)【未开始】【2人力日】</p>
+<ul>
+<li>登录中心-Login授权Token</li>
+<li>登录中心-找回密码</li>
+</ul>
+<p>SecpointJava调整-【未开始】【7人力日】</p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2022/11/02/new-astp/';
+        this.page.title = '新版Astp';
+        this.page.identifier = '2022/11/02/new-astp/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

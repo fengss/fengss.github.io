@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Edr学习笔记 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="EDR学习相关详解笔记  
+传统杀软工作原理一切的开始杀毒软件的工作原理: 
+
+传统杀软缺陷以上方法对于家庭电脑是没有问题的,因为出现了未知病毒感染了几个家庭电脑后,这个病毒就已经被杀软捕获分析并且拉黑了但是对于没有见过的病毒来说,杀毒软件需要一段时间进行人工分析.而人工分析需要的时间又非常的多.
+但对于安全需要极高的电脑来说,比如政府、军用的电脑,是不允许感染任何病毒的,因此这种杀毒软件的模式无法满足需要.另外对于”APT”组织的攻击,如美国国家安全局NSA等黑客组织的专业攻击,他们的病毒绝对">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java栈</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C/C++</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go/Rust</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">系统内核</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">威胁追踪</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">数据库</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#传统杀软"><span class="toc-number">1.</span> <span class="toc-text">传统杀软</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理"><span class="toc-number">1.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传统杀软缺陷"><span class="toc-number">1.2.</span> <span class="toc-text">传统杀软缺陷</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EDR的出现"><span class="toc-number">2.</span> <span class="toc-text">EDR的出现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#行为检测"><span class="toc-number">3.</span> <span class="toc-text">行为检测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#行为检测概念"><span class="toc-number">3.1.</span> <span class="toc-text">行为检测概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行为检测遇到的问题"><span class="toc-number">3.2.</span> <span class="toc-text">行为检测遇到的问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ATT-amp-CK"><span class="toc-number">4.</span> <span class="toc-text">ATT&amp;CK</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对比特征码的方案"><span class="toc-number">4.1.</span> <span class="toc-text">对比特征码的方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.2.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EDR的实现"><span class="toc-number">5.</span> <span class="toc-text">EDR的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows版数据来源实现"><span class="toc-number">5.1.</span> <span class="toc-text">Windows版数据来源实现</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Edr学习笔记
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2022/08/23/edr-study/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2022-08-23T09:44:31.000Z" itemprop="datePublished">2022-08-23</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>EDR学习相关详解笔记<br><a id="more"></a>  </p>
+<h1 id="传统杀软"><a href="#传统杀软" class="headerlink" title="传统杀软"></a>传统杀软</h1><h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>一切的开始杀毒软件的工作原理: </p>
+<p><img src="/2022/08/23/edr-study/image-01.png" width="500px"></p>
+<h2 id="传统杀软缺陷"><a href="#传统杀软缺陷" class="headerlink" title="传统杀软缺陷"></a>传统杀软缺陷</h2><p>以上方法对于家庭电脑是没有问题的,因为出现了未知病毒感染了几个家庭电脑后,这个病毒就已经被杀软捕获分析并且拉黑了<br>但是对于没有见过的病毒来说,杀毒软件需要一段时间进行人工分析.而人工分析需要的时间又非常的多.</p>
+<p>但对于安全需要极高的电脑来说,比如政府、军用的电脑,是不允许感染任何病毒的,因此这种杀毒软件的模式无法满足需要.<br>另外对于”APT”组织的攻击,如美国国家安全局NSA等黑客组织的专业攻击,他们的病毒绝对是之前没有见过的病毒.</p>
+<p>杀毒软件也绝对不可能捕获到这些攻击.专业的黑客组织会将木马伪造成正常文件诱导用户点击打开,而对于杀毒软件,他们在投毒之前就已经确信能100%防止被找到</p>
+<h1 id="EDR的出现"><a href="#EDR的出现" class="headerlink" title="EDR的出现"></a>EDR的出现</h1><p>EDR背景的提出</p>
+<p>对于非常需要安全措施的电脑,EDR 即终端检测响应(endpoint detection response)概念被提出来了;<br>最简单的理解,客户的一台重要电脑是终端,服务端负责检出,还有专业的安全团队做出响应,防止客户遭到攻击,而EDR则是这一系列流程的概括.</p>
+<h1 id="行为检测"><a href="#行为检测" class="headerlink" title="行为检测"></a>行为检测</h1><h2 id="行为检测概念"><a href="#行为检测概念" class="headerlink" title="行为检测概念"></a>行为检测概念</h2><p>对于新型威胁,如点对点攻击,国家级的黑客组织的入侵.国外在12年左右发布了行为检出概念.<br>即不再通过文件进行判断, 而是通过软件的行为,进行威胁检测.<br>举个例子,QQ.exe在某一天突然把你的电脑文件加密了,传统杀毒软件是无法检测到的,因为他们认为QQ是可信的白名单文件而基于行为检测的EDR,则可以很容易的发现,QQ.exe是坏东西.这就是EDR的基础.即上报行为日志,分析行为日志,找出威胁</p>
+<h2 id="行为检测遇到的问题"><a href="#行为检测遇到的问题" class="headerlink" title="行为检测遇到的问题"></a>行为检测遇到的问题</h2><p>由于要做行为检测,则需要”软件每做一个动作,我们的EDR就要记录一个动作”.<br>这会导致非常多的日志,在未处理的情况下,我们需要面对9,00000/分钟的数据量一台电脑.<br>因此,如何在海量的行为中检索出数据、对数据进行过滤是行为检测所遇到的问题</p>
+<h1 id="ATT-amp-CK"><a href="#ATT-amp-CK" class="headerlink" title="ATT&amp;CK"></a>ATT&amp;CK</h1><p>为了解决海量数据的问题.国外提出了att&amp;ck的架构(不准确,最开始是为了标记出全部可能的攻击手法,但是可以这样理解)<br>att&amp;ck是个矩阵,大概类似于这样:</p>
+<blockquote>
+<p>这个矩阵容纳了所有可能的攻击方法.分别为</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TA -&gt;即战术</span><br><span class="line">T-&gt;即技术</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>比如开机自启动,我们可以这样形容这个行为:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Persistence(持久化)-→Boot or Logon Autostart Execution(在启动阶段自动启动)</span><br><span class="line">如果翻译成机器能识别的东西:</span><br><span class="line">TA0003 -&gt;T1547</span><br></pre></td></tr></table></figure>
+<p>一个恶意软件,他的特征码在传统软件里面如下:E48E13207341B6BFFB7FB1622282247B<br>一个恶意软件,他的特征码在EDR的软件里面如下: T1083 T1490 T1135 T1486 T1016 T1057</p>
+<p>代表:它会会扫描进程，结束指定进程.并且会关掉系统恢复功能，然后识别网络，扫描网络的同时扫描本地文件，最后加密文件<br>那么他就是一个勒索软件病毒的特征码</p>
+<h2 id="对比特征码的方案"><a href="#对比特征码的方案" class="headerlink" title="对比特征码的方案"></a>对比特征码的方案</h2><p>文件特征码通常是一个文件对应一个特征码.会有无穷无尽的文件,有无穷无尽的特征码<br>而EDR的att&amp;ck他是有限的集合.一个特征库,文件特征积累了20年,那么可能因为系统更新之类的原因,也就10年内的能用,并且每次遇到一个新的文件,就需要新加一个特征库.简而言之,需要不断更新、不断淘汰.否则就会落后.<br>并且还是不能识别出新型病毒,依然需要人工分析病毒然后入库一个行为特征库,积累20年,基本上能覆盖到各个家族的木马病毒.以及各个可能的攻击手法.甚至是可以通过行为推断出这个软件是什么软件.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简而言之,越老能力越强.</p>
+<p>att&amp;ck还作为一个能力指导框架,标准化评估目前的产品与攻击手法,一个安全产品的好坏可以通过att&amp;ck这个矩阵的覆盖度来评估,覆盖越多代表能检测的手段越多.</p>
+<h1 id="EDR的实现"><a href="#EDR的实现" class="headerlink" title="EDR的实现"></a>EDR的实现</h1><h2 id="Windows版数据来源实现"><a href="#Windows版数据来源实现" class="headerlink" title="Windows版数据来源实现"></a>Windows版数据来源实现</h2><img src="http://www.plantuml.com/plantuml/svg/ZP71Ji8m7CRlUugzWF7EmSl4X4IC0HEEfewAZTkQT9N0JKCK0oIUv23gd84uJsX8FBYGlGpTnbjOriri6C1Br__NVjz--GfKYebSXgIELAXWWnAiIL9sbhTsv5s2wf3a-TpCoVFtJzPnGcyGsZr_uh3haPGw_tFza60LckPnmK2KcmAdExzy2AmHktrYRrtMwo-xOmDtccL85G81XR5sW2awRPRm1KK6p3SMVx_ffKFNaXoTyQng119yUvj1nFqCXv0o608Y7RWMeg236jInm62Tbt0wdTy_ijRT1fZ8LyG9pZu6rKZAi8YaE7KpImdMa4aXYLZYCcs73Px3ZzPAaCIKanKzsIj0qqw0Ufvlo4in_w2ew4YyoSGDN6lcsVxLsBT6uVXr9KEbME1DOlxXLKGD81LGX8q4vDSPjngnhANOGneKFVJRC_ShzDg-EnH8Ap4M7kxKQD835_YwpPKo1OIA4HarKKewMPAa7m00">
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2022/08/23/edr-study/';
+        this.page.title = 'Edr学习笔记';
+        this.page.identifier = '2022/08/23/edr-study/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
