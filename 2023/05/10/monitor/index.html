@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>夜莺监控 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="监控实时的可行性
+监控为什么要监控
+引自《SRE:Google运维解密》的为什么要监控? + 商业产品在客户环境的可观测性增强
+
+
+分析长期趋势数据库目录数据量及增长速度
+
+构建监控指标根据下面介绍的4个黄金指标, 预警某指标设施出现故障或长期趋势会有潜在的问题
+
+预警、自愈及回溯发生阈值指标或故障主动通知进行报警, 或自启自愈方案回溯问题减少客户的操作性,提高用户体验感增强了监控指标,极大提升了可观测性, 回溯问题的处理会极大缩小员工的排错时间
+
+
+4个黄金指标
+《SRE:Google运维解密">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C嵌入式</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go云原生</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">Linux安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Win安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">大数据处理</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Net/">Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#监控"><span class="toc-number">1.</span> <span class="toc-text">监控</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要监控"><span class="toc-number">1.1.</span> <span class="toc-text">为什么要监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4个黄金指标"><span class="toc-number">1.2.</span> <span class="toc-text">4个黄金指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#延迟"><span class="toc-number">1.2.1.</span> <span class="toc-text">延迟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#流量"><span class="toc-number">1.2.2.</span> <span class="toc-text">流量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误"><span class="toc-number">1.2.3.</span> <span class="toc-text">错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#饱和度"><span class="toc-number">1.2.4.</span> <span class="toc-text">饱和度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#长尾问题"><span class="toc-number">1.3.</span> <span class="toc-text">长尾问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Metric-时序指标"><span class="toc-number">2.</span> <span class="toc-text">Metric 时序指标</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本介绍"><span class="toc-number">2.1.</span> <span class="toc-text">基本介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#时序数据介绍"><span class="toc-number">2.1.1.</span> <span class="toc-text">时序数据介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时序数据模型-gt-关系型数据模型"><span class="toc-number">2.1.2.</span> <span class="toc-text">时序数据模型-&gt;关系型数据模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务方向【业务层Agent单独埋点搜集】"><span class="toc-number">2.2.</span> <span class="toc-text">业务方向【业务层Agent单独埋点搜集】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础设施方向【基建设施层Categraf-开源Agent搜集】"><span class="toc-number">2.3.</span> <span class="toc-text">基础设施方向【基建设施层Categraf 开源Agent搜集】</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Log-日志【日志与漏洞业务共享Es】"><span class="toc-number">3.</span> <span class="toc-text">Log 日志【日志与漏洞业务共享Es】</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端日志集中化【开源filebeat搜集】"><span class="toc-number">3.1.</span> <span class="toc-text">服务端日志集中化【开源filebeat搜集】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent实时日志集中化【自研Agent实时日志方案】"><span class="toc-number">3.2.</span> <span class="toc-text">Agent实时日志集中化【自研Agent实时日志方案】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error级别日志报警联动"><span class="toc-number">3.3.</span> <span class="toc-text">Error级别日志报警联动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#告警管理"><span class="toc-number">4.</span> <span class="toc-text">告警管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#告警规则-amp-生效条件【开源嵌套】"><span class="toc-number">4.1.</span> <span class="toc-text">告警规则&amp;生效条件【开源嵌套】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通知媒介【开源嵌套】"><span class="toc-number">4.2.</span> <span class="toc-text">通知媒介【开源嵌套】</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自愈管理【开源嵌套】"><span class="toc-number">5.</span> <span class="toc-text">自愈管理【开源嵌套】</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#开源参考"><span class="toc-number">6.</span> <span class="toc-text">开源参考</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            夜莺监控
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2023/05/10/monitor/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2023-05-10T07:11:25.000Z" itemprop="datePublished">2023-05-10</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>监控实时的可行性<br><a id="more"></a></p>
+<h1 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h1><h2 id="为什么要监控"><a href="#为什么要监控" class="headerlink" title="为什么要监控"></a>为什么要监控</h2><blockquote>
+<p>引自《SRE:Google运维解密》的为什么要监控? + 商业产品在客户环境的可观测性增强</p>
+</blockquote>
+<ul>
+<li><p>分析长期趋势<br>数据库目录数据量及增长速度</p>
+</li>
+<li><p>构建监控指标<br>根据下面介绍的4个黄金指标, 预警某指标设施出现故障或长期趋势会有潜在的问题</p>
+</li>
+<li><p>预警、自愈及回溯<br>发生阈值指标或故障主动通知进行报警, 或自启自愈方案<br>回溯问题减少客户的操作性,提高用户体验感<br>增强了监控指标,极大提升了可观测性, 回溯问题的处理会极大缩小员工的排错时间</p>
+</li>
+</ul>
+<h2 id="4个黄金指标"><a href="#4个黄金指标" class="headerlink" title="4个黄金指标"></a>4个黄金指标</h2><blockquote>
+<p>《SRE:Google运维解密》的4个黄金指标</p>
+</blockquote>
+<h3 id="延迟"><a href="#延迟" class="headerlink" title="延迟"></a>延迟</h3><p>服务处理某个请求所需时间,区分成功和失败请求; “慢”错误要比“快”错误更糟</p>
+<h3 id="流量"><a href="#流量" class="headerlink" title="流量"></a>流量</h3><p>某个高层次的指标针对系统负载需求所进行的度量<br>例如Web上的Qps、音频流媒体的网络IO速率、并发会话数量、存储系统的每秒事务数及读取操作数</p>
+<h3 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h3><p>错误分显示(非200状态码),隐式(200码的包中含错误内容); 或者根据其他协议抓取内部错误异常</p>
+<h3 id="饱和度"><a href="#饱和度" class="headerlink" title="饱和度"></a>饱和度</h3><p>内存受限中的使用情况、IO受限的IO情况、Cpu的利用率情况、磁盘空间饱和度预测<br>复杂场景高层次如Api负载率承接应对百分之多少的额外流量<br>延迟是增加饱和度的前导现象, 99%的请求延迟(例如分钟维度)可作为饱和度早期预警指标</p>
+<p>度量四个黄金指标,某个指标出现故障发生报警,能做到这些,服务的监控就差不多了</p>
+<p><br></p>
+<h2 id="长尾问题"><a href="#长尾问题" class="headerlink" title="长尾问题"></a>长尾问题</h2><blockquote>
+<p>定义</p>
+</blockquote>
+<p>长尾请求一般是指请求时间明显高于均值的那部分占比较小的请求。 业界关于延迟有一个常用的P99标准,也就是99%的请求延迟要满足在一定耗时以内,1%的请求会大于这个耗时, 而这1%就可以认为是长尾请求。</p>
+<blockquote>
+<p>危害举例</p>
+</blockquote>
+<p>假设一个服务B，有1%的可能性响应时间大于1s，如果此刻一个上游服务A需要完成一次查询，需要同时查询100次的话，那么服务A响应时间超过1s的概率是63%。<br>怎么算的？ 0.99的概率是小于1s，100次的概率是0.99^100 = 0.37，小于1s响应的时间是37%的概率。</p>
+<blockquote>
+<p>如何解决长尾</p>
+</blockquote>
+<p>传统解决接口超时问题可能通过重试，在一次请求发送之后等待指定的超时时间，如果没有返回则再请求一次，最差情况下要消耗2倍的超时时间。<br>而双发机制则不然，在发送一次请求后等待 P90(在 T1 时间内有 90% 的请求都能返回则称 P90=T1，通常系统的 P90 和程序设置的超时时间相比小很多)时间。<br>如果请求没有返回则在此刻再次发送一次请求，在超时时间内，这两个请求中取最快返回的那个。</p>
+<p>当然这里有个防雪崩机制，假如超过一定数量的请求(比如15%)都在进行双发，则认为服务整体有问题，会自动停止双发。实践证明，双发机制的去长尾效果非常明显<br>这里如果我们服务全部迁移成功, 可使用Dubbo的衍生ForkingClusterInvoker</p>
+<p><br></p>
+<h1 id="Metric-时序指标"><a href="#Metric-时序指标" class="headerlink" title="Metric 时序指标"></a>Metric 时序指标</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><h3 id="时序数据介绍"><a href="#时序数据介绍" class="headerlink" title="时序数据介绍"></a>时序数据介绍</h3><p>时序数据: 一种随着时间推移而发生各种变化事件的数据;常见于各种机器的用量监控、行为监控、金融的股票记录</p>
+<blockquote>
+<p>这类的数据场景特性</p>
+</blockquote>
+<ul>
+<li>必带发生时间点</li>
+<li>数据量巨大以时间维度产生</li>
+<li>更关注变化趋势而不是数据本身</li>
+<li>实时性比较高不允许等待</li>
+</ul>
+<h3 id="时序数据模型-gt-关系型数据模型"><a href="#时序数据模型-gt-关系型数据模型" class="headerlink" title="时序数据模型-&gt;关系型数据模型"></a>时序数据模型-&gt;关系型数据模型</h3><table>
+<thead>
+<tr>
+<th>关系模型</th>
+<th>时序模型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>table</td>
+<td>metric / measurement</td>
+<td>表 → 指标（时间序列集合）</td>
+</tr>
+<tr>
+<td>column</td>
+<td>value / field</td>
+<td>列 → 值（无索引列）</td>
+</tr>
+<tr>
+<td>index</td>
+<td>tag</td>
+<td>索引 → 标签（索引列）</td>
+</tr>
+<tr>
+<td>row</td>
+<td>point</td>
+<td>记录行  → 数据点（时间序列中某个时刻的数据）</td>
+</tr>
+<tr>
+<td>primary key</td>
+<td>timestamp</td>
+<td>行主键 → 点时间戳（时间序列内唯一标识）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="业务方向【业务层Agent单独埋点搜集】"><a href="#业务方向【业务层Agent单独埋点搜集】" class="headerlink" title="业务方向【业务层Agent单独埋点搜集】"></a>业务方向【业务层Agent单独埋点搜集】</h2><ul>
+<li>各业务Jvm jmx内存情况: Jvm Memory、Memory Pool、Gc、 线程及ClassLoad、物理内存情况</li>
+<li>API方向侧: Api进入Broker的速度、Api进入Broker的大小、Api进入Broker的数量、消费单条Api消息的速率、消费单条Api的大小、消费单条Api的数量、Api处理异常次数搜集</li>
+<li>漏洞方向侧: 漏洞上报进Broker的速度、漏洞进入Broker的大小、漏洞进入Broker的数量、消费单条漏洞消息的速率、消费单条漏洞的大小、消费单条漏洞的数量、漏洞处理异常搜集</li>
+<li>三方组件侧: 三方组件上报进Broker的速度、三方组件进入Broker的大小、三方组件进入Broker的数量、消费单条三方组件消息的速率、消费单条三方组件的大小、消费单条三方组件的数量、三方组件处理异常次数搜集</li>
+<li>配置下发侧: </li>
+</ul>
+<h2 id="基础设施方向【基建设施层Categraf-开源Agent搜集】"><a href="#基础设施方向【基建设施层Categraf-开源Agent搜集】" class="headerlink" title="基础设施方向【基建设施层Categraf 开源Agent搜集】"></a>基础设施方向【基建设施层Categraf 开源Agent搜集】</h2><ul>
+<li>Kafka: Topic数量情况、Partitions分区情况、Broker服务器情况、磁盘吞吐量情况、每个Topic(总消息数、未消费消息、剩余量)、消费偏移调整</li>
+<li>Redis: redis连接数情况、现使用内存、最大内存限额、命令执行时序情况(执行频率top、命令种类时序、命中情况)、关键Key的时许情况(Key总量、过期&amp;淘汰)</li>
+<li>Pgsql: Qps时序、sharedBuffer、连表产生的临时对象、Select查询计划时序情况、慢查询Top10、当前LockWait语句Top5、连接数、client线程活动情况、网络流量、OpenFile打开句柄情况、OpenTable打开表情况</li>
+<li>主机: 总Cpu使用率、总内存使用率、总磁盘分区使用率、总设备io吞吐Top10、FD使用率、OOM次数、网络(出入流量时序、error、drop、tcp、socket)、磁盘(磁盘空间、fd使用、inode、读写错误、io await)、进程维度(进程数、每个进程的Cpu、每个进程的内存、每个进程的Swap内存、每个进程的磁盘IO写、每个进程的磁盘IO读、每个进程的线程数、每个进程的上下文切换、每个进程文件描述符打开数，每个进程文件描述符使用率(访问过/总打开Fd)、)</li>
+<li>Es:Es集群、Es节点数、Es数据节点、EsCPU平均使用率、存活的所有分片、存活的主分片、Unassigned分片、Gc的次数和时间、事务日志操作时间、事务日志操作大小、Cpu和内存情况、每个节点文档数量、文档倒排索引率、文档删除率、文档merge合并率、文档merge大小、文档查询时间、文档索引时间、文档merge时间、Es各操作类型时间占比、Es各操作类型数量比率(flus\fetch\query\indexing\get_exists\get_missiong\refres、merges)、Segment段的数量</li>
+</ul>
+<h1 id="Log-日志【日志与漏洞业务共享Es】"><a href="#Log-日志【日志与漏洞业务共享Es】" class="headerlink" title="Log 日志【日志与漏洞业务共享Es】"></a>Log 日志【日志与漏洞业务共享Es】</h1><p>业务的es承担日志集中化存储 + 日志周期性清理</p>
+<h2 id="服务端日志集中化【开源filebeat搜集】"><a href="#服务端日志集中化【开源filebeat搜集】" class="headerlink" title="服务端日志集中化【开源filebeat搜集】"></a>服务端日志集中化【开源filebeat搜集】</h2><p>Es承担proxy、core、data的业务日志</p>
+<h2 id="Agent实时日志集中化【自研Agent实时日志方案】"><a href="#Agent实时日志集中化【自研Agent实时日志方案】" class="headerlink" title="Agent实时日志集中化【自研Agent实时日志方案】"></a>Agent实时日志集中化【自研Agent实时日志方案】</h2><p>Es承担各个Agent的实时日志搜集</p>
+<h2 id="Error级别日志报警联动"><a href="#Error级别日志报警联动" class="headerlink" title="Error级别日志报警联动"></a>Error级别日志报警联动</h2><p>Es遇到Error级别的日志,联动告警</p>
+<h1 id="告警管理"><a href="#告警管理" class="headerlink" title="告警管理"></a>告警管理</h1><h2 id="告警规则-amp-生效条件【开源嵌套】"><a href="#告警规则-amp-生效条件【开源嵌套】" class="headerlink" title="告警规则&amp;生效条件【开源嵌套】"></a>告警规则&amp;生效条件【开源嵌套】</h2><ul>
+<li>自定义Metric的规则</li>
+<li>Error级别的Log日志</li>
+<li>生效时间范围段</li>
+</ul>
+<h2 id="通知媒介【开源嵌套】"><a href="#通知媒介【开源嵌套】" class="headerlink" title="通知媒介【开源嵌套】"></a>通知媒介【开源嵌套】</h2><ul>
+<li>通知配置: 通知媒介(dingtalk\email\feishu)</li>
+<li>警报接受组 —&gt; Astp管理员?用户组关联?孝道开发人员?</li>
+<li>Webhook回调地址</li>
+</ul>
+<h1 id="自愈管理【开源嵌套】"><a href="#自愈管理【开源嵌套】" class="headerlink" title="自愈管理【开源嵌套】"></a>自愈管理【开源嵌套】</h1><ul>
+<li>HPA 实现单词扩容消除警报, 若扩容超过一次未解决则报警</li>
+<li>HPA所适用于(Kafka\Es)</li>
+</ul>
+<h1 id="开源参考"><a href="#开源参考" class="headerlink" title="开源参考"></a>开源参考</h1><ul>
+<li>nightingale: <a href="http://192.168.2.153:17000/" target="_blank" rel="noopener">http://192.168.2.153:17000/</a>   root/root.2020</li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2023/05/10/monitor/';
+        this.page.title = '夜莺监控';
+        this.page.identifier = '2023/05/10/monitor/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

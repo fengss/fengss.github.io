@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>引擎组能力图谱 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="引擎组能力及配合摘录
+能力图谱
+资产的概念技术视角上划分两种资产层级(一级资产、二级资产)
+一级资产
+容器资产
+容器信息: ContainerId、ContainerName、MergedDir工作目录、MountDir挂载目录、ContainerPort网络端口、 PortBindings端口映射、 Env环境变量、ImageId所用镜像Id、User用户
+镜像信息: ImageId镜像Id、ImageName镜像名称、RepoTag镜像仓库&amp;amp;镜像Tag
+容器内含进程关联: 容器内部进">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C嵌入式</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go云原生</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">Linux安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Win安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">大数据处理</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Net/">Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#能力图谱"><span class="toc-number">1.</span> <span class="toc-text">能力图谱</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#资产的概念"><span class="toc-number">2.</span> <span class="toc-text">资产的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一级资产"><span class="toc-number">2.1.</span> <span class="toc-text">一级资产</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二级资产"><span class="toc-number">2.2.</span> <span class="toc-text">二级资产</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#客户端原子能力组合-能力面"><span class="toc-number">3.</span> <span class="toc-text">客户端原子能力组合 - 能力面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Iast产品"><span class="toc-number">3.1.</span> <span class="toc-text">Iast产品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#组合方式"><span class="toc-number">3.1.1.</span> <span class="toc-text">组合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资产及能力面"><span class="toc-number">3.1.2.</span> <span class="toc-text">资产及能力面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rasp产品"><span class="toc-number">3.2.</span> <span class="toc-text">Rasp产品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#组合方式-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">组合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资产及能力面-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">资产及能力面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scanner-Sca-产品"><span class="toc-number">3.3.</span> <span class="toc-text">Scanner(Sca)产品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#组合方式-2"><span class="toc-number">3.3.1.</span> <span class="toc-text">组合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资产及能力面-2"><span class="toc-number">3.3.2.</span> <span class="toc-text">资产及能力面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AssetDiag-Scanner-资产审计类产品"><span class="toc-number">3.4.</span> <span class="toc-text">AssetDiag + Scanner 资产审计类产品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#组合方式-3"><span class="toc-number">3.4.1.</span> <span class="toc-text">组合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资产及能力面-3"><span class="toc-number">3.4.2.</span> <span class="toc-text">资产及能力面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AllInOne"><span class="toc-number">3.5.</span> <span class="toc-text">AllInOne</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#组合方式-4"><span class="toc-number">3.5.1.</span> <span class="toc-text">组合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资产及能力面-4"><span class="toc-number">3.5.2.</span> <span class="toc-text">资产及能力面</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AllInOne客户端-插桩联动-技术解决方案"><span class="toc-number">4.</span> <span class="toc-text">AllInOne客户端/插桩联动 - 技术解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#启动侧"><span class="toc-number">4.1.</span> <span class="toc-text">启动侧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#资产搜集及识别侧"><span class="toc-number">4.2.</span> <span class="toc-text">资产搜集及识别侧</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            引擎组能力图谱
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2023/07/11/allInOne/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2023-07-11T03:51:51.000Z" itemprop="datePublished">2023-07-11</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>引擎组能力及配合摘录<br><a id="more"></a></p>
+<h1 id="能力图谱"><a href="#能力图谱" class="headerlink" title="能力图谱"></a>能力图谱</h1><p><img src="/2023/07/11/allInOne/image-01.png" width="900px"></p>
+<h1 id="资产的概念"><a href="#资产的概念" class="headerlink" title="资产的概念"></a>资产的概念</h1><p>技术视角上划分两种资产层级(一级资产、二级资产)</p>
+<h2 id="一级资产"><a href="#一级资产" class="headerlink" title="一级资产"></a>一级资产</h2><ul>
+<li>容器资产<ul>
+<li>容器信息: ContainerId、ContainerName、MergedDir工作目录、MountDir挂载目录、ContainerPort网络端口、 PortBindings端口映射、 Env环境变量、ImageId所用镜像Id、User用户</li>
+<li>镜像信息: ImageId镜像Id、ImageName镜像名称、RepoTag镜像仓库&amp;镜像Tag</li>
+<li>容器内含进程关联: 容器内部进程NsPid, 容器外部进程Pid、容器内所有进程NsId</li>
+<li>容器血缘: 容器组的概念 (K8s Pod中会有一组Container在同一个Pod中)</li>
+</ul>
+</li>
+<li>进程资产又称应用资产<ul>
+<li>进程信息: Pid、Exe执行文件名称、Cwd工作目录、CmdLine命令行、ParentPid父进程Id、Name进程名</li>
+<li>进程应用识别:AppName应用名、AppVersion应用版本、应用类型</li>
+<li>进程网络信息: ListeningPorts 监听端口</li>
+<li>进程用户信息: UserName用户名、Uid用户Id、Gid用户组Id </li>
+<li>进程血缘: 进程与进程、进程与socket、进程与用户</li>
+<li>进程应用配置configFile: 当前应用配置文件</li>
+<li>进程日志【待定】</li>
+</ul>
+</li>
+</ul>
+<h2 id="二级资产"><a href="#二级资产" class="headerlink" title="二级资产"></a>二级资产</h2><p>为何出现二级资产, 二级资产凸显在一级应用资产概念内部</p>
+<ul>
+<li>Api接口: 插桩类(Java\Php\Python\DotNet\Golang)、 非插桩类(Nginx\Openrestry\Tegine\Apache.….)【等待AssetDiag壮大】</li>
+<li>sbom软件成分: 语言Pkg(Java\Php\Python\DotNet\Golang)、系统Pkg(apk、dpkg、flatpak、pacman….)、Iac配置类</li>
+<li>流量池: 插桩类(Java\Php\Python\DotNet\Golang)</li>
+<li>应用漏洞<ul>
+<li>OWASP Web应用漏洞</li>
+<li>SBOM CVE漏洞<ul>
+<li>Language Pkg SBOM</li>
+<li>Os Pkg SBOM</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>应用威胁风险<ul>
+<li>Iac侧<ul>
+<li>Docker&amp;Dockerfile侧检测<ul>
+<li>暴露22端口</li>
+<li>Evn环境变量携带密钥</li>
+<li>使用sudu</li>
+<li>root</li>
+<li>….</li>
+</ul>
+</li>
+<li>Kubernetes侧检测<ul>
+<li>apiServer侧</li>
+<li>cni侧</li>
+<li>controllermanager侧</li>
+<li>scheduler侧</li>
+<li>….</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>不安全隐患 Q3能力增长<ul>
+<li>后门检查</li>
+<li>密钥泄露</li>
+<li>逃逸/提权风险</li>
+<li>弱口令</li>
+<li>容器不安全挂载</li>
+<li>……</li>
+</ul>
+</li>
+<li>攻击意图(异常行为) 【Q3能力增长】<ul>
+<li>Dns查询</li>
+<li>线程操作</li>
+<li>Attach</li>
+<li>native方法绕过</li>
+<li>…..</li>
+</ul>
+</li>
+<li>应用血缘异常 【Q3能力增长】<ul>
+<li>进程网络侧异常<ul>
+<li>端口异常</li>
+<li>非法网络协议</li>
+<li>非法持有外部Socket</li>
+</ul>
+</li>
+<li>进程关系测<ul>
+<li>所属父进程异常</li>
+<li>启动命令异常</li>
+<li>工作目录异常</li>
+</ul>
+</li>
+<li>用户侧<ul>
+<li>特权用户异常</li>
+<li>非法用户启动异常(容器)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>代码【待定】</li>
+</ul>
+<p><hr><br><br><br><br><br><br></p>
+<h1 id="客户端原子能力组合-能力面"><a href="#客户端原子能力组合-能力面" class="headerlink" title="客户端原子能力组合 - 能力面"></a>客户端原子能力组合 - 能力面</h1><h2 id="Iast产品"><a href="#Iast产品" class="headerlink" title="Iast产品"></a>Iast产品</h2><h3 id="组合方式"><a href="#组合方式" class="headerlink" title="组合方式"></a>组合方式</h3><ul>
+<li>【基础能力包】通信、控制 </li>
+<li>【原子能力】污点链路漏洞检测 </li>
+<li>【原子能力】非污点链路漏洞检测</li>
+<li>【原子能力】应用三方组件资产搜集</li>
+<li>【原子能力】应用流量资产搜集</li>
+<li>【原子能力】应用代码资产搜集【待定】</li>
+</ul>
+<h3 id="资产及能力面"><a href="#资产及能力面" class="headerlink" title="资产及能力面"></a>资产及能力面</h3><ul>
+<li>Api接口: 插桩类(Java\Php\Python\DotNet\Golang)</li>
+<li>sbom软件成分: 语言Pkg(Java\Php\Python\DotNet\Golang)</li>
+<li>流量池: 插桩类(Java\Php\Python\DotNet\Golang)</li>
+<li>应用漏洞<ul>
+<li>OWASP Web应用漏洞</li>
+<li>SBOM CVE漏洞<ul>
+<li>Language Pkg SBOM</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>代码【待定】</li>
+</ul>
+<p><hr><br><br><br><br></p>
+<h2 id="Rasp产品"><a href="#Rasp产品" class="headerlink" title="Rasp产品"></a>Rasp产品</h2><h3 id="组合方式-1"><a href="#组合方式-1" class="headerlink" title="组合方式"></a>组合方式</h3><ul>
+<li>【基础能力包】通信、控制 </li>
+<li>【原子能力】漏洞防护</li>
+<li>【原子能力】应用三方组件资产搜集</li>
+<li>【原子能力】应用流量资产搜集</li>
+<li>【原子能力】应用代码资产搜集【待定】</li>
+</ul>
+<h3 id="资产及能力面-1"><a href="#资产及能力面-1" class="headerlink" title="资产及能力面"></a>资产及能力面</h3><ul>
+<li>Api接口: 插桩类(Java\Php\Python\DotNet\Golang)</li>
+<li>sbom软件成分: 语言Pkg(Java\Php\Python\DotNet\Golang)</li>
+<li>流量池: 插桩类(Java\Php\Python\DotNet\Golang)</li>
+<li>应用漏洞<ul>
+<li>OWASP Web应用漏洞</li>
+</ul>
+</li>
+<li>应用威胁风险<ul>
+<li>攻击意图(异常行为) 【Q3能力增长】<ul>
+<li>Dns查询</li>
+<li>线程操作</li>
+<li>Attach</li>
+<li>native方法绕过</li>
+<li>…..</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><hr><br><br><br><br></p>
+<h2 id="Scanner-Sca-产品"><a href="#Scanner-Sca-产品" class="headerlink" title="Scanner(Sca)产品"></a>Scanner(Sca)产品</h2><h3 id="组合方式-2"><a href="#组合方式-2" class="headerlink" title="组合方式"></a>组合方式</h3><ul>
+<li>【基础能力包】命令解析、控制、通信</li>
+<li>【原子能力】Iac 【defsec】</li>
+<li>【原子能力】bom</li>
+<li>【原子能力】insecure隐患筛查</li>
+</ul>
+<h3 id="资产及能力面-2"><a href="#资产及能力面-2" class="headerlink" title="资产及能力面"></a>资产及能力面</h3><ul>
+<li>sbom软件成分: 语言Pkg(Java\Php\Python\DotNet\Golang)、系统Pkg(apk、dpkg、flatpak、pacman….)、Iac配置类</li>
+<li>应用漏洞<ul>
+<li>SBOM CVE漏洞<ul>
+<li>Language Pkg SBOM</li>
+<li>Os Pkg SBOM</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>应用威胁风险<ul>
+<li>Iac侧<ul>
+<li>Docker&amp;Dockerfile侧检测<ul>
+<li>暴露22端口</li>
+<li>Evn环境变量携带密钥</li>
+<li>使用sudu</li>
+<li>root</li>
+<li>….</li>
+</ul>
+</li>
+<li>Kubernetes侧检测<ul>
+<li>apiServer侧</li>
+<li>cni侧</li>
+<li>controllermanager侧</li>
+<li>scheduler侧</li>
+<li>….</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>不安全隐患 Q3能力增长<ul>
+<li>后门检查</li>
+<li>密钥泄露</li>
+<li>逃逸/提权风险</li>
+<li>弱口令</li>
+<li>容器不安全挂载</li>
+<li>……</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><hr><br><br><br><br></p>
+<h2 id="AssetDiag-Scanner-资产审计类产品"><a href="#AssetDiag-Scanner-资产审计类产品" class="headerlink" title="AssetDiag + Scanner 资产审计类产品"></a>AssetDiag + Scanner 资产审计类产品</h2><h3 id="组合方式-3"><a href="#组合方式-3" class="headerlink" title="组合方式"></a>组合方式</h3><ul>
+<li>DaemonAgent启动器</li>
+<li>AssetDiag<ul>
+<li>【原子能力】RuleEngine - 识别审计库</li>
+<li>【基础能力包】</li>
+</ul>
+</li>
+<li>Scanner(sbom及威胁检测)<ul>
+<li>【基础能力包】命令解析、控制、通信</li>
+<li>【原子能力】Iac 【defsec】</li>
+<li>【原子能力】bom</li>
+<li>【原子能力】insecure隐患筛查</li>
+</ul>
+</li>
+</ul>
+<h3 id="资产及能力面-3"><a href="#资产及能力面-3" class="headerlink" title="资产及能力面"></a>资产及能力面</h3><blockquote>
+<p>一级资产</p>
+</blockquote>
+<ul>
+<li>容器资产<ul>
+<li>容器信息: ContainerId、ContainerName、MergedDir工作目录、MountDir挂载目录、ContainerPort网络端口、 PortBindings端口映射、 Env环境变量、ImageId所用镜像Id、User用户</li>
+<li>镜像信息: ImageId镜像Id、ImageName镜像名称、RepoTag镜像仓库&amp;镜像Tag</li>
+<li>容器内含进程关联: 容器内部进程NsPid, 容器外部进程Pid、容器内所有进程NsId</li>
+<li>容器血缘: 容器组的概念 (K8s Pod中会有一组Container在同一个Pod中)</li>
+</ul>
+</li>
+<li>进程资产又称应用资产<ul>
+<li>进程信息: Pid、Exe执行文件名称、Cwd工作目录、CmdLine命令行、ParentPid父进程Id、Name进程名</li>
+<li>进程应用识别:AppName应用名、AppVersion应用版本、应用类型</li>
+<li>进程网络信息: ListeningPorts 监听端口</li>
+<li>进程用户信息: UserName用户名、Uid用户Id、Gid用户组Id </li>
+<li>进程血缘: 进程与进程、进程与socket、进程与用户</li>
+<li>进程应用配置configFile: 当前应用配置文件</li>
+<li>进程日志【待定】</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>二级资产</p>
+</blockquote>
+<ul>
+<li>Api接口: 插桩类(Java\Php\Python\DotNet\Golang)、 非插桩类(Nginx\Openrestry\Tegine\Apache.….)【等待AssetDiag壮大】</li>
+<li>sbom软件成分: 语言Pkg(Java\Php\Python\DotNet\Golang)、系统Pkg(apk、dpkg、flatpak、pacman….)、Iac配置类</li>
+<li>流量池: 插桩类(Java\Php\Python\DotNet\Golang)</li>
+<li>应用漏洞<ul>
+<li>SBOM CVE漏洞<ul>
+<li>Language Pkg SBOM</li>
+<li>Os Pkg SBOM</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>应用威胁风险<ul>
+<li>Iac侧<ul>
+<li>Docker&amp;Dockerfile侧检测<ul>
+<li>暴露22端口</li>
+<li>Evn环境变量携带密钥</li>
+<li>使用sudu</li>
+<li>root</li>
+<li>….</li>
+</ul>
+</li>
+<li>Kubernetes侧检测<ul>
+<li>apiServer侧</li>
+<li>cni侧</li>
+<li>controllermanager侧</li>
+<li>scheduler侧</li>
+<li>….</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>不安全隐患 Q3能力增长<ul>
+<li>后门检查</li>
+<li>密钥泄露</li>
+<li>逃逸/提权风险</li>
+<li>弱口令</li>
+<li>容器不安全挂载</li>
+<li>……</li>
+</ul>
+</li>
+<li>应用血缘异常 【Q3能力增长】<ul>
+<li>进程网络侧异常<ul>
+<li>端口异常</li>
+<li>非法网络协议</li>
+<li>非法持有外部Socket</li>
+</ul>
+</li>
+<li>进程关系测<ul>
+<li>所属父进程异常</li>
+<li>启动命令异常</li>
+<li>工作目录异常</li>
+</ul>
+</li>
+<li>用户侧<ul>
+<li>特权用户异常</li>
+<li>非法用户启动异常(容器)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>代码【待定】</li>
+</ul>
+<p><hr><br><br><br><br></p>
+<h2 id="AllInOne"><a href="#AllInOne" class="headerlink" title="AllInOne"></a>AllInOne</h2><h3 id="组合方式-4"><a href="#组合方式-4" class="headerlink" title="组合方式"></a>组合方式</h3><ul>
+<li>DaemonAgent启动器</li>
+<li>AssetDiag<ul>
+<li>【原子能力】RuleEngine - 识别审计库</li>
+<li>【基础能力包】</li>
+<li>【Agent原子能力通讯包】<ul>
+<li>Iast<ul>
+<li>【原子能力】漏洞检测</li>
+<li>【原子能力】应用三方组件资产搜集</li>
+<li>【原子能力】应用流量资产搜集</li>
+<li>【原子能力】应用Api资产搜集</li>
+</ul>
+</li>
+<li>Rasp<ul>
+<li>【原子能力】漏洞防护</li>
+<li>【原子能力】意图感知</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Scanner(sbom及威胁检测)<ul>
+<li>【基础能力包】命令解析、控制、通信</li>
+<li>【原子能力】Iac 【defsec】</li>
+<li>【原子能力】bom</li>
+<li>【原子能力】insecure隐患筛查</li>
+</ul>
+</li>
+</ul>
+<h3 id="资产及能力面-4"><a href="#资产及能力面-4" class="headerlink" title="资产及能力面"></a>资产及能力面</h3><p>能力全部齐全</p>
+<p><hr><br><br><br><br></p>
+<h1 id="AllInOne客户端-插桩联动-技术解决方案"><a href="#AllInOne客户端-插桩联动-技术解决方案" class="headerlink" title="AllInOne客户端/插桩联动 - 技术解决方案"></a>AllInOne客户端/插桩联动 - 技术解决方案</h1><h2 id="启动侧"><a href="#启动侧" class="headerlink" title="启动侧"></a>启动侧</h2><img src="http://www.plantuml.com/plantuml/svg/jLJVJzfG57vU_uh6TwYmp4qUbfZvujkopRSborrxXMQbRTh2uXiQbD-24OrHuoJJwQOMJQP3AlEFMUzj-IzsoyK24qYMR9S7slETdk-SxvvpU4KsD4LYPm6CA_9C5Ce6mtTjCxeEZLaHH7tBQnx8CjGOXkdp3pplUucmg597-HEtRg7oLdkbvBHCl9MnhMlEFVwCzoiKHkijspf4vMMyUS78YW5P9GarLbaOI8HJL8CJEWRW6JYInu8O3Iw2kCGm58WmB3cg9YQ10UcBTsAAJd89JOU3eQbdmN0mx2EgeX4a_7HwYje8howIE6mo59malpUF6LLAHCLkP4hP2mmyKG82KQLdyuu03I1A4NPYOj2iV9Gb1GW9JT87F_1EW5qG9HZXkBvA0xJK7a_Vuq006SHXX1q1wZ4GVZBr81rTZCh0I6Zm0M8e7w3yqBgeZkRmbVDa2_cGJfla_yhJ9Rd_7oBCCEIVgZACO50Ibe6om7hjpG39y8kT9yNQZHBUhdlbEPSMsYymZqPF53wumINJjexiHlv5fntfNBbtkswjY8iPPEuukIpUEtElqhXPiHi5jzKQ5v5wK6zKMKFr6rolKd58LgZo1Pb5lFaT7zJQtufU4MFc7LzcSFu8jJPGhcGtBBpNT7RISyBegQPESu9J_OIpbNRASd-kCm6MImADayJt72yf2O7SjW4uKTOD8FCm80gUXxwe4vHq8oV4HKuKE5LJX0Hll4ia_dIGeS518pR90K7GeAupL3woReYKy_Dpi-Xy6wqS4H-UYmC-9ieT4l--ncctHYHpJkleDaMMMVILohTJE_PT3PNAhccEsupaW-F2SBtKNwabjBg23nhaWLwcSvuZKV5IVLp8p2ewp7HtQYLDUkbbPtVfZfKcEpVYh_2tzwjx89OF-slxAcqtZv5PSyqQ3S7uFdzIRvHGi-hULT7kFahTefjhAWWoipX_ECZJ9RzdmRbJN2vtutUnlui-ihaexir4Hs0o8iv90HUNxUOgpgwZYylsrpEl3mevz-f7xxf_0m00">
+<h2 id="资产搜集及识别侧"><a href="#资产搜集及识别侧" class="headerlink" title="资产搜集及识别侧"></a>资产搜集及识别侧</h2><img src="http://www.plantuml.com/plantuml/svg/dLPBK-D643wZN-7QNCaXoMrJbIeISg0gAROWkVcY5OhBjQpayYFXAC3W9xPuB0ks5cEmiGFnWx20RM7uCMX6qhz8opC8oSyb5tiazNH__Kr_tSDoOJ7emRjRMbT1smSC9mhXeBZicGc5-F2id_NPRnOvLX3uuFCppmL4ln1ccBVYYkVL71iAls82R33iv_m1LWXxy5qMVpx2fnA-Jha-eCwUlbVLMWcytzRLgARU6DTHhLF1icBcDuUOukjLCvQTO3GJyBiiU6790yWel0Ks51W6pppu5oTBxW_HBChVusX1BvIVlJ0s8r__O2zVUv3SGCcgRo70QQqCaZFwHSEKSaQzuHLG-qPx-8JJg-XXtRYzWaSKsqIb6CwKyTuDJiSqjJJMwq9acVzPyFa5VeJPiy5NYs8aoF4U_A69j-gu8wCx2LLIb0f13FCUyKy-w17_S9piu7OzqqHA5Ii9hLNIBrL6QqdmPppazMgAk6PGzeoyHVKsEgpIjnPDLfJ9GAsbnwX4KVmGnKkedYD8Hs4qrGEZNeA8gFpHQ6oY-0NgxgB45iLqqD1KIMl7IGcWR59FnB7oZvwBqX2TNGPE1Ii5xIvd7aPHwyor7p8b-sjdvk695KRfsCbu9cVpMz3lym5cetA6ijjQAucJPL85en8YHuBYJGjZ3uINv0NF90ilmMazEoWsrxikzpRZjdPT6F5L5MsKdpJwACba6yvKKFm6PPjQAmM07wLjDyxdHc2lT2NbH0iuWFK95EZg8OK9jfOU7c9z9M1N0DwlqNEDTT36hTRTjKDDO-KSD4WUQ6dcrhJM5WaogUYepdf44BLv1QDoYezauX7bZr5DXfgnMXVAhW7FNe7xQscQN-6d1VOzhzSIsaCHhpP61KZSMypaw_WuHbp2hr5Cqv0z0frRdqu3z4tKwJeZvcdXCkonI8eQYXKh4jvl0d4ubR0MoMEZsnsnqUeWI8vQIiqK855ZlOkIUT9l7Ll6DsD8Cfqm5Ob66c_i8YSY-5TcnVUiNrWKkNTy6Ae0o1m8FDZQXuOSDFi_mVf6nD18VJOl2-ESANtUdPzUwDGnZ_gTEZvzYTCHqwQv-Vli8iYET1hQPk9DAk5nwgBr2Ljx0gFjHOvghVCtGV4jZxCxkFWtD34OeFG20LLA5cE7v-J9EUWE9ovmDWl1wD2uoz4tlOwlNwcwMj1QAbOwqFq0ytmeyCv7odZnn_bVXtYS3xq1YrpK-anywUekFbA0CNmPSx74BeUfMj5sqdqSpdf2pKjTFMUc1cFPFHgQCgwLy4TABgH1cZMrHBTbw2kKX25-I8kZcJVQncNHkUDxh_3DQt90HgDcL2NQ2ticqCfGzuDN-FR9eWVS_7JY5q8y5mdoPax6QwTwBOyBPQ_mNR_P7CkXUW9jLArB7roUfbopXIBq06YBJcfYD_4XgPWxSIi3GXz9I8vIs5sO_3SuBgFufkNEDHj7nPsZQRmqDacA94znmDtkYoBE_FJIO42YTbyP7ePV3l5qHckT3fmet9-89JFbk0SyAsAOAHbOQ2TD7s507AM6eRBrvDGT6N7KHsSFO1C754OF8T4riKVf3IHVqCdUgw_XP35JG36wb72rg5ybGIpwvvFnf15P-mLkERB44zTqCsLyP4RfjhcnPHRRGFMZjFfK5R3yXHLy4TR7W-h1rBgHz0Oe4Nt_zUi_">
+<p>自研率:<br>scd<br>–print<br>–path<br>/home/coderss/Documents/some_c_cpp/zero/src/strings<br>–name<br>zero-test<br>–version<br>unkonw</p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2023/07/11/allInOne/';
+        this.page.title = '引擎组能力图谱';
+        this.page.identifier = '2023/07/11/allInOne/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

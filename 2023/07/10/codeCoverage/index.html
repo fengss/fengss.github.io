@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>代码覆盖率-技术方案 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="代码覆盖率测试
+Jacoco基本使用源码存在的情况装载Agent-javaagent:/home/coderss/Documents/jacoco/lib/jacocoagent.jar=includes=*,output=tcpserver,port=9100,address=127.0.0.1
+生成状态文件java -jar jacococli.jar dump --address 127.0.0.1 --port 9100 --destfile ~/Desktop/jacoco.exec
+">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C嵌入式</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go云原生</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">Linux安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Win安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">大数据处理</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Net/">Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Jacoco基本使用"><span class="toc-number">1.</span> <span class="toc-text">Jacoco基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#源码存在的情况"><span class="toc-number">1.1.</span> <span class="toc-text">源码存在的情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码不存在的情况"><span class="toc-number">1.2.</span> <span class="toc-text">源码不存在的情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不同点"><span class="toc-number">1.3.</span> <span class="toc-text">不同点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SecPoint内部原理"><span class="toc-number">2.</span> <span class="toc-text">SecPoint内部原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CodeCoverage内部"><span class="toc-number">3.</span> <span class="toc-text">CodeCoverage内部</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#探针插入策略"><span class="toc-number">3.1.</span> <span class="toc-text">探针插入策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法是否被触发"><span class="toc-number">3.1.1.</span> <span class="toc-text">方法是否被触发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不同分支的执行情况"><span class="toc-number">3.1.2.</span> <span class="toc-text">不同分支的执行情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计执行的代码块的执行情况"><span class="toc-number">3.1.3.</span> <span class="toc-text">统计执行的代码块的执行情况</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体流程"><span class="toc-number">3.2.</span> <span class="toc-text">具体流程</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            代码覆盖率-技术方案
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2023/07/10/codeCoverage/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2023-07-10T06:30:01.000Z" itemprop="datePublished">2023-07-10</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>代码覆盖率测试<br><a id="more"></a></p>
+<h1 id="Jacoco基本使用"><a href="#Jacoco基本使用" class="headerlink" title="Jacoco基本使用"></a>Jacoco基本使用</h1><h2 id="源码存在的情况"><a href="#源码存在的情况" class="headerlink" title="源码存在的情况"></a>源码存在的情况</h2><p>装载Agent<code>-javaagent:/home/coderss/Documents/jacoco/lib/jacocoagent.jar=includes=*,output=tcpserver,port=9100,address=127.0.0.1</code></p>
+<p>生成状态文件<br><code>java -jar jacococli.jar dump --address 127.0.0.1 --port 9100 --destfile ~/Desktop/jacoco.exec</code></p>
+<p>导出报告<br><code>java -jar jacococli.jar report ~/Desktop/jacoco.exec --classfiles /home/coderss/Documents/some_java/SecExample/target/classes --sourcefiles /home/coderss/Documents/some_java/SecExample/src/main/java --encoding utf-8 --html ~/Desktop/jacoReport</code></p>
+<p><img src="/2023/07/10/codeCoverage/image-02.png" width="800px"></p>
+<h2 id="源码不存在的情况"><a href="#源码不存在的情况" class="headerlink" title="源码不存在的情况"></a>源码不存在的情况</h2><p>我们将使用<code>procyon</code>的算法进行批量反编译<br>反编译整个Jar:<code>java -jar crf-0.152.jar  -jar myJar.jar --outputdir ~/Document/sourcefile</code></p>
+<p>再出导出报告<br><code>java -jar jacococli.jar report ~/Desktop/jacoco.exec --classfiles /home/coderss/Documents/some_java/SecExample/target/classes --sourcefiles /home/coderss/Documents/some_java/SecExample/src/main/java --encoding utf-8 --html ~/Desktop/jacoReport</code></p>
+<h2 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h2><table>
+<thead>
+<tr>
+<th>源码存在</th>
+<th>源码不存在</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/2023/07/10/codeCoverage/image-04.png" width="600px"></td>
+<td><img src="/2023/07/10/codeCoverage/image-03.png" width="600px"></td>
+</tr>
+</tbody>
+</table>
+<p>反编译只要行数尚有差距, 结果就无法匹配</p>
+<h1 id="SecPoint内部原理"><a href="#SecPoint内部原理" class="headerlink" title="SecPoint内部原理"></a>SecPoint内部原理</h1><img src="http://www.plantuml.com/plantuml/svg/RL1DJi9055vtJZ47m0kmC3744tY2ffqqJPePGoQw5KCehQZTG2Wq1e915jBM3IcIocNwfkCjR5FHah1xyxwVDz-dCShRpC9NHBjc9kL8-rreJ2SjTaFQga4GEi1dvuUfYKrgSl0YS5TWz-3LHfHnWal9lvjyMuWN3vxlnJ0MuwTy7eg13U5414wsM-IpZbpsykaedtGX-1H-r82-N_fcoLhkft8-qDajjPYgNrB3f0GHgkFo358jZYyCGddb_Urt8LdMBP5IKbgr55do2Ein12k8FxBaGQPfu-yDqKuuNs8KvqvV1EyLZ1JbLEuAFB96Il4nL6FNssjYS6U5eYwGUwy8XvGwxxIgOi9s8yCOqk5HQ-v6t7NAJj0F">
+<h1 id="CodeCoverage内部"><a href="#CodeCoverage内部" class="headerlink" title="CodeCoverage内部"></a>CodeCoverage内部</h1><h2 id="探针插入策略"><a href="#探针插入策略" class="headerlink" title="探针插入策略"></a>探针插入策略</h2><ul>
+<li>如何统计某个方法是否被触发</li>
+<li>如何统计不同分支的执行情况</li>
+<li>如果统计执行的代码块的执行情况</li>
+</ul>
+<h3 id="方法是否被触发"><a href="#方法是否被触发" class="headerlink" title="方法是否被触发"></a>方法是否被触发</h3><ul>
+<li>方法尾加:这种处理比较麻烦, 可能有多个return或者throw.能说明方法被执行过, 且说明了探针上面的方法被执行了, 同时也说明了下个语句准备.</li>
+<li>方法头加: 处理很简单, 但只能说明方法有进去过.</li>
+</ul>
+<h3 id="不同分支的执行情况"><a href="#不同分支的执行情况" class="headerlink" title="不同分支的执行情况"></a>不同分支的执行情况</h3><p>不同的分支指遇到了例如if判断语句, for判断语句, while, switch等, 会跳到不同代码块执行, 中间可能会漏执行部分代码<br>因为jacoco是针对字节码工作的, 因此这类跳转指令对应的字节码为 GOTO, IFx, TABLESWITCH or LOOKUPSWITCH, 统称为JUMP类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function() &#123;</span><br><span class="line">    指令1</span><br><span class="line">    if (条件)&#123;</span><br><span class="line">       指令3</span><br><span class="line">    &#125;</span><br><span class="line">    指令5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="统计执行的代码块的执行情况"><a href="#统计执行的代码块的执行情况" class="headerlink" title="统计执行的代码块的执行情况"></a>统计执行的代码块的执行情况</h3><blockquote>
+<p>这个比较简单, 只要在每行代码前都插入探针即可, 但这样会性能问题, 需要插入大量的探针. 那有没有办法优化一下呢?</p>
+</blockquote>
+<blockquote>
+<p>如果几行代码都是顺序执行的, 那只要在代码段前, 代码段后放置探针即可. 但还会有问题, 某行代码抛异常了怎么办?</p>
+</blockquote>
+<p>JaCoCo考虑到非方法调用的指令一般出现异常的概率比较低. 因此对非方法调用的指令不插入探针, 而对每个方法调用之前都插入探针.<br>这当然会存在问题, 例如 NullPointerExceptionorArrayIndexOutOfBoundsException 异常出现会导致在临近的非方法调用的指令的覆盖率会有异常.</p>
+<p>下图是在 a/0抛出了异常, 但除了test1()上面的探针能捕获 int a = 10; 这个语句之外其他都无法判定是否执行.<br><img src="/2023/07/10/codeCoverage/image-05.png" width="350px"></p>
+<p>对代码的修改点, 看了上面的反编译后的例子, 可以看到具体改了3个地方.</p>
+<ul>
+<li>类增加了$jacocoData属性</li>
+<li>每个方法开头都增加了一个boolean数组的局部变量, 并调用$jacocoInit进行赋值</li>
+<li>类增加了$jacocoInit方法</li>
+<li>对方法里面的语句进行boolean数组里面元素的修改.</li>
+</ul>
+<h2 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程"></a>具体流程</h2><img src="http://www.plantuml.com/plantuml/svg/IyxFAodApr58paz9TSulIorAJ4_buaBcwTeXywmKdavO_xHhnTFsjgTBsl4gzCmhBWalIYmeI2top2t8KKvCIGafIimhJiiloaqjKj3LjLE0AKOInsjaG55-KgfZKL5YPN19KM99Qdeb0000">
+<ul>
+<li>ProbeArrayStrategy: 是boolean数组的生成策略类. 用于实现上面1 $jacocoData属性,2 (增加boolean数组并赋值) 和3 $jacocoInit初始化方法<br>因为设计到class的处理和method的处理, 因此在这两者的处理类里面都能看到他的身影.</li>
+</ul>
+<img src="http://www.plantuml.com/plantuml/svg/ROr13i8m30JlVaK_q0zmg8Hwue345qAyAf5ANDccxmT5EIIqH-_EZgDaLrc7A8nPTcXOGDHUutJBvlfv8plqCgISdDfedEOrc3rKdh0hXwrW8KPiJiUguhrqJvOgtAlly9VedxlGfM4w0UgAJrwq8-u_5SKlWXxmBm00">
+<ul>
+<li>ClassProbesAdapter: 没有太多的逻辑</li>
+<li>ClassInstrumenter: ClassProbesAdapter的代理的类了, 其实也没有太多的逻辑, 因为IProbeArrayStrategy 已经把类级别的事情做了,ClassInstrumenter 调用一下就可以了. 并且还要创建方法处理器.</li>
+<li>ClassInstrumenter 其实是一个具体实现, 继承 ClassProbesVisitor, 还有另一个实现是 ProbeCounter 作用是统计所有探针的数量, 但不做任何处理, 在ProbeArrayStrategyFactory 里面负责统计完之后生成不同的实现类. 例如探针数为0, 则用NoneProbeArrayStategy即可.</li>
+<li>MethodProbesAdapter: 也是一个适配器, 作用是找到哪些指令需要插入探针的, 再调用MethodInstrumenter来插入.</li>
+<li>MethodInstrumenter: 这个是解决如何插探针的问题. 大部分情况可能直接插入就可以了, 但少部分情况需要做些额外处理才能插入.</li>
+<li>ProbeInserter: 这个负责生成插入探针的代码, 例如 插入 arrbl[2] = true; 且因为在方法头增加了一个局部变量, 因此还要处理一些class文件修改层面的事情, 例如剩余代码对局部变量的引用都要+1, StackSize 等都要进行修改. 这个需要了解class文件的格式和字节码一些基础知识.</li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2023/07/10/codeCoverage/';
+        this.page.title = '代码覆盖率-技术方案';
+        this.page.identifier = '2023/07/10/codeCoverage/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

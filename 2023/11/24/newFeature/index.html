@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>InfraService能力版图 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="基础设施服务能力及职责摘录
+Infra-All版图Infra基础设施 - 轮廓
+Infra基础设施 - 云服务位置
+核心服务TemplateService[规格标准]
+管理模版
+管理标准和规格
+SecurityGroup:安全组
+Net:网络
+Flaover:规格
+Volume:数据磁盘
+InfraExt:基建设施扩展属性
+
+
+
+IacService[Iac任务模块]
+资源建设单构建 - IacPlan
+IacPlan单据 - 组建申请
+IacPlan单据 - 执行计划一览
+
+
+资源建设单审批 ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C嵌入式</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go云原生</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">Linux安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Win安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">大数据处理</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Net/">Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Infra-All版图"><span class="toc-number">1.</span> <span class="toc-text">Infra-All版图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Infra基础设施-轮廓"><span class="toc-number">1.1.</span> <span class="toc-text">Infra基础设施 - 轮廓</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Infra基础设施-云服务位置"><span class="toc-number">1.2.</span> <span class="toc-text">Infra基础设施 - 云服务位置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#核心服务"><span class="toc-number">1.2.1.</span> <span class="toc-text">核心服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TemplateService-规格标准"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">TemplateService[规格标准]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IacService-Iac任务模块"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">IacService[Iac任务模块]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ReqService-Req资源申购"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">ReqService[Req资源申购]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AssetService-Asset资源"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">AssetService[Asset资源]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CostService-Cost成本-待定"><span class="toc-number">1.2.1.5.</span> <span class="toc-text">CostService[Cost成本][待定]</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#旁系服务"><span class="toc-number">1.2.2.</span> <span class="toc-text">旁系服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#k8sService-K8s直查模块"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">k8sService[K8s直查模块]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rdsService-Rds直查模块"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">rdsService[Rds直查模块]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ecsService-Ecs直查模块"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">ecsService[Ecs直查模块]</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.3.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#价值"><span class="toc-number">1.4.</span> <span class="toc-text">价值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据结构"><span class="toc-number">1.5.</span> <span class="toc-text">数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#资源业务单和资源建设单-基本结构"><span class="toc-number">1.5.1.</span> <span class="toc-text">资源业务单和资源建设单-基本结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Asset资源-基本结构"><span class="toc-number">1.5.2.</span> <span class="toc-text">Asset资源-基本结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计费项目-询价-账单"><span class="toc-number">1.5.3.</span> <span class="toc-text">计费项目-询价-账单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#角色用例参与情况"><span class="toc-number">1.6.</span> <span class="toc-text">角色用例参与情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环节把控-审批人相关配置"><span class="toc-number">1.6.1.</span> <span class="toc-text">环节把控-审批人相关配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资源编排-工作流相关配置"><span class="toc-number">1.6.2.</span> <span class="toc-text">资源编排-工作流相关配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资源发起流程"><span class="toc-number">1.6.3.</span> <span class="toc-text">资源发起流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资源撤销流程"><span class="toc-number">1.6.4.</span> <span class="toc-text">资源撤销流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资源变更流程"><span class="toc-number">1.6.5.</span> <span class="toc-text">资源变更流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资源盘点流程"><span class="toc-number">1.6.6.</span> <span class="toc-text">资源盘点流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资源费用-账单及资费优化告知"><span class="toc-number">1.6.7.</span> <span class="toc-text">资源费用-账单及资费优化告知</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资源费用-威胁告知"><span class="toc-number">1.6.8.</span> <span class="toc-text">资源费用-威胁告知</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资源费用-用量优化告知"><span class="toc-number">1.6.9.</span> <span class="toc-text">资源费用-用量优化告知</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单据跟踪-故障单"><span class="toc-number">1.6.10.</span> <span class="toc-text">单据跟踪-故障单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主体流程"><span class="toc-number">1.7.</span> <span class="toc-text">主体流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ApproveChain审批链"><span class="toc-number">1.7.1.</span> <span class="toc-text">ApproveChain审批链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Template资源模板"><span class="toc-number">1.7.2.</span> <span class="toc-text">Template资源模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Req资源业务单流程"><span class="toc-number">1.7.3.</span> <span class="toc-text">Req资源业务单流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Iac资源建设单流程"><span class="toc-number">1.7.4.</span> <span class="toc-text">Iac资源建设单流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Asset资源实例流程"><span class="toc-number">1.7.5.</span> <span class="toc-text">Asset资源实例流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cost成本资费流程"><span class="toc-number">1.7.6.</span> <span class="toc-text">Cost成本资费流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工时"><span class="toc-number">1.8.</span> <span class="toc-text">工时</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#资费相关"><span class="toc-number">2.</span> <span class="toc-text">资费相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#华为云"><span class="toc-number">2.1.</span> <span class="toc-text">华为云</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ecs计费项"><span class="toc-number">2.1.1.</span> <span class="toc-text">Ecs计费项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CCE云容器计费项"><span class="toc-number">2.1.2.</span> <span class="toc-text">CCE云容器计费项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDS计费项"><span class="toc-number">2.1.3.</span> <span class="toc-text">RDS计费项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他事项"><span class="toc-number">2.1.4.</span> <span class="toc-text">其他事项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#欠费说明"><span class="toc-number">2.1.4.1.</span> <span class="toc-text">欠费说明</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#欠费原因"><span class="toc-number">2.1.4.1.1.</span> <span class="toc-text">欠费原因</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#欠费影响"><span class="toc-number">2.1.4.1.2.</span> <span class="toc-text">欠费影响</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#避免和处理欠费"><span class="toc-number">2.1.4.1.3.</span> <span class="toc-text">避免和处理欠费</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#续费"><span class="toc-number">2.1.4.2.</span> <span class="toc-text">续费</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#成本分配"><span class="toc-number">2.1.4.3.</span> <span class="toc-text">成本分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#成本分析"><span class="toc-number">2.1.4.4.</span> <span class="toc-text">成本分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#成本优化"><span class="toc-number">2.1.4.5.</span> <span class="toc-text">成本优化</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#成本控制"><span class="toc-number">2.1.4.5.1.</span> <span class="toc-text">成本控制</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#资源优化"><span class="toc-number">2.1.4.5.2.</span> <span class="toc-text">资源优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#计费模式优化"><span class="toc-number">2.1.4.5.3.</span> <span class="toc-text">计费模式优化</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#退费"><span class="toc-number">2.1.4.6.</span> <span class="toc-text">退费</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#非五天无理由退订"><span class="toc-number">2.1.4.6.1.</span> <span class="toc-text">非五天无理由退订</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#可五天无理由退订"><span class="toc-number">2.1.4.6.2.</span> <span class="toc-text">可五天无理由退订</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#不可退费"><span class="toc-number">2.1.4.6.3.</span> <span class="toc-text">不可退费</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#升配-降配资费变动"><span class="toc-number">2.1.4.7.</span> <span class="toc-text">升配/降配资费变动</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阿里云"><span class="toc-number">2.2.</span> <span class="toc-text">阿里云</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ecs计费项-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">Ecs计费项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDS计费项-1"><span class="toc-number">2.2.2.</span> <span class="toc-text">RDS计费项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ACK计费项"><span class="toc-number">2.2.3.</span> <span class="toc-text">ACK计费项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他事项-1"><span class="toc-number">2.2.4.</span> <span class="toc-text">其他事项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#欠费说明-1"><span class="toc-number">2.2.4.1.</span> <span class="toc-text">欠费说明</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#欠费原因-1"><span class="toc-number">2.2.4.1.1.</span> <span class="toc-text">欠费原因</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#欠费影响-1"><span class="toc-number">2.2.4.1.2.</span> <span class="toc-text">欠费影响</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#避免和处理欠费-1"><span class="toc-number">2.2.4.1.3.</span> <span class="toc-text">避免和处理欠费</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#续费-1"><span class="toc-number">2.2.4.2.</span> <span class="toc-text">续费</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#成本优化-1"><span class="toc-number">2.2.4.3.</span> <span class="toc-text">成本优化</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#归集成本"><span class="toc-number">2.2.4.3.1.</span> <span class="toc-text">归集成本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#优化资源"><span class="toc-number">2.2.4.3.2.</span> <span class="toc-text">优化资源</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#退费-1"><span class="toc-number">2.2.4.4.</span> <span class="toc-text">退费</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#非五天无理由退订-1"><span class="toc-number">2.2.4.4.1.</span> <span class="toc-text">非五天无理由退订</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#可五天无理由退订-1"><span class="toc-number">2.2.4.4.2.</span> <span class="toc-text">可五天无理由退订</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#不可退费-1"><span class="toc-number">2.2.4.4.3.</span> <span class="toc-text">不可退费</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#升配-降配资费变动-1"><span class="toc-number">2.2.4.5.</span> <span class="toc-text">升配/降配资费变动</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            InfraService能力版图
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2023/11/24/newFeature/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2023-11-24T08:29:17.000Z" itemprop="datePublished">2023-11-24</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>基础设施服务能力及职责摘录<br><a id="more"></a></p>
+<h1 id="Infra-All版图"><a href="#Infra-All版图" class="headerlink" title="Infra-All版图"></a>Infra-All版图</h1><h2 id="Infra基础设施-轮廓"><a href="#Infra基础设施-轮廓" class="headerlink" title="Infra基础设施 - 轮廓"></a>Infra基础设施 - 轮廓</h2><img src="http://www.plantuml.com/plantuml/svg/IqmkoIzIU3QvzydUEKzsxU9ApiyhAShFKN1AImjEBIhBJ4w52tdcfHKbmWIv2XAJinFJKr54ev_icFMqQ-7BzjxdJJjZgxaKW20wCp4PAXqB4IX9pIt8IIn9XOagG8IBKWjHrIKM5wUMe0ebPoGMfSCrSjNYSCQBhItFTaruDd_fY_MBOCueIYb6DIlR0aqWDRaOsMGkUA3esY52mqhXwVnTJtVlUh5ktxDfUryshtY-TzFBEGtFDZPn8HJfsY4xnqeXFQWW6G00">
+<h2 id="Infra基础设施-云服务位置"><a href="#Infra基础设施-云服务位置" class="headerlink" title="Infra基础设施 - 云服务位置"></a>Infra基础设施 - 云服务位置</h2><img src="http://www.plantuml.com/plantuml/svg/ZLFBJi905DttAoRisHiM9ZuMkjMuKXPDEqLYRR4KJJGag1YZM1yHYGyID36-nRUHOlLZx4pRlx1bX0vQAhFglUTqUiwzFIodoWh0kvffb4rTPoIPXw1V44QXCflau083t2F88WyL41cM18NzGG3UkyTQTM1iP12NDRH-4W64x9rn5KwdH5Q5F-Guy245pZIxVfDDfw7wjyrDiae2jlMpJ9PX64wKCpnmzZ-TrGrJto5VRcYdDKRxn2IbglNGzEE-QIyRQFs8EF3e4P_UK91aEUgoU3keyEdEu5HF20YvDj2NblLD4ez8spJVz12FGnbs3j8sExaZn123XD3POo1EsGp4AQU_yRzUFwgsSHUsp_cC0hkmsk25hTB3GvOP0DFh383fXRR3b4kcbRDehv-n640L7TLrk_g1IuQpV64PZquvXn-Mt3Ig48XGK84iKAcCuUEQbprlQ4vk3HSkqOQEAfK9oJauRKRFVibZVTi-p-FZzw_SeXixg_XaFzyYRSyj6u4Z5BSYENDB-xb6HcZM2kYqD26XbLUpNY9PntTRvjkLEsjIMeKRwxhW71QjiphZYuloyfmKxHqF-4dZCP0OIN7_aSa0k-IAhLk_0G00">
+<h3 id="核心服务"><a href="#核心服务" class="headerlink" title="核心服务"></a>核心服务</h3><h4 id="TemplateService-规格标准"><a href="#TemplateService-规格标准" class="headerlink" title="TemplateService[规格标准]"></a>TemplateService[规格标准]</h4><ul>
+<li>管理模版</li>
+<li>管理标准和规格<ul>
+<li>SecurityGroup:安全组</li>
+<li>Net:网络</li>
+<li>Flaover:规格</li>
+<li>Volume:数据磁盘</li>
+<li>InfraExt:基建设施扩展属性</li>
+</ul>
+</li>
+</ul>
+<h4 id="IacService-Iac任务模块"><a href="#IacService-Iac任务模块" class="headerlink" title="IacService[Iac任务模块]"></a>IacService[Iac任务模块]</h4><ul>
+<li>资源建设单构建 - IacPlan<ul>
+<li>IacPlan单据 - 组建申请</li>
+<li>IacPlan单据 - 执行计划一览</li>
+</ul>
+</li>
+<li>资源建设单审批 - 【BuildApprove】<ul>
+<li>IacPlan单据 - 审批</li>
+</ul>
+</li>
+<li>资源建设单实例落地 - 【BuildApply】<ul>
+<li>IacPlan单据 - 实例落地</li>
+</ul>
+</li>
+<li>资源建设单实例关联 - 【BuildRef】<ul>
+<li>IacPlan单据 - 实例关联落地</li>
+</ul>
+</li>
+<li>资源建设单成本估算 - 【BuildCost】<ul>
+<li>IacPlan单据 - 建造开销</li>
+</ul>
+</li>
+<li>资源建设单回收审批 - 【BuildDestroyApprove】<ul>
+<li>IacPlan单据 - 资源回收审批</li>
+</ul>
+</li>
+<li>资源建设单回收落地 - 【BuildDestroyApply】<ul>
+<li>IacPlan单据 - 资源回收执行</li>
+</ul>
+</li>
+</ul>
+<h4 id="ReqService-Req资源申购"><a href="#ReqService-Req资源申购" class="headerlink" title="ReqService[Req资源申购]"></a>ReqService[Req资源申购]</h4><ul>
+<li>资源业务单基本数据点 - ReqPlan<ul>
+<li>单据类型: 扩容/新增</li>
+<li>业务系统编码</li>
+</ul>
+</li>
+<li>Req资源业务单 - 发起/驳回更正二次发起 - 【ReqLaunch】</li>
+<li>Req资源业务单 - 结束 - ReqFinish</li>
+<li>所需基础设施资源 - ReqRefAssets<ul>
+<li>关联Template模版及所给规格</li>
+</ul>
+</li>
+</ul>
+<h4 id="AssetService-Asset资源"><a href="#AssetService-Asset资源" class="headerlink" title="AssetService[Asset资源]"></a>AssetService[Asset资源]</h4><ul>
+<li>资源大屏一览 - Assets<ul>
+<li>资源管理 【AssetPreview】<ul>
+<li>业务/主机/云区域/云账户</li>
+</ul>
+</li>
+<li>资源业务<ul>
+<li>业务单 - 基本属性CURD</li>
+<li>业务单 - 对外业务涉略真实落地资产一览</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>资源盘点/对账 - 【AssetsCheck】<ul>
+<li>自动发现录入/ 手动导入 / 变更审计</li>
+</ul>
+</li>
+</ul>
+<h4 id="CostService-Cost成本-待定"><a href="#CostService-Cost成本-待定" class="headerlink" title="CostService[Cost成本][待定]"></a>CostService[Cost成本][待定]</h4><ul>
+<li>资费账单 - Bill<ul>
+<li>云厂商捞取账单</li>
+</ul>
+</li>
+<li>成本溯源 - Cost<ul>
+<li>业务单 - 涉略每个资产的成本(包年/包月/计时/计量)</li>
+<li>日/周/月告知产生资费</li>
+</ul>
+</li>
+</ul>
+<h3 id="旁系服务"><a href="#旁系服务" class="headerlink" title="旁系服务"></a>旁系服务</h3><h4 id="k8sService-K8s直查模块"><a href="#k8sService-K8s直查模块" class="headerlink" title="k8sService[K8s直查模块]"></a>k8sService[K8s直查模块]</h4><ul>
+<li>集群查询[后期建设]</li>
+<li>节点查询[后期建设]</li>
+<li>节点池查询[后期建设]</li>
+</ul>
+<h4 id="rdsService-Rds直查模块"><a href="#rdsService-Rds直查模块" class="headerlink" title="rdsService[Rds直查模块]"></a>rdsService[Rds直查模块]</h4><ul>
+<li>实例查询[当前建设]</li>
+<li>数据库查询[当前建设]</li>
+<li>Db参数配置查询[后期建设]</li>
+</ul>
+<h4 id="ecsService-Ecs直查模块"><a href="#ecsService-Ecs直查模块" class="headerlink" title="ecsService[Ecs直查模块]"></a>ecsService[Ecs直查模块]</h4><ul>
+<li>实例查询[当前建设]</li>
+</ul>
+<p><br></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>自动化的驱动力 - 面对瞬息万变的市场，业务团队希望快速响应市场的需求，打造更多有创意的产品。<br>在这背后要求Cloud Infra团队提供更敏捷的基础设施，提升用云的管理水平主要体现在：</p>
+<ul>
+<li>加速资源供应：支持业务团队以自服务的方式快速获取云资源；</li>
+<li>降低总体成本： 提升资源利用率以降低总体的成本；</li>
+<li>提升运维和管理效率：提升运维的效率，减少重复性的人工操作。</li>
+</ul>
+<h2 id="价值"><a href="#价值" class="headerlink" title="价值"></a>价值</h2><ul>
+<li>Assets: 基础设施盘点<ul>
+<li>未关联业务单-及时回收;及时发现基建设施资产资源与业务计划不对称</li>
+<li>资源自动发现和录入,避免漏网之鱼,完善成本计算; </li>
+<li>资产发现故障后的与之关联的业务进行复盘</li>
+</ul>
+</li>
+<li>IacPlan:外部团队的需求能快速交付<ul>
+<li>快速血缘编排,避免点点点,各类参数复制产生人为错误;</li>
+<li>大规模案例量,不同组合,不同需求的不同设施快速资源购买;</li>
+<li>线上化联动部署计划; 快买快建快部署;</li>
+</ul>
+</li>
+<li>ReqPlan:资源业务单<ul>
+<li>隔绝线下无效需求与资源人为交涉;增加公开性,避免口头相传无效业务开设; </li>
+<li>业务基建设施需求填写需求表单;当前业务所涉账单和资费以及所关联资产一览</li>
+</ul>
+</li>
+</ul>
+<p><br><br><br></p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="资源业务单和资源建设单-基本结构"><a href="#资源业务单和资源建设单-基本结构" class="headerlink" title="资源业务单和资源建设单-基本结构"></a>资源业务单和资源建设单-基本结构</h3><blockquote>
+<p>Rds侧</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/pLTjKzDO5FxUNv6P_KexY-wBumTcaBhQzMLOg_l9cHYIMyoODl4cgLjVPYXB5LzgOGGKmKM4GPQLLXQLseZy67EJzDF-XJt9JTg45jRPdP5bfcquR_VSvpxtd9COBt6gofmL-Hin1lv4mVl9YJmh2eozFKdAYqxr8rc-aw8QLH_A8OqXwnEWz2HvXVU-V5THOJb1m0YYDbTcpFfQQf3CloRFHdPfMKbK8KxfdMdCf9I8IVux5kMu8GanrfCQcLYnfchMWw8hfobed8QOhvZUU9-rlaJgzRy-p7qTxoDRVvBnvytPPSz8mN9U511cpCOaUJXAfc_7RiLYCRhTDE9rB6g54rZMbNCe4zcxnk5XfB5QGK4CgTubfLNR62EbJQSuPMyOvBVxHvdUJoD5WApdKE8uhyBpuSIf8-xlDubpWlhvEVeh0T2aj6LkFsgjPXkJfFhKUJjcDIO2tFsKsM4tPyydi3Pt5grYpRFYCO9rMKtC8eOXutF4Q5YFtpKVl_6qMLaGCmLVQ-vKhQdt8QtdA-EKm0IkpaYfxISYJqNTNCsjhcX6eEnCkfrr-ocLZ5-ua4fQpp-G3nNFJq0gZqL54-LSsyogL9oTrvIUN3PyDXDbilxuys7_aY25gUZkFyB6RcJK9HI148EWVThEop4oFilekg_DO3dBAZBM662A_KUDL9Q2QmQhQZ8lImmfLvngbH9EfiRaeH4rnbnk6343gUIvlSxjymvkV_3-DKG_I5nUnW4ky4KtBt5olkLZpPV9lKKows846TbF8RqsMHWg1QhOBoc7U4LNcIwEfFQUDAR0VM3mWlMyRarJSynbzpSdjqja_GbPVabULtf8UThSBflrnfbZdqP6AQT5zSgU_ivAqTeOXIZsfc4R2_QS7oXm_jAK_UybzcTPqhDHAkSzKSexBNln5MmobUpPHI1Ll8uy_LAn1OAFvebZeIXUTKxtfo-cqycBwVxp_GTwixjn5Zh1UPHL94WeWeB0QPmA2o7QOLmxu9XLhfB68zfV6FFZVR8oUgQG_kdqBXUWk-eMnOZJtN5h_fNlz6tY-n1ANk4eR_aj9EFT8XQZJ70RlARcUc91JMGBwbKfeVOc9BSjKT8ZJc3bd5HWXmgihi96QKCcbJMdPi3Q50Mtf8JgYQ8FIUxye33D5sFsz6nA2Oi5ESk9ETQxbLHF5XRWNb8RGEwQZ8L0KraoZJt9TX0d7cVigLLhV8j2rpxjL2w3kUE_Q3VsInR42i9GLg-WWWjkXX5TDrOGUOtbPG55hVASf2FFp7lg64xSAQHVLP7MSmYU0hA5pMW4Ebn0SV6CKqB8s6U6vl_hLNfhTH4evMlYpCb-UwuEsssMolPsbJ7h1Wo3piuJbmbmB-jhlfrpPutSMmMTQMo7FG9rTT5vyvuIt1SbXmRaN4OSZjWDN7PJZrX7GKu2M94BvG87fQhvuXbPdh7k_ausfa-Xma00fqUq3dMe4OI7ZGuxqxXl6-LG2Xm_A76vLYlgW8yI8u9XIqr7of21VzzF7Kd3cGIZ8qPNtK3D-H5e2G2n7sKFJhcL6XgPixFjrDVE8uovZ8opfc50ax7llRD6Yl-JUnAKHNIr4y0CBA1Z6FVd5wpvEM0gtNmFBLC_gdBEHoRBuIiGUTEfRG7JhCtL5cAgh6EUdi3oJFFNLRF-r6spvMaealiZUC3GK55dqfI2RUOD1jb7oI_9EXr_AXFcnpdO4oqBakWLXPCwTms9FOTTqNL0s8ThsEMwYyA31XJVWtXp27N7kAx4R_R1wrGCFd49PRHut-uNj5X441VaQxakHXr1_o5CjxLWt8x4wGigUonuy4Lk7OfOUj5kzj71fvk6Jh4H3Ts8NrIwQ893Z_dNfcLx54YqSGcafpaznr--H2gJpjijflVesTZV">
+<blockquote>
+<p> K8s节点侧</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/nLVTJzjM57_FNt4bNWaQT9ec7f0ewTgiQuT8kwTAgN5kKgkEdVeZ7Mqd4TPGljB0IYYKTC1AWR8HOBGbO5B-cFhQpjF-XHtxsi4cWLLxQ2CbjixNlUTtVlUScn3BCxAChdFimn223vTm7WB7nha4CcipfB1YLJwGrITHgf7LGG4hY6nDWzAHP3Eiy-EwSfauaqX86ABMr-RqwcQqdvHtoClXKzeupyaG9_zUr-QYcO19zfiu5fX17YDZVfjChncpsyPKpfOx1Xb9p789B27zS8Oy7I6bqT0leL28PXB3h2fnoj1bILGp0pWPI4jXf1HMuifG1YDI6IVv3LDxJF9xLcxMtDN8xvFTgFFZS0xGQE_gkCJAy7wXu-gtzlFhZe64x0y2y93ylbvxrWXaQZEayi9wzzWudFRGSdSJJzdRSNmyQ_runSXjspjliV70hfk3d4GvUOj6mZTlHYF6yX4vAZf-2Iop4fTHE54uCJEAHUjuXnQPIVjXc2wGhUTqGOLHC6f3dU4UO-iLgLR_ELhyAjn3zlycOylrXLN7Y9KmMCKL3e8WChP8j4FZ-VlwyxUEDYqckEIGgzMFAyRiWK_h-8fI539nNQtX_8aVXnqLTVCqNjNj_0E5RrLtbSS122KGdA1lhJycOmj8LLrjKXBJyOmeAGWgP_wvJOglFBB2geh8YZmYXQ9LgL02YDIOFDM2nX8Zf33gYqO6pghRfnNkVF3-1qGkHj_nJ5QKF63WXsRFCsAsuMIK2sHYXIpO8C6Mp1UmlnEs82e5hfZhb4HiHfLH2qUoVK0EPy6zh_-ciLmrIjHSOjBdcvFHFDcQ9wlhPAVOJWeblLRGguVNBduS7g6avkIxP_fRQpbZTmIYc7kQgIsPYsuWp_bpS_QJ3bBhTaOhzfF8g-aWbREEAEeKorpv2tACHjfF4KZc7c17_ohNmC05y_95NnId4SPwOxTYiSYjME-DtYzwibi10Ctt1avdUDXGWxVE4yukA6F8cXWnHmwCtML7ed-O96iZp8FEZWJRsIPtTl1siswx1CTV-Z66kZgwFCh3GOXBEEaHsfa1jhlduqC9KHZfXA2hYp8odXNqMfaIpNOylGOlfZWXBijtudVn42BRe_NVNWDBVReC97XVb63CBcYaLW8JSpb7anGuXMFuws82zucgeA0sClQIh4-woPPswazeeILHL2X7K5k3y_ISC0f3DJ9g0m-ZKF5KWnpFSqBg6aH7BdvmPApAYlNsmDXO0HAXhxgHCJLUBm_hsZn8OVvrTYCobISp6qPvwQogsU8mCcStZB5zYkX98QD2Kc8k_QmyFCyPn1aiGSUq8KDsUJZRBPxWM2NEmdw3Lbc6Lx5ZvhmrZNXxblVACbRQk-3Duv7VZ4QWSnmmS8oZ2P-nEyV3w4glkLY5fEhvWbch8BsgmPt8EfwtRoXmiAgRhftrP9DCR81Ersf-3q_je4ofv8eYWtsYaEHI0JlWlLtzVb7aOop3O_seQXwzQMLoZH6O54vZGN5BMLanfqVDhJcpzDgrxBjZPnjOEbYN2E0RQ38srj2twd-y9AjpnlWRibkwYeVwl0euiw19xPiA_gj7avskJPfQmRS5Xktd6I5ulXMt0FIUPNC9g6cEZxa5QQZfNSvdu1vJw0rGHk_E9k5xTY0WDCm7g9SRvGmQscqRfffrNBEgcpUm9359KKhhcWOJnvnuRmpdlaYVR3vQBe03-5upW4bOG9NW2brUCigBG6wQV3jjUD_Bek0YasQakn1vpzhU1zeQUniDn6HHbLXQWTMv-gyRUlM5FNCB9MWcvoFuXQ6XekPDKmhwaEltjXzaFo-gz39KdDO_B49Ij9NmdDD8hgZCVSorNx153m1Y5w-KJNORXgb3ihJqsM6mamg5VFCoh6R2ZthWlqm8lc4U9vLmp-b_Hw6089mGxmijZ9g2_aUOLcl1T0p4wV46GiXxSKLsBmfOEj4UzT3BQoiD7NC13Kt4RImjD5xTG-xHQTXs0v5sRuFq1qOLs3ktIN76UhUFEhklX_u5">
+<h3 id="Asset资源-基本结构"><a href="#Asset资源-基本结构" class="headerlink" title="Asset资源-基本结构"></a>Asset资源-基本结构</h3><img src="http://www.plantuml.com/plantuml/svg/pLLVRnf747_dKwoK1x_OKUbJP4kLegGFo98L9NsB8dJY5deDt96xmosA8W7X7C329Os9tHZReRKDLMfib3_64E8Favkzurjq_nq-osuUczxBtixCRtPsVZEpaKHQiInq5p-warRqnn54Fqr5VCsQnhAcOXEvm-UmLeBc2XTRjcBdBEGENa6j3VMczwhirJwGGl4-Z8P-xnEfDA2s-xbG55lOw_llzjcsroRLKxBwcpVQdcxTmU63gLUCIFEOr7j-xnZ6JR9v18q3qggIPWL5nVeDsNXD5uumSKOn7mPnx3qZRxkpq5WZhLs_lG-EmuqI9gP-uxQMmGX1POl6H3O-J3RUSMt6KBLaNchTinvPFmrfETOmOoeAe7x1ESTfcAi4BD3C8M-zIoeduBprY-jI17il9q-xquJH6vBgNz1lHfv48YB_CILnEVyspcJJB7eg4Fv8j-rLAp7rejhEP_450wy_WfrLj7ZZ7itpNTMIwNh474rQ1T8lqIYabo-JBEFwAln-PUeeDvAScvQ5xO0QlYXCmh99a-QzEV8ROsWT--_Bxh0J2rjmPi9QmKnKqBBmBLqNRrXBXehl64PwWIDfUCbuGZ4fa4FWf0SVIwIsxnyUp4wApoGbxc0DnY-WMdS7TU_l0w4FKySFoUcwfgSM43lfjl6p7gA2wU5m4rfT-iFqa_K2EIgA61HRYVza6Jg2ipUUqs6_iu8xztINNYYc9qtb-r_i_voeQSVy8AjVy7ATVWWQPP5VqLsJzYdN9TFAic76JPn4VgTCNdyCzUQoaSxHkBm_YzxMfW1pkIxelIPClV5pRzJoHcMHFfp8cPgTZwTC8vSDcK6l2autCFkNnlhVL7L0uUClHKl5MMpIkpx4UJP2aaXZiBYg9UnuWjRjHQjb9Pt3t8p_YJ6bcAcW5LZDyMwQPGKNK1Ws4nx0EN77B-Z3merZQiXOzXSTghj3EOzUZg6tC_dT4Or6dZgmybuQBM5Rw0I5KdgF9b59OQ5XFL3gXaOnk-1jUhyB7S_kYgwXoH_RT9YB-bh4-Lj11dGbSuKQ6dMlSomw2bi9KylQ6ksfItRkQDKRrJat_C9pkUpSTxBFv-KO8DlxPDYOeHkwoCbRRyuWj3GV3Q7aGtubQle0pN2GD9qpjTIFTkYywFoITAZIYK4Lib02d-5aUwCLlrQw10d82Y2IcMwRR9_nimEVmU7d0F9hm_sqHPzBgAnmA-Zla497vEeSomWIQPf69v1yBwf2OE1m0vm13J7w3m00">
+<h3 id="计费项目-询价-账单"><a href="#计费项目-询价-账单" class="headerlink" title="计费项目-询价-账单"></a>计费项目-询价-账单</h3><img src="http://www.plantuml.com/plantuml/svg/dLPjJzjM5FwUNs7rKpib5DPzc3ofKbin3QsgfcsQD2aIDR6XrX8xifrqrLGfOK1u2o4hRuEK4fgIj1i9R5cRD-YFgU-rywb_OSU-ThZ610h-aDZtFiyvvpxdd7jl8Cv5Vk4c1EP78HQFSfhmMu219nBbL9NvdbUzmzOJOd2bY9-_rzyNSRfc3p-bECEHotE-_VBod0TYXA71nb7UQ1VwW7-IeucOuCM_J1jR6ttmNqSvEIaeDDuiJ-6TZlljOun8umet_Al6-1U0vrwZmzLkiUaZtL5LGGF1JZYYf6gS5156HPv1rMtzU664Fvi6cbs51Ycz2WtKlWgDwFv9pAU1G80mxycgHYWQfqm8sgZs92umU7OP5_usjgfu9sCSjj7s0Wj1XPrCXOcdC6I0Pe8RcZV2iv8OWT4WaxJnrkiuiG2l0_0uAv0J_AWgA4aHOhNTwwqyBcJHV97uDZfhAFSk20j0UvFN7ZrM1npqW8KUaCVKQxObHL3bXE8QCV-RmgtbVXPSB36HZ9soeCQ5Y2-CpIbYarIdGvWGPUa4YHPRuClOITkpSK4HPTu9fxfhrlVHuZHgrc_27oxCwgqoUfO6ioXVmOKNnCiWAht-a4f_3lFmTmlGyFS5EiZXzRUqKIaH-mIRUFN09gc9CJMYY74DehsG2gHk9cVpk9YSa3JclYnDC2YxgXzb7wBPcS-61WS77mQTTEljTwuS4QYcqPZCknLaLejclKaM5iIBSs3sfiUd_PMlz6eXeIY257d2e4RQA6U_Okuz-FbZPrDljV117iQ808gS57b1iLH7IvDeTIP0xm2ekcb5PFjt9iWGsjf1-yiXOwMYjvRCsYuCEVFamsW_mzk5Rdl3h9QCVuvHQm_Fla6vDGTah1m2JszaKIU5LuvHQQtxUmNbQcRcZMM_EKVSMzBd9a72i8JdKdhxLOz1YWTLcw02AfKXfIWtxnbixS4lj8vPcxaU6mjEZDte6ISXXYKm22mTWgmt8HDMYYj5rCbT9n_6_jmDgxj9SzyLer7ItDHUu6jsixu7gRsWsNljUb6pztfzu599rKGWyV0ZgLQ99hbe0efe_MrtlMwqww0CIdN24lG6-VhOMJHhhs1CRxIUm1EAnK8y3v8NPli2Jlp414vDAFR6I5oGqWuoG-20iLhFnew1V1w9R74-f2QPGHRllqIDnX3RJQMWbSWw7rdIaF8dXKzIOn66M4_Pts8PgniAAPieZu-B4P6BZfxNRL346t3iTZFvxkvpkZVxDIU96JR-xf_J5Clg1ck8JBiDGDRNdZ7d9vq68IU6VL9OPqI8bnzBeTjEKR3E2MriDT3qlqwlr-fuOua6ayfXdTF_V2nK7EjSAr1Z3rMFQ20a_kWFlB2BEasSAW-FV1V-uVvTckrU25ZccpkmNQ9IHcyVuVGkAcMX8xf_RHYjCjcWIUVu_LEtBzR97bmYhE8-pE1K6xgQGlHR17MrwcE4GlGpGjtf-XYX41uZLhk74l7GRUewu5NVgGbuIQ-SWbyX0Lu3e0_h5D9PcftZ6aJnCIcXpc624ZucfOw76GXGqTWcx2NZtB9-l4KMxaEu6ZeWMqaVgDSJ1ENS3gWmBe7oXtGQSMP8b5eso5j3nQonye8SDA02ZIKLTv84SeGHWhC1qAkbu7Qspu3JuL9mEr5dm5tNeQWmhj5OCk-apXscKRPI5w9SjMZW_m00">
+<p><br></p>
+<p><br></p>
+<h2 id="角色用例参与情况"><a href="#角色用例参与情况" class="headerlink" title="角色用例参与情况"></a>角色用例参与情况</h2><blockquote>
+<p>基本业务数据</p>
+</blockquote>
+<p><img src="/2023/11/24/newFeature/image-03.jpg" width="100%"></p>
+<blockquote>
+<p>审批链数据</p>
+</blockquote>
+<p><img src="/2023/11/24/newFeature/image-04.png" width="60%"></p>
+<blockquote>
+<p>针对数据产生的用例</p>
+</blockquote>
+<p><img src="/2023/11/24/newFeature/image-01.jpg" width="80%"></p>
+<blockquote>
+<p>Template规格模板</p>
+</blockquote>
+<ul>
+<li>SecurityGroup:安全组</li>
+<li>Net:网络</li>
+<li>Flaover:规格</li>
+<li>Volume:数据磁盘</li>
+<li>InfraExt:基建设施扩展属性</li>
+</ul>
+<blockquote>
+<p>Req资源业务单</p>
+</blockquote>
+<ul>
+<li>ReqPlan</li>
+<li>K8sTemplate</li>
+<li>RdsTemplate</li>
+</ul>
+<blockquote>
+<p>Iac资源建设单</p>
+</blockquote>
+<ul>
+<li>IacPlan</li>
+<li>K8sTemplate</li>
+<li>RdsTemplate</li>
+</ul>
+<blockquote>
+<p>Asset资源</p>
+</blockquote>
+<ul>
+<li>Assets </li>
+</ul>
+<blockquote>
+<p>Approve审批链</p>
+</blockquote>
+<ul>
+<li>ApproveChain审批链</li>
+<li>Approve审批实例</li>
+</ul>
+<h3 id="环节把控-审批人相关配置"><a href="#环节把控-审批人相关配置" class="headerlink" title="环节把控-审批人相关配置"></a>环节把控-审批人相关配置</h3><img src="http://www.plantuml.com/plantuml/svg/RL1DIm916BxFhvYZGelt3a978UZGBrZMCGBPMQR53X4O9RdcjXkfHKAY54ZW88IeM-slsNVS_HVDxfQ5xbpcvNdUvsD6rKpASB1uWjOG-gFeSR1Fr39XI4s8LMSWwXSfWJIgcunMCNpMmRaBwmrOleCpHMXRZXMbkBctYwE6lVhYCJQR5u0FXRL4_nCoHV3IYox7m4UYEGTkYOwVAgDx7o56D5FLZwe47nWdIaclCFMGiDgnHl0Pml9is2MzSdk6mMYDh7toCkLt5jsfi3cuRJ5vJHnqQX9S9HKJqqgsD7bFu7a5sJDw62l5bFr1SgBPMqtyGh2uZQ_m-WrQOpdb4_TjGwoKwQaUroofMZYx4fuB7rx8VR2xCaquRk3tr-lWsXBFA9efZZ-xwVw9-NFWt-o8jWMUawBI1vqZZBu1">
+<h3 id="资源编排-工作流相关配置"><a href="#资源编排-工作流相关配置" class="headerlink" title="资源编排-工作流相关配置"></a>资源编排-工作流相关配置</h3><img src="http://www.plantuml.com/plantuml/svg/oqbDAr4eoLSeoapFA558oInAJIx9pC_ZIamkoIzIUB9ZrjEkXKzdBtevOpuN5nT8CZ4lFITLmR-WMDSpBwqeCJYrg2mpELMXcai1293LA-ZgsYbeXAJc5kGabgI-MDxoRC6UPoiMFfkxNzDAmV1nG-Epdeal6pgXMYPql6neUZwhvSNMbcUx9a3KWOt4ReA27j3ieDH2Y7Ae6RrJWIO_wv_mPDzikEBddHquN8PLjn7GNKyNhdxQDXDPxkMSXcSRcsBo86AUYSbFT-zwiMwVYwFxYuKDp_VCUB9xDr3LyptJdlLD8iKsOw1jG0cVnDAyv8od_HDVRDsEfWWI15WqA-Ybv9VdWK81w1o89CHH49DDW2O_sRNy-PJvGEc0dCGyD2KnUIzdjZpTiGpk1OZZdxPkVhvvDrSjbm8N0000">
+<h3 id="资源发起流程"><a href="#资源发起流程" class="headerlink" title="资源发起流程"></a>资源发起流程</h3><blockquote>
+<p>内部团队</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/bPDDRzf048Rl-olsI0vKwdULGwMqfqYHAhKzvh8oInhLjLtZfAggI90Im6qHRfj-AA5AZ9f0gyf96X011_WnyQxN_w9B5e4R318-sJippxplUWP9Xgf3rhDyjqvsAy7tFQ0XwJbQmT0xso7lRFgr1Ty0o1yaKXjPhrqDocbwiibZaoDB62Mm3ZO0K5G3GoZZf07Lv0WBXc-aTCJolucpuxLCujZKR97cWTSfqqO6CAVhTnoIsmhUraO5-VqWytcGkdLAYhQ_VJAAvauv2s0b0Vkj0T2nP21bHSRmaPQABof97Jt1-lggX0VMOW_Lb44B5Yt_cOFn-7qOUufVQ38oCAjcwVuvhTdqHszk7eO_sL75SvlB2YrPNdVNTtF-tq-aVSWSczLRWIskvigbJ8LVlqXdWhH9t_yQ1dop80H6bi1h7FOOl-HDQDiI_adn2qS9JMEOI3MHW1jSo_2VZ6VCI8CtEOv7bj2Q8ZrRLaZf8siqm_KNwSqefXWY64-ehvI9z5i2lg1fkhgEEVroBbWlJzsVtbcHM0NVoeN1uaeZMCB28f94WBXjFdu32qApE19IGqipfV0EL_TWRLLEND4tdYnaHK0kwU5sy_0sfvBkDt_l8AXalVDZCRmHmznVkudQH9OOv5aytGrvab_p5J2hpFumgwFOGYg53H7Yq7lzaRCwf7miZgQO-R-GrGyvao-Tlrq36_y0">
+<blockquote>
+<p>外部用户-生态</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/bP9FIm916CRl-odcg0U3_Xuw1DP928Bgw6NPnXAsTLlN82Ami59Bt2AZrAZre1Qn_LDqrz8FqyxixBTeR28C5w4v3Coyx_jxdeSPNb1Z2Y0zpUaqKAdYNjroFBjgfcohvfQJ-EK0NveSfq11vQLr4O8bEHu8IH65Nu7ATbI0O9S3TFaMOd4LfpLSVlI3G60E-5RXfYpoAYIr5BvxntKTt_Jyis3mI9ugTgSLbd1UixibftFal9uZgqeCdJHCLpU_oOFs63d42zGWjZJKiOZHHRa2vOv_9lVTIiefNDCT6KNMuPJQwF2DTk2SmMX_ausqEj579ZFuvFwtu6JIBAxd21YZi6MunRJjTX5bTUQE9Hp2UBhn14nIB-JuWGQppSnmnpzfO8hYQ6MHJqZ2HbX2-JFIR0tEivGUmoEU04p_cCpM6P0LvnDHSIqeo-8EVUbCZUYdmzDCpeFAv8BnE5HPYUhCz6Mq3rH-PbSU7r244NLua3Igb4d_bdDHv_Q-0000">
+<h3 id="资源撤销流程"><a href="#资源撤销流程" class="headerlink" title="资源撤销流程"></a>资源撤销流程</h3><img src="http://www.plantuml.com/plantuml/svg/bPFFRjD04CRl-nHxJ0u1KK18790A2Aad9E2OYvLk85AmWsqgLGZ9hQ8sIPlQBMaJI6ZgK2K1MhkXQH8x_nu6xwxz5gpPWYeIaF3DCxE_xvlPMI6XIZBqfmOTTd6r4LJgGE2XYwpdjeAQHZhhvC01G4O9LH2Vfn5yd55YIs9I5fuYUIMLGF0DWEoBF90KbUGCKZk9mbZi7emyGoypQK55VYjBZaQaRPAFq-XTUFNNjnlUi1yNYMvuaoeTRj1lUzXj-fRfTvt0T3XvBWXUOn9Fq2lcbBY6D_Y02oOkxZC13ljTJFEvdvW_Mk8Uvm9kVDVMME9HIamfBqY-vPlRkD3snhMuw8sdjDGcjNhmtY2vB_xcESaTaFmMovEzuraQRs2E2kJwIqA2P_3GzQq9ruTOt_Kl-WmOb3Jk_SeD_UFW0ZD-_tKglVmGAQeihIvcChAqWh1bahmJ5oyfjiF9FFm__9kp_FGg7z0lEZdzX4Sw5s0CVffFOGwIQoqg2b9vYedSOYAuUaXAFHwQirrfb5Hd3_hT9cEonM4t1Du284egWc4fb99_MIB6vbO3JMC7oNcRP7Mwxe1m1TYsu7Thj3F4XrkaOcEZwGsAMBTvBGY7pSFqf8cDdEVkqgysAHzHOuEMEc6LrOZWueutSAy7bMcmkNqR7tyEkvjO_jY-iu3FT5BkHK4uLhnJltmILiFldh9ui3_5Ue7qSg6nSWyF1knPKAiSDBBUw8oRm7qBQoE0n6KOTWj-0000">
+<h3 id="资源变更流程"><a href="#资源变更流程" class="headerlink" title="资源变更流程"></a>资源变更流程</h3><img src="http://www.plantuml.com/plantuml/svg/lLHBJzj04BxlhzWZI0qaGA2D52JQ4n9IfRP7BbPOA6hgf8b1hQfAeM2Q0552LPvn7m5A0gA1La6G9p-cdhLzuYzqdGaX0XDngWzUspFpFMPdBGMKK8IQ5scZKeJCZhNvdOIbm2jfYb7zV1kMidozz9vGSKcOURgWbtEM5kE_FuhGtP4n9asm2Fb028cmW2B9Kq56duQZhb5vCY8zPv7PwG2Z2Dtr91HLU3pDjQDkwd8DqwuNx7KuA2dCp2tm7rMUp_Al5zq-slvg7k_ebRDncQVIUZrZL1QDFv-Xl6yMicQnP6LHcZCGxH4KpzWR8PcNq-WJack20C5QoKOYte2vuQsZHi_Vs9mLI_3b0xv-Ocmlt0_CKKsVW1A1CMb63hpaYPoPNO6bl5xJncLhAscfoLv8VXBBxM8d8jmHrx0pLpzoZOJ3aT0iWqNLci_ZG40XonFDTZgKKZGmAWKm0fMoMQWZA8NKgdbwXYs0r2RF555PsxnrABSrFPwP3avSgMee6PURvSSbuTse5H2uJUOzuGVQu8FliBzNuFpNBbHJY2oAiGnxu82592FHA5Cm9D2z0jrCrq0xmKyEanvaayhjGhEuBp3541jVylRvaKCAetOg3KtUCNK4XI84DkK1f0v1dJCBvx2YGgdOAnQknOazditzQCoEZ-AAVDHFnTHYN9mkSQTlAIGEzDeMhEQv9jf9-KQkGm8nzifwVRdzaz_ZlQp61mMxNgbXW6k7Ukr24CBU0LyxkQmcUcc_-pgBQp7OoxM2VkhkyHAziWlgJr2F6Zjp3FMD6z87t6wXHgGAbNtzLyz--j0BwZmXVIthU7fyr8h58FFjsdf7PxRrZhtvhzPlIB-swwAUHuCjwvuXspgJ9wWzHk9dJFu1">
+<h3 id="资源盘点流程"><a href="#资源盘点流程" class="headerlink" title="资源盘点流程"></a>资源盘点流程</h3><img src="http://www.plantuml.com/plantuml/svg/TPBBJi9058RtVOfPGamNNXSiI8mhLYQwTTFWg2IanL9qOKogWaQvM8pNbaYg8IvC2YfegH4UniwbR-7OCGGHPpTdpldF_vqpKb9JL43x1dbl8-ikkAuB4Wzryhxt4DHq_BIFBxk2eCAa9idhQGWMCran8Q-fqZ9Kjr9927O4m4vaFfk56gl3dX45OYuZna4a8ILv1BrxrEcXyaKq1YO_zJtacFZgTGbkfU3sICQAZEzrqhvRI2kvLT-haiVcJqQpYvldGsrGzvNQZU3368g5NcH5Wq1DhMzeG5dxxIm6q9lD6WpGq5a9ERV1JO4ZuuC2EkpuRjbtTNhK7eV6m8Od5WDJ32ZGJL9lS3iyavXvtpNHYSsO9WPqeU1m-S-eHWOU0zDCb7XztotYv_gtkkMYmWkpwlUAt2IN-bqNkeiimKtkOM20SSymGUwFtN7PuIAqRr6xX4whjFF6OSSK0t5LsPR5-FXzpdxlCxpZonQZ_fl4ketXPax_-I5pJ77aWMs46X-erbgHYTN6bGPnR68SaaeBrux3_V3H2BjV">
+<h3 id="资源费用-账单及资费优化告知"><a href="#资源费用-账单及资费优化告知" class="headerlink" title="资源费用-账单及资费优化告知"></a>资源费用-账单及资费优化告知</h3><img src="http://www.plantuml.com/plantuml/svg/VLBBRjfG4DtxA-wIg7AaFbP4GghQJLQLsYwpiSo5HgKs1QTTL9KSXKUWc92aH1H8gQa8B5AJIZGXDe-FgU-r_HST-r94g5Mlx9dnEMVE745Kv0novpN76f5MrsjqE24eaKBUEnZOuoOfwui6bnR4rq8I8ziyfaSrUzOYzGBwm25un9Iy5qTUO-uLAz1UgH6jQe_DjThCSAT3l_QHup9OL0GfcSBeMJhBRqk9ZF02PzxjYdY17Nc9twHJWeBfGAVdymt4PtQJhnG-XYAFircikBzorAnjH95Z5KZbZ4nFIKaZnbTxzidjv-YtYPVNlExvZXJIDtHtTElfj-54ct7vlRGPkxDm516ZITiTKglG7xqb06shzEpAjcw0RqSYHsLNxv5ytXrT4ArEwrTKCnZ7gcH-Byt78jk2oBw9PRh63EPXb_k_rVq5qN7PwVGOljFCkSCki0GsFP6p2ZsiqVObWmu1ubCu0Kv5dkEthBMuQC3nOCb1VnQfQi6G7mFp0cX22K9GWXLMynD53m7swMuYmNQtnrMcdGa7jvpF0t0es6gDXTmOH9sG_IQms6QVpTgJ1bmDZ2Q79_-NyMzcemWz0ZNkiBSSXKFGaaglImnYSQ165SBXfr6I5Onyqv2S26NYWijCJxnMWOcE8kRU6ibVU7-5EoI1wrhHCVjK0qU-Gw0WIchVFPZQOmtUMMYt7FtIjgxX5BGr0llOy9RtHREdLGPx3q89IEnV3ajnvAld_W00">
+<h3 id="资源费用-威胁告知"><a href="#资源费用-威胁告知" class="headerlink" title="资源费用-威胁告知"></a>资源费用-威胁告知</h3><img src="http://www.plantuml.com/plantuml/svg/dPBBRjf058RtynIpX0LKJPjD5jbq4NNLHVi2bZ5HLMeZwhIBgX8qt08X63KeJfpK8Gh1gWH95PSOXzeFKy_jBJfZKubUnAApyPmp_h_p-nzBigwL80qDSkyYwuAPDW2WACclf6q5HduFTuqei52_3jy3o9TSq7Poa9aXQ-ppuwKUwXn4dlz7BvZGxzUYzm60aYBhahfTKE2puflCKpLVafuhfRSlPMN1JhrGNXSBagvWPu3FmZJCvhHtQdRpDnyRyE6FSWLDJl2fZOnzF1uIoqErMsOsKNcE3uOqx16dZVohVp8p1IMlPpQNFtW3hWbYhqNiOUmgGKMUAr0VPyAxgkaA55AevVzY0kHKw6u5LsrEGDrMWWB29xQDNo_JKHMVpydNU_Iv7NbjSb95dJvrhr3tZc-OLIV1PUHzmVqRTcoWvXIihTGlPuAQDpG8wBSgzkEEVqZS4Pdxn0_1ezKkukpeP43T6HlCwBI66dvYYbsSYH0VhzRROtmqPKSkgjVGvKYSEWFsoQUJ0AolL7AtaJyYXxVq-awCtUlm2-MXq6aRjSBuxjQp8i94bugy5ZaEyBa7dnHtO59jGJ5sRAPfi9i0KlmHUMNKSnuaEv7eQJCfzf8YJSC6zxeO8LBcMHBBN7ZvVvI8EXileAWvAFwPdm00">
+<h3 id="资源费用-用量优化告知"><a href="#资源费用-用量优化告知" class="headerlink" title="资源费用-用量优化告知"></a>资源费用-用量优化告知</h3><img src="http://www.plantuml.com/plantuml/svg/TP51RzCm68Rl_XK-jeTiWi6bXqeSaPX0SEKIfUusKPAI9ko0a3BeQ5cRB95WBTsqRC1OGLetfWvbMRl-6E8lyOc_W9DKaD7Xa_twy_Ez_bvHqXGLHnCxl1ZIxO-iwo8naUYRTVQw7tWzkh4_lK1LKNeYBX7yG5MU4csPw3Ny0c6-f8gYbp3hJbYZ7VXEHgEc5NZ-Fzhb81eVnzfBX5GYQQAyL27uVhKct9NBglY8gCzN939bPvhDwTMv8ixTgTM85ftLmRVpk81l_3JMw60NEZ-etOQZ0shN-J6uR2qIJLsHmdTzrjXCK5TU2dfLAEOUacVfUVfJyts-W6ycn1xikF2z0SR5RD6V7bdwDQoaINQw1Rp0uU3-hKcVf1pgUVmRh3FCKQS_3plDUNhqYVfVyi7O2doBTPlK63sMgRCHkWViWybbQ3gmTGvMFpBji5UF3kkmDqhyPDiA5LBMXE9ig0MCRt53eJy9l1QSkipeiOO9MoUmQGV-Pxwv2fqb22LbLVxV96zpDh-u9-gojCmDitKp1QCuUrdH28wTOQLyxVXGd6suxO1ro3gduNWGcqbgVetQR6r2EUxiMpGyHt5ap7WBhQ_KRZBZ5IzC0vfw9t89n-tGRm00">
+<p><br></p>
+<h3 id="单据跟踪-故障单"><a href="#单据跟踪-故障单" class="headerlink" title="单据跟踪-故障单"></a>单据跟踪-故障单</h3><img src="http://www.plantuml.com/plantuml/svg/RP7BJjj058RtynHd2Gi7qTAD5v6GsB2eYieJMCxaeWOxTPnsWP08pGNI93Y2G828g9UWI8W4YOjCWEHXwXbxtg9ZJmHEcrdDd3dd-yz_ZgAQkW7Us78VRydPJzRg82K8aLAHVUivzYcf_9Xy85NNJ4DFWtjHPFa3X3AA-ab9O5Wpz0ri9d4k2vi8-57JUYu6h3LcvQepR8HYf5PtxE4_iL7VUnxuiIs43AoQYfP8O_YGoKghMjnGrh7n9QNY2Jia5Z5IYQGPYSBSSZQBJU-kG8VMFCYm-6SxJ_hdzFYUM5LwrILMWJ-TqVVts3HIgdlOO-NzW3PLAUKoKdJk8_uitXFpjUQy36zyuk2HxetSCviKRy8PplEO4-dHWo3Eg0_0OceolEKex-wQDelijCr_VVBJ3h5jVWy88b4Ap4dHy6vaMFAp6nMtqwMTLm6X9snn4FVDZcy5bEuUnVIl6cqFm-mqZdFq_pkM0Tw9zaJrmakNjDOdlmkkLV86NI4dCjpAFTtE-vlJT1E33mOzFdCAA5ZBViEjNw-8bWGT1SDjz6YxmpkQyX98i5ydxBA5i1O3NmFz1G00">
+<p><br><br><br></p>
+<h2 id="主体流程"><a href="#主体流程" class="headerlink" title="主体流程"></a>主体流程</h2><h3 id="ApproveChain审批链"><a href="#ApproveChain审批链" class="headerlink" title="ApproveChain审批链"></a>ApproveChain审批链</h3><img src="http://www.plantuml.com/plantuml/svg/nLNDLXf95DxNKzHovWmkajcHepcpp2hFu2Hc4u-TevwSMQAn1q4HZ4O9e0GZaPX06u816g4VPlhUBjuYjwkQfcaxm6vwrLLrl_lpVRTkBJ_RrDQvtIb0kWB5Ys6-p9Rb5boU3D_Ke761kst6_jR-uT3z3jaRnkbxfgrjhckh7EuIa3qK2JtYJ7krmLRMddE2ChQuo8Twnkate571L7TuDE2BYum5uoui4I8-OGQv36JUiJLjSuLhhrVMkVRYNaXtSTkczLyBItQ7pjeAQvicRPZx_eRJsnaRqsBIN6q4p0dFnlRsNHxqNSUyYjC-N-BIcSenNRFxfJZ7tHEdFlWliMLt3jIFI5xJ8VrB6jmYo660rOMbK2rn3ZrJD0PUHWU6I6-7YW-A8WOwf3y7jpouPCs3-w53iIA2gtnfUvWeYBRXcDOCvWEHdM9hU6G-4bREwRM4bOV1gQf2tEwWcVCI8osdwVLukZwFWpo6gv6zunGxe7_7TpUOQK1k7-lLfzI4owkRrE0PxQLipucIt1xbtlU09FFZOoa5bmMxSosktefKqpTww1lvMSDXtkxkGIgZ8iBbDz6gniWpnOHw7aer7_qdeR6KePPtpxA6SqpjaGBzXzqxaKP-WUw2N4Iro67QALTnxwtJEuE3CXG_IEFxyWRK6Q6ykoKpZ4O5BsGaQcLrW-XxEKvG4gyeSSd8flqRJiLZvUEKKZoXsat579yhfP5taUkxtbt669C31ijLOLoCmpVExS6U73EXENC_aIWalj7XtzjPDtOgDB99Xuai94tLgavX9mHbqLJD0CsbVWW4kwUYKcDpjK0qz7-Ro-CvGBBRLWFh7qCP_kQoLH_4HUCp_Vd8tsKxJCtRQLrXeagZ2lf7xgKUGONHXgsaUrrB9hutxBv5jvUvmO-xf8ZTqp5lUFHONnpzAWRT7yEpSngcP0ZdUrYhu9d5uDCsdfSKBdGMu-Bs9lHCqhahy7YCptX0f5pAUwY0MPTW6dIwqkeTbAK_USx_uD3Pnr8HZgv9IFKC-IshYCHlsrXiKHmykObGDVhUgFo44Mv6J_zGndCCVNdiPYO5PVuRC57Ev12NupyGILL74qnOoHZMB_5hHH68fnzm9sjtK_xiHoDBfvxpxA5pNBRl2j0d7NEgNu9nOwCjMM0dJLbYEUVJENvxsirNoniRNinc1InTVDfYexScH8fREHQsiNIj1YubZMVLHseCKw7aNoHR0JfyHUvD_LzqZnzAYUBMbYxFDTPLfktcR61ej4K2AN76VW80">
+<p><br><br><br></p>
+<h3 id="Template资源模板"><a href="#Template资源模板" class="headerlink" title="Template资源模板"></a>Template资源模板</h3><img src="http://www.plantuml.com/plantuml/svg/tLPRKnft57_VJx6JftPI96YQEfinCwaFcKodcKoIplJ15o8RwvIm5Z1Z-uH4v28t6r0YA494YOc0ep7Sb0_JFV_T_HOzksSXNBHDNzgPCgCiU-xd_Cx5FkkLtBpQIIgjKyWMjKoUizEh3ojoyq3B-TYndsqqkAVI4W-D4qZKE1u_ivBBwvQSlBJWuKINWqSonqrDyL3POhay9AFigAG5ObfnMprOORjjVcgAuv3PSWV_2GRRvXcn4GFdahmYBxqGtRpqp52h7BVaTbkk--Jw6alNMAoYTh9g8KfId3Zh6PlxPinfTy-9LdwSVp7zy0VUoa_oz-Q_jVAGg2gfCaIRLlx7oLjivupjhA12s5cpyjCBYn3tGthLocl55RLoGTgLR8RZM3N1Dajt5-PPlgHMYv2CapcMUm-v6Z4Q0UlkSaR8c2dMJB9oWMrtBFI3GiBubVEAHMjbrCgUaO3-F7SpSPw6G4d9rY5mOlhXR_HbYjv19m25Tsote1r6HpFroE4nsGnbv0fdwSesNr7amlU_UdvnpZoKFDuvj_WO7_7liUX6JGFCuH16AooDBU5R2BnNpjVlBmWy_Xupt-Mnm35X2Jy3Sk-ga7WZy1CJDsxzuLl--kR4E9An2YpqiOyVgglAxZBg6nBlHul0onThrzmEpzXptUKnZutgV4qNo5GXkG-9GxNQGZ61zxeNHUipkzCZ8bLkhayxfKK7IoJbYopM63CSIsk-i9RfQC4eaj4rYCNbUjDylgYevrLy9c5438Pdg7WapirBBe6dRtG8zltsPnQFjEZzoMApw_prBOWKb8CyHkWLNNQNzxv3eB28TDSjsacZi62tUz2SL_HuyMl1BJaCx1HYIYglPwKIXa1PQQtep-q6ynrWsY5M8AzqQ1AhN8yXO15M47gDKR6rjsgrD18qMhWi5cmaZj3OCuUSP8X4q91o54OBsA0Szzsavu7a41zAalDIVAaHFu9re73TIkdKIa4zRI0pj1F23KHoD8pZH4RxfmsqPiFAH0EmNiPveGSTgk433WLjyrGmPNlqVgBU7btJx7WNGjjmi0RH3VHG2oO4surU1kLsNMc_XOHVTvvGq_P1iZe4cNvcblD1BM4gJzVCOWvpx1qCSs2cdjZds6vGEReGJEVm1UNhDZlQqmeDjVOIcllaFkm5sKbPC672DeAi4A9tjx6UD4GehonLPT5bPMk5M27NPA-hLs7L1EbljZ77hEtIRlW7pV0_1tTlYFVDMcE-2ePJxweUny-u19JS6c67vS9m_Wh2CHhhBEnZPs4bNSBIKBrcN6XCQUM-U30_YmOVBpvz87g_x9dMqzjr3DqOdUAuQn3aSYkkTbvZTI3UOXqV9DPPlAYS5kLM2tFEaOdBbLOsqTEx7e_eXSeEGk4hoEvYQNN7ZT_pZe451AjcA6XFhX_YnfHR9KXaMFQKXP9gy10YPNH2ZN-4n0P7NvGPI28Q3scfa6fQadgR6hC1auCRIokqUidvb6wxqskkJ2mt76KWLpOk2gCC_VvXFI8bM8-W_zfcHIjcK5blGtwbxY_ZPQ85OsoZfbwymZRZHEndK_MmNgEyJyJd2qwxLpIFYUGvheyhJVTuSDw5aX396n6CBdo4Y9O9mEzH0YokUMJwd6DfwC3gGj0uE_ejz9zDtJwyFglZ7ejntKvDEEDYiHsi3ru220cSHgIX5p5LXQwNqKChNjCoPwpo0PUgtc9x6zhBCkrjQYWIb-j7BBgEOPfjffV3843j686df8xbUaJRBfg9fBicLKPqgBuesovnR7ENdQHrO5Msv4QO4c3EEYCDj_Mj_l8SQgjuTc3b4P8irK1d8BHAjrzFc0Hmx7CuyEYamED3RkrX-BIAZDRGiKcBeUzeet8Ffb_WDLy2Wit1p7_6TTVp27tHRxoHibvYI0SA94EQpz_h3zFYtqlBdGexUaCvqVE3pPfge1fQSuF57RxXTIoYJB_BFKbiHfnda8X0Cmt7_jvuwGsSWU55cWxroTXCwOSsIjGZXZ9zVXXqcoxKLnah7OW6RHnfqzAYopjG8fqoqIiWgUB7foVlyHRB7VxcjEtMlKzblA9_Hi_b_sQ-pxZaHfuC3ddQFM0pE5_bvge-VPlPuPQYQlxrh1o6nhyxBaUiNpKn_mG0">
+<p><br><br><br></p>
+<h3 id="Req资源业务单流程"><a href="#Req资源业务单流程" class="headerlink" title="Req资源业务单流程"></a>Req资源业务单流程</h3><img src="http://www.plantuml.com/plantuml/svg/rLVBKYD75jtNLzH-OD7jZQC9sj4HjYCSuyM4mpkt5pAj3dSOImmm4_PEW0HwFq1WlK28aK133vBe5aYg0kbZN9bPzHTpChEgL7g0tLxPse1IDs_UnybpJ_fMDeFhgdaJfbhMgeJezJOz6YW-kJhAChrBocTMeQfy5_n93QvjA2e-Ay70vdfmLNpt1rwf-4rHbELbzIl_F_-nwWkeYogjDips6RvBrqQ_HE8raZfKbvSLPUgunUTmz4pk8EbTadatjKa913VzQl3V_dKr-5gS-kJNq1QjnBu8l5xtIMEQoP9OojgBq_nGUbQUSgDgWrKIit4O_OHdCz4ripN4CcdLQ6n0To9azqPHdglqi4DJBHBznQmrIVs2XZCAV2b8y0lV2azrySatfFUEP7BcJUzRKPn5zQjN6whzhtHlNeJfwTt44elVqj2MioGBBSusHsMYdTiHUCvvAiufdp3zs3ddxnzlVDWnaxakUWyKVUHbLb3UnUTJ7NfcZl8u-tSsnq71JCbJDAkH_Zcff-ZnjWpjcKeob-YaMqJqp4rqIQ69VVp5PdJ1FDyoHYrwzHzpxvBqhbafRCSNpf3oqDudV91CM_RTBXvCftANXzEADixRnk-Nldy5Lhv7jQIh1n0yapEflIMxnIbJn65e6karU72PzekrDwpSfUa6Duv4naVFt8VfygiqcRD2CPADMg5jPFEr_yUrLT-ctuP-iqQFH_Dl5T_LAaaBSXSY5ucvaSucPFH3Lk6Mjcwi0ruppw7IcJ58a6nwYLIQXfQKbjA_SLSoQmtazs9Zmx_9AbNIEZ6pzwJIaMSgBD-aqPwXfILUfzpsux99iidkHaExM223MpTuV6VvzsRtoeK1oSIvPzpGIIZpAgXag-IUSrgpBfEARtLJ3VuWRiROpD3gJ2--M5jRHodazS3Ebm6I3HlzItkXVcrs6sG_IQDP4g_IKGX8OUK-qVA8nT0IXduhtCwKLBK_z6QBDHDmJ7OZf7vaxJGbnv9edHvTkMRUdzmjjD0csNFhBCmEYm9XFQEVTr9Z_pi7H8G3jmQJ2JgMwjzShbvsA4QOhljVovXLOS_ors1AO86zFJNZsx2SkaWoC92lCIoFpvh6hw7h76VHClR9iYsOxPwye_D9nR-wuLV167QBvjPI_8oQauf6YssnnES2qu2YX9SIKJT3moa54cykaLQCH9fC3tFJ-npJA_Z7qD320f1g397j6NeitF49Gg8TSpYq2b4IkcE7IQkOXQybG2L7qjlaS1VHcjrpD4BkniImzZAmiiwEXO-Fu0F1cDs1rnDyV6EEYa0LiZ3q18aqldsiSIGNPzK6kJ_0a7EQo76NhygqFBNtJ6tEhY2EBMkx1LHQeH9ySAX6tWEdLct0hvHL38EJxVhVZ_WTEXhmgW9TLrcp7UEZzC7EEe59tXLNOyaR0JXPPaVgOPRTvNVJOThFtmJUR72cfVjrAn_wtKmhQe0mUQj4l7R_dyX2kuG83s0_clYlbI-QxVR2X9xXT_cqx_uYGPtgIeYYEK8yIAPowAL0ozq5bNyJySeua9zBaFR81IsrUnzExkvKcot4V6f_i6wJDPlMTcPdozovbmsJ29H-HFtaCeQMoD_zzgNVzyg_hWWeUxIABGr9whqZ9KwCFcTa40R95KZdcaz0lI4Fm65JWNuoZwebFyijz7W7DoduWoG2JjdUzJ4zp8ScZHr0HtXpvAG3DFDJFISo_OBfLsGO4hJHcOMSLsOA_aNN-MIATbmMK6ZbqXvSemA6eYqa1JloQaJth9rxHCirYkHEMK709rGoHtjoZ47YVEhVWFR-cQIh91Bbrx2goGtqw5w6i3Ik6g-8nA5x_FH44uff5YCUOUWnlgyGhJev_WIfSPx0O3JwQHSI681sqo_spTWxByCWAHjIZ_H6zb7C0bMolNkXF8dCvNrdSabPYuyhag6yPnS_Mvcpw6ZdQOrwLoBj0KOvgPU0ckbX5mi1pR21O3NwCNQHSdIwFNfe_XOy3_eXTnaC6OnlcenX7BZ3PAu1oJLffUeE2wyDxVKmqRa-5ZRun-CGD8ehGB99Go-uEnQWoc29ziYas5jeq7qqnjd2qXtWKoesR3T3EsOn9mUK45LL3ZhuEAayDezmJwQVJkKJHEx5_JIwk92uV5n8cErpfkzYOZ0zzTj3f_UEwHaaCmv6nC3IRHp1Ttl7ZKVOSoR_G7alzj235Au8nmXKRx-E_dj7pzbRBpSwv5CsQqbhBqMFEboxWfoVZaaKKCyceLYbbIp5Wfs9P9XAPq5U2x0OkzOviOZsqdoR9hSyZvT7ATyc-r04eNC0znDaxnJk9EMdgp9Yws3e6ahwd_SBqB4gfy734yv-U63qybS2xdIQ8zUTa6wj5-poH58GIxB4BmCqUcGZLmnIx89kW0w5lYVrFVg-AGqLhpWImjdc3zafyIPyc494uWu3etFolJdMVFOuAu1McNv0Zw5NCPupEKwd-O77-qTUHuwfqq4FaKrIzepxkKICjn0V7NUdSnZvPM22SJsiBFMw_I8JEx2E9uouCj8nRspvzC_nD53_uDl0hk54w_xYoJoEe0UVamBBRNGv3Qt0QY6f5Up7GVq25mYGnRKmapkat8N4W7GYqTi_uJFnZvIF4_p_0G00">
+<p><br></p>
+<h3 id="Iac资源建设单流程"><a href="#Iac资源建设单流程" class="headerlink" title="Iac资源建设单流程"></a>Iac资源建设单流程</h3><img src="http://www.plantuml.com/plantuml/svg/jLfRKnl95NwVNp5LUKdAKB6zUKZChbrsDfNAfIefUoilwtrGRB7hCfQ8W2txJGY1BkY6kLWWWImi8Vac2H18Z2pqOpBTC_ClShhFpAXdT06SjSfsmKoVFgVFvJlVQTdpQDuVaEbwKktcLKMHFFntlPVHEasIspUo1VFHjzwV_p4xPpxwj_-vx9-TasJuFFBxvWF-6Vwxr_TOXdUIzCqtybyyZ_uvu_79ap8jbFNwFlokduIfaY4THQ-Tox14aWBUQTd_irUmu1OkCl91UXYYMsVQnY7At_V-1r-fxHqIBvBafXvCqDsoP8jEtWORRicMFjzqm7DluSdCOrGe-VppNbJcd-RMtfRfPeCcQoJwIYzMIQb2msa9r4XWisdzv8tlIUk8fDVqazOF_BYJylt7SxBv8ngaLyBqzIV78or-IeEBrYFqPgr8OsTwBqUK0xgqJ5PEH3qtkPxSdjRPjVJyxVTpLrCZU1UyCoagv95X3f3Wu9Et-zwMIJff74G5Pt4faexVdPlppejgJACzC_CoEGWPYn4kPAmpVNyA1Fm1ReSG3J5bRibgEqxZPMDZMw_NoTcfVh080LOxgsIvh5VUa9LZBYxAEEpKEjkg4gNn8CtNwKQT9XObxyoSLpJ5DBrqg3VBV3DcAcqlq-q6MTccsHH95KZkjROJvczTrWgwzCWxqZeq8acwrT0wOQqJWQnWOU9og9PlHQj5xJYkjfEWPSIsOYdTacdi79uAvsKVSSd0cTifadv3IatppDm0Y2KBg2Gv9LdsunFjVHsAGCklkeeEqkAXJsrtcFEpzHl_3IwYpq2Xjb6TkWaFK0xUaio17Imm6m-CwUCy4sOGwQwJM79Gdv0rGfATBwDYVXv7OJgWn_OdDmgaC38e2pvd8D3BwSM4VGm01zj7FDy77UoqNZzfS9Fkpiu6m0QpQbpd0EUevwkOSFrJq5Y5gNRcsxs57qS4rbaEP2sk5ShVUGC1pxG_y4nLAjf60N98b7SMWzFk8VNGJyxbKxMpXH63P_P-5pjQbBGViZoX-Gyato0l4wgo1ja5Fg5RNOHFI7zIFpEw6Lk0vH6i8waGsLnXCMeUq6ZBsCuO-xkgiZA1FeR3qbUd90Wv7jHoJNsfgsUw3AuWQP8rUpFsKRihB2DVhv1y5G8rym9T3-kPKQMA4Kd3RloD-IpQqC_FKQEzqrUYMJGH0bFiTuvykIXd0Ch-kl1ize4t0BvarS9pV09gbhHCC9kWktd0SkDLpTZFMXc9HUleZSPoKklM1dkZ11z7kFejUgW8j4d0gBzx5doFVi9sDG5MqUqwuAFQNfLuhGEAV2ZYMzbUBR5ewVllQMmT-e-g98QjiTtZRhPzfV4gl22DGmZKTzvdipCUCFwQR0AdR9_veO_5fWT1VwV7GyQxgfR_H0eAv1TurLm3bG3rG28Aj7UeJx0VLfledbVWKF9WCsSkXfhG6oQatP7DqcUQCC_eQWpsXCsXcP5CWduiWm2DhgcT3vWz303--9FdYGyJM-kiqxqms00XvfiXng5pm0KqLGRJsFkTi0b0y13oTFsTgkJkk7ekTzU_F3DF7eDdSBcnVcwrKxgNfqT5cezXT4cvQ-_8LG-qRGuVVN_HQ0Q1o2mkkXEYUV3P3YafFEq6RG2N6qjTArRGokXk3pc6NURO1k30e05S1wsQfBCGQMwrg7KGnwsOyBW8AvclBeGN5x28XQfrrxHE7YjPosLv2ukHvIhhqnzZUZ49oWIcvAZh7mF-XLbv56eDRMrhHd3H2DNKpYbwt1Q3SsYXiuS-01XIsZAsmwHzO2RxDQkyhm2yB6zBOIspSiVACYlyk9pMJY0OR5Lqsrux7BquFRXCph0Qup613ezanmKjPhroiUVFdzkMsBQX6MhxumH9rpMb1-MWBsvennrfB0l2bVIeO0Ht43lL3cHM795VKrxJZs_0kT8boD500npEwF1uTBC9vg8M4baXfOW8TmBQiIQAISloDbxekvDNaEb2k_vPqm8MAz1yUhAeLLUbIwGLk02yAx2XIqGDZOB8dDbP2GWPDBAdOd3qoaizTZG-4X0s4lgWzfPC0wm69L8Yw593IH5sgGifwFSssVjXA1izAu0H47zmXDwBc4vPFmVdajvx8rX0vmu7VAIUK8fGbcfd6VumnEBnjKOijYgnJ5S_08ZOR8kx4kW7ieXQaKHVzj7QhKd-rVNhV_3UkCxtCkE0-cX6WQh7UiKPIUzb4GfeFgZtrY0ea5wsMXhTUl3uAMg5YGbDb8Vr2LBl0ESsTZQqWuvMWKHiGIy5n8D_IK8X1SOKxMqVpBEEaexFJ-lX7K1IQI1JcHYtqk41kykHJ1Gz-TdqVYo_7qoHAx5kYraFZ7VEegIl8tgj8IuIfkEnxObzH8otguKMCguh1oWqVagN5u0-cHtzxJ6Gg16upAavmaCVLPo70ByGPGCExlOqfprE0H7U12Wncn1O2ZbYB5L9TCK1w2xJIUi8Ayy6U25o5cSTcHQOovmevHbb5Q1ZvWK3Zc67uS0nkYMQ8Qmbe9Z8-IjK8N1xs0emi5yrGz8BPLngKVeB59czHXQil4O-PcdnpJNHG_GmGeETGIW3GWGx8Wu11m8chjLUmJP_VZBF89vl13_3FcfRaU0lYQH9OmrGKc_LZJSfO_ijC22s3k-pb7LsmG9cfBCqruHUH1lDlh_uhGYtojtS1Z8Awy4cl5EcErj7MYUDnmHKdGBU1GKFgQPrZ_0GD5K5s9uQsV-mp0GRfZ2T-aWfvXKld85X-u9zSUNOVI-y6k2N3P0YB4lu83U1X1YOEf90YpmBX7Fip0y9TnWQe2mNZVakbiDxj5rfzxtJG-fi-HXu6AkpCMM6D9C32pc4mI-5SOKHsoJX-HYfxJ44nl5RFLjbVUwJ0gddWiLhBb2Hj5G3zj6BPSRUsoMjaZIxSZv8CYczLS2TqSv-Qah8q44DpHU43dx11Gw_giGTGQL-UYpGB_k6sIabt6wYe20oad8YOpLDxxu4hmdp_OYhHCYCpIOwIZYGlUBhoO4aJgRrHjIKY0NfQGnG1orrw-7eOmHZTFMjbObG-Avx05Ued4wnPdZN8dJ6f6F-juF3yyRYBgCg4HVjblcmt-yg_gSJPddoo2DZ7KKIa3_oICs9eJ9_vhVseobsdxNmyRmlE4eTEfAh-thojdrTuUubcB9Z2OLuMsnzh8l-kuwdxCCrJjuOyVpcq5tkZLZzrOZdlniSXWNIWLUe_61uZNE1L_dA_wjvu1QiUJX7Zc-zS_C1_mjXyiZjqOtJaVF7Y2ioVQbhvHwx_a6GOsc05qsThDuyezKY-PG6N4DOHKNi4bzyVOkiLHaK1Ik_9cVDtz9yz3VijY8HCoBfAMQrbgknHDy9mKIW1vVqRGQD83u13Ta0AuIzRPYJfU4rZ03BoK0C377Lv0I6YRui6Hj1WNtGjJQx2USk4R-YmGhClpE__NA5lBOFCxQR2fOEwMOKMVD37ouPn0Py3s4qBHcM0FZAp13alTXjMaT3pI6VWgG2vTbmMoH4tprIZpw7DIltwV_mcHfvYvZXxZ7y2cFxi277FGZZQNwHSTZfXf5Kzb9CTkZbXlNTACw5BhWJi4u4MheNvaVXF1Ol3Vbr8KliJCeMwVDbSmx7LK9x70IgpvX9BnWzdL3pYqsPux1m_609ZhZiR7dPKP8d73ZeteBmFVWNizJ_r1uQnnDqlhb5xXrijXyK71-j0mpypu7nDwfZHaZiTKv07Zj2CfFyWHUco9US7arDLvyVGSAU_73QG-7Bp7p32klAOzXdZ3dyx8FJ3RyD-ny0">
+<p><br></p>
+<h3 id="Asset资源实例流程"><a href="#Asset资源实例流程" class="headerlink" title="Asset资源实例流程"></a>Asset资源实例流程</h3><img src="http://www.plantuml.com/plantuml/svg/dLZTJo9N57-Vls8UsmJJrutDTjDassJJf0_DFZOfhEB6wCfMs6Rx1Ye80eBV7w282ygwCeYVm8ZyCPrpxynJ_uMUUyym3eAkbXWppBtdt7D_vtT_vrny8w70j6fsibm_Xzo-jLbGVFALqTY6XQBzwatWemhDCyYSA2f-HW9JeUd0f1fu7rJyKwCg3YjJWP1V3VpbdrO3OtBWjV_T-qbVo6yqgdnxxkT9dnZqMj6qjRzZ7iwnlMilP6gWRREDIyYcMBNiCVIoqLhYNseqRZHQHaDN-E89v2kiMhB2kdcpn3PhRAy8jQONj0H4AroVy_uJZdY5PMvJFlBs4jVpNbvDWBPht2JDOfgl5enEaKLgQ0xP0vPFm9K6rpCA7ComtRpp7U9RLdYR5ye4YJLRiJOgB964XGhBdRFgfs_ucSxrWj58cxDjN1wzKjmjY9VOUXM3XlcOnwoLsTe9IsiGYuBMX7OTLj9GEeBIzhSICu6NeZn_haAZWTiLEEGBxd1nCtocYHCKH7Fe1_mth7Pd2SmmJBCp7noTO1XiRP-0GwJD-IESO3GJX0BYGSZWWmCO8aDek7pRuRPMM7eNCkiiVmpv4wXk6eqaUcML8jlfOFPuMnDldkRxvVZO6E6BmV9yqfq4AnTJV9CXzJObWcBIrarBt7ncoGf7h1dDq2yDlGJHIxPspbQRNlDYZhMon1cAq8iHswyfSAzqsiTHrVwGKqeLKiuyY1Zj5S6xzWeaqWuowDNP9cxv3WYEDqe5N9rQgs5MYmZqf0U2vNkMpn6L81ldsPYR9dS3Mbf09YAr42_p9FBlTQ5_gnWYae5biaQhX3Eb1uTV-A3SGpAYbohurGUBqKpYjcas9anr7rftglinmEGhPcUB7HVHxhVH80vCF1F__ID1MfTI7vXm7OAdyHkzVlVBi-2lWL4_UNmr-cWM_nWC-aDaPUtiedjSxSbaTR4LlmxPGfbUCneBG-GRJfQCLkmX7dVJQrOFq0mMTLm7_yZSQEn3gTxZmQt6VHxSLef_CkXtHTSTSs9C8nWefzr8IziFHIhvvtvdD4xDo2gnq77gWSWsRtLm8rmh8gDXEIN85b-MVjtcTpSYhPBij22INInRxIowm_n9uY8rnJbPRLAeIDL-fbhxStnjosY4ZSOHP3v1DQj0liMsQiCK44k41HRIgNbn0bhA0uKMBuPDxOQjjuLSqbwQ1GlbN6_XU_FYYksK5QCTmynZ0O1upCg7MNq6CfiOaCS-Wz81vFPO8SiFqx1Om6UEyIwMtRj2BEWh6IkGNRHszk4aPbnlOnhmh3YHOxXc9sSMKtPgj5rhAyfcen2x86FUsaFLK1JtYbY-qFcmCYJW0At84arHYkPRg5xMXcRjRz8GLIrw_-R3Mm_kIAXSHuDIsjuHFpzauJ8De95TYGadEOHfP0ibNZaJ1pHyw75Af8CGoX0kuJhQ0nKNFGkzkid1MipUwtAAJYeTq6oACZe-5GpvfaRyVuoFag5C2UaGcf0i2KhNca9ud6Llpx8eXWiLIAsxHG-F3w9mQpU0-MxzTOc6OuF4GHTclUYXEMwYAezblAAunxe2bitpytsHt6XSg9t_ppkdJHaW25OuO-LF1ypjNQ1tZomfJWYTZHxAfkSHMTHiQojD3sOdmWzralexkoFPRgz1rCP9LamxgvAro7XH0IMF-_aWMa0vpIesUKuRTgNSKVTk9uaXos9E1XWNIto6-XfQseVB8S3RwS27zwgmGwtsanMlwv94GhrlUrDR3ft2Es1tg1lUhe6xfq09JS7wd52xOXcYKI-xYF1Aqd7bOc6nR5wU3VBHExatFuFcaoTQYEihRAVGBVWFxO2bi7DA3FH7WaFmFJ4MicBnB2mKf60Jwg-cngPzFtqCKNBSgCkHb-CZzX1KDo3QU5GAY632b8mmvGz5IvF8YE9JrHwSUfVeDUx6ZuYnv6ViqQpm31BO2HwTC-rYml-tSb-mnI-uRgyX-eFwBehc_Kt1G31TsjD5Sj2ATD3iyo8wj5hCMYuxzn-x-tj40DINKSz8N7EAh_h_n1pBBxzkOMT2UZb8f6qz_egZEtfDblBUw099zcPseob9saklHn_9UviXiPrS0w9dTmi2LGDnPxWw9JtuVGeMplZi0ItbQB9eJvkNw04RAGdsamwiCZ1rQUiWxX1ke1dHgNk_l1MH-oWbgWFV2NTzUOG8zjUNhroh-WsmhflnOqouQBBMctorJaFuV7jzQiUefx0tKD-pwL3VDLgBxbZnqeGpkRv5RPxZocXt-Egje3WDF7PRU8h4BIvw3D6wu_-5Itli6LIlo99Q8gx7C2PtGNtHUzcwGp3f2Vb1rhBv5DqPia9scVtOY4jKTphDUUKReJdq5UUWTMvF_YvownTdlVPFJ_l60jFlAAdszEKKzdVObg1HvaWqJdIWPOMMLrc9gcGaJkcA3EmcnMyOLCUlJWLiuHJUbkmtqlN3QNUZXjnaYnKdFZKqPixX7U_OGy7qx_0XJFinuwjdPkqA2p6hhTrtSD74Q1sQsJPkKHou_m00">
+<p><br></p>
+<h3 id="Cost成本资费流程"><a href="#Cost成本资费流程" class="headerlink" title="Cost成本资费流程"></a>Cost成本资费流程</h3><img src="http://www.plantuml.com/plantuml/svg/jPAnKi9054Nx_OhjbS9MHnihEiVQ1X4g9wl0E1OMC892488I4KN5E2gCeu0A2edAp-IzNVx29OjEj3UJ8djlzkxDoGk54on6nR34dIxKhaVLEbbbsnG6Bs1q29LNc6c965kdR2DE8jeQbJOXy_DqT7q1DnNCbl3y8QX5Ow555a-uJXuojrJQn9yPM92xPodc6i8w28R2efT6kmGj2tC38gs9_oT6-TXByMP-3WvrNh-5ZpBa2b2tmR55wnCh7wxTu6QTdwLL4p2gS53nPNBpoRMBUDp1GeixPRnCSqVU-rXjY-4fNht9hTFSESMsuVRlboERgflRFmFTWi8ncfzkNvUYw0xSeOMfzeg6IKS9Kr3S0-DP7egrhap01-jF7w4_ZSmaqLWYGjbM94PPr2Cf2QbEa3qHLfF8WmaDKCbcQJsa1MOyz06wl1QdaqVLIpJIUFN-I-BwAoPJtvAYxf4JmnhOTxYRWRqUsI4xLFM4Kb6k_lt0No4UBK_oosEEtG4tcpu77syanGbHXL2zCfwzCKRrR_tJDKlLSFmCrlYBHCk2x14OkWeXv0i0">
+<p><br><br><br></p>
+<h2 id="工时"><a href="#工时" class="headerlink" title="工时"></a>工时</h2><blockquote>
+<p>审批工作流</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>UserCase名</th>
+<th>人日</th>
+<th>备注 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>审批工作流本地化-用户/用户组适配</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>审批工作流本地化-支持License事件激发</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>审批工作流本地化-增加条件-支持数据库查单据</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>配置审批链</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>查询审批链</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>修改审批链实例-让出审批人</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>审批链-发起入口</td>
+<td>2</td>
+<td>给与Req资源业务单联动</td>
+</tr>
+<tr>
+<td>前端-审批所有画面</td>
+<td>10</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Tempalte模板</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>UserCase名</th>
+<th>人日</th>
+<th>备注 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Template各类型数据定稿</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>Template衍生规格/云盘/网络数据定稿</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>阿里云Sdk直查缺失补足实例</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>华为云Sdk直查缺失补足实例</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>微软云Sdk直查缺失补足实例</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>资源模板-查询</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>资源模板-自定义化</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>资源模板 - 区分用户/系统</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>前端-资源模板查询+新增/修改</td>
+<td>5</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Req资源业务单</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>UserCase名</th>
+<th>人日</th>
+<th>备注 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Req资源业务单-查询</td>
+<td>2</td>
+<td>有组织结构拼接</td>
+</tr>
+<tr>
+<td>Req资源业务单-ReqLaunch发起</td>
+<td>3</td>
+<td>跟审批链打交道</td>
+</tr>
+<tr>
+<td>Req资源业务单-ReqFinish撤销</td>
+<td>4</td>
+<td>跟审批链+基建设施打交道</td>
+</tr>
+<tr>
+<td>Req资源业务单-ReqLaunch二次发起</td>
+<td>3</td>
+<td>跟审批链+基建设施打交道</td>
+</tr>
+<tr>
+<td>前端-Req资源业务单查询+发起</td>
+<td>5</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Iac资源建设单</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>UserCase名</th>
+<th>人日</th>
+<th>备注 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Terraform - 隔离规划落地</td>
+<td>3</td>
+<td>适配的租户隔离+组件隔离能落地 </td>
+</tr>
+<tr>
+<td>Terraform - State状态管理</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Terraform - Tf脚本管理</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Terraform - 状态锁</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>IacPlan - 查询Iac资源建设单</td>
+<td>3</td>
+<td>多角色+有ReqPlan+IacPlan+各类数据单据</td>
+</tr>
+<tr>
+<td>IacPlan - 配置Iac资源建设</td>
+<td>2</td>
+<td>由ReqLaunch引起、还得跟审批链打交道</td>
+</tr>
+<tr>
+<td>IacPlan - 审批Iac资源建设</td>
+<td>4</td>
+<td>跟审批链打交道做License监听 + Terraform Plan计划</td>
+</tr>
+<tr>
+<td>IacPlan - 应用Iac资源建设</td>
+<td>4</td>
+<td>跟审批链打交道做License监听 + Terraform Apply落地</td>
+</tr>
+<tr>
+<td>IacPlan - 关联Iac资源建设</td>
+<td>2</td>
+<td>跟Asset + IacPlan核心打交道</td>
+</tr>
+<tr>
+<td>IacPlan - 回收审批Iac资源建设</td>
+<td>3</td>
+<td>跟审批链打交道做License监听 + Terraform Plan计划</td>
+</tr>
+<tr>
+<td>IacPlan - 回收Iac资源建设</td>
+<td>3</td>
+<td>跟审批链打交道做License监听 + Terraform Destory落地</td>
+</tr>
+<tr>
+<td>前端-IacPlan 查询+落地审批+落地应用+关联+回收审批+回收应用</td>
+<td>10</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Asset资源实例</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>UserCase名</th>
+<th>人日</th>
+<th>备注 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Asset-常规定期实例衍生项盘点</td>
+<td>3</td>
+<td>定期同步-自定义网络、云盘、安全组等<br>缺失补齐,有但不对则邮件通知</td>
+</tr>
+<tr>
+<td>Asset-常规定期实例项盘点</td>
+<td>3</td>
+<td>定期同步-Rds、K8s、Ecs等<br>缺失补齐,有但不对则邮件通知</td>
+</tr>
+<tr>
+<td>Asset-更改实例</td>
+<td>3</td>
+<td>变更则扩展补齐</td>
+</tr>
+<tr>
+<td>Asset-补足实例</td>
+<td>3</td>
+<td>缺失则扩展补齐</td>
+</tr>
+<tr>
+<td>前端 - Asset拓扑图</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td>前端 - Asset结合ReqPlan+IacPlan展示</td>
+<td>4</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>后期衍生能力</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>UserCase名</th>
+<th>人日</th>
+<th>备注 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IacPlan - 编排</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>前端 - IacPlan - 编排</td>
+<td>10</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><br><br><br></p>
+<h1 id="资费相关"><a href="#资费相关" class="headerlink" title="资费相关"></a>资费相关</h1><p>Ecs成本</p>
+<ul>
+<li>资源成本: 实力规格、镜像、公网带宽、云硬盘(系统盘、数据盘)、带宽加油包、共享流量包</li>
+<li>运维成本: …</li>
+</ul>
+<h2 id="华为云"><a href="#华为云" class="headerlink" title="华为云"></a>华为云</h2><h3 id="Ecs计费项"><a href="#Ecs计费项" class="headerlink" title="Ecs计费项"></a>Ecs计费项</h3><p><img src="/2023/11/24/newFeature/image-06.png" width="70%"></p>
+<h3 id="CCE云容器计费项"><a href="#CCE云容器计费项" class="headerlink" title="CCE云容器计费项"></a>CCE云容器计费项</h3><p><img src="/2023/11/24/newFeature/image-07.png" width="70%"></p>
+<h3 id="RDS计费项"><a href="#RDS计费项" class="headerlink" title="RDS计费项"></a>RDS计费项</h3><p><img src="/2023/11/24/newFeature/image-08.png" width="70%"></p>
+<h3 id="其他事项"><a href="#其他事项" class="headerlink" title="其他事项"></a>其他事项</h3><h4 id="欠费说明"><a href="#欠费说明" class="headerlink" title="欠费说明"></a>欠费说明</h4><h5 id="欠费原因"><a href="#欠费原因" class="headerlink" title="欠费原因"></a>欠费原因</h5><ul>
+<li>已购买按需计费或竞价计费的弹性云服务器，因持续性周期扣款而导致账户的余额不足。</li>
+<li>删除按需计费或竞价计费的弹性云服务器后，因存在未删除的关联资源（如云硬盘、EIP）持续扣费而导致账户的余额不足。</li>
+</ul>
+<h5 id="欠费影响"><a href="#欠费影响" class="headerlink" title="欠费影响"></a>欠费影响</h5><ul>
+<li>包年包月:在帐户出现欠费的情况下，已有的包年/包月ECS资源仍可正常使用。然而，对于涉及费用的操作，如新购ECS、升级ECS规格、续费订单等，用户将无法正常进行。</li>
+<li>按需计费/竞价计费: 因按需计费/竞价计费的ECS资源自动扣费导致欠费后，帐号将变成欠费状态。欠费后，资源不会立即停止服务，资源进入宽限期。您需支付资源在宽限期内产生的费用<ul>
+<li>如果您在宽限期内仍未支付欠款，那么资源就会进入保留期，资源状态变为“已冻结”，您将无法对处于保留期的按需计费/竞价计费资源执行任何操作。</li>
+<li>保留期到期后，若您仍未支付帐户欠款，那么云服务器（计算资源，包括vCPU和内存）、云硬盘和弹性公网IP都将被释放，数据无法恢复。</li>
+</ul>
+</li>
+</ul>
+<h5 id="避免和处理欠费"><a href="#避免和处理欠费" class="headerlink" title="避免和处理欠费"></a>避免和处理欠费</h5><p>您可以在“费用中心 &gt; 总览”页面设置“可用额度预警”功能，当可用额度、通用代金券和现金券的总额度低于预警阈值时，系统自动发送短信和邮件提醒。</p>
+<p><br></p>
+<h4 id="续费"><a href="#续费" class="headerlink" title="续费"></a>续费</h4><blockquote>
+<p>状态释义 </p>
+</blockquote>
+<ul>
+<li>云服务器从购买到到期前，处于正常运行阶段，资源状态为“运行中”。</li>
+<li>到期后，资源状态变为“已过期”。</li>
+<li>到期未续费时，云服务器首先会进入宽限期，宽限期到期后仍未续费，资源状态变为“已冻结”。</li>
+<li>超过宽限期仍未续费将进入保留期，如果保留期内仍未续费，资源将被自动删除。</li>
+</ul>
+<p><img src="/2023/11/24/newFeature/image-05.png" width="60%"></p>
+<p>包年/包月云服务器到期后会影响云服务器正常运行。<br>如果您想继续使用，需要在指定的时间内为云服务器续费，否则vCPU、内存、云硬盘等资源会自动释放，数据丢失且不可恢复。</p>
+<ul>
+<li>手动续费:包年/包月云服务器从购买到被自动删除之前，您可以随时在ECS控制台为云服务器续费，以延长云服务器的使用时间。</li>
+<li>自动续费:开通自动续费后，云服务器会在每次到期前自动续费，避免因忘记手动续费而导致资源被自动删除。</li>
+</ul>
+<p><br></p>
+<h4 id="成本分配"><a href="#成本分配" class="headerlink" title="成本分配"></a>成本分配</h4><p>成本管理的基础是树立成本责任制,让各部门,各业务团队,各责任人参与进来,为各自小号云服务产生的成本负责<br>企业通过成本分配的方式,将云上成本分组, 归集到特定的团队或项目业务中,让各责任组织及时了解各自的成本情况</p>
+<ul>
+<li>通过关联账号进行成本分配: 关联账号对子客户的成本进行归集，从而对子账号进行财务管理</li>
+<li>通过企业项目进行成本分配: 在进行成本分配之前，建议开通企业项目并做好企业项目的规划，可以根据企业的组织架构或者业务项目来划分。</li>
+<li>通过成本标签进行成本分配: 按各种维度（例如用途、所有者或环境）对云资源进行分类的标记。推荐企业使用预定义标签进行成本归集</li>
+<li>使用成本单元进行成本分配: 可以使用成本中心的“成本单元”来拆分公共成本。公共成本是指多个部门共享的计算、网络、存储或资源包产生的云成本，或无法直接通过企业项目、成本标签分配的云成本。这些成本不能直接归属于单一所有者，因此不能直接归属到某一类别。使用拆分规则，可以在各团队或业务部门之间公平地分配这些成本</li>
+</ul>
+<h4 id="成本分析"><a href="#成本分析" class="headerlink" title="成本分析"></a>成本分析</h4><p>使用“成本分析”的汇总和过滤机制可视化企业的原始成本和摊销成本，从而通过各种角度、范围分析成本和用量的趋势及驱动因素。<br>通过成本中心的“成本监控”，及时发现计划外费用，做到成本的可监控、可分析和可追溯。</p>
+<p><br></p>
+<h4 id="成本优化"><a href="#成本优化" class="headerlink" title="成本优化"></a>成本优化</h4><h5 id="成本控制"><a href="#成本控制" class="headerlink" title="成本控制"></a>成本控制</h5><p>“预算管理”页面创建精细粒度的预算来管理成本和使用量，在实际或预测超过预算阈值时，自动发送通知给指定消息接收人。</p>
+<h5 id="资源优化"><a href="#资源优化" class="headerlink" title="资源优化"></a>资源优化</h5><p>通过监控云服务器的历史消费情况和CPU使用率，为客户提供云服务器资源的空闲识别和优化建议，寻找节约成本的机会。</p>
+<h5 id="计费模式优化"><a href="#计费模式优化" class="headerlink" title="计费模式优化"></a>计费模式优化</h5><ul>
+<li>针对长期稳定的成熟业务，使用包年/包月计费模式。</li>
+<li>针对不能中断的短期、突增或不可预测的业务，使用按需计费模式。</li>
+<li>针对无状态Web服务、离线分析等业务，使用竞价计费模式。</li>
+</ul>
+<p><br></p>
+<h4 id="退费"><a href="#退费" class="headerlink" title="退费"></a>退费</h4><h5 id="非五天无理由退订"><a href="#非五天无理由退订" class="headerlink" title="非五天无理由退订"></a>非五天无理由退订</h5><ul>
+<li>退款金额= 订单实付金额－已消费金额－退订手续费，具体退款金额以退订页面显示的为准（当按照退款金额计算公式得出的退款金额如小于 0，则不予退款）。</li>
+<li>订单实付金额：包含客户现金账户支付的支付金额和现金券抵扣的金额，但不包含客户通过代金券抵扣的金额。</li>
+<li>已消费金额= 订单实付金额×（实际消费时长/订单总时长）（退订计算公式仅供参考，实际消费时长以“天”为单位，实际金额以账单、消费明细中的金额为准）</li>
+<li>退订手续费：包含现金账户手续费和现金券手续费。若客户有已生效的框架合同且框架合同有退订免手续费条款，则在退订资源时免除退订手续费。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>产品类型</th>
+<th>实际消费时长≤1年</th>
+<th>1年＜实际消费时长 ≤2年</th>
+<th>2年＜实际消费时长≤3年</th>
+<th>3年＜实际消费时长≤4年</th>
+<th>4年＜实际消费时长≤5年</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5年预付费产品</td>
+<td>实付金额×30%</td>
+<td>实付金额×40%</td>
+<td>实付金额×30%</td>
+<td>实付金额×15%</td>
+<td>实付金额×20%</td>
+</tr>
+<tr>
+<td>4年预付费产品</td>
+<td>实付金额×30%</td>
+<td>实付金额×40%</td>
+<td>实付金额×20%</td>
+<td>实付金额×20%</td>
+<td>-</td>
+</tr>
+<tr>
+<td>3年预付费产品</td>
+<td>实付金额 ×15%</td>
+<td>实付金额 ×10%</td>
+<td>实付金额 ×5%</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>2年预付费产品</td>
+<td>实付金额 ×15%</td>
+<td>实付金额 ×10%</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>1年预付费产品</td>
+<td>实付金额 ×10%</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>包月预付费产品</td>
+<td>实付金额 ×10%</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h5 id="可五天无理由退订"><a href="#可五天无理由退订" class="headerlink" title="可五天无理由退订"></a>可五天无理由退订</h5><p>部分云服务新购5天内，支持五天无理由退订，全额退还实付金额、已使用的代金券，不退还已使用的折扣券。</p>
+<h5 id="不可退费"><a href="#不可退费" class="headerlink" title="不可退费"></a>不可退费</h5><blockquote>
+<p>不可退订的场景</p>
+</blockquote>
+<ul>
+<li>试用的云服务；</li>
+<li>DevCloud资源包产品（含1元优惠套餐、1000元基础套餐、园区套餐）；</li>
+<li>一次性收费云服务；</li>
+<li>资源包产品（除云服务器备份服务和数据仓库服务）；</li>
+<li>免费的云服务；</li>
+<li>已过期云服务；</li>
+<li>公安冻结场景下不允许退订（若账号因违规被公安冻结，该账号下的所有资源不允许退订；若账号下的某个资源因违规被公安冻结，该资源不允许退订）；</li>
+<li>正在进行其他交易的产品；</li>
+<li>客户以代售模式关联经销商后，不可以退订之前使用储值卡购买的资源；</li>
+<li>云市场云服务或伙伴代付订单，开发票后不允许退订；</li>
+<li>使用现金券购买的华为云云服务产品，开发票后不允许退订；</li>
+<li>云服务参加了特殊赠送活动，不可退订（如促销套餐、促销优惠券、促销优惠券礼包、折扣券计划、抽奖活动、推荐送活动（云豆活动）等）；</li>
+<li>订单关联了标准销售合同，不支持退订；</li>
+<li>“硬件KEY”产品购买后，在未下载前可以取消交易，已下载不支持退订。</li>
+</ul>
+<blockquote>
+<p>不支持退订的云服务</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>云服务产品</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>专属计算集群服务</td>
+</tr>
+<tr>
+<td>2</td>
+<td>人工智能服务</td>
+</tr>
+<tr>
+<td>3</td>
+<td>机器学习服务</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Elasticsearch服务</td>
+</tr>
+<tr>
+<td>5</td>
+<td>设备接入</td>
+</tr>
+<tr>
+<td>6</td>
+<td>消息通知服务</td>
+</tr>
+<tr>
+<td>7</td>
+<td>域名注册服务</td>
+</tr>
+<tr>
+<td>8</td>
+<td>华为云会议</td>
+</tr>
+<tr>
+<td>9</td>
+<td>数据加密服务</td>
+</tr>
+<tr>
+<td>10</td>
+<td>联络中心</td>
+</tr>
+<tr>
+<td>11</td>
+<td>DDoS高防</td>
+</tr>
+<tr>
+<td>12</td>
+<td>CCE HCS敏捷版</td>
+</tr>
+<tr>
+<td>13</td>
+<td>专属云裸金属服务器</td>
+</tr>
+<tr>
+<td>14</td>
+<td>专属云服务器备份</td>
+</tr>
+<tr>
+<td>15</td>
+<td>专属云存储</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Welink</td>
+</tr>
+<tr>
+<td>17</td>
+<td>SSL证书管理服务SCM</td>
+</tr>
+<tr>
+<td>18</td>
+<td>云专线</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h4 id="升配-降配资费变动"><a href="#升配-降配资费变动" class="headerlink" title="升配/降配资费变动"></a>升配/降配资费变动</h4><blockquote>
+<p>包年/包月</p>
+</blockquote>
+<ul>
+<li>规格升配: 升配费用 = 新规格价格 x 剩余周期 - 旧规格价格 x 剩余周期<br>  示例剩余周期=15（6月份剩余未使用天数）/ 30（6月份最大天数）= 0.5，代入公式可得升配费用 = 400 x 0.5 - 230 x 0.5 = 85元</li>
+<li>规格降配: 退回费用 = 旧规格价格 x 剩余周期 - 新规格价格 x 剩余周期<br>  示例剩余周期=15（6月份剩余未使用天数）/ 30（6月份最大天数）= 0.5，代入公式可得退回费用 = 230 x 0.5 - 196 x 0.5 = 17元</li>
+</ul>
+<p><br><br><br></p>
+<h2 id="阿里云"><a href="#阿里云" class="headerlink" title="阿里云"></a>阿里云</h2><h3 id="Ecs计费项-1"><a href="#Ecs计费项-1" class="headerlink" title="Ecs计费项"></a>Ecs计费项</h3><p><img src="/2023/11/24/newFeature/image-09.png" width="60%"></p>
+<h3 id="RDS计费项-1"><a href="#RDS计费项-1" class="headerlink" title="RDS计费项"></a>RDS计费项</h3><p><img src="/2023/11/24/newFeature/image-10.png" width="60%"></p>
+<h3 id="ACK计费项"><a href="#ACK计费项" class="headerlink" title="ACK计费项"></a>ACK计费项</h3><p><img src="/2023/11/24/newFeature/image-11.png" width="35%"></p>
+<h3 id="其他事项-1"><a href="#其他事项-1" class="headerlink" title="其他事项"></a>其他事项</h3><h4 id="欠费说明-1"><a href="#欠费说明-1" class="headerlink" title="欠费说明"></a>欠费说明</h4><h5 id="欠费原因-1"><a href="#欠费原因-1" class="headerlink" title="欠费原因"></a>欠费原因</h5><p>账号的可用额度（含阿里云账户余额和代金券）小于待结算的账单，账号进入欠费状态。</p>
+<h5 id="欠费影响-1"><a href="#欠费影响-1" class="headerlink" title="欠费影响"></a>欠费影响</h5><blockquote>
+<p>包年包月ECS资源</p>
+</blockquote>
+<p>可正常使用已有的包年包月ECS资源。但无法执行涉及费用的操作，例如新购、升级或续费实例等。</p>
+<blockquote>
+<p>按量付费ECS资源</p>
+</blockquote>
+<p>系统将暂停对应资源的服务；持续欠费15天后，系统将释放或解绑所有ECS资源。</p>
+<h5 id="避免和处理欠费-1"><a href="#避免和处理欠费-1" class="headerlink" title="避免和处理欠费"></a>避免和处理欠费</h5><ul>
+<li>充值结清欠费账单</li>
+</ul>
+<p>账号欠费，实例有停机风险，请及时充值结清欠费账单，避免对您的服务造成影响。具体操作，请参见充值操作指引。</p>
+<ul>
+<li>释放无用资源</li>
+</ul>
+<p>若ECS资源不需要再使用，建议您及时备份删除，以免继续扣费。</p>
+<ul>
+<li>设置额度预警</li>
+</ul>
+<p>您可以登录用户中心，在首页设置额度预警。当您账户可用额度低于预警阈值时，系统自动发送短信提醒。</p>
+<ul>
+<li>设置自动释放时间</li>
+</ul>
+<p>为按量付费实例开启自动释放功能，避免超出预期开通时长产生不必要的费用或欠费。具体操作，请参见释放实例。</p>
+<ul>
+<li>开启延期免停权益</li>
+</ul>
+<p>阿里云提供延期免停权益，即当按量付费的资源发生欠费后，提供一定额度或时长继续使用云服务的权益，延停期间正常计费。</p>
+<p><br></p>
+<h4 id="续费-1"><a href="#续费-1" class="headerlink" title="续费"></a>续费</h4><blockquote>
+<p>续费降配</p>
+</blockquote>
+<p>续费降配可以在实例到期前15天内至实例被释放前进行</p>
+<blockquote>
+<p>续费变配</p>
+</blockquote>
+<p>如果您续费时提示库存不足，建议续费变配。<br>在实例被自动释放前使用续费变配功能，在续费的同时修改实例规格，支持升级和降低实例规格。</p>
+<blockquote>
+<p>自动续费</p>
+</blockquote>
+<p>自动续费功能次日生效，请至少在包年包月实例到期前2天开通自动续费。</p>
+<p><br></p>
+<h4 id="成本优化-1"><a href="#成本优化-1" class="headerlink" title="成本优化"></a>成本优化</h4><h5 id="归集成本"><a href="#归集成本" class="headerlink" title="归集成本"></a>归集成本</h5><ul>
+<li>使用费用账单的账单总览功能，查看账号消费趋势、产品消费分布等信息，把握整体消费情况。</li>
+<li>使用资源组、标签等功能，从业务、部门、项目等维度分类资源，以便统计相应成本。</li>
+<li>使用费用账单的账单明细功能，查看详细的资源消费情况。通过设置的资源组和标签，在更细粒度汇总各类资源的成本。</li>
+</ul>
+<h5 id="优化资源"><a href="#优化资源" class="headerlink" title="优化资源"></a>优化资源</h5><ul>
+<li>监控资源的使用情况<ul>
+<li>监控资源利用率，评估当前配置是否过高。例如CPU、内存、云盘、带宽等资源的利用率。</li>
+<li>监控闲置的资源，避免浪费。例如升配但未重启的实例、未匹配实例的预留实例券、未挂载的云盘、未关联的EIP等。</li>
+<li>监控资源使用周期。如果长期使用按量付费实例、云盘等资源，考虑以更实惠的方式购买，例如包年包月、资源包等。</li>
+<li>监控资源生命周期，了解包年包月资源的到期日，及时续费。例如包年包月实例、预留实例券、存储容量单位包等。</li>
+</ul>
+</li>
+<li>选择合适的实例规格<ul>
+<li>实例规格对云服务器ECS成本有较大影响，根据业务场景选择最佳性价比的实例规格，并调整合适的数量。在满足业务需求的同时追求高资源利用率，降低成本。<br>  例如针对短视频场景，目前使用d1ne.14xlarge（10台），监控ECS实例发现内存使用率合理，但CPU相对空闲。因此可以采取以下方案：<br>  适当降低CPU和内存比，满足业务需求的同时提高CPU使用率。d1ne.14xlarge实例为1:4，d2s实例为1:4.4。使用d2s.10xlarge（13台）替换d1ne.14xlarge（10台），规格从14xlarge降为10xlarge，约节省18%的成本。</li>
+</ul>
+</li>
+<li><p>组合多种付费模式<br>  不同类型的业务对资源使用周期有不同要求。为每一类业务确定合适的付费模式，灵活组合达到最优效果。</p>
+<ul>
+<li>针对稳定业务负载，使用包年包月、预留实例券。</li>
+<li>针对有状态且动态变化的业务负载，使用按量付费。</li>
+<li>针对无状态且可容错的业务负载，使用抢占式实例。</li>
+</ul>
+</li>
+<li><p>利用专有宿主机DDH复用ECS实例资源。<br>  针对CPU绝对稳定性要求不严苛的场景，例如开发测试环境，使用超分型DDH部署更多同等规格的ECS实例，降低单位部署成本。<br>  部署在DDH上的ECS实例停机时不占用资源，您也可以在生产环境业务流量的低峰期停止部分ECS实例，使用生产环境的空闲资源运行可预期周期的测试任务，例如离线计算、自动化测试等。</p>
+</li>
+</ul>
+<p><br></p>
+<h4 id="退费-1"><a href="#退费-1" class="headerlink" title="退费"></a>退费</h4><p>退款仅针对预付费（包年包月、资源包等）商品，当您想终止服务时，基于退订规则退还资源并退还相应的款项。</p>
+<h5 id="非五天无理由退订-1"><a href="#非五天无理由退订-1" class="headerlink" title="非五天无理由退订"></a>非五天无理由退订</h5><blockquote>
+<p>常见的支持非全额退订的云产品如下所示</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>产品名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>弹性计算</td>
+<td>云服务器ECS（包月）轻量应用服务器无影云电脑</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>关系型数据库RDS（包月）<br>数据传输服务DTS云数据库Redis包年包月（云盘版）<br>云数据库KVStore版（包月）<br>云数据库MongoDB版分片集群（包年包月）<br>云数据库MongoDB版副本集（包年包月）<br>云数据库专属集群（托管版）主机（包年包月）<br>云原生数据仓库PostgreSQL版（包年包月）<br>云原生数据仓库AnalyticDB MySQL版（包年包月）<br>ClickHouse（包年包月）<br>PolarDB MySQL引擎（包年包月）<br>PolarDB O引擎（包年包月）<br>PolarDB PostgreSQL引擎（包年包月）<br>PolarDB-X 1.0 存储层 - 私有定制RDS（包年包月）<br>RDS只读（包月）<br>Tair（包年包月）</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>EIP（包月）<br>NAT网关（包年包月）<br>VPN网关（包月）<br>传统型负载均衡CLB（包年包月）<br>共享带宽（包月）</td>
+</tr>
+<tr>
+<td>存储</td>
+<td>对象存储OSS资源包（包月）<br>NAS资源包</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>检索分析服务 Elasticsearch 版（包月）<br>消息队列 RabbitMQ 版（包年包月）<br>阿里云RPA机器人云游戏集群</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>退订金额计算</p>
+</blockquote>
+<p>退订金额=订单实付金额－已消费金额。</p>
+<ul>
+<li>“订单实付金额”又称订单应付现金金额，仅指用户以现金方式支付的订单款项，不包含用户通过代金券、优惠券抵扣的部分。</li>
+<li>“已消费金额”的计算规则如下：<ul>
+<li>对于云服务器ECS（包月）、云游戏集群和云防火墙<ul>
+<li>使用时长不足30天时：<code>已消费金额=【日单价x已使用时长x已使用时长可享受的折扣】*1.5</code>。</li>
+<li>使用时长大于等于30天时：已消费金额=日单价x已使用时长x已使用时长可享受的折扣。</li>
+</ul>
+</li>
+<li>对于其他商品： 已消费金额 = 日单价x已使用时长x已使用时长可享受的折扣。</li>
+<li>对于总量递减型资源包：<code>已消费金额=（已使用量/购买总量）*订单实付金额</code></li>
+<li>对于总量恒定型资源包:<code>已消费金额=（已使用天数/订单实际购买天数）*订单原价</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>非全额退订</p>
+</blockquote>
+<p>不满足五天无理由和五天未使用全额退订规则的预付费云产品退货退款，属于非全额退订。</p>
+<h5 id="可五天无理由退订-1"><a href="#可五天无理由退订-1" class="headerlink" title="可五天无理由退订"></a>可五天无理由退订</h5><blockquote>
+<p>常见的支持五天无理由退订的云产品如下所示</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>产品名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>弹性计算</td>
+<td>云服务器ECS（包月）<br>轻量应用服务器</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>关系型数据库RDS（包月）<br>云数据库Redis包年包月（云盘版）<br>云数据库MongoDB版副本集（包年包月）<br>云数据库专属集群（托管版）主机（包年包月）<br>云原生数据仓库PostgreSQL版（包年包月）<br>云原生数据仓库AnalyticDB MySQL版（包年包月）<br>PolarDB-X 1.0 存储层 - 私有定制RDS（包年包月）<br>Tair（包年包月）<br></td>
+</tr>
+<tr>
+<td>其他</td>
+<td>云市场产品云虚拟主机阿里云Elasticsearch（包月）<br>阿里云RPA机器人</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>五天未使用全额退订</p>
+</blockquote>
+<p>支持五天未使用全额退订的资源包商品，在新购5天内且未使用，可申请全额退款。</p>
+<h5 id="不可退费-1"><a href="#不可退费-1" class="headerlink" title="不可退费"></a>不可退费</h5><p>常见的不可退订的云产品如下所示</p>
+<table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>产品名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>安全</td>
+<td>安全管家服务<br>堡垒机<br>高防anycast<br>高防IP<br>抗D流量包<br>漏洞扫描服务<br>全量日志<br>数据库审计<br>网站安全监测服务<br>现场值守服务<br>新BGP高防IP<br>一键式HTTPS<br>应急响应<br>游戏盾</td>
+</tr>
+<tr>
+<td>存储</td>
+<td>批量计算（包年包月）<br>闪电立方</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>RDS主机组<br>数据库自治服务DAS</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>智能接入网关带宽</td>
+</tr>
+<tr>
+<td>流量及CDN</td>
+<td>加速上云服务</td>
+</tr>
+<tr>
+<td>大数据计算</td>
+<td>Flink培训P<br>Flink专家服务</td>
+</tr>
+<tr>
+<td>视频云</td>
+<td>短视频SDK退款</td>
+</tr>
+<tr>
+<td>IoT</td>
+<td>物联网测试卡</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>EMAS-移动测试人工支持用例编写<br>Hotfix-IOS设备资源包<br>2G/NB模组包<br>4G模组包（涉及硬件情况）<br>ID²认证授权<br>IoT通用类设备组件<br>安全通告服务<br>安全众测<br>高防托管产品<br>混合云灾备存储C系<br>解决方案PCBA<br>跨境高速通道<br>跨境加速带宽包<br>跨境云企业网<br>渗透测试<br>物联网无线连接服务<br>智能播报音箱</td>
+</tr>
+</tbody>
+</table>
+<h4 id="升配-降配资费变动-1"><a href="#升配-降配资费变动-1" class="headerlink" title="升配/降配资费变动"></a>升配/降配资费变动</h4><p>包年包月实例变配时会产生补差价或者退款。</p>
+<ul>
+<li>升配：需选择立即升配，根据所选规格，需要支付差价。</li>
+<li>降配：需选择立即降配，根据所选规格，系统会退还差价。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>变配类型</strong></th>
+<th><strong>费用说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>立即升配</td>
+<td>支付费用 = 新配置剩余时长总价（新配置的月单价/30/24 × 包年包月剩余时长）- 老配置剩余时长总价（老配置的月单价/30/24 × 包年包月剩余时长）<br>示例：新配置月单价14400元，老配置月单价7200元，包年包月剩余天数50天，则需要支付（14400/30/24x50x24）-（7200/30/24x50x24）=12000元。</td>
+</tr>
+<tr>
+<td>立即降配</td>
+<td>关于立即降配的退款金额，请参见<a href="https://help.aliyun.com/document_detail/201955.html" target="_blank" rel="noopener">退款规则</a>。</td>
+</tr>
+</tbody>
+</table>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2023/11/24/newFeature/';
+        this.page.title = 'InfraService能力版图';
+        this.page.identifier = '2023/11/24/newFeature/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

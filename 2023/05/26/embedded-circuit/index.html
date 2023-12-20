@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>嵌入式-电路 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="嵌入式-电路方向笔记
+信创芯片情况飞腾 最主流华为鲲鹏 次顶流
+龙芯 都是玩MIPS很独特海光&amp;amp;兆芯 x86独两家申威  军工和超级计算机 自定义Alpha架构
+中标麒麟桌面操作系统软件V7.0产品实现对龙芯、申威、兆芯、鲲鹏等自主CPU及x86平台的同源支持
+符号表
+电流表 PA电压表 PV有功电度表 PJ无功电度表 PJR频率表 PF相位表 PPA最大需量表(负荷监控仪) PM功率因数表 PPF有功功率表 PW无功功率表 PR无功电流表 PAR声信号 HA光信号 HS指示灯 HL红色">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C嵌入式</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go云原生</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">Linux安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Win安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">大数据处理</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Net/">Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#信创芯片情况"><span class="toc-number">1.</span> <span class="toc-text">信创芯片情况</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#符号表"><span class="toc-number">2.</span> <span class="toc-text">符号表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#电路"><span class="toc-number">3.</span> <span class="toc-text">电路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#电阻-【R】"><span class="toc-number">3.1.</span> <span class="toc-text">电阻 【R】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#普通电阻器"><span class="toc-number">3.1.1.</span> <span class="toc-text">普通电阻器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#碳膜电阻器"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">碳膜电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#金属膜电阻器"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">金属膜电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#金属氧化膜电阻器"><span class="toc-number">3.1.1.3.</span> <span class="toc-text">金属氧化膜电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合成碳膜电阻器"><span class="toc-number">3.1.1.4.</span> <span class="toc-text">合成碳膜电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#玻璃釉电阻器"><span class="toc-number">3.1.1.5.</span> <span class="toc-text">玻璃釉电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#水泥电阻器"><span class="toc-number">3.1.1.6.</span> <span class="toc-text">水泥电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#排电阻器"><span class="toc-number">3.1.1.7.</span> <span class="toc-text">排电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#贴片式电阻器"><span class="toc-number">3.1.1.8.</span> <span class="toc-text">贴片式电阻器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#敏感电阻器"><span class="toc-number">3.1.2.</span> <span class="toc-text">敏感电阻器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#热敏电阻器"><span class="toc-number">3.1.2.1.</span> <span class="toc-text">热敏电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#光敏电阻器"><span class="toc-number">3.1.2.2.</span> <span class="toc-text">光敏电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#湿敏电阻器"><span class="toc-number">3.1.2.3.</span> <span class="toc-text">湿敏电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#压敏电阻器"><span class="toc-number">3.1.2.4.</span> <span class="toc-text">压敏电阻器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#气敏电阻器"><span class="toc-number">3.1.2.5.</span> <span class="toc-text">气敏电阻器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可调电阻器"><span class="toc-number">3.1.3.</span> <span class="toc-text">可调电阻器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#电容-【C】"><span class="toc-number">3.2.</span> <span class="toc-text">电容 【C】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#普通电容器"><span class="toc-number">3.2.1.</span> <span class="toc-text">普通电容器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#色环电容器"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">色环电容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#纸介电容器"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">纸介电容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#瓷介电容器"><span class="toc-number">3.2.1.3.</span> <span class="toc-text">瓷介电容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#云母电容器"><span class="toc-number">3.2.1.4.</span> <span class="toc-text">云母电容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#涤纶电容器"><span class="toc-number">3.2.1.5.</span> <span class="toc-text">涤纶电容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#玻璃釉电容器"><span class="toc-number">3.2.1.6.</span> <span class="toc-text">玻璃釉电容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#聚苯乙烯电容器"><span class="toc-number">3.2.1.7.</span> <span class="toc-text">聚苯乙烯电容器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#电解电容器"><span class="toc-number">3.2.2.</span> <span class="toc-text">电解电容器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模电"><span class="toc-number">4.</span> <span class="toc-text">模电</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数电"><span class="toc-number">5.</span> <span class="toc-text">数电</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            嵌入式-电路
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2023/05/26/embedded-circuit/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2023-05-26T02:15:34.000Z" itemprop="datePublished">2023-05-26</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/嵌入式/">嵌入式</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>嵌入式-电路方向笔记<br><a id="more"></a></p>
+<h1 id="信创芯片情况"><a href="#信创芯片情况" class="headerlink" title="信创芯片情况"></a>信创芯片情况</h1><p>飞腾 最主流<br>华为鲲鹏 次顶流</p>
+<p>龙芯 都是玩MIPS很独特<br>海光&amp;兆芯 x86独两家<br>申威  军工和超级计算机 自定义Alpha架构</p>
+<p>中标麒麟桌面操作系统软件V7.0<br>产品实现对龙芯、申威、兆芯、鲲鹏等自主CPU及x86平台的同源支持</p>
+<h1 id="符号表"><a href="#符号表" class="headerlink" title="符号表"></a>符号表</h1><p><img src="/2023/05/26/embedded-circuit/image-18.jpg" width="500px"></p>
+<p>电流表 PA<br>电压表 PV<br>有功电度表 PJ<br>无功电度表 PJR<br>频率表 PF<br>相位表 PPA<br>最大需量表(负荷监控仪) PM<br>功率因数表 PPF<br>有功功率表 PW<br>无功功率表 PR<br>无功电流表 PAR<br>声信号 HA<br>光信号 HS<br>指示灯 HL<br>红色灯 HR<br>绿色灯 HG<br>黄色灯 HY<br>蓝色灯 HB<br>白色灯 HW<br>连接片 XB<br>插头 XP<br>插座 XS<br>端子板 XT<br>电线,电缆,母线 W<br>直流母线 WB<br>插接式(馈电)母线 WIB 电力分支线 WP<br>照明分支线 WL<br>应急照明分支线 WE<br>电力干线 WPM<br>照明干线 WLM<br>应急照明干线 WEM<br>滑触线 WT<br>合闸小母线 WCL<br>控制小母线 WC<br>信号小母线 WS<br>闪光小母线 WF<br>事故音响小母线 WFS<br>预告音响小母线 WPS<br>电压小母线 WV<br>事故照明小母线 WELM<br>避雷器 F<br>电工电子电路图符号英文缩写大全<br>熔断器 FU<br>快速熔断器 FTF<br>跌落式熔断器 FF<br>限压保护器件 FV 电容器 C<br>电工电子电路图符号英文缩写大全<br>电力电容器 CE<br>正转按钮 SBF<br>反转按钮 SBR<br>停止按钮 SBS<br>紧急按钮 SBE<br>试验按钮 SBT<br>复位按钮 SR<br>限位开关 SQ<br>接近开关 SQP<br>手动控制开关 SH<br>时间控制开关 SK<br>液位控制开关 SL<br>湿度控制开关 SM<br>压力控制开关 SP<br>速度控制开关 SS<br>温度控制开关,辅助开关 ST<br>电压表切换开关 SV<br>电流表切换开关 SA<br>整流器 U<br>可控硅整流器 UR<br>控制电路有电源的整流器 VC 变频器 UF<br>变流器 UC<br>逆变器 UI 电动机 M 异步电动机 MA 同步电动机 MS<br>直流电动机 MD<br>绕线转子感应电动机 MW<br>鼠笼型电动机 MC<br>电动阀 YM<br>电磁阀 YV<br>防火阀 YF<br>排烟阀 YS<br>电磁锁 YL<br>跳闸线圈 YT<br>合闸线圈 YC<br>气动执行器 YPA,YA<br>电动执行器 YE<br>发热器件(电加热) FH<br>照明灯(发光器件) EL<br>空气调节器 EV<br>电加热器加热元件 EE<br>感应线圈,电抗器 L<br>励磁线圈 LF<br>消弧线圈 LA<br>滤波电容器 LL<br>电阻器,变阻器 R<br>电位器 RP<br>热敏电阻 RT<br>光敏电阻 RL<br>压敏电阻 RPS<br>接地电阻 RG<br>放电电阻 RD<br>启动变阻器 RS<br>频敏变阻器 RF<br>限流电阻器 RC<br>光电池,热电传感器 B<br>压力变换器 BP<br>温度变换器 BT<br>速度变换器 BV<br>时间测量传感器 BT1,BK<br>液位测量传感器 BL<br>温度测量传感器 BH,BM</p>
+<blockquote>
+<p>辅助文 名称</p>
+</blockquote>
+<p>A 电流<br>A 模拟<br>AC<br>A 交流<br>自动<br>AUT<br>ACC 加速<br>ADD 附加<br>ADJ 可调<br>AUX 辅助<br>ASY 异步<br>B<br>BRK 制动<br>BK 黑<br>BL 蓝<br>BW 向后<br>C 控制<br>CW 顺时针<br>CCW 逆时针<br>D 延时(延迟)<br>D 差动<br>D 数字<br>D 降<br>DC 直流<br>DEC 减<br>E 接地<br>EM 紧急<br>F 快速<br>FB 反馈<br>FW 正，向前<br>GN 绿<br>H 高<br>IN 输入<br>INC 增<br>IND 感应<br>L 左<br>L 限制<br>L 低<br>LA 闭锁<br>M 主<br>M 中<br>M 中间线<br>M<br>MAN 手动<br>N 中性线<br>OFF 断开<br>ON 接通(闭合)<br>OUT 输出<br>P 压力<br>P 保护<br>PE 保护接地<br>PEN 保护接地与中性线共用<br>PU 不接地保护<br>R 记录<br>R 右<br>R 反<br>RD 红色<br>R<br>RST 复位<br>RES 备用<br>RUN 运转<br>S 信号<br>ST 启动<br>S<br>SET 置位、定位<br>SAT 饱和<br>STE 步进<br>STP 停止<br>SYN 同步<br>T 温度<br>T 时间<br>TE 无噪音(防干扰)接地<br>V 真空<br>V 速度<br>V 电压<br>WH 白<br>YE 黄 电气元件符号大全</p>
+<blockquote>
+<p>序号 元件名称 新符号 旧符号</p>
+</blockquote>
+<p>1 继电器 K J<br>2 电流继电器 KA LJ<br>3 负序电流继电器 KAN FLJ<br>4 零序电流继电器 KAZ LLJ<br>5 电压继电器 KV YJ<br>6 正序电压继电器 KVP ZYJ<br>7 负序电压继电器 KVN FYJ<br>8 零序电压继电器 KVZ LYJ<br>9 时间继电器 KT SJ<br>10 功率继电器 KP GJ<br>11 差动继电器 KD CJ<br>12 信号继电器 KS XJ<br>13 信号冲击继电器 KAI XMJ<br>14 继电器 KC ZJ<br>15 热继电器 KR RJ<br>16 阻抗继电器 KI ZKJ<br>17 温度继电器 KTP WJ<br>18 瓦斯继电器 KG WSJ<br>19 合闸继电器 KCR或KON HJ<br>20 跳闸继电器 KTR TJ<br>21 合闸 继电器 KCP HWJ<br>22 跳闸 继电器 KTP TWJ<br>23 电源监视继电器 KVS JJ<br>24 压力监视继电器 KVP YJJ<br>25 电压 继电器 KVM YZJ<br>26 事故信号 继电器 KCA SXJ<br>27 继电保护跳闸出口继电器 KOU BCJ<br>28 手动合闸继电器 KCRM SHJ<br>29 手动跳闸继电器 KTPM STJ<br>30 加速继电器 KAC或KCL JSJ<br>31 复归继电器 KPE FJ<br>32 闭锁继电器 KLA或KCB BSJ<br>33 同期检查继电器 KSY TJJ<br>34 自动准同期装置 ASA ZZQ<br>35 自动重合闸装置 ARE ZCJ<br>36 自动励磁调节装置 AVR或AAVR ZTL<br>37 备用电源自动投入装置 AATS或RSAD BZT<br>38 按扭 SB AN<br>39 合闸按扭 SBC HA<br>40 跳闸按扭 SBT TA<br>41 复归按扭 SBre或SBR FA<br>42 试验按扭 SBte YA<br>43 紧急停机按扭 SBes JTA<br>44 起动按扭 SBst QA<br>45 自保持按扭 SBhs BA<br>46 停止按扭 SBss<br>47 控制开关 SAC KK<br>48 转换开关 SAH或SA ZK<br>49 测量转换开关 SAM CK<br>50 同期转换开关 SAS TK<br>51 自动同期转换开关 2SASC DTK<br>52 手动同期转换开关 1SASC STK<br>53 自同期转换开关 SSA2 ZTK<br>54 自动开关 QA<br>55 刀开关 QK或SN DK<br>56 熔断器 FU RD<br>57 快速熔断器 FUhs RDS<br>58 闭锁开关 SAL BK<br>59 信号灯 HL XD<br>60 光字牌 HL或HP GP<br>61 警铃 HAB或HA JL<br>62 合闸接触器 KMC HC<br>63 接触器 KM C<br>64 合闸线圈 Yon或LC HQ<br>65 跳闸线圈 Yoff或LT TQ<br>66 插座 XS<br>67 插头 XP<br>68 端子排 XT<br>69 测试端子 XE<br>70 连接片 XB LP<br>71 蓄电池 GB XDC<br>72 压力变送器 BP YB<br>73 温度变送器 BT WDB<br>74 电钟 PT<br>75 电流表 PA<br>76 电压表 PV<br>77 电度表 PJ<br>78 有功功率表 PPA<br>79 无功功率表 PPR<br>80 同期表 S<br>81 频率表 PF<br>82 电容器 C<br>83 灭磁电阻 RFS或Rfd Rmc<br>84 分流器 RW<br>85 热电阻 RT<br>86 电位器 RP<br>87 电感(电抗)线圈 L<br>88 电流互感器 TA CT或LH<br>89 电压互感器 TV PT或YH<br>10KV电压互感器 TV SYH<br>35KV电压互感器 TV UYH<br>110KV电压互感器 TV YYH<br>90 断路器 QF DL<br>91 隔离开关 QS G<br>92 电力变压器 TM B<br>93 同步发电机 GS TF<br>94 交流电动机 MA JD<br>95 直流电动机 MD ZD<br>96 电压互感器二次回路小母线<br>97 同期电压小母线(待并) WST或WVB TQMa,TQMb<br>98 同期电压小母线(运行) WOS或WVBn TQM<code>a</code>,TQM<code>b</code><br>99 准同期合闸小母线 1WSC,2WSC,3WSC<br>1WPO,2WPO,3WPO 1THM,2THM,3THM<br>100 控制电源小母线 +WC,-WC +KM,-KM<br>101 信号电源小母线 +WS,-WS +XM,-XM<br>102 合闸电源小母线 +WON,-WON +HM,-HM<br>103 事故信号小母线 WFA SYM<br>104 零序电压小母线 WVBz</p>
+<h1 id="电路"><a href="#电路" class="headerlink" title="电路"></a>电路</h1><h2 id="电阻-【R】"><a href="#电阻-【R】" class="headerlink" title="电阻 【R】"></a>电阻 【R】</h2><p>电阻器简称电阻，是利用物质对所通过的电流产生阻碍作用这一特性制成的电子元件，是电子产品中最基本、最常用的电子元件之一</p>
+<p><img src="/2023/05/26/embedded-circuit/image-01.jpg" width="800px"></p>
+<h3 id="普通电阻器"><a href="#普通电阻器" class="headerlink" title="普通电阻器"></a>普通电阻器</h3><p>常见的普通电阻器有碳膜电阻器、金属膜电阻器、金属氧化膜电阻器、合成碳膜电阻器、熔断电阻器、玻璃釉电阻器、水泥电阻器、排电阻器、贴片式电阻器及熔断器等。</p>
+<h4 id="碳膜电阻器"><a href="#碳膜电阻器" class="headerlink" title="碳膜电阻器"></a>碳膜电阻器</h4><p>碳膜电阻器是将炭在真空高温条件下分解的结晶炭蒸镀沉积在陶瓷骨架上制成的。这种电阻器的电压稳定性好，造价低，在普通电子产品中应用非常广泛。</p>
+<h4 id="金属膜电阻器"><a href="#金属膜电阻器" class="headerlink" title="金属膜电阻器"></a>金属膜电阻器</h4><p>金属膜电阻器是将金属或合金材料在真空高温的条件下加热蒸发沉积在陶瓷骨架上制成的。<br>该类电阻器的阻值也采用色环标注的方法，具有较高的耐高温性能、温度系数小、热稳定性好、噪声小等优点。<br>与碳膜电阻器相比，金属膜电阻器的体积小，但价格也较高。</p>
+<h4 id="金属氧化膜电阻器"><a href="#金属氧化膜电阻器" class="headerlink" title="金属氧化膜电阻器"></a>金属氧化膜电阻器</h4><p>金属氧化膜电阻器就是将锡和锑的金属盐溶液经过高温喷雾沉积在陶瓷骨架上制成的。<br>这种电阻器比金属膜电阻器更为优越，具有抗氧化、耐酸、抗高温等特点。</p>
+<h4 id="合成碳膜电阻器"><a href="#合成碳膜电阻器" class="headerlink" title="合成碳膜电阻器"></a>合成碳膜电阻器</h4><p>合成碳膜电阻器是将碳黑、填料还有一些有机黏合剂调配成悬浮液，喷涂在绝缘骨架上，再进行加热聚合而成的。<br>合成碳膜电阻器是一种高压、高阻的电阻器，通常它的外层被玻璃壳封死。</p>
+<h4 id="玻璃釉电阻器"><a href="#玻璃釉电阻器" class="headerlink" title="玻璃釉电阻器"></a>玻璃釉电阻器</h4><p>玻璃釉电阻器是将银、铑、钌等金属氧化物和玻璃釉黏合剂调配成浆料，喷涂在绝缘骨架上，再经过高温聚合而成的。<br>这种电阻器具有耐高温、耐潮湿、稳定、噪声小、阻值范围大等特点，通常采用直标法标注阻值。</p>
+<h4 id="水泥电阻器"><a href="#水泥电阻器" class="headerlink" title="水泥电阻器"></a>水泥电阻器</h4><p>水泥电阻器是采用陶瓷、矿质材料封装的电阻器件。其特点是功率大、阻值小，具有良好的阻燃、防爆特性</p>
+<h4 id="排电阻器"><a href="#排电阻器" class="headerlink" title="排电阻器"></a>排电阻器</h4><p>排电阻器简称排阻。这种电阻器是将多个分立的电阻器按照一定的规律排列集成为一个组合型电阻器，也称为集成电阻器电阻阵列或电阻器网络。</p>
+<p><img src="/2023/05/26/embedded-circuit/image-02.jpg" width="600px"></p>
+<h4 id="贴片式电阻器"><a href="#贴片式电阻器" class="headerlink" title="贴片式电阻器"></a>贴片式电阻器</h4><p>贴片式电阻器是指采用表面贴装技术安装的一种固定电阻器，该类电阻器一般体积较小，多应用于集成度较高的电子产品中。<br>为适应表面安装工艺的要求，贴片式电阻器是一种无引脚电阻器</p>
+<p><img src="/2023/05/26/embedded-circuit/image-03.jpg" width="600px"></p>
+<h3 id="敏感电阻器"><a href="#敏感电阻器" class="headerlink" title="敏感电阻器"></a>敏感电阻器</h3><p>敏感电阻器是指可以通过外界环境的变化（如温度、湿度、光亮、电压等）改变自身阻值的大小，因此常用于一些传感器中。<br>常用的主要有热敏电阻器、光敏电阻器、压敏电阻器、气敏电阻器、湿敏电阻器等。</p>
+<h4 id="热敏电阻器"><a href="#热敏电阻器" class="headerlink" title="热敏电阻器"></a>热敏电阻器</h4><p><img src="/2023/05/26/embedded-circuit/image-04.jpg" width="600px"></p>
+<p>正温度系数热敏电阻器（PTC）的阻值随温度的升高而升高，随温度的降低而降低；<br>负温度系数热敏电阻器（NTC）的阻值随温度的升高而降低，随温度的降低而升高。 </p>
+<p>在电视机、音响设备、显示器等电子产品的电源电路中，多采用NTC热敏电阻器。</p>
+<h4 id="光敏电阻器"><a href="#光敏电阻器" class="headerlink" title="光敏电阻器"></a>光敏电阻器</h4><p>光敏电阻器是一种由具有光导电特性的半导体材料制成的电阻器。<br>光敏电阻器的特点是当外界光照强度变化时，光敏电阻器的阻值也会随之发生变化。</p>
+<p><img src="/2023/05/26/embedded-circuit/image-05.jpg" width="600px"></p>
+<p>光敏电阻器利用半导体的光导电特性，使电阻器的电阻值随入射光线的强弱发生变化<br>当入射光线增强时，阻值会明显减小;<br>当入射光线减弱时，阻值会显著增大。</p>
+<h4 id="湿敏电阻器"><a href="#湿敏电阻器" class="headerlink" title="湿敏电阻器"></a>湿敏电阻器</h4><p>湿敏电阻器的阻值会随周围环境湿度的变化而发生变化，常用作传感器，用来检测环境湿度。<br>湿敏电阻器是由感湿片（或湿敏膜）、电极引线和具有一定强度的绝缘基体组成的</p>
+<p><img src="/2023/05/26/embedded-circuit/image-06.jpg" width="600px"></p>
+<p>湿敏电阻器也可细分为正系数湿敏电阻器和负系数湿敏电阻器两种。<br>正系数湿敏电阻器是当湿度增大时，阻值明显增大；当湿度减小时，阻值会显著减小。<br>负系数湿敏电阻器是当湿度减小时，阻值会明显增大；当湿度增大时，阻值会显著减小。</p>
+<h4 id="压敏电阻器"><a href="#压敏电阻器" class="headerlink" title="压敏电阻器"></a>压敏电阻器</h4><p>压敏电阻器是利用半导体材料的非线性特性原理制成的电阻器。<br>压敏电阻器的特点是当外加电压施加到某一临界值时，阻值会急剧变小，常作为过压保护器件，应用在过压保护电路中</p>
+<p><img src="/2023/05/26/embedded-circuit/image-07.jpg" width="600px"></p>
+<h4 id="气敏电阻器"><a href="#气敏电阻器" class="headerlink" title="气敏电阻器"></a>气敏电阻器</h4><p>气敏电阻器是利用金属氧化物半导体表面吸收某种气体分子时，会发生氧化反应或还原反应而使电阻值发生改变而制成的电阻器。</p>
+<p><img src="/2023/05/26/embedded-circuit/image-08.jpg" width="600px"></p>
+<p>通常气敏电阻器是将某种金属氧化物粉料添加少量铂催化剂、激活剂及其他添加剂，按一定比例烧结而成的半导体器件。<br>它可以把某种气体的成分、浓度等参数转换成电阻变化量，再转换为电流、电压信号。<br>它常作为气体感测元件制成各种气体的检测仪器或报警器产品，如酒精测试仪、煤气报警器、火灾报警器等。</p>
+<h3 id="可调电阻器"><a href="#可调电阻器" class="headerlink" title="可调电阻器"></a>可调电阻器</h3><p>可调电阻器是一种阻值可改变的电阻器。这种电阻器的外壳上带有调节部位，可以通过手动调整阻值，一般也称其为电位器。</p>
+<p><img src="/2023/05/26/embedded-circuit/image-09.jpg" width="600px"></p>
+<p>可调电阻器一般有3个引脚，其中有两个定片引脚和一个动片引脚，还有一个调整旋钮，可以通过它改变动片，从而改变可变电阻的阻值。<br>可调电阻器常用在电阻值需要调整的电路中，如电视机的亮度调谐器件或收音机的音量调节器件等。</p>
+<h2 id="电容-【C】"><a href="#电容-【C】" class="headerlink" title="电容 【C】"></a>电容 【C】</h2><p>电容器是一种可储存电能的元件（储能元件），通常简称为电容。它与电阻器一样，几乎每种电子产品中都有电容器。图为电路板上的电容器。</p>
+<p><img src="/2023/05/26/embedded-circuit/image-10.jpg" width="800px"></p>
+<p>电容器的种类很多，根据其电容量是否可调，主要可分为固定电容器和可变电容器两大类；<br>根据电容器引脚的极性，可分为无极性电容器和有极性电容器（电解电容器）。<br>归纳起来电容器可分为普通电容器、电解电容器和可变电容器。</p>
+<h3 id="普通电容器"><a href="#普通电容器" class="headerlink" title="普通电容器"></a>普通电容器</h3><p>常见的普通电容器主要有色环电容器、纸介电容器、瓷介电容器、云母电容器、涤纶电容器、玻璃釉电容器、聚苯乙烯电容器等。</p>
+<h4 id="色环电容器"><a href="#色环电容器" class="headerlink" title="色环电容器"></a>色环电容器</h4><p>色环电容器是指在电容器的外壳上标识有多条不同颜色的色环，用以标识电容量。该类电容器与色环电阻器十分相似</p>
+<p><img src="/2023/05/26/embedded-circuit/image-11.jpg" width="600px"></p>
+<p>普通电容器也称为无极性电容器，是指电容器的两引脚没有正、负极性之分，使用时两引脚可以交换连接。<br>在大多情况下普通电容器由于材料和制作工艺的特点，在生产时电容量已经被固定，因此也属于电容量固定的电容器。</p>
+<h4 id="纸介电容器"><a href="#纸介电容器" class="headerlink" title="纸介电容器"></a>纸介电容器</h4><p>纸介电容器是以纸为介质的电容器，用两层带状的铝或锡箔中间垫上浸过石蜡的纸卷成筒状，再装入绝缘纸壳或金属壳中，两引出脚用绝缘材料隔离。</p>
+<p><img src="/2023/05/26/embedded-circuit/image-12.jpg" width="600px"></p>
+<p>在实际应用中，有一种金属化纸介电容器，在涂有醋酸纤维漆的电容器纸上再蒸镀一层厚度为0.1μm的金属膜作为电极，然后将这种金属化的纸卷绕成芯子，装上引线并放入外壳内封装而成<br>该电容器比普通纸介电容器体积小，但其容量较大，且受高压击穿后具有自恢复能力，广泛应用于自动化仪表、自动控制装置及各种家用电器中，不适于高频电路。</p>
+<h4 id="瓷介电容器"><a href="#瓷介电容器" class="headerlink" title="瓷介电容器"></a>瓷介电容器</h4><p>瓷介电容器以陶瓷材料作为介质，在其外层常涂以各种颜色的保护漆，并在陶瓷片上覆银制成电极。<br>这种电容器的损耗较小，稳定性好，且耐高温、高压，是应用最多的一种电容器。</p>
+<p><img src="/2023/05/26/embedded-circuit/image-13.jpg" width="600px"></p>
+<h4 id="云母电容器"><a href="#云母电容器" class="headerlink" title="云母电容器"></a>云母电容器</h4><p>云母电容器是以云母作为介质的电容器，通常以金属箔作为电极，外形通常为矩形。<br>云母电容器的电容量较小，只有几皮法（pF）至几千皮法，具有可靠性高、频率特性好等特点，适用于高频电路。</p>
+<p><img src="/2023/05/26/embedded-circuit/image-14.jpg" width="600px"></p>
+<h4 id="涤纶电容器"><a href="#涤纶电容器" class="headerlink" title="涤纶电容器"></a>涤纶电容器</h4><p>涤纶电容器是一种采用涤纶薄膜为介质的电容器，又可称为聚酯电容器</p>
+<p><img src="/2023/05/26/embedded-circuit/image-15.jpg" width="600px"></p>
+<p>涤纶电容器的成本较低，耐热、耐压和耐潮湿的性能都很好，但稳定性较差，通常适用于稳定性要求不高的电路中，例如在彩色电视机或收音机的耦合、隔直流等电路中常有应用。</p>
+<h4 id="玻璃釉电容器"><a href="#玻璃釉电容器" class="headerlink" title="玻璃釉电容器"></a>玻璃釉电容器</h4><p>玻璃釉电容器是一种使用玻璃釉粉压制的薄片为介质的电容器，如图3-8所示。这种电容器的电容量一般为10～3300pF，耐压值有40V和100V两种，具有介电系数大、耐高温、抗潮湿性强、损耗低等特点。</p>
+<p><img src="/2023/05/26/embedded-circuit/image-16.jpg" width="600px"></p>
+<h4 id="聚苯乙烯电容器"><a href="#聚苯乙烯电容器" class="headerlink" title="聚苯乙烯电容器"></a>聚苯乙烯电容器</h4><p>聚苯乙烯电容器是以非极性的聚苯乙烯薄膜为介质制成的电容器，内部通常采用两层或三层薄膜与金属电极交叠绕制。这种电容器的成本低、损耗小、绝缘电阻高、电容量稳定，多应用于对电容量要求精确的电路中。</p>
+<p><img src="/2023/05/26/embedded-circuit/image-17.jpg" width="600px"></p>
+<h3 id="电解电容器"><a href="#电解电容器" class="headerlink" title="电解电容器"></a>电解电容器</h3><h1 id="模电"><a href="#模电" class="headerlink" title="模电"></a>模电</h1><h1 id="数电"><a href="#数电" class="headerlink" title="数电"></a>数电</h1>
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2023/05/26/embedded-circuit/';
+        this.page.title = '嵌入式-电路';
+        this.page.identifier = '2023/05/26/embedded-circuit/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>一键部署 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="一键部署能力及配合摘录
+一键部署方案需求背景客户能够一键安装整个集群
+
+前提条件
+
+
+客户所用业务单元全为Docker容器
+客户所用关系数据库: Mysql
+其他数据存储单元?  Nfs/Nas/Redis?
+
+大范围隐患K8s Node节点池隔离?Master 宕机影响全客户更新及容器飘逸
+其他不隔离的情景下产生的问题梳理?
+……
+……
+
+跨云厂商需求?是否有阿里云/华为云不同厂商通讯
+已购买资源?决定复用?复用的逻辑要评估资源可用性?
+
+小维度隐患Rds备份恢复?
+备份是否做?
+自动备份失败">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C嵌入式</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go云原生</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">Linux安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Win安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">大数据处理</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Net/">Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一键部署方案"><span class="toc-number">1.</span> <span class="toc-text">一键部署方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求背景"><span class="toc-number">1.1.</span> <span class="toc-text">需求背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大范围隐患"><span class="toc-number">1.2.</span> <span class="toc-text">大范围隐患</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#K8s-Node节点池隔离"><span class="toc-number">1.2.1.</span> <span class="toc-text">K8s Node节点池隔离?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他不隔离的情景下产生的问题梳理"><span class="toc-number">1.2.2.</span> <span class="toc-text">其他不隔离的情景下产生的问题梳理?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跨云厂商需求"><span class="toc-number">1.2.3.</span> <span class="toc-text">跨云厂商需求?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#已购买资源"><span class="toc-number">1.2.4.</span> <span class="toc-text">已购买资源?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小维度隐患"><span class="toc-number">1.3.</span> <span class="toc-text">小维度隐患</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Rds"><span class="toc-number">1.3.1.</span> <span class="toc-text">Rds</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#备份恢复"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">备份恢复?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源评估类"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">资源评估类?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参数指标类"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">参数指标类?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全访问类"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">安全访问类?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ecs-amp-容器云"><span class="toc-number">1.3.2.</span> <span class="toc-text">Ecs&amp;容器云</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#节点池加入"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">节点池加入?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源评估类-1"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">资源评估类?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全访问类-1"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">安全访问类</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CloudService服务"><span class="toc-number">2.</span> <span class="toc-text">CloudService服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#模块简介"><span class="toc-number">2.1.</span> <span class="toc-text">模块简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总体流程"><span class="toc-number">2.2.</span> <span class="toc-text">总体流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署配置单流程"><span class="toc-number">2.3.</span> <span class="toc-text">部署配置单流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RdsService"><span class="toc-number">2.4.</span> <span class="toc-text">RdsService</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Rds实现流程时序图"><span class="toc-number">2.4.1.</span> <span class="toc-text">Rds实现流程时序图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方式"><span class="toc-number">2.4.2.</span> <span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#华为云"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">华为云</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#华为云SDK-Rds-操作点"><span class="toc-number">2.4.2.1.1.</span> <span class="toc-text">华为云SDK-Rds-操作点</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#阿里云"><span class="toc-number">2.4.2.2.</span> <span class="toc-text">阿里云</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微软云"><span class="toc-number">2.4.2.3.</span> <span class="toc-text">微软云</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EcsService"><span class="toc-number">2.5.</span> <span class="toc-text">EcsService</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ecs流程时序图"><span class="toc-number">2.5.1.</span> <span class="toc-text">Ecs流程时序图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方式-1"><span class="toc-number">2.5.2.</span> <span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#华为云-1"><span class="toc-number">2.5.2.1.</span> <span class="toc-text">华为云</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#华为云SDK-Ecs-操作点"><span class="toc-number">2.5.2.1.1.</span> <span class="toc-text">华为云SDK-Ecs-操作点</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#阿里云-1"><span class="toc-number">2.5.2.2.</span> <span class="toc-text">阿里云</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微软云-1"><span class="toc-number">2.5.2.3.</span> <span class="toc-text">微软云</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#K8sService"><span class="toc-number">2.6.</span> <span class="toc-text">K8sService</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#K8s流程时序图"><span class="toc-number">2.6.1.</span> <span class="toc-text">K8s流程时序图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方式-2"><span class="toc-number">2.6.2.</span> <span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#华为云-2"><span class="toc-number">2.6.2.1.</span> <span class="toc-text">华为云</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#华为云SDK-K8s-操作点"><span class="toc-number">2.6.2.1.1.</span> <span class="toc-text">华为云SDK-K8s-操作点</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#阿里云-2"><span class="toc-number">2.6.2.2.</span> <span class="toc-text">阿里云</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微软云-2"><span class="toc-number">2.6.2.3.</span> <span class="toc-text">微软云</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CustomerService"><span class="toc-number">2.7.</span> <span class="toc-text">CustomerService</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CustomerService流程时序图"><span class="toc-number">2.7.1.</span> <span class="toc-text">CustomerService流程时序图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方式-3"><span class="toc-number">2.7.2.</span> <span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#华为云-3"><span class="toc-number">2.7.2.1.</span> <span class="toc-text">华为云</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#华为云SDK-Ecs-操作点-1"><span class="toc-number">2.7.2.1.1.</span> <span class="toc-text">华为云SDK-Ecs-操作点</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#阿里云-3"><span class="toc-number">2.7.2.2.</span> <span class="toc-text">阿里云</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微软云-3"><span class="toc-number">2.7.2.3.</span> <span class="toc-text">微软云</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bizDeployService"><span class="toc-number">2.8.</span> <span class="toc-text">bizDeployService</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bizDeploy实现流程时序图"><span class="toc-number">2.8.1.</span> <span class="toc-text">bizDeploy实现流程时序图</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#物料准备"><span class="toc-number">3.</span> <span class="toc-text">物料准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#华为云-4"><span class="toc-number">3.1.</span> <span class="toc-text">华为云</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#终端节点"><span class="toc-number">3.1.1.</span> <span class="toc-text">终端节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#认证鉴权"><span class="toc-number">3.1.2.</span> <span class="toc-text">认证鉴权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阿里云-4"><span class="toc-number">3.2.</span> <span class="toc-text">阿里云</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#微软云-4"><span class="toc-number">3.3.</span> <span class="toc-text">微软云</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            一键部署
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2023/11/20/oneClickDeploy/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2023-11-20T02:03:31.000Z" itemprop="datePublished">2023-11-20</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>一键部署能力及配合摘录<br><a id="more"></a></p>
+<h1 id="一键部署方案"><a href="#一键部署方案" class="headerlink" title="一键部署方案"></a>一键部署方案</h1><h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><p>客户能够一键安装整个集群</p>
+<blockquote>
+<p>前提条件</p>
+</blockquote>
+<ul>
+<li>客户所用业务单元全为Docker容器</li>
+<li>客户所用关系数据库: Mysql</li>
+<li>其他数据存储单元?<br>  Nfs/Nas/Redis?</li>
+</ul>
+<h2 id="大范围隐患"><a href="#大范围隐患" class="headerlink" title="大范围隐患"></a>大范围隐患</h2><h3 id="K8s-Node节点池隔离"><a href="#K8s-Node节点池隔离" class="headerlink" title="K8s Node节点池隔离?"></a>K8s Node节点池隔离?</h3><p>Master 宕机影响全客户更新及容器飘逸</p>
+<h3 id="其他不隔离的情景下产生的问题梳理"><a href="#其他不隔离的情景下产生的问题梳理" class="headerlink" title="其他不隔离的情景下产生的问题梳理?"></a>其他不隔离的情景下产生的问题梳理?</h3><ul>
+<li>……</li>
+<li>……</li>
+</ul>
+<h3 id="跨云厂商需求"><a href="#跨云厂商需求" class="headerlink" title="跨云厂商需求?"></a>跨云厂商需求?</h3><p>是否有阿里云/华为云不同厂商通讯</p>
+<h3 id="已购买资源"><a href="#已购买资源" class="headerlink" title="已购买资源?"></a>已购买资源?</h3><p>决定复用?复用的逻辑要评估资源可用性?</p>
+<p><br></p>
+<h2 id="小维度隐患"><a href="#小维度隐患" class="headerlink" title="小维度隐患"></a>小维度隐患</h2><h3 id="Rds"><a href="#Rds" class="headerlink" title="Rds"></a>Rds</h3><h4 id="备份恢复"><a href="#备份恢复" class="headerlink" title="备份恢复?"></a>备份恢复?</h4><ul>
+<li>备份是否做?</li>
+<li>自动备份失败的容错</li>
+</ul>
+<h4 id="资源评估类"><a href="#资源评估类" class="headerlink" title="资源评估类?"></a>资源评估类?</h4><ul>
+<li>多大的Cpu/内存配额及磁盘</li>
+<li>maxconnection 最大数据库连接数?</li>
+<li>Rds慢的卡点?buffer内存设定?细粒度Config配置</li>
+</ul>
+<h4 id="参数指标类"><a href="#参数指标类" class="headerlink" title="参数指标类?"></a>参数指标类?</h4><ul>
+<li>监控指标?</li>
+<li>不可用宕机通知?</li>
+<li>过期提醒</li>
+</ul>
+<h4 id="安全访问类"><a href="#安全访问类" class="headerlink" title="安全访问类?"></a>安全访问类?</h4><ul>
+<li>安全组配置</li>
+<li>SSL/Tls证书有效期</li>
+<li>访问数据库来源Ip名单设定</li>
+<li>机器访问密钥对/密码?</li>
+<li>sql初始化的审查机制?</li>
+</ul>
+<p><br></p>
+<h3 id="Ecs-amp-容器云"><a href="#Ecs-amp-容器云" class="headerlink" title="Ecs&amp;容器云"></a>Ecs&amp;容器云</h3><h4 id="节点池加入"><a href="#节点池加入" class="headerlink" title="节点池加入?"></a>节点池加入?</h4><ul>
+<li>是否划分资源倾向类型(计算报表类/内存业务类)</li>
+<li>资源阈值(Master所在地及调度能力统一化的弊端)</li>
+</ul>
+<h4 id="资源评估类-1"><a href="#资源评估类-1" class="headerlink" title="资源评估类?"></a>资源评估类?</h4><ul>
+<li>划分多大多小节点资源参考案例</li>
+<li>用户以往使用情况评估?</li>
+<li>挂多大的数据盘?</li>
+</ul>
+<h4 id="安全访问类-1"><a href="#安全访问类-1" class="headerlink" title="安全访问类"></a>安全访问类</h4><ul>
+<li>NAT(DNAT\SNAT)设定</li>
+<li>安全组</li>
+</ul>
+<p><br><br><br></p>
+<h1 id="CloudService服务"><a href="#CloudService服务" class="headerlink" title="CloudService服务"></a>CloudService服务</h1><h2 id="模块简介"><a href="#模块简介" class="headerlink" title="模块简介"></a>模块简介</h2><img src="http://www.plantuml.com/plantuml/svg/AqXCpavCJrLmSdEhvk9yDhdtoTuvJtRjKj1LY0OAwReLvUULfEQbn79nel9X2e9JYyeoarDZkMgvk0gWPZddv9UcG2M0XaPd5kVd99QakgGMvEHNmZLmHXUb52FnKfEHUTaMoBpaqkAI_DpK8YIXfCmgD0E1Ba1rauAkhfq2Tjkj59vthtc-kljbyuhdUpUzdDFmR6CJ5mwr46EG76kby6BB_1TR5WUb5B_Osl9iruIdktUzMBVlwQIUb-tjJtPkm6yGaZzX1hacasCGKX1PAK1D0eeXcuJV0FHGXPloTDsYPntRN-oVy6B2KgXnUoSzwrw4tpYC686RzsJ7hATT2v-shdZPtlzoCjXX0000">
+<p><img src="/2023/11/20/oneClickDeploy/image-01.png" width="100%"></p>
+<h2 id="总体流程"><a href="#总体流程" class="headerlink" title="总体流程"></a>总体流程</h2><img src="http://www.plantuml.com/plantuml/svg/dLXBKnj743xl_eez9XKdL9ABorLELG8-k9A3arGEALSEM8WKPPabad3PEOc77e24nDCo4aR24X034c0CQ8Ma7-FjcTr_aPxjbRGIkuu85wIPwPxfhx_-faUZlh0QLDXQIc_aTKsJVUfaEAW6b2VZux_wWyydV7vPVgA-K7m1TNgiFJ8r6WnF-2QcHYV3oaH83Oo6_IF-gO3wqcr1S2paDkptkGu_lUiwx9iEXTLd_g3Rt9E9ltjtzq-EANXcMPRltrVCQ8etAf3QWFGYLBRq-YLRh-hrh89pSYVkBx_h1dnFOJjbCnlbIqVySCcSE-2DCpCVOQUpSdTHhm6SRl3b4sYimKBAQSQtvesv1Ypcs5mKOX_aIJNiLzJd_g2YZZiX_lfZP0Ooy_oqhcihHgN9DXkVGMfPlzA6e5an6jKXCziouydFyUniTSNszirDAzmGeaUGlh93BSGX7bCiHCJUFG5qWc-VdroGyo7ZmxnnNhDtyiAfK6Ef2c63y98950yXzXfXDtUt1Uor2vREw5h94poZbJEAILrBigCYBrQCIWbjZ4m3j3MzjGt7sKuAlLsSr_Zw0INMED_3fNJmh_3lFsB-CAzh-xGQuNGQurVoo3PhS9sso6HbLQ_NOR48YHpKDQIH5phwLSHShpZf8FyPLAUdb1_6nny5rHSlPSah7WBMgZb8n22f6ITp620aJg1Q0sqTqspcOhnPueVLNYzkvOYnefL59oGAN4TWVmcFZkc6oYvBNFBz6PPVWEGcNwx2xfnWY-pcnyixAnJDTqcMhK9c3oxFA69qPmVTGtfNkP04__dH7cGIHhLCAUaaNTGG9OasECv2_a2M1Fbfn6YjiFmEfUCnn0k8cBcw0x7eaFXoacQlBjfVIl_WfpzawLjHELRiv09JnURJS5n28XfxCn3hgMAsUOA7m3LGVjKjfT50MEb4QuSgtGgsZNEUYK6wQbHQvgiAnScqZ2mDY1WqLbdnhN5-Z42nH0OMTz37BsCXd7hW2n6UjYOXNzfuwgqYcwcAShMuJb_RU3PvIICJmfncEuNHNjm1mIFW7Yulbc5biGyfzUaTB798fyoz14GlzSOQxUUilrvYkrKkblqNpWAM_O6GNs7vTywj5BpVu5g3n4KdcoAFjqfL1ppsDe8t0v56VTgNAOzKMRaYmwuVud8cWGnuFFpejo7a9IaTggRHYaDf_uvYPtRZn8odOIQDOqXTAr6sE9EJQDIuU8yJi3UBPQnVfLYzY2DiOGroRuZbpem9tdR9OAckNS3v1QEAoHqWfvGur7KpjjgDoR97iMBvdDwgiFKQ-l9AuQ0EX1RTAbK89EQPrC190n8yakv1Q6kBl2sJIL5VAujyfsnBvl42DAEU37LkR3kwFACptI5JScn9RT-zmXRsKON4lKAtXNEErsF6ukpj0B6zdXROSfcjNzZ7mLkPzhcbPbaN4_buE6RkednjVenax2QfdSYFaHKljzrk45Fbk8bGjcIfEzcxKDUMSPuV5Z1ukzMoZDfmTAlGqMnA4jfWRu9wpjuVeBppsPeGtHCC05iBSUDWov2ujAw21OWUyFgy-7ozmTQM-KA2vOzWDMdipxF2jHWlnVLw0qVOp2wKKlnuas-KBTiQdsds5nXkRLFdjCorFIYT6kTbF98pGdU4lIm745gwJom3qaEgCbpZNOZyVPtNTupuEqCxX5o1dnSilRH8tiadtaxcRXQT370neGxbtk2k8c7OZ5gdWUKTz2tcX1JY3EaNIXKfLnSxIy3x8R2gxt-1Prj-GaIwpv1UFk85YdQ-aEj2vAEuO0VW8yBaUEX8QDNFIDvOWLHHiF7j3CzbnLMHJuaAVMqJ4djuVjmKJ4jNHG-OrCG5qA5bcxhz3CIjN7daZCaTH2_BWPAFndHjaHcc6Axsa16ileN9KI1HC5-NEaK8bJTwSuaU06OamewQNG89XDq9H7j0jFnf6lN7qQRHxH7eqiXJBhllrZQFg1n_l1l2XgFTs7LNzLeWeN3XW8HoF96buU47FOJQchTK3etmFse-hnJn488mraZdwy_JQdYKkWqQSzB7UKftW705EUm5o1sQlhSxuhDwO5HtIMCeXTJsoLBVKXTRHCfePOnCcTxL0qBM__E193cTOBxOUlFxgObxz8wqcz3DchczwyJbnkayEX0Ap792BRfdlz7touLuCsw9saV3w9ovPhK8KlygLpjjcKnl1SkDNquaQMJa9zeNIV987QFFr6WYqSnuQlYXqQWFZ-1IxDxmdG1nl7BYK6uCZn0JHT5QFqgWBed6DR4jH3Mv6VehW3wHER-FFWiuORqPdmUkr7zTdj6X1Ecg6xTiNqxZuZbYFN3iHeYyu6d-1G00">
+<p><br></p>
+<h2 id="部署配置单流程"><a href="#部署配置单流程" class="headerlink" title="部署配置单流程"></a>部署配置单流程</h2><p><br><br><br></p>
+<h2 id="RdsService"><a href="#RdsService" class="headerlink" title="RdsService"></a>RdsService</h2><h3 id="Rds实现流程时序图"><a href="#Rds实现流程时序图" class="headerlink" title="Rds实现流程时序图"></a>Rds实现流程时序图</h3><img src="http://www.plantuml.com/plantuml/svg/jLRBRXf955sdlwALTKQZUMqYUQJ8baQHPX7bCQjiiDtne7Z00X9bPeKncFV3mOwn8GPx03EsUNXC27Jp-9ZKhQvUvHVcTbVJ3TWusSm6eQewzznxwjnRlUn-8wwikr-jFf4yhvqhah3XyFYSAyuDXyidEhtkTOTFMf8srjr_tdJ0i-eTBqkkLN7P_KOGy4UyI-GTzRp96aFwRa2pIJ8et9q2_eA1NMjFLbzEhJwLF1x72xVd3pkQiB0WQg6aEcZGqh5sbX0N5WJXfho--TbEvhu8VJ-Sna6HCON7gzxdBkXrO2Uc5Yiy62Jt1FlyD9QcAdItWoY8v342KHI87JztgID5BSHjkCljaqJtQyaZkbzC2i72Pqm-f-aC6UQ9l4swVYBdbvONtQuNphLxaBnY7u9Kph1caFHRf1kdxolgOL1JSgnHfgKmXBSX7Q1xBS6YOe4cD0vfhgdvepJ-3wvh9-yHXb68dAAH7Q9SNCUJRXtZ8hrst3Fqr1EUNxIXhaM9P92fGYQYPhRdLaha1Bquda4Y9uTH_wd0zrQCqZ4bccpmm9WL2xVn1BoTu2n48In3g29yzyc_-LXQSxfTa92XM1I-nuL5tQMchqw3jDJ7KAIRvByyeF03deD6548rLGcQDQHtrDqYf7CqtnP-n7tlgsMNv8DwHXtip1o1M4tu2O-ytbYvOSVIqB7kCps9pAP6T-O92-LtQAWbfsljgMFzvRVQtqUaLzNyXsX5heYLlJWTv2QJtnTPqtOmZMOXVsJaDVTUpSDeYd8O6aVOZaPBiNQTz5guG8PnewKcyLPptXSNFHBcyD3bzJbSAn9sbT7IBRnadZp8MHx448NlG_cIjIl27IlCZ23ff5QDQBi7hDbKIvjVK_Giv5h54nd3y4nDDTLw58QXNvrUtpXtBorMMFE4PslUhZ4Ufkrj3oQ-oy_V4_76eDirpEOdtJCrtuLc3qRdch-8Oh1HMAt5F_SJPB2D2EqWnFpxTBy3wIRR6f3-8UHBK3vKJvFuHssNc3y1_O30WtCtV-uVylR6S8-Ndl0jzLA18umRWMfWyT4ptTtR8QZdz3_r70HgK3w5LXgh_ToFscI3IyWc-VJ29BJzzYT_0EsldUSubzwZHdmEqGf-LjtK3-oDz9ir83XVk7SGAs2hg4e1ctLisJgCjlGeI2FlSW0Mm2cv6BI32SL8DwNbHbeuWOqxWqL5oUWODKD9QBriKYWTDYhUJaHwHQj8wbV88Cl5DXAzKbIboDf5DXZeYewveNS5QTssCCX2DCaFO20kW1chaCH1Fyc44Q5GGzdWgeKhjF51JtUYI4jojPQ4OOE6JlYurrDvyEZXZ3piOA06ExZEMblgReqMBl2XuCQ2OGJDn0r4zzheC9CW4QBn2tn643KZ0ue4cPIgrAtRDD_9SUhwIuJl1kb5-OP-GTK0FIfWJPD5w28dGf0vHnfyM71WwOwUnUeM_EtH8hQ4uGbxpF83t89O01iTs4OyEO9OoOe9vQ3-BbZvJGtKgLw5I1dPTOjZgdo-p9acDxNuS1yYhValtMMOnYhS1_njPwCyo5NXotDeBjJ-IfaOgNC_4AmHdZx3pmICfMNrKVFCAtbGs2M7px7iy4hO-_pBoTPftipJHHZ3J16iyJnFE3RQnSV3dkAHVNPSkvLWMKyGhsQVT8SMJlTnvAE9lfLgwkGjF0zU-NvtUvn_IQjsIOZx-2zDHUZxhQyiZBFDG4pokJT3Iprzw2WLqesnr4T8lyC9HJUR0hOaEjUSgEDeU5VcbN4QJgaUA33OctmWR_xuklR8ZgiLPsZcrMaUYsGWLln2PEFcJ81v3RtELyevYJB9ZEVt_-Wl_eNEGT1889tm7m00">
+<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><h4 id="华为云"><a href="#华为云" class="headerlink" title="华为云"></a>华为云</h4><ul>
+<li>SDK: <a href="https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/README_CN.md" target="_blank" rel="noopener">https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/README_CN.md</a></li>
+<li>WebApi: <a href="https://console.huaweicloud.com/apiexplorer/#/openapi/RDS/doc?api=CreateInstance" target="_blank" rel="noopener">https://console.huaweicloud.com/apiexplorer/#/openapi/RDS/doc?api=CreateInstance</a></li>
+<li>Terraform</li>
+</ul>
+<h5 id="华为云SDK-Rds-操作点"><a href="#华为云SDK-Rds-操作点" class="headerlink" title="华为云SDK-Rds-操作点"></a>华为云SDK-Rds-操作点</h5><ul>
+<li>华为云SDK-Rds模块: <a href="https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/services/rds/v3/rds_client.go" target="_blank" rel="noopener">https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/services/rds/v3/rds_client.go</a></li>
+</ul>
+<blockquote>
+<p>初始化操作</p>
+</blockquote>
+<ul>
+<li>CreateConfiguration: 创建参数配置模板</li>
+<li>ApplyConfigurationAsync: 应用参数模板</li>
+<li>CreateInstance: 创建数据库实例</li>
+<li>CreateDbUserInvoker: 创建数据库用户</li>
+</ul>
+<blockquote>
+<p>验证弥补操作</p>
+</blockquote>
+<ul>
+<li>ListConfigurations: 列举参数模板</li>
+<li>ListDbUsers: 列举数据库用户列表</li>
+<li>ListAuthorizedDatabases: 用户已授权数据库</li>
+<li>ListDatabases: 查询数据库列表</li>
+<li>ListInstances: 查询实例列表</li>
+</ul>
+<h4 id="阿里云"><a href="#阿里云" class="headerlink" title="阿里云"></a>阿里云</h4><h4 id="微软云"><a href="#微软云" class="headerlink" title="微软云"></a>微软云</h4><p><br><br><br></p>
+<h2 id="EcsService"><a href="#EcsService" class="headerlink" title="EcsService"></a>EcsService</h2><h3 id="Ecs流程时序图"><a href="#Ecs流程时序图" class="headerlink" title="Ecs流程时序图"></a>Ecs流程时序图</h3><img src="http://www.plantuml.com/plantuml/svg/ZLPBRo9743xl_8hHdZUAyZnOSgJ8Zg98ELZn9gUzi7Zi81EmW5YxDunv6iRWzGi32zW1J6ppiCmYO1ZuCTlLtNFQlv2QQGm6coGNDEgghnvVVrNDQ_SRsUvq_xcsgdYs7NP5sh9vV0wxOylcyiaEhzjfyodBofRJ_VOf1yNklJzMN6loQ_SRIS8V-Jdf7R3h1gyFw8bE3rMYvvvF0N_4mAwDrRNDgTENYiTZMtTx_fX4anONPIEaChrEY-V6LK9UN9Iaf-hwxBj9CGiozFrm6GUjXoNyOFU-Sa6t3GTxh50MmK0zbYR-qrYwNwP7RKH1D8iHYAR1tlah5njgB1UVm5rkdoAxjnMFx5v_I0IFNF7UDKsco21BUc7IyPDU5gCjkLthZeqNeDxn3q7QI_56aFIRf1Edxyii4pIqDA-NQ342aJ0a0_IuAOrpyK03wXcQRXZ-68t_ZUV6nNk4OHJIswVH0wBTFCQJJWtZOdxZl6iHQbOylskBtd5AJ0Qf2gIYB1MUsohf9UZD-GmISmeOzLzAmcQtMiUIg5eNWR4g7ccX1xnxa3CNWqWFGcNfYu_-7PGGpQb8FPnLcHOS5LHBGwugVObsTgSnhM0Svs0tEMNyQWRCBuEqs1-v90_OKG6IQTYhIb-ZezVx-wRo5XfXurqP6jrxhpGaJgHlqBwzPNUipMBHzYtQ8DbWHrL8zARIZvcsENqZwPAEEcBosJpweNI2kbjsk3PUsfoRdnj_vKctOlWpg5Z16yOGfCdJGPwQXGMPDoP2fx53oEQjkkRU_iWPfLEAG3sFKsjD7c_LIBU91sGGjoPlAi1uY1UMF0hMO1eKZnTdpnhy9Yh1d28BRR4XB52wvQsoz6mCds4YgHgLg75qnXiDLjpvFztEGXwrEgbKXi4Lss-mMWm6ePyTNj-ew6N5PtCulRHGveqBKVBeLgqTCZq2a-qbhCB_XOpt1PqEuioXxronR0Sb1SDhmrz0BlWmmghnJ_q4qSE8CCv2t7zAJzie8xwhatu6iaKePTYbYX-iLUJ-1FG3aWWkHFofdn4h0CFzihmgJEnMWpp6ZK8biBJogodCS0Z5Q7wW90DLA5r2CuajV-h79idqMpXKnOh38epJraT_W6PRndLQv3Bds8el84REpoixfiFn44q2WZj8A0Un4jCFc9R3WRuNR0s6ksOKJDCx4W1iGAGKPD0s5hH7Elj6UcX44kRKJcEHKJ8yHywG4behZL9eRJui_7iYqYsCcwH-ZUY7WcohK6jpy5Q1wxh9w7rkwDv1qbGjw8SGKuK31X84Z6A9hV8W4qR4iKVQuAw99xJ-mIptGPDZobbLXK6TXYx4cs2MyltAJpFqy3ET1Tjupfkxk5rexWPV4o4i64HHJ490zBY52XibI8He_0RV6aJDq80aGMgVQRNnROuUq_lIpUSAtnRIZGc3UK6L0CtdiAU7JPWa9qAGkiOq-FZWkZ8LFOir9VZRoXAEXAM97QZ786HkR-4W98WDyE7PH8WNUTWhZcD2AMY-7UFwfjRfuu65Q0bB4Ajtj6dcx9MvmpuuXMXp_hju6w5xPQ48yLU03xFGgqZ_lPRcGgL_0000">
+<h3 id="实现方式-1"><a href="#实现方式-1" class="headerlink" title="实现方式"></a>实现方式</h3><h4 id="华为云-1"><a href="#华为云-1" class="headerlink" title="华为云"></a>华为云</h4><ul>
+<li>SDK: <a href="https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/README_CN.md" target="_blank" rel="noopener">https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/README_CN.md</a></li>
+<li>WebApi: <a href="https://console.huaweicloud.com/apiexplorer/#/openapi/RDS/doc?api=CreateInstance" target="_blank" rel="noopener">https://console.huaweicloud.com/apiexplorer/#/openapi/RDS/doc?api=CreateInstance</a></li>
+<li>Terraform</li>
+</ul>
+<h5 id="华为云SDK-Ecs-操作点"><a href="#华为云SDK-Ecs-操作点" class="headerlink" title="华为云SDK-Ecs-操作点"></a>华为云SDK-Ecs-操作点</h5><ul>
+<li>华为云SDK-Rds模块: <a href="https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/services/ecs/v2/ecs_client.go" target="_blank" rel="noopener">https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/services/ecs/v2/ecs_client.go</a></li>
+</ul>
+<blockquote>
+<p>初始化操作</p>
+</blockquote>
+<ul>
+<li>CreateServers: 创建服务器</li>
+<li>AttachServerVolume: 弹性云服务器挂载</li>
+</ul>
+<blockquote>
+<p>验证弥补操作</p>
+</blockquote>
+<ul>
+<li>NovaListServersDetailsInvoker: 查询云服务器详情列表</li>
+<li>NovaShowServerInvoker: 查询云服务器详情</li>
+<li>ListServerBlockDevices:  查询弹性云服务器磁盘信息</li>
+<li>ShowServerBlockDevice: 查询弹性云服务器单个磁盘信息</li>
+</ul>
+<h4 id="阿里云-1"><a href="#阿里云-1" class="headerlink" title="阿里云"></a>阿里云</h4><h4 id="微软云-1"><a href="#微软云-1" class="headerlink" title="微软云"></a>微软云</h4><p><br><br><br></p>
+<h2 id="K8sService"><a href="#K8sService" class="headerlink" title="K8sService"></a>K8sService</h2><h3 id="K8s流程时序图"><a href="#K8s流程时序图" class="headerlink" title="K8s流程时序图"></a>K8s流程时序图</h3><img src="http://www.plantuml.com/plantuml/svg/VLDRJnfH47xk-HKRdzgaZUarneGcHfC-c3HDyD4NX5K9T9SiOBLFI10GM2wA1WKLMb3gXRMnDR08_fYUERlxBpgooCLAzs5pScQ-Rxupyys2kChPtQBVOUMb5QUT9nwRv7FQdHwRuEESNj5jy_4plCSjhZsMu9hmtb_pWeDR45S9mHytHjMCTgRejJRRRR5jcROAOqF03qWiB5aThg7RELwIR8kYzBdFPh5mneQijMgiM39E4vp5GWXvJDUBztqnanpS1E0ahiU2Mh01iI9iL30wBq3Z6Z8nxQXYSeAyG_geOGQMhB3izI03RJOXLfeNjDkcLeZt6GJHntFY2Yznuk9WH_J8gQwUiLIQjlDK3TDwWAhvsGdlj2WiEfUUWtob_munDQqh8NfpIUjnTb3HzaD6CwVNogmOWKWOKa6sSqbwjVIW0hLzbbECm2QB_y1xuzi1mf25gaaMpT3c-RzuMhz0Ngnlb1gTpjuf7ltmJgDx9R4Of8yX7TNIuP5FfMg2dPSU8B6c2ME14sB6x9sdeoGcrqnYLAL7Vc46R0tKB6n2HCMMavT_0klMPV7BjDllzV6IaGzhxN9NqaKE2bNogflnKNJmdqJHRKviC6MSrcNp1D4zYEQXgPBNY4AFieAC8uMzgduIOiMRBYgLqR97aCf1h4hUOABNk-pYrq096riLKEwvCPxO9MynlkAnEnqFiHXxXp58ALgs2WbrI7Hl23Qth-llEv5cav-CcWoKTz6LCqvXQSxcTeqRtmzfuzW8xAEVpPOYXzbFRfZaiNsPv7IblmPiSnloXnrT8utHJKPNbIDGEyJD7bXFlA3jU6Sz-oOPS0Z8ILfNiUMeaMKLbbZNr2kjLkgEArd1QNVFFui4sZMzfVm_UshM-dJggr_YkLd_0Yy9l8_tFYEGEaNt6BbR8vAu6t07Z80UMB_Dz-lWrnl5Nm00">
+<h3 id="实现方式-2"><a href="#实现方式-2" class="headerlink" title="实现方式"></a>实现方式</h3><h4 id="华为云-2"><a href="#华为云-2" class="headerlink" title="华为云"></a>华为云</h4><ul>
+<li>SDK: <a href="https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/README_CN.md" target="_blank" rel="noopener">https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/README_CN.md</a></li>
+<li>WebApi: <a href="https://console.huaweicloud.com/apiexplorer/#/openapi/RDS/doc?api=CreateInstance" target="_blank" rel="noopener">https://console.huaweicloud.com/apiexplorer/#/openapi/RDS/doc?api=CreateInstance</a></li>
+<li>Terraform</li>
+</ul>
+<h5 id="华为云SDK-K8s-操作点"><a href="#华为云SDK-K8s-操作点" class="headerlink" title="华为云SDK-K8s-操作点"></a>华为云SDK-K8s-操作点</h5><ul>
+<li>华为云SDK-CCE(华为k8s-Cloud Container Engine)模块: <a href="https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/services/cce/v3/cce_client.go" target="_blank" rel="noopener">https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/services/cce/v3/cce_client.go</a></li>
+</ul>
+<blockquote>
+<p>操作类Api</p>
+</blockquote>
+<ul>
+<li>AddNode: 纳管节点</li>
+<li>CreateNodePool: 节点池</li>
+</ul>
+<blockquote>
+<p>查询类Api</p>
+</blockquote>
+<ul>
+<li>ListClusters: 获取指定项目下的集群</li>
+<li>ShowCluster: 获取指定集群</li>
+<li>ListNodePools: 获取集群下的节点池</li>
+<li>ListNodes: 获取集群下所有节点</li>
+<li>ShowNodePool: 获取指定的节点池</li>
+<li>ShowQuotas: 查询CCE服务下的资源配额</li>
+</ul>
+<blockquote>
+<p>问题</p>
+</blockquote>
+<ul>
+<li>华为云不支持纳管节点加入到节点池,会形成孤立节点</li>
+</ul>
+<h4 id="阿里云-2"><a href="#阿里云-2" class="headerlink" title="阿里云"></a>阿里云</h4><h4 id="微软云-2"><a href="#微软云-2" class="headerlink" title="微软云"></a>微软云</h4><blockquote>
+<p>问题</p>
+</blockquote>
+<ul>
+<li>微软云不支持virtual-machines加入到Aks(k8s云容器集群)</li>
+</ul>
+<p><br><br><br></p>
+<h2 id="CustomerService"><a href="#CustomerService" class="headerlink" title="CustomerService"></a>CustomerService</h2><h3 id="CustomerService流程时序图"><a href="#CustomerService流程时序图" class="headerlink" title="CustomerService流程时序图"></a>CustomerService流程时序图</h3><img src="http://www.plantuml.com/plantuml/svg/IqmkoIzIU3QvzydUEKzsxU9ApiyhAShFKKXAIuEpatFoIrE2KulACfDJkU1ATUs0QgmKAYegk80CNJjaLM1X0000">
+<h3 id="实现方式-3"><a href="#实现方式-3" class="headerlink" title="实现方式"></a>实现方式</h3><h4 id="华为云-3"><a href="#华为云-3" class="headerlink" title="华为云"></a>华为云</h4><ul>
+<li>SDK: <a href="https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/README_CN.md" target="_blank" rel="noopener">https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/README_CN.md</a></li>
+<li>WebApi: <a href="https://console.huaweicloud.com/apiexplorer/#/openapi/RDS/doc?api=CreateInstance" target="_blank" rel="noopener">https://console.huaweicloud.com/apiexplorer/#/openapi/RDS/doc?api=CreateInstance</a></li>
+<li>Terraform</li>
+</ul>
+<h5 id="华为云SDK-Ecs-操作点-1"><a href="#华为云SDK-Ecs-操作点-1" class="headerlink" title="华为云SDK-Ecs-操作点"></a>华为云SDK-Ecs-操作点</h5><ul>
+<li>华为云SDK-Rds模块: <a href="https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/services/ecs/v2/ecs_client.go" target="_blank" rel="noopener">https://github.com/huaweicloud/huaweicloud-sdk-go-v3/blob/master/services/ecs/v2/ecs_client.go</a></li>
+</ul>
+<blockquote>
+<p>初始化操作</p>
+</blockquote>
+<ul>
+<li>AddNode: 纳管节点</li>
+<li>CreateNodePool: 节点池</li>
+</ul>
+<h4 id="阿里云-3"><a href="#阿里云-3" class="headerlink" title="阿里云"></a>阿里云</h4><h4 id="微软云-3"><a href="#微软云-3" class="headerlink" title="微软云"></a>微软云</h4><p><br><br><br></p>
+<h2 id="bizDeployService"><a href="#bizDeployService" class="headerlink" title="bizDeployService"></a>bizDeployService</h2><h3 id="bizDeploy实现流程时序图"><a href="#bizDeploy实现流程时序图" class="headerlink" title="bizDeploy实现流程时序图"></a>bizDeploy实现流程时序图</h3><p><br><br><br></p>
+<h1 id="物料准备"><a href="#物料准备" class="headerlink" title="物料准备"></a>物料准备</h1><h2 id="华为云-4"><a href="#华为云-4" class="headerlink" title="华为云"></a>华为云</h2><h3 id="终端节点"><a href="#终端节点" class="headerlink" title="终端节点"></a>终端节点</h3><ul>
+<li>从地区和终端节点查询服务的终端节点,请您根据业务需要选择对应区域的终端节点<br><a href="https://developer.huaweicloud.com/endpoint" target="_blank" rel="noopener">https://developer.huaweicloud.com/endpoint</a></li>
+<li>集群管理、节点管理、节点池管理、插件管理、配额管理的URL格式为：<a href="https://Endpoint/uri。其中uri为资源路径，也即API访问的路径。" target="_blank" rel="noopener">https://Endpoint/uri。其中uri为资源路径，也即API访问的路径。</a></li>
+<li>Kubernetes API、存储管理的URL格式为：https://{clusterid}.Endpoint/uri。其中{clusterid}为集群ID，uri为资源路径，也即API访问的路径。</li>
+</ul>
+<h3 id="认证鉴权"><a href="#认证鉴权" class="headerlink" title="认证鉴权"></a>认证鉴权</h3><p>调用接口有如下两种认证方式</p>
+<ul>
+<li>Token认证：通过Token认证调用请求。Token的有效期为24小时。</li>
+<li>AK/SK认证：通过AK（Access Key ID）/SK（Secret Access Key）加密调用请求。推荐使用AK/SK认证，其安全性比Token认证要高。<ul>
+<li>AK/SK签名认证方式仅支持消息体大小在12MB以内，12MB以上的请求请使用Token认证。</li>
+<li><a href="https://support.huaweicloud.com/devg-apisign/api-sign-provide-start.html" target="_blank" rel="noopener">https://support.huaweicloud.com/devg-apisign/api-sign-provide-start.html</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="阿里云-4"><a href="#阿里云-4" class="headerlink" title="阿里云"></a>阿里云</h2><h2 id="微软云-4"><a href="#微软云-4" class="headerlink" title="微软云"></a>微软云</h2>
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2023/11/20/oneClickDeploy/';
+        this.page.title = '一键部署';
+        this.page.identifier = '2023/11/20/oneClickDeploy/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

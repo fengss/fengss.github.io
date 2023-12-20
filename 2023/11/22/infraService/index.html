@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>基建设施服务 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="基础设施服务能力及职责摘录
+InfraService服务模块协作
+服务内部职责划分iacService[Iac任务模块]
+检查Iac清单
+校验不合理Iac任务
+配额过大
+
+
+
+
+调度Iac任务
+创建Iac任务
+追踪Iac任务
+
+
+核查Iac落地[后期建设]
+周期性核查历史Iac清单与资产落地情况
+核查当前Iac任务落地情况
+
+
+
+templateService[配置模版/规格标准]
+管理模版
+管理标准和规格
+
+allDeployService[业务&amp;amp;数据铺设服务]
+管理Sql全量初始化铺">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">C嵌入式</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go云原生</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">Linux安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Win安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">大数据处理</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Net/">Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#InfraService"><span class="toc-number">1.</span> <span class="toc-text">InfraService</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#服务模块协作"><span class="toc-number">1.1.</span> <span class="toc-text">服务模块协作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务内部职责划分"><span class="toc-number">1.2.</span> <span class="toc-text">服务内部职责划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iacService-Iac任务模块"><span class="toc-number">1.2.1.</span> <span class="toc-text">iacService[Iac任务模块]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#templateService-配置模版-规格标准"><span class="toc-number">1.2.2.</span> <span class="toc-text">templateService[配置模版/规格标准]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#allDeployService-业务-amp-数据铺设服务"><span class="toc-number">1.2.3.</span> <span class="toc-text">allDeployService[业务&amp;数据铺设服务]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#k8sService-K8s直查模块"><span class="toc-number">1.2.4.</span> <span class="toc-text">k8sService[K8s直查模块]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdsService-Rds直查模块"><span class="toc-number">1.2.5.</span> <span class="toc-text">rdsService[Rds直查模块]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ecsService-服务计算直查模块"><span class="toc-number">1.2.6.</span> <span class="toc-text">ecsService[服务计算直查模块]</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础设施用例流程"><span class="toc-number">1.3.</span> <span class="toc-text">基础设施用例流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总体流程"><span class="toc-number">1.4.</span> <span class="toc-text">总体流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Infra数据模型"><span class="toc-number">2.</span> <span class="toc-text">Infra数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#参数配置"><span class="toc-number">2.1.</span> <span class="toc-text">参数配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#规格数据样例"><span class="toc-number">2.1.1.</span> <span class="toc-text">规格数据样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rds配置单样例"><span class="toc-number">2.1.2.</span> <span class="toc-text">Rds配置单样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#k8s节点池样例"><span class="toc-number">2.1.3.</span> <span class="toc-text">k8s节点池样例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Infra清单用例"><span class="toc-number">2.2.</span> <span class="toc-text">Infra清单用例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Infra清单数据结构"><span class="toc-number">2.2.1.</span> <span class="toc-text">Infra清单数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#资源评估"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">资源评估</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#扩展参数"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">扩展参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#额外结构"><span class="toc-number">2.2.1.3.</span> <span class="toc-text">额外结构</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Terraform"><span class="toc-number">3.</span> <span class="toc-text">Terraform</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Infra清单-转变-Tf脚本"><span class="toc-number">3.1.</span> <span class="toc-text">Infra清单-转变-Tf脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置样例"><span class="toc-number">3.2.</span> <span class="toc-text">配置样例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Rds部分"><span class="toc-number">3.2.1.</span> <span class="toc-text">Rds部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#华为云"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">华为云</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#K8s"><span class="toc-number">3.2.2.</span> <span class="toc-text">K8s</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#华为云-1"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">华为云</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#隔离性"><span class="toc-number">3.3.</span> <span class="toc-text">隔离性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#状态管理"><span class="toc-number">3.4.</span> <span class="toc-text">状态管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关于状态存储"><span class="toc-number">3.4.1.</span> <span class="toc-text">关于状态存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于状态锁定"><span class="toc-number">3.4.2.</span> <span class="toc-text">关于状态锁定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#装配backend"><span class="toc-number">3.4.3.</span> <span class="toc-text">装配backend</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可重用设施部分"><span class="toc-number">3.5.</span> <span class="toc-text">可重用设施部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#默认配额-基础设施重用"><span class="toc-number">3.5.1.</span> <span class="toc-text">默认配额-基础设施重用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#默认配额-可调参部分"><span class="toc-number">3.5.2.</span> <span class="toc-text">默认配额-可调参部分</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Deploy部署"><span class="toc-number">4.</span> <span class="toc-text">Deploy部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Deploy部署包"><span class="toc-number">4.1.</span> <span class="toc-text">Deploy部署包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建-建设-应用Deploy程序包"><span class="toc-number">4.2.</span> <span class="toc-text">构建/建设/应用Deploy程序包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题及物料"><span class="toc-number">5.</span> <span class="toc-text">问题及物料</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-number">5.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#材料准备"><span class="toc-number">5.2.</span> <span class="toc-text">材料准备</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            基建设施服务
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2023/11/22/infraService/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2023-11-22T09:13:40.000Z" itemprop="datePublished">2023-11-22</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>基础设施服务能力及职责摘录<br><a id="more"></a></p>
+<h1 id="InfraService"><a href="#InfraService" class="headerlink" title="InfraService"></a>InfraService</h1><h2 id="服务模块协作"><a href="#服务模块协作" class="headerlink" title="服务模块协作"></a>服务模块协作</h2><img src="http://www.plantuml.com/plantuml/svg/IqmkoIzIU3QvzydUEKzsxUBYIixFAodApr5mIaiBJYqgoqnEvU8gI4pEJanFLV3CIojAX8fMSoa0GNHcOZ9K85O18bAKKWmJWGXaMw09f2QZ2PIavXRa99QaeeecvkIuf1Rav5V2XMkvkE0krRL3kD1AuUdyNKztxtgnRj-pQNjVDgzuldVJopaDppOsSI4KwTeXEzzA8Jse81a0">
+<h2 id="服务内部职责划分"><a href="#服务内部职责划分" class="headerlink" title="服务内部职责划分"></a>服务内部职责划分</h2><h3 id="iacService-Iac任务模块"><a href="#iacService-Iac任务模块" class="headerlink" title="iacService[Iac任务模块]"></a>iacService[Iac任务模块]</h3><ul>
+<li>检查Iac清单<ul>
+<li>校验不合理Iac任务<ul>
+<li>配额过大</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>调度Iac任务<ul>
+<li>创建Iac任务</li>
+<li>追踪Iac任务</li>
+</ul>
+</li>
+<li>核查Iac落地[后期建设]<ul>
+<li>周期性核查历史Iac清单与资产落地情况</li>
+<li>核查当前Iac任务落地情况</li>
+</ul>
+</li>
+</ul>
+<h3 id="templateService-配置模版-规格标准"><a href="#templateService-配置模版-规格标准" class="headerlink" title="templateService[配置模版/规格标准]"></a>templateService[配置模版/规格标准]</h3><ul>
+<li>管理模版</li>
+<li>管理标准和规格</li>
+</ul>
+<h3 id="allDeployService-业务-amp-数据铺设服务"><a href="#allDeployService-业务-amp-数据铺设服务" class="headerlink" title="allDeployService[业务&amp;数据铺设服务]"></a>allDeployService[业务&amp;数据铺设服务]</h3><ul>
+<li>管理Sql全量初始化铺设</li>
+<li>管理Pod全量初始化铺设<ul>
+<li>有/无编排顺序铺设</li>
+</ul>
+</li>
+</ul>
+<h3 id="k8sService-K8s直查模块"><a href="#k8sService-K8s直查模块" class="headerlink" title="k8sService[K8s直查模块]"></a>k8sService[K8s直查模块]</h3><ul>
+<li>集群查询[后期建设]</li>
+<li>节点查询[后期建设]</li>
+<li>节点池查询[后期建设]</li>
+</ul>
+<h3 id="rdsService-Rds直查模块"><a href="#rdsService-Rds直查模块" class="headerlink" title="rdsService[Rds直查模块]"></a>rdsService[Rds直查模块]</h3><ul>
+<li>实例查询[当前建设]</li>
+<li>数据库查询[当前建设]</li>
+<li>Db参数配置查询[后期建设]</li>
+</ul>
+<h3 id="ecsService-服务计算直查模块"><a href="#ecsService-服务计算直查模块" class="headerlink" title="ecsService[服务计算直查模块]"></a>ecsService[服务计算直查模块]</h3><ul>
+<li>实例查询[当前建设]</li>
+</ul>
+<p><br></p>
+<h2 id="基础设施用例流程"><a href="#基础设施用例流程" class="headerlink" title="基础设施用例流程"></a>基础设施用例流程</h2><img src="http://www.plantuml.com/plantuml/svg/nPB1RjD048RF-2dsI8MYNf4Ft0f2bH02n0Lni98DH7Bio74GlPNYDBOQjovDgeW4KfSM6o7SHXIfjN7wCfvTvorOPODYqYHNVFBCV3Fxp-WNP5pKaQuYhVJgjOuA9GtdzPAg2BVIQuT65z0z7dNwA9UxXswdlmmIEgbdaAFVexfDus15K5GTJthLudo4x3d9i0jVjvBB7T8-9tP0V9TQff13Jt6-ffNqZGUQMgk845XGzsbaiCeZh8iqtgTHZmNtPKbzWpMHpsM9vwfSAsEHJwDVtj5kXsKVAaLDMdkhYz0F8GhJO4WEOs9zWq4R1f_9fYTWfO36YWN4lkKRalvfUdQyie3arV6BvB8ETdiH285BhAj_m9cRpI4oGUh4q3jFmdtw_Im9FThgFvOb9GrSC3y8qrzor20_VOWFmB8vpDU7lGuq3-dM5Rg3CbC5_kYqdtuqm36fivqzqtWbSc0dSIy9m-Kdci4Mt6U6uXPPTfmvH2PWNg5HWxO6u1Xq43qfL5VNxrPNr_9LjiypNAx8aexv2Euvra1CH_XRuaauyKRlVJ2t9-xyTCesX1ERjdm6CB7PdV-ZQnSvB6mnfKiTTfDuSSDrBncI37VIwmOukyJoKhV9xSGiHBeNJ1rrDxcwYVle3mkSPXBkwbZJfAAgbP5KgSWRKy5_0000">
+<h2 id="总体流程"><a href="#总体流程" class="headerlink" title="总体流程"></a>总体流程</h2><img src="http://www.plantuml.com/plantuml/svg/fLTRRnf757xVNx6FYMJBIjk7A98ZjOdKHgtKACbRsmTYuyWA0GkJg7d35ypTuFWIR72u66pdOh1JRCDYy8_fpkpkl-YPFSCoku2XBG-MT_PyvpRVkQnh9k3potGpgRPpgg98BlDPlqvhhJh9benCdXyzTB_vTM7HTaIkWYIrmOzcVDw0t-UHdy_DFNNxtypFkANdlZ_bUU-StzKzaE7NbPjtpGmw3hXVBNXS0VUWTowFvw5xmUDxsttfzixAO4IQdfRryrMgfFMZLLguCa99hLsLfwSbCOx9-ptNxibwiK92eIcQhTETKuJHbH1PExzbj39wjOpwG9DHshyjzP2JznqUtXkgIN98sXqWgQHn627jJH9DSfIfWMD5Ys8KNU00Y3CDD5_HQoMM1kjwxIwWmFyAdcp4j7pboUpYrCkxY_Iug4KZ91L3bUF7Jr8rRUkOeqHpbkEEi7d0B68CuX6Z6Ms4I78R0fQ7HIo88SvchKT9o4sXIPFLHxDzwhdjdgmZfno7xlRZRemEiz4Fyle2RjdtnksNVNDYuPYIsbQURBJ9nZ7DvIMaljeucRnFb2r8AlpxcvO_eNlBVtIFQ2HDOdcP5R3vJCfdUhrY5XCpX6b5HVQq3iigANucQxk8GE4REGF1RkZdboWFmYIL0HxtiwKF9rfGbGJzKgI5el4f8Ray0RaRUPAa8rfw3HCwWe8cUPzn4GjgJxVGp-xy7Lp2eg2P6aaVwjTXKZxguRw1zshx6b9gxAP9v894JlLEnyX4IF2gbzuX373uRnIRF0G0tXo67lv4gdjgCsfbL4-tYR8vWjj2_jbrc5UjjbeaLXnARe7KA8bG9DJDr1u6Obn36ZfBM7H2z5xGHCyAHWckUcUOyxQeensu459hWhadxXVpFYz9A2IVXtxrmEDxFQig6sDXjRtLPsw_tpNdyx-IdmRWLaXuZPJ3P6bFLUB3LM1ZO8wAFDRRNu3_FptuHL_TexalG-4zauyzBg-ZUsP8OWV2w5C-LDl3UU-BPoxFoodZu8FQF9mobgjgwu8hhHPfjCbs0VDkp2T77x3fjKydcaeRQ-yi7Tn3w6J9AdY8hZh6ikWO0X6573ABcyRVQQrzsp5R3DWhxJXEbDGFhr-O9-mdEYTkBLqgqkswKRmM4QAKtHyMmcL5RSL9g0AbJK8Nd7d8NWPsUnRTVExIN1GgVmeUz7hJU5yrIXdBnh0UBWi_lWrSXrbGPbS6if7rFCaMoE6oseZRf5axKXijlNv8KfSa4IBDElobkGZQPwsadBSXd0tAo0N506dq8-jdfe2UM27P-WIOXSipicjQftpdfHvRrfQRbaghfGtAl9txORrwoglVZ8jn8NI1eKbSbzdfXgduSJv0JZAqU80viig1is5qsNo_iE1vIwD7UZ41TGQpWtEHSSWXnGVYS1uPmJqO7FX4cXSuHsYiOcpjgjT5kbIJJ58uZIDdnaaIznC1B2szJGStO6GzNFV8zSxQi128HMp1RKtRkL-FgS89StYHIgkTxB_mGXmTPzlQ-ga5wSbZFZwiafOo81_YTudT6RKHKwyAR61Uda5fER0ahsZ5eB6T8oifLj0xkoFIW-f6Qx7LVjzN3EncKAkO9to3O5moI3Mg7uGWSq28tX9nSyv5BUZZY14jvBaVDO6lyGKKBkpuK46Sw3WaMefUxOXNUmCjZPLZhVqL2J6O3RPqzJvDhV_8vLSZ6ANnZwJITYH_yhumgcxHQ50_N38scNTmtTfwZPHMRaiuhutz0aHfx9VKHbbjjV6g81BjSrnj14dtNlaa7RY-zJEYFnC3hcf0dPbxBDygEspNu2eAON1s17_O712-731AJfxJCwtroLnC-MmHlkmiSs15-XP4jFQ6rihfIrlGtsZmYAi0vdKwqdVmdX_qcOAf5uPPayJWWQTgGn6f6f0X2BtQGBT7S1URgPX14ic2vX4C5b1ypeWeinr3aLbEo6DvGTyNw5_RACPdrOts1yXtcpVkkCuI6OSROb3MmijttN7mh1iUnV5kyExWSnsgWMwVigKiii_UceFml-Zw-IxJzTWtAog22sVhIWoO0QN4M19MO3OEC26swX5hgI3vkrThxRBLg6iJOm5pUgtcQFzs2-8JBZsal0gVMnFw-QdOpMdscYPBz7m9Eii4Z7WQZSEQX9t4OTLXRy2KC5SilLgY9mUS6rqDa1JciKbFKaredNMS_6Cs3M5X45O5IVe7">
+<p><br><br><br></p>
+<h1 id="Infra数据模型"><a href="#Infra数据模型" class="headerlink" title="Infra数据模型"></a>Infra数据模型</h1><h2 id="参数配置"><a href="#参数配置" class="headerlink" title="参数配置"></a>参数配置</h2><h3 id="规格数据样例"><a href="#规格数据样例" class="headerlink" title="规格数据样例"></a>规格数据样例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;id&quot;: &quot;ai1.2xlarge.4&quot;,</span><br><span class="line">    &quot;name&quot;: &quot;ai1.2xlarge.4&quot;,</span><br><span class="line">    &quot;vcpus&quot;: &quot;8&quot;,</span><br><span class="line">    &quot;ram&quot;: 32768,</span><br><span class="line">    &quot;disk&quot;: &quot;0&quot;,</span><br><span class="line">    &quot;swap&quot;: &quot;&quot;,</span><br><span class="line">    &quot;attachableQuantity&quot;: &#123;</span><br><span class="line">        &quot;free_scsi&quot;: 20,</span><br><span class="line">        &quot;free_blk&quot;: 12,</span><br><span class="line">        &quot;free_disk&quot;: 20,</span><br><span class="line">        &quot;free_nic&quot;: 4</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;OS-FLV-EXT-DATA:ephemeral&quot;: 0,</span><br><span class="line">    &quot;rxtx_factor&quot;: 1,</span><br><span class="line">    &quot;OS-FLV-DISABLED:disabled&quot;: false,</span><br><span class="line">    &quot;rxtx_quota&quot;: null,</span><br><span class="line">    &quot;rxtx_cap&quot;: null,</span><br><span class="line">    &quot;os-flavor-access:is_public&quot;: true,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Rds配置单样例"><a href="#Rds配置单样例" class="headerlink" title="Rds配置单样例"></a>Rds配置单样例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;instance&quot;: &#123;</span><br><span class="line">        &quot;name&quot;: &quot;rds-instance-rep2&quot;,</span><br><span class="line">        &quot;datastore&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;MySQL&quot;,</span><br><span class="line">            &quot;version&quot;: &quot;5.6&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;flavor_ref&quot;: &quot;rds.mysql.s1.large&quot;,</span><br><span class="line">        &quot;volume&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;ULTRAHIGH&quot;,</span><br><span class="line">            &quot;size&quot;: 100</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;disk_encryption_id&quot;: &quot;2gfdsh-844a-4023-a776-fc5c5fb71fb4&quot;,</span><br><span class="line">        &quot;region&quot;: &quot;aaa&quot;,</span><br><span class="line">        &quot;availability_zone&quot;: &quot;bbb&quot;,</span><br><span class="line">        &quot;vpc_id&quot;: &quot;490a4a08-ef4b-44c5-94be-3051ef9e4fce&quot;,</span><br><span class="line">        &quot;subnet_id&quot;: &quot;0e2eda62-1d42-4d64-a9d1-4e9aa9cd994f&quot;,</span><br><span class="line">        &quot;security_group_id&quot;: &quot;2a1f7fc8-3307-42a7-aa6f-42c8b9b8f8c5&quot;,</span><br><span class="line">        &quot;port&quot;: &quot;8635&quot;,</span><br><span class="line">        &quot;backup_strategy&quot;: &#123;</span><br><span class="line">            &quot;start_time&quot;: &quot;08:15-09:15&quot;,</span><br><span class="line">            &quot;keep_days&quot;: 12</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;charge_info&quot;: &#123;</span><br><span class="line">            &quot;charge_mode&quot;: &quot;postPaid&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;password&quot;: &quot;Test@12345678&quot;,</span><br><span class="line">        &quot;configuration_id&quot;: &quot;452408-ef4b-44c5-94be-305145fg&quot;,</span><br><span class="line">        &quot;enterprise_project_id&quot;: &quot;fdsa-3rds&quot;,</span><br><span class="line">        &quot;time_zone&quot;: &quot;UTC+04:00&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;job_id&quot;: &quot;dff1d289-4d03-4942-8b9f-463ea07c000d&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="k8s节点池样例"><a href="#k8s节点池样例" class="headerlink" title="k8s节点池样例"></a>k8s节点池样例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;kind&quot;: &quot;NodePool&quot;,</span><br><span class="line">    &quot;apiVersion&quot;: &quot;v3&quot;,</span><br><span class="line">    &quot;metadata&quot;: &#123;</span><br><span class="line">        &quot;name&quot;: &quot;lc-it-nodepool-79796&quot;,</span><br><span class="line">        &quot;uid&quot;: &quot;99addaa2-69eb-11ea-a592-0255ac1001bb&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;spec&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;vm&quot;,</span><br><span class="line">        &quot;nodeTemplate&quot;: &#123;</span><br><span class="line">            &quot;flavor&quot;: &quot;s6.large.2&quot;,</span><br><span class="line">            &quot;az&quot;: &quot;******&quot;,</span><br><span class="line">            &quot;os&quot;: &quot;EulerOS 2.5&quot;,</span><br><span class="line">            &quot;login&quot;: &#123;</span><br><span class="line">                &quot;sshKey&quot;: &quot;KeyPair-001&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;rootVolume&quot;: &#123; //系统盘</span><br><span class="line">                &quot;volumetype&quot;: &quot;SAS&quot;,</span><br><span class="line">                &quot;size&quot;: 40</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;dataVolumes&quot;: [ //数据盘</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;volumetype&quot;: &quot;SAS&quot;,</span><br><span class="line">                    &quot;size&quot;: 100,</span><br><span class="line">                    &quot;extendParam&quot;: &#123;</span><br><span class="line">                        &quot;useType&quot;: &quot;docker&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            &quot;publicIP&quot;: &#123; // 公有Ip</span><br><span class="line">                &quot;eip&quot;: &#123;</span><br><span class="line">                    &quot;bandwidth&quot;: &#123;&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;nodeNicSpec&quot;: &#123;</span><br><span class="line">                &quot;primaryNic&quot;: &#123;</span><br><span class="line">                    &quot;subnetId&quot;: &quot;7e767d10-7548-4df5-ad72-aeac1d08bd8a&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;billingMode&quot;: 0,//0: 按需付费 1: 包周期 2: 已废弃:自动付费包周期</span><br><span class="line">            &quot;extendParam&quot;: &#123;</span><br><span class="line">                &quot;maxPods&quot;: 110</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;k8sTags&quot;: &#123;</span><br><span class="line">                &quot;cce.cloud.com/cce-nodepool&quot;: &quot;lc-it-nodepool-79796&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;autoscaling&quot;: &#123;</span><br><span class="line">            enable: 1,</span><br><span class="line">            minNodeCount: 1</span><br><span class="line">            maxNodeCount: 20</span><br><span class="line">            scaleDownCooldownTime: 111,//节点保留时间,单位为分钟,扩容出来的节点在这个时间内不会被缩掉</span><br><span class="line">            priority: 1,//节点池权重,更高的权重在扩容时拥有更高的优先级</span><br><span class="line">        &#125;, </span><br><span class="line">        initialNodeCount: 1, //初始化数量</span><br><span class="line">        &quot;nodeManagement&quot;: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Infra清单用例"><a href="#Infra清单用例" class="headerlink" title="Infra清单用例"></a>Infra清单用例</h2><img src="http://www.plantuml.com/plantuml/svg/IqmkoIzIUB5_mlFTMvxENlHondokHB3GiyczJ_REUR9h5nTNKMfoIM9UUawgWcTUMb5YS6fHMMPoga8rbm8G86jLqDLLq7YnlENPWZtFLYnytjcXQQNmT5tFqsajJoVrl5Yuz6bhArWFt6ni6busT3xhNeai2DQ3gan1pqv10-oQPpjQd_PE1UfxrZ_XoRxP6FfGxKBLyg9zrTDrivxix4GIvge50000">
+<blockquote>
+<p>规格模版</p>
+<ul>
+<li>SecurityGroup:安全组</li>
+<li>Net:网络</li>
+<li>Flaover:规格</li>
+<li>Volume:数据磁盘</li>
+<li>InfraExt:基建设施扩展属性</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>Infra清单</p>
+<ul>
+<li>Infra</li>
+<li>K8sTemplate</li>
+<li>RdsTemplate</li>
+</ul>
+</blockquote>
+<h3 id="Infra清单数据结构"><a href="#Infra清单数据结构" class="headerlink" title="Infra清单数据结构"></a>Infra清单数据结构</h3><h4 id="资源评估"><a href="#资源评估" class="headerlink" title="资源评估"></a>资源评估</h4><p>资源评估类不需要变动参数模版,直接选择“规格”作为参数填充覆盖原模版</p>
+<h4 id="扩展参数"><a href="#扩展参数" class="headerlink" title="扩展参数"></a>扩展参数</h4><p>扩展参数类需要用到自定义Infra清单</p>
+<blockquote>
+<p>Rds侧面</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/XLHTJzim57tFhx34Sz_tX3ILVI2aFGpU8vCuNKIQH8vJLcsJw4I1bcK2ZKwLODFAAj5LemDjshfc5JzcSHp-nHmdgH8gHX_SvDpZctllERPYGCS1Jn1v8G7-qrNnvxZh9YA0dX-mwQ50QhOYbfHWOwkcgmY3O798txwcdHtfbIGf8jagKboiaqVOSkrYrYHGbojnIDPL0EYeHPi3vc_VcVMX0MiMplBn9JhR3Z_zMKvIcx2ACeWUUEpiGi2AxJfY5MyOLlaRtMdIywu0LDtP081zRh3Z170sePsimQGVUgVqpUJEmfwgpXggsWOaAAbEXGGwnC989dMRLyK9OUSYz4PqyevT-lJZ_WrQ3M57jymYiRKNddmLH4rqBcEaPGqslqUDeqGMot1vvqaBkUHSlNY-2mcLYyZyaspAypAaj3l5YE4IO4U3SEzNMiHi3CkcXk63vwcFRjdCOHjX_kaDLETwy8xqU9kiwWgH5Kj5HLOD6YuIDF4aWYITjR1FEEZnGQKUA877zzdnc1TstVJOT0I2iK_xkz5LD-n-erud60zJNhGxfEq1ZmN-DByZ2uzwqO_VkMcMmD9wsJ8rlLBWbPz1N445Td4SIxojmWc8MmGBuFhq0-s_3rjVw6Ld1TNBMUF2nNFXd9zLv2XOjqdibZbUuEyptxjHmkp0p0ql4R0mmLbO63TFIDe3A_TM_surk4__9x938E77BhgQHkFX6i8OQXQk1hvFsptM_XbkDMunKkuabLoxz7AHNqlpOFvwAKGNCmjAsKCAnJ8Kc0RI2C-KN2c5Y6fjckakwHy0">
+<blockquote>
+<p>K8s侧</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/XLHTJnf157tdLqp2QtdgIvzC2FR3c1fJZ4ycPCeEk77PtUmkMFgHW17yAgqsOcZLLgn6D1KrDYso4F-BtTc1Vz7PcLspMxJmCEpUS-RkdNFFdL1IWheE9f3n9WJeJnJOdvvzAIC3uDDrqjrWaPoQP8jBK3Kb9mf80rPx0tzOmDLow5qen9F5KJAhYSPJJScgmQmSo2VI3fGG1G1mSmMN6iHS79hrYGHpYkRbeqllQD7Uwupnr3BC82-4rolaw9o5asfMPojxqs26lk5o2P_MU47pKEMhrJwmA_luVNje7TEAbCsWuBd4ruYBn30Zho8GZyPdul7HcNXqAZeqv_WZVGfbL0aQRk8vKQP7Z4wEaGiJVrrxWBVRkFa55petXPq9HK2JYYBT57OP5whYDD9qKP7PXfLbU-T7O4FkeKTDCGqJ6afvKfKkUyLDN-s0V2-IxHh_B8jBIbgK4xe-cvX3UO3FolrFX_ZioeUfz0ZpYYO0yjd4tIgbaBqYrqSM3H5AJiKn9IiR88oNT_7HMczrWInSsTNp_j97tXb5CRYm84mkJM9-eqKmH806v8WEmdI7NMbw47Meuw4mFmGrAZ5tF2SDMisb3JMS4uu0ijcmbt-xyjpsQKnEQV3nAtTMxjbCmohIwASTlO2ZjUXiImXYqaWagHH1LWvAMSHex8c1Xci6DY9seqwRwley0fv5oNQB5jOlLKYt2QoMYG-MUjSrktQ6ArMhTUBoUaidUBL1CSli-dTuSBFU-tdbwtC4ZBwCAN9AJ0Tur9gUuU99A26hqoATuxiepw4CqoY3P8EtbpJhPBrCJhT8zT1bncQXbaQ1JmUr7QKQ1KRBqGk4GNz_5nzisIl7-A8wZl8nJqKszWEmxm8Ga9xKHDLmfcE0PvbhnApyKyBj3JFG2Uw6G3jkOJRpVW8_7jKc_gTGV27e_tECRa23tbEzwswlTJA5D0sc52rZcIPUhPFLNtQXU8yhVVT69Aj6texGUtmmwB-F0-Y8v-UGz-26d3O4c19A6JGJluFlGlY81X11cPVTVA6_">
+<h4 id="额外结构"><a href="#额外结构" class="headerlink" title="额外结构"></a>额外结构</h4><img src="http://www.plantuml.com/plantuml/svg/Iyv9B2vM22ZAByjCIIsgvb80WimKC9MOd9nQN1oVdLgfeF1qVTlBIKl1miMfoKMf9V58iaYIHQdfcVbvGFKzkvxEdmyMIix9BqrHK7YoQo9NBHSN0000">
+<p><br><br><br></p>
+<h1 id="Terraform"><a href="#Terraform" class="headerlink" title="Terraform"></a>Terraform</h1><h2 id="Infra清单-转变-Tf脚本"><a href="#Infra清单-转变-Tf脚本" class="headerlink" title="Infra清单-转变-Tf脚本"></a>Infra清单-转变-Tf脚本</h2><p>用户表单填写数据整理<code>Infra</code>数据结构题<br><code>Infra</code>数据转变转Terraform HCL脚本</p>
+<img src="http://www.plantuml.com/plantuml/svg/ZLBBJW8n5DttA_e1kZSckD65hwWHbcucGyUGm9JKaJKOHWSKGNa4yO6G64qq0oRu64VqO-IsmrzOmOmO4s9Nj_VUS-xfwKMAQb26lVU2S3jmsknNwqYbki5e54SKDKXO8g8IZ91E3O9fWZ1CjLyLht45fjbxTdlT8dz8YPlzwGLTOmf_DY5N5hKql9H4wGOHFOo_I10A1F0mDzA70m64DXdTZcD-wV2StJTpeclx98l1rHMlUmVvAXGiKTYLgVdPPOJb-H4pEVCJJsDUl_9QJR3Qw-6j48d5euf1FfAffId_jg4BDotSlO4EuHRvHPgNstBuFtZ5TPrRJv9FZTBjSE_bI8QCR4QepZDlScY8CAPebCN6S-rd85_nUt7GaB9whpMlTIwoZpoP6eyUE3LqSQ0RMWvlbNmwBrtZPtUmQuBjJ0nhy6I3TIjsdB748UqRcg_oqmu_I_9AMpe-jEWFSdHv9DP_p5fKqU6-B0xRNzzsKF7i1bZ7aC-E_3jaSb0ud8jecgzCk2UZZ60tUCOPh0_w1000">
+<h2 id="配置样例"><a href="#配置样例" class="headerlink" title="配置样例"></a>配置样例</h2><h3 id="Rds部分"><a href="#Rds部分" class="headerlink" title="Rds部分"></a>Rds部分</h3><h4 id="华为云"><a href="#华为云" class="headerlink" title="华为云"></a>华为云</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">variable &quot;vpc_id&quot; &#123;&#125;</span><br><span class="line">variable &quot;subnet_id&quot; &#123;&#125;</span><br><span class="line">variable &quot;secgroup_id&quot; &#123;&#125;</span><br><span class="line">variable &quot;availability_zone&quot; &#123;&#125;</span><br><span class="line"></span><br><span class="line"># 建设实例</span><br><span class="line">resource &quot;huaweicloud_rds_instance&quot; &quot;instance&quot; &#123;</span><br><span class="line">  name              = &quot;terraform_test_rds_instance&quot;</span><br><span class="line">  flavor            = &quot;rds.pg.n1.large.2&quot;</span><br><span class="line">  vpc_id            = var.vpc_id #预留</span><br><span class="line">  subnet_id         = var.subnet_id #预留</span><br><span class="line">  security_group_id = var.secgroup_id #预留</span><br><span class="line">  availability_zone = [var.availability_zone] #预留</span><br><span class="line"></span><br><span class="line">  db &#123;</span><br><span class="line">    type     = &quot;MySQL&quot;</span><br><span class="line">    version  = &quot;8.0&quot;</span><br><span class="line">    password = &quot;test&quot;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  volume &#123;</span><br><span class="line">    type = &quot;ULTRAHIGH&quot;</span><br><span class="line">    size = 100</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  backup_strategy &#123;</span><br><span class="line">    start_time = &quot;08:00-09:00&quot;</span><br><span class="line">    keep_days  = 1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 建设数据库</span><br><span class="line">resource &quot;huaweicloud_rds_mysql_database&quot; &quot;test&quot; &#123;</span><br><span class="line">  instance_id   = huaweicloud_rds_instance.instance.id</span><br><span class="line">  name          = &quot;test&quot;</span><br><span class="line">  character_set = &quot;utf8&quot;</span><br><span class="line">  description   = &quot;test database&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 建设账号</span><br><span class="line">resource &quot;huaweicloud_rds_mysql_account&quot; &quot;test&quot; &#123;</span><br><span class="line">  instance_id = huaweicloud_rds_instance.instance.id</span><br><span class="line">  name        = &quot;test&quot;</span><br><span class="line">  password    = &quot;Test@12345678&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 授权</span><br><span class="line">resource &quot;huaweicloud_rds_mysql_database_privilege&quot; &quot;test&quot; &#123;</span><br><span class="line">  instance_id = huaweicloud_rds_instance.instance.id</span><br><span class="line">  db_name     = huaweicloud_rds_mysql_database.test.name</span><br><span class="line"></span><br><span class="line">  users &#123;</span><br><span class="line">    name     = huaweicloud_rds_mysql_account.test.name</span><br><span class="line">    readonly = false</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="K8s"><a href="#K8s" class="headerlink" title="K8s"></a>K8s</h3><h4 id="华为云-1"><a href="#华为云-1" class="headerlink" title="华为云"></a>华为云</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">variable &quot;cluster_id&quot; &#123;&#125;</span><br><span class="line">variable &quot;key_pair&quot; &#123;&#125;</span><br><span class="line">variable &quot;availability_zone&quot; &#123;&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;huaweicloud_cce_node_pool&quot; &quot;node_pool&quot; &#123;</span><br><span class="line">  cluster_id               = var.cluster_id</span><br><span class="line">  name                     = &quot;testpool&quot;</span><br><span class="line">  os                       = &quot;EulerOS 2.5&quot;</span><br><span class="line">  initial_node_count       = 2</span><br><span class="line">  flavor_id                = &quot;s3.large.4&quot;</span><br><span class="line">  availability_zone        = var.availability_zone</span><br><span class="line">  key_pair                 = var.keypair</span><br><span class="line">  scall_enable             = true</span><br><span class="line">  min_node_count           = 1</span><br><span class="line">  max_node_count           = 10</span><br><span class="line">  scale_down_cooldown_time = 100</span><br><span class="line">  priority                 = 1</span><br><span class="line">  type                     = &quot;vm&quot;</span><br><span class="line"></span><br><span class="line">  root_volume &#123;</span><br><span class="line">    size       = 40</span><br><span class="line">    volumetype = &quot;SAS&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  data_volumes &#123;</span><br><span class="line">    size       = 100</span><br><span class="line">    volumetype = &quot;SAS&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h2><ul>
+<li><p>一个Terraform配置文件管理所有环境隔离性会被打破</p>
+<ul>
+<li>workspace隔离(不直观)</li>
+<li>文件布局隔离<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">infra</span><br><span class="line">    huaweicloud</span><br><span class="line">        component</span><br><span class="line">            rds</span><br><span class="line">            ecs</span><br><span class="line">            k8s</span><br><span class="line">    azure</span><br><span class="line">        component</span><br><span class="line">            rds</span><br><span class="line">            ecs</span><br><span class="line">            k8s</span><br><span class="line">    aliyun</span><br><span class="line">        component</span><br><span class="line">            rds</span><br><span class="line">            ecs</span><br><span class="line">            k8s</span><br><span class="line">prod/租户1</span><br><span class="line">    service</span><br><span class="line">        - var.tf</span><br><span class="line">        - main.tf</span><br><span class="line">        - outputs.tf</span><br><span class="line">    database</span><br><span class="line">        - var.tf</span><br><span class="line">        - main.tf</span><br><span class="line">        - outputs.tf</span><br><span class="line">test/租户2</span><br><span class="line">    service</span><br><span class="line">        - var.tf</span><br><span class="line">        - main.tf</span><br><span class="line">        - outputs.tf</span><br><span class="line">    database</span><br><span class="line">        - var.tf</span><br><span class="line">        - main.tf</span><br><span class="line">        - outputs.tf</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>太过隔离引发问题</p>
+<ul>
+<li>需要每个文件夹中多次运行terraform apply(使用Terragrunt通过apply-all命令来自动执行)</li>
+<li>调用资源依赖关系将变得十分困难,Terraform的terraform_remote_state数据源可以解决</li>
+</ul>
+</li>
+</ul>
+<p>terraform_remote_state使用数据源直接读取其他Terraform写入的Terraform状态文件<br>举例数据库隔离粒度不是Rds,而是Database,只需要一个Db<br>各个Service所需要的db来源就可以用remote_state<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">data &quot;terraform_remote_state&quot; &quot;db&quot;&#123;</span><br><span class="line">    backend = &quot;s3&quot;</span><br><span class="line"></span><br><span class="line">    config = &#123;</span><br><span class="line">        bucket = &quot;bucket_name&quot;</span><br><span class="line">        key = &quot;prod/data-stores/mysql/terraform.tfstate&quot;</span><br><span class="line">        region = &quot;us-east-2&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h2><p>Terraform脚本代码可Git托管,State当前集群状态无法给Git托管</p>
+<ul>
+<li>手动错误<br>  忘记从Git中读取最新状态文件，或在运行Terraform之后忘记将状态文件推送Git<br>  系统意外地回到之前状态或重复了以前的部署</li>
+<li>锁定<br>  Git无法处理锁定机制，该机制避免多实例对同一个状态文件同时运行terraform apply</li>
+<li>机密<br>  Terraform状态文件属于纯文本文件。可能会将与资源相关的敏感数据写入文件</li>
+</ul>
+<h3 id="关于状态存储"><a href="#关于状态存储" class="headerlink" title="关于状态存储"></a>关于状态存储</h3><p>Amazon S3远程存储Terraform状态文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">provider aws &#123;</span><br><span class="line">    region = &quot;us-east-2&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;aws_s3_bucket&quot; &quot;terraform_state&quot; &#123;</span><br><span class="line">    bucket = &quot;terraform-state&quot;</span><br><span class="line">    </span><br><span class="line">    # 防止Terraform Destory删除S3 Bucket</span><br><span class="line">    lifecyle &#123;</span><br><span class="line">        prevent_destroy = true</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    # s3启用版本控制</span><br><span class="line">    versioning &#123;</span><br><span class="line">        enabled = true</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    # 服务器端加密</span><br><span class="line">    servver_side_encryption_configuration &#123;</span><br><span class="line">        rule &#123;</span><br><span class="line">            apply_server_side_encryption_by_default &#123;</span><br><span class="line">                sse_algorigthm = &quot;AES256&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="关于状态锁定"><a href="#关于状态锁定" class="headerlink" title="关于状态锁定"></a>关于状态锁定</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;aws_dynamodb_table&quot; &quot;terraform_locks&quot;&#123;</span><br><span class="line">    name = &quot;terraform-locks&quot;</span><br><span class="line">    billing_mode = &quot;PER_REQUEST&quot;</span><br><span class="line">    hash_key = &quot;LockId&quot;</span><br><span class="line">    attribute &#123;</span><br><span class="line">        name = &quot;LockId&quot;</span><br><span class="line">        type = &quot;S&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="装配backend"><a href="#装配backend" class="headerlink" title="装配backend"></a>装配backend</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">terraform &#123;</span><br><span class="line">    backend &quot;s3&quot; &#123;</span><br><span class="line">        bucket = &quot;terraform-state&quot;</span><br><span class="line">        key = &quot;/xxx/xxx/terraform.tfstate&quot;</span><br><span class="line">        region = &quot;xxx&quot;</span><br><span class="line"></span><br><span class="line">        dynamodb_table = &quot;terraform-locks&quot;</span><br><span class="line">        encrypt = true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以单独拿出backend配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; backend.hcl</span><br><span class="line"></span><br><span class="line">bucket = &quot;xxx&quot;</span><br><span class="line">region = &quot;xxx&quot;</span><br><span class="line">dynamodb_table = &quot;xxx&quot;</span><br><span class="line">encrypt = true</span><br></pre></td></tr></table></figure>
+<p>terraform init -backend-config=backend.hcl</p>
+<p><br><br><br></p>
+<h2 id="可重用设施部分"><a href="#可重用设施部分" class="headerlink" title="可重用设施部分"></a>可重用设施部分</h2><h3 id="默认配额-基础设施重用"><a href="#默认配额-基础设施重用" class="headerlink" title="默认配额-基础设施重用"></a>默认配额-基础设施重用</h3><p>默认配额: 该HCL不额外制定其他属性被认定默认配额</p>
+<blockquote>
+<p>infra component云设施基础组件不同Provider</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">provider &quot;alicloud&quot;&#123;</span><br><span class="line">    access_key = &quot;your-access-key&quot;</span><br><span class="line">    secret_key = &quot;your-secret-key&quot;</span><br><span class="line">    region     = &quot;cn-hangzhou&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">provider &quot;huaweicloud&quot; &#123;</span><br><span class="line">  access_key  = &quot;your-access-key&quot;</span><br><span class="line">  secret_key  = &quot;your-secret-key&quot;</span><br><span class="line">  region      = &quot;cn-north-1&quot;</span><br><span class="line">  project_id  = &quot;your-project-id&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">provider &quot;azurerm&quot; &#123;</span><br><span class="line">  features &#123;&#125;</span><br><span class="line">  client_id       = &quot;your-client-id&quot;</span><br><span class="line">  client_secret   = &quot;your-client-secret&quot;</span><br><span class="line">  subscription_id = &quot;your-subscription-id&quot;</span><br><span class="line">  tenant_id       = &quot;your-tenant-id&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如按照默认我们提供的配置的则走<code>infra</code>-&gt;<code>huawei</code>|<code>alicloud</code>|<code>azure</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">- infra</span><br><span class="line">    - alicloud</span><br><span class="line">        - component</span><br><span class="line">            - k8s</span><br><span class="line">                - main.tf</span><br><span class="line">            - rds</span><br><span class="line">                - main.tf</span><br><span class="line"></span><br><span class="line">- 租户1</span><br><span class="line">    - service</span><br><span class="line">        - main.tf</span><br><span class="line">    - databases</span><br><span class="line">        - main.tf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">module &quot;webservice&quot; &#123;</span><br><span class="line">    source = &quot;../../infra/alicloud/component/k8s/...&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module &quot;databases&quot; &#123;</span><br><span class="line">    source = &quot;../../infra/alicloud/component/rds/...&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如有自定义配置走全量自定义,非模块引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- 租户1</span><br><span class="line">    - service</span><br><span class="line">    - databases</span><br><span class="line">        - main.tf</span><br><span class="line"></span><br><span class="line">resource xxx &#123;</span><br><span class="line">    xxx</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="默认配额-可调参部分"><a href="#默认配额-可调参部分" class="headerlink" title="默认配额-可调参部分"></a>默认配额-可调参部分</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">- infra</span><br><span class="line">    - huaweicloud</span><br><span class="line">        - component</span><br><span class="line">            - k8s</span><br><span class="line">                - main.tf</span><br><span class="line"></span><br><span class="line">- 租户1</span><br><span class="line">    - service</span><br><span class="line">        - var.tf</span><br><span class="line">        - main.tf</span><br><span class="line">    - databases</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; var.tf</span><br><span class="line">variable &quot;cluster_node_count&quot; &#123;</span><br><span class="line">    description = &quot;节点池数量&quot;</span><br><span class="line">    type = &quot;number&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; main.tf</span><br><span class="line"></span><br><span class="line">resource &quot;webservice&quot; &#123;</span><br><span class="line">    source = &quot;../../infra/huaweicloud/component/k8s/...&quot;</span><br><span class="line">    cluster_node_count = var.cluster_node_count</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; infra/huaweicloud/component/main.tf</span><br><span class="line"></span><br><span class="line">resource &quot;huaweicloud_cce_node_pool&quot; &quot;test&quot; &#123;</span><br><span class="line">  ...</span><br><span class="line">  initial_node_count       = var.cluster_node_count</span><br><span class="line">  scall_enable             = false</span><br><span class="line">  min_node_count           = 0</span><br><span class="line">  max_node_count           = 0</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<h1 id="Deploy部署"><a href="#Deploy部署" class="headerlink" title="Deploy部署"></a>Deploy部署</h1><h2 id="Deploy部署包"><a href="#Deploy部署包" class="headerlink" title="Deploy部署包"></a>Deploy部署包</h2><p>Sealos优势</p>
+<ul>
+<li>自建云自带image-cri-shim类镜像私仓</li>
+<li>LVScare多Master ipvs轻量级负载均衡</li>
+<li>镜像内部附带kubectl、sealos操作命令,将部署工作融合到一个镜像</li>
+<li>业务镜像全部离线download到registry</li>
+</ul>
+<blockquote>
+<p>手动安装自建私有云<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sealos run labring/kubernetes:v1.25.0 labring/helm:v3.8.2 labring/calico:v3.24.1 \</span><br><span class="line">     --masters 192.168.64.2,192.168.64.22,192.168.64.20 \</span><br><span class="line">     --nodes 192.168.64.21,192.168.64.19 -p [your-ssh-passwd]</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>手动铺设Deploy程序包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sealos run digiwin.com/xxx/deploy:x.x.x</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>Deploy程序包结构</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── charts</span><br><span class="line">│   └── nginx</span><br><span class="line">│       ├── Chart.lock</span><br><span class="line">│       ├── charts</span><br><span class="line">│       ├── Chart.yaml</span><br><span class="line">│       ├── README.md</span><br><span class="line">│       ├── templates</span><br><span class="line">│       ├── values.schema.json</span><br><span class="line">│       └── values.yaml</span><br><span class="line">├── images</span><br><span class="line">│   └── shim</span><br><span class="line">│       └── nginxImages</span><br><span class="line">├── init.sh</span><br><span class="line">├── Kubefile</span><br><span class="line">├── manifests</span><br><span class="line">│   └── nginx</span><br><span class="line">│       ├── deployment.yaml</span><br><span class="line">│       ├── ingress.yaml</span><br><span class="line">│       └── service.yaml</span><br><span class="line">├── opt</span><br><span class="line">│   └── helm</span><br><span class="line">└── registry</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Kubefile内容</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FROM scratch</span><br><span class="line">ENV version v1.1.0</span><br><span class="line">COPY manifests ./manifests</span><br><span class="line">COPY registry ./registry</span><br><span class="line">ENTRYPOINT [&quot;kubectl apply -f manifests/tigera-operator.yaml&quot;]</span><br><span class="line">CMD [&quot;kubectl apply -f manifests/custom-resources.yaml&quot;] </span><br><span class="line"># 当然也可以做py脚本初始化,由Py脚本去做Sql的全量铺设以及kubectl apply -f 集群各类yaml文件的初始化</span><br><span class="line">CMD [manifests/start.py]</span><br></pre></td></tr></table></figure>
+<h2 id="构建-建设-应用Deploy程序包"><a href="#构建-建设-应用Deploy程序包" class="headerlink" title="构建/建设/应用Deploy程序包"></a>构建/建设/应用Deploy程序包</h2><img src="http://www.plantuml.com/plantuml/svg/ZL9BJiCm4Dtd5Bv0stqNhDYnuG1iGcDGH8Yhj8MoGq21_WYe1I4ez2FnbK3g0bgI09VnECajSEtIJwW0U-EnvxqPlpTgAaiin6fL-jwWZgEe8WPl6-mJkEo4vqqbHSoiHGn4qXb5MRL8BetOzHwupZnE6sJBlo-3OqEbe22-9f6nkSaeYJWaUFw8eCBJ1kpQ0ckIB4Pa0rk8h4ot89YR3dME8cZVhV5Umjg0E3XuX5xNlzYZ_GiejHU99d0BkMMyeXlOxxhKy-P9QWrRWvZsdU2bv--yYIniQhB-dx_8ODKW6RISqmqDQVgglgcRyHHPJ-Jp-OGcsalcutoZ9NEcJXC__aUTZBg1KOmWpXxFgXOdfPzNy7GkMU2ex7iFiyNdVYKHxPUervhb57-EbfJ9xF0OIas5A_9jjpGk0KxThzzBBjOlGFLK48s6PrWot2woyWEFvG5ktYFbWy_Be5sHferR4LZMQeUF5Ta1AzPv9dLTRYRhjYAPe_kmim_s6Rozik8Tf_qvIOEvHSCr5DKWgePY-hUeqMShP_xgxDJ4ZFiQ2S57tQw6juVoGineOw3d5m00">
+<p><br><br><br></p>
+<h1 id="问题及物料"><a href="#问题及物料" class="headerlink" title="问题及物料"></a>问题及物料</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ul>
+<li><del>客户开放的子账号模式?合作伙伴模式?主账号申请账单?涉及到毛利计算颗粒度</del></li>
+<li>使用限制:单账号单集群节点最大用量</li>
+<li>资费:包年/包月/用量计费</li>
+<li>资产基础设施盘点: 盘点未关联客户Infra清单的设施、未落地Infra清单的设施</li>
+<li>工作流程<ul>
+<li>Rds购入</li>
+<li>Rds逻辑库配置</li>
+<li>K8s NodePool/AgentPool配置</li>
+<li>K8s Scale伸缩实例数</li>
+</ul>
+</li>
+</ul>
+<h2 id="材料准备"><a href="#材料准备" class="headerlink" title="材料准备"></a>材料准备</h2><ul>
+<li>开设子账号<ul>
+<li>华为云<ul>
+<li>IAM、Region-项目Id-项目名<ul>
+<li>子账号【编程访问】</li>
+<li>CCE FullAccess</li>
+<li>RDS ManageAccess</li>
+</ul>
+</li>
+<li>User Name,Access Key Id,Secret Access Key</li>
+</ul>
+</li>
+<li>微软云 (<a href="mailto:swqqh@qq.com" target="_blank" rel="noopener">swqqh@qq.com</a>)<ul>
+<li>Microsoft Entra Privileged Identity Management</li>
+<li>凭据:subscription_id、tenant_id、client_id、client_secret</li>
+</ul>
+</li>
+<li>阿里云<ul>
+<li>RAM子账号、Region、用户组/权限<ul>
+<li>AliyunCSFullAccess</li>
+<li>AliyunRDSFullAccess</li>
+<li>启用 OpenAPI 调用访问</li>
+</ul>
+</li>
+<li>AccessKey SECRET_KEY</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Terraform测试/开发集群:测试产生资费<ul>
+<li>华为云</li>
+<li>微软云</li>
+<li>阿里云</li>
+</ul>
+</li>
+<li>回收:中间的路由设施也得回收</li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2023/11/22/infraService/';
+        this.page.title = '基建设施服务';
+        this.page.identifier = '2023/11/22/infraService/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
