@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>物流排线及调整技术方案 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="Tms物流排线方案
+
+
+
+物流排线操作
+司机排线操作
+状态机流程图
+
+物流排线操作
+
+
+
+
+UC
+备注 
+
+
+
+
+网点筛选
+- 
+
+
+未排线列表
+- 
+
+
+未排线详情
+- 
+
+
+排线列表
+-
+
+
+排线详情
+- 
+
+
+已排线列表
+- 
+
+
+已排线详情
+-
+
+
+操作排线数据
+-
+
+
+
+
+司机端操作
+
+
+
+
+UC
+备注 
+
+
+
+
+司机个人信息
+- 
+
+
+司机排线列表
+- 
+
+
+装车详情
+- 
+
+
+卸货详情
+-
+
+
+排线详情
+- 
+
+
+确认数量情况
+- 
+
+
+
+">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">Cpp嵌入式</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go云原生</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">Linux安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Win安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">数据与算法</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/work">工作相关</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">文章标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Net/">Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">历史归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#物流排线操作"><span class="toc-number">1.</span> <span class="toc-text">物流排线操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#司机排线操作"><span class="toc-number">2.</span> <span class="toc-text">司机排线操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#状态机流程图"><span class="toc-number">3.</span> <span class="toc-text">状态机流程图</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+           物流排线及调整技术方案
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2021/08/23/tms/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2021-08-23T05:49:55.000Z" itemprop="datePublished">2021-08-23</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Tms物流排线方案<br><a id="more"></a><br><img src="http://www.plantuml.com/plantuml/svg/bLLRZz9057xU_efvz9B6TnvyK5usCJ4k-WoLZj0ij59Qaysw2OkYeDPbTo549H98N3Ogi2fPRY9_XaxBlt2cqnkt5P-WFTytv_lEcNFAH1DSEWrsO6gVsTf_8i04Vm04tlkVbbGv2iC23_Hs0-LxPhkXQsNzgCS05wEceUmXjdbVA2PpFBG3HgjW39k-e2JpcAW8IGSnxR_5XwFAvQpIPGuOnXKNX0ed9C0QZJ9CMUbplyp3qg9CpyckwcgaYOoFBqExgeSGrUIMFwwFJ_M2XY4OYCeNizT7dgWWJ0ZFeBmNikgpg0pd2Yygv2qFHEYica4_idghY7Di-r2FEIKQ3uiI0AWmGD_hS_8JWWZ3N59IHMMk5QoBPT7x4sCuqOUbMKuZObqkRulTZD_-lCXF2p7n7roZzGULBZ4BU3KAHUEGLx7ms5nviBk9EIakziTlq4MWp6W3FtDmH_ujojMr_XntNHhNWAV_BYV7f7MjbILLiUR2x7LmrSmtMICxm1V5tr1_BdoDRXhVFc3G2aCYXFmAe6jbXGykgYmpLdLXXmXTSa5ROnbmgx1E-aQo_q_oUhaXXLC4III2BQ7qCInoU4lOEOgQqRp08O4sWBwrnYq9bRY4CwLKCfgKUcVl0NaAFhn_xJf0jIzcfs6CZp63HQKEUdT87unNDPGjU3BkOV-FdbfbSmwbN5JzQiz9lcBMpzV7pSuPUf5RYkkzdrVotVWo_rIRZglKBONWfOIqDgldF-cZuVFff8rA0sB16pp0iZTiBm50_9uSszbhGwEUeGSmz8eGgCSC0AAXrw4Nc-vMzwOmJfS8ns87x3Qm_d5Ww0JvGFXAcDqc6NthG7yAPc6b4fR53u28V-dGdKELH-oTxvnAp33uUq5JEj-D09ZsH_R6kar_oL8VTVNXcLC1znj3cFDAhip_ksoKpYCh3uty1G00"></p>
+<hr>
+
+<p><img src="/2021/08/23/tms/image-02.png" width="1200px"></p>
+<h1 id="物流排线操作"><a href="#物流排线操作" class="headerlink" title="物流排线操作"></a>物流排线操作</h1><img src="http://www.plantuml.com/plantuml/svg/xLVVJzjM57ws_mfBawfM1AdqRKXKweeqJQes2RQdgGyHU3HgYDVWJ9hK1mUMNmKxuLSP40YX47vi9B2sr3ZByiVWSw_zj7zXnxwEumG2j0yyL7l2rxxdVEUSxxlV3U4nMOeBD7T0tYU9ja2DfcaOF3ycnUIu51MUH6BY3p_xon7nXVyyB4OZluZnNqUbH7nCz5-FZZqJnnFHI6oY_KeEon4fnlD3Gm8fxLgrRTgOfzDdmj0GtuNS_v0X3deR8LzZtrW4pxxsFyH21WL8PTakgxeDwlAFf7XefrHRIRwqP_OXcsOBuSuTmQo_8YkxpfC0ZKN8gL3IG9z-ocEUDgJLN8BrJVfd1GfPib4swwTqxJSMoX1yUB_8hJEYLeDRC88i7-DBCfE2zFkGlPs6_Ejs6_YvgCAhClrZDTYFDw9MsvRs0QEm7nOL374oP0yHYQoSsYllw54EJZQ9iiTxARhR2SRsiJzUG0kxYm9_3kvUrWmVv8vjRzK6sHMhl7ybbSWJQFMFfYh8bBEcH-ksaiF-MMLFEyKG75mNXGmpHEibgrecIXsC9GSlaxy1_Lt4Tuf-KB2LDQkPmJJ3eXoEHByPVnAPaja8M4iENQuIxdhZSh53tgAwYOjxV6VMQoeQdl8ukLoCVd_zTuCWBuFmzuGX0N87PcELhNjB0KwMgNRSHJOVasHHaB1YGVgfPH5aBkTB3Oh7j90s6ofjLB5Yv0yMvc3Em2HWv7anDYuuAVWhP6NLAZYtAsNbQThKrn0LDKEA9PQgdSGbZyt_VxNSkbeOXpvHeyyJ5mc73tzzae-GNDDg5Xmh-GJ3QDzHLoh1n-3R0TUCknrojGQyXEBdAe7RSGjVF3TmYob_ufw0sCtQwGtNaVMP4jNpe2wgPgFeJSejxIQ6ZE5zZoQbH4ncCNsGrqdHC9jbagpnuQWSuCBKLLCtw871SxquC9jLSlJ6F9l5iztvpPiMvwHynAntu7xeA_y9jDA3-zZabpp7THFHZJ8YJg94JLqnzKEMmDIr5l6EAbDlwTjw2FALu9vlHN6SjGgP_02oo7DYT4hiLGtPs7KBWkB-mC3rHNLMep8sUfU0W_oe4XxSg8GT7ycUQRIhCEkQNLJ8oJGvsR8pS_R6DgHLCjk4Z5k4VnSY7btQHo3N1UAHYMUoOmETCC8NuHU9C6xof7QoXK2mKyB84EPq5Xd3kvUjvYhTKzd9SpxaQzPC8oIOnXui9ktL0cHn0Xmw0xkq1zcbu2NM5gn6nQdjU0QC2gQ3ohI_5NOEJ4FhkF4v3WsCxXXuqgmtATGRlhHEK-W9kCT_y-_VSpWBgv8aMphKpanzbjJorZzfXXMC9R_Ne511ETCowfRphSrvuhaEe-pwzufZxJjNO453CLh99Rjie3yoRy3V50ZrTJmyBlOzZejXMVm-CidoUWYNtdrkRDlU-W9765UUhDppHueAhQSHut4uFY6nanUoCofvVKoMtw5_ZqY98Cm5l_dkEU_gCdZsEmz-i3B8haFTQ5LshXHmX3XEKpywL-RFbMGNsiMcBcc4vOG2Qw6tuP3y0gHs0x_Il7XQduVgMhl-MoBiqacYNFu3">
+<h1 id="司机排线操作"><a href="#司机排线操作" class="headerlink" title="司机排线操作"></a>司机排线操作</h1><img src="http://www.plantuml.com/plantuml/svg/xLNFJnDH4Bw_lsBlsaRK4qcvuCN4ayQJyK1WHGBfcjfwfjYMBR2s_6WgHIWjK8p8jY92sNRf7-FEszTJ_mLdE-rs-mFqOEB5f8Tv--QR-MQ-UTEfwR0IaY1LvPyCnYQLO3YaB4YFGdFlv12RxXoVp0Nbvs_SuxFfr_9CP64kEDlxD1zXB13e1EBv8r4kMjKlbc5OZGAFbgL0WD6TRuA2Z_Vvakr5C7BhkNiTxPqgnByBioIk4pUumrfS7CHlYKjNuv9eRC7ENiUHN8PAuHysRAC1QbOKFdjBeSPqkP4NVn-7n8yNc1pvMTNJdujHk8w3LXNdnsWtureJl-XhN4s_P44bB4iAyf6KLzqskyXMNONqIL-WopCw-g2-1DKg1hOBkj0FM_KaSxCGplL5WvoyJ1o0bmgJWpEImuOH2zz4JsMiR_-AQphVBLYr2woL9wzviY4QQT0oF5F1g_v2F0F2ood-jG0h-y8qn-vX18PT0YCbZcEWRhVgEQjMWvM2PHpRMtcUlMXcps7HSN3Sr6oFLY_c0BLswvygaR2CzKrEXMOL-pHfrnBs6OOfTUXvqLtXxLeC6qGES7L1Sy26nQSkYd89bRr5_7pQxOdlBQMJ7y_OkPWNVqjtUvZH7Vvx3UWIfuhRIDXO8sGkrWTpwSv7kfdGf5hkybLy4XN8960p2ke9f3LdmZQZzhUQOxGVe6De6SlKciluIp543nB0JmFPtCws6qC9xDevqXBH7AHnkcFufC7OwYJGzqZ8Pd6NNfyRwNTQ3qXDR-E_rFzMwZlsoRQzT7K7z29NBqSAZqBrwJrgZzAYeR-AJgXS3CmDlbeStdP_F2YqIftaoobAFcfGO7t5pX-1kGb9pQFsnpAaIxIwHuw7q2jWPWZc3eN3-b97r52jdZqxvgVPuwS76BnLtxdlXyCSVhEC19uU-A6oxfuU-Y6bqhLZj6z6RrfNlb74RdXhoZpx1G00">
+<h1 id="状态机流程图"><a href="#状态机流程图" class="headerlink" title="状态机流程图"></a>状态机流程图</h1><img src="http://www.plantuml.com/plantuml/svg/DOvB3i8m34JtEOKbDX2rbVXjYDHJi468HTgu7n7Pg761tfwaBKlF6xsnkZJCUwFo4cuyGcq9NgE0u5U02Ummy2SOrJUm5Goo0-cG541-trH-n4TUnYCv3cP9sm6HCcT3XovIk7QusA8wDgmF31KcTy0t3jQ3xmb3GkH0wvXDMeDdQekYCAlzQ1JwWFzXMpypnoBpn5evnGgvlb7p4tRAAlOpJl1iVW00">
+<blockquote>
+<p>物流排线操作</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>UC</th>
+<th>备注 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网点筛选</td>
+<td>- </td>
+</tr>
+<tr>
+<td>未排线列表</td>
+<td>- </td>
+</tr>
+<tr>
+<td>未排线详情</td>
+<td>- </td>
+</tr>
+<tr>
+<td>排线列表</td>
+<td>-</td>
+</tr>
+<tr>
+<td>排线详情</td>
+<td>- </td>
+</tr>
+<tr>
+<td>已排线列表</td>
+<td>- </td>
+</tr>
+<tr>
+<td>已排线详情</td>
+<td>-</td>
+</tr>
+<tr>
+<td>操作排线数据</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>司机端操作</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>UC</th>
+<th>备注 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>司机个人信息</td>
+<td>- </td>
+</tr>
+<tr>
+<td>司机排线列表</td>
+<td>- </td>
+</tr>
+<tr>
+<td>装车详情</td>
+<td>- </td>
+</tr>
+<tr>
+<td>卸货详情</td>
+<td>-</td>
+</tr>
+<tr>
+<td>排线详情</td>
+<td>- </td>
+</tr>
+<tr>
+<td>确认数量情况</td>
+<td>- </td>
+</tr>
+</tbody>
+</table>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2021/08/23/tms/';
+        this.page.title = '物流排线及调整技术方案';
+        this.page.identifier = '2021/08/23/tms/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

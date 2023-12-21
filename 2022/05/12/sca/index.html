@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Synopsys Detect客户端逆向成本分析 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="SCA二级制检测能力扩展
+背景简介Synopsys Detect 旨在本地集成到构建/CI 环境中，并支持用于静态分析的所有 Coverity 语言。对于 Black Duck 和 Black Duck 二进制分析，它可以更轻松地使用各种语言和包管理器设置和扫描代码库，以识别开源风险。
+谢老师需要了解客户端进行扫描的整个动作之后如何和云端沟通以及和Hub沟通的一些细节
+客户端
+先说结果再说过程结果是二进制桌面客户端逆向分析是可行的, 没有混淆加壳操作, 没有R0内核保护, 如果对客户端进行逆向分">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">Cpp嵌入式</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go云原生</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">Linux安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Win安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">数据与算法</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/work">工作相关</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">文章标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Net/">Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">历史归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#背景简介"><span class="toc-number">1.</span> <span class="toc-text">背景简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#客户端"><span class="toc-number">2.</span> <span class="toc-text">客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制桌面客户端过程"><span class="toc-number">2.1.</span> <span class="toc-text">二进制桌面客户端过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#静态分析"><span class="toc-number">2.1.1.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上Hook"><span class="toc-number">2.1.2.</span> <span class="toc-text">上Hook</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程注入我的Hook代码"><span class="toc-number">2.1.3.</span> <span class="toc-text">远程注入我的Hook代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析关键数据"><span class="toc-number">2.1.4.</span> <span class="toc-text">分析关键数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jar包客户端过程"><span class="toc-number">2.2.</span> <span class="toc-text">Jar包客户端过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java检测库"><span class="toc-number">2.2.1.</span> <span class="toc-text">Java检测库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#各个部件"><span class="toc-number">2.2.2.</span> <span class="toc-text">各个部件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检测流程"><span class="toc-number">2.2.3.</span> <span class="toc-text">检测流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#成分分析细节"><span class="toc-number">2.2.4.</span> <span class="toc-text">成分分析细节</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GoModCliDetectable"><span class="toc-number">2.2.4.1.</span> <span class="toc-text">GoModCliDetectable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GitDetectable"><span class="toc-number">2.2.4.2.</span> <span class="toc-text">GitDetectable</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最终扫描-amp-结果上报"><span class="toc-number">2.2.5.</span> <span class="toc-text">最终扫描&amp;结果上报</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#runSignatureScanner-离线扫描"><span class="toc-number">2.2.5.1.</span> <span class="toc-text">runSignatureScanner 离线扫描</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#服务端"><span class="toc-number">3.</span> <span class="toc-text">服务端</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+           Synopsys Detect客户端逆向成本分析
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2022/05/12/sca/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2022-05-12T06:17:11.000Z" itemprop="datePublished">2022-05-12</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>SCA二级制检测能力扩展<br><a id="more"></a></p>
+<h1 id="背景简介"><a href="#背景简介" class="headerlink" title="背景简介"></a>背景简介</h1><p>Synopsys Detect 旨在本地集成到构建/CI 环境中，并支持用于静态分析的所有 Coverity 语言。<br>对于 Black Duck 和 Black Duck 二进制分析，它可以更轻松地使用各种语言和包管理器设置和扫描代码库，以识别开源风险。</p>
+<p>谢老师需要了解客户端进行扫描的整个动作之后如何和云端沟通以及和Hub沟通的一些细节</p>
+<h1 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h1><blockquote>
+<p>先说结果再说过程<br>结果是二进制桌面客户端逆向分析是可行的, 没有混淆加壳操作, 没有R0内核保护, 如果对客户端进行逆向分析,<br>但是我在分析他们的Github开源上Java写的客户端也很完美, 虽然我还没有跑过Java客户端的流程<br>如果完整去分析细节,可能得先了解Java端的分析软件所做的事情, 再去着重以这个逻辑看二进制桌面软件流程<br>了解原先Java源码所做的事情可能需要一周、再去逆向二进制桌面软件交互流程又得需要一周多<br>并且不排除数据是否有涉加密的情景</p>
+</blockquote>
+<h2 id="二进制桌面客户端过程"><a href="#二进制桌面客户端过程" class="headerlink" title="二进制桌面客户端过程"></a>二进制桌面客户端过程</h2><p><img src="/2022/05/12/sca/image-02.png" width="900px"> </p>
+<p>客户端全部静态包在一个执行文件, 导致一个客户端二进制exe特别大, 达200mb<br>函数数量达百万级别, 这导致的另一个问题就是IDA pro、OD这类的软件运行特别卡顿</p>
+<p>其次这个客户端没有进行VMP之类的加壳软件进行混淆和代码膨胀(我看执行流是正常的)<br>还有这个客户端纯R3, 没有进行客户端代码防护, 比如R0进程的句柄保护、ObRegisterCallback回调监控等操作(不让其他动态调试器调试进程、或者跨进程读写内存)</p>
+<h3 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h3><blockquote>
+<p>整个客户端使用系统库情况</p>
+</blockquote>
+<ul>
+<li>ffmpeg<ul>
+<li>利用了ffame、buffer、dict、packet等数据结构存数据、并且大量的codec编解码</li>
+</ul>
+</li>
+<li>WS2_32<ul>
+<li>利用大量的socket库传输数据 - 基操</li>
+</ul>
+</li>
+<li>KERNEL32<ul>
+<li>利用大量的Thread线程、Event事件同步、File文件操作、LoadLibrary&amp;ProcAddress函数call</li>
+</ul>
+</li>
+<li>WINHTTP<ul>
+<li>用到了HTTP库</li>
+</ul>
+</li>
+<li>AVDAPI<ul>
+<li>使用了注册表操作、事件日志</li>
+</ul>
+</li>
+<li>USER32/GDI<ul>
+<li>这类窗口以及绘制上的方向</li>
+</ul>
+</li>
+<li>其他<ul>
+<li>还用到了USB、Bluetooth的Api</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>分析点</p>
+</blockquote>
+<p><img src="/2022/05/12/sca/image-04.png" width="700px"><br><img src="/2022/05/12/sca/image-06.png" width="700px"><br><img src="/2022/05/12/sca/image-07.png" width="700px"><br><img src="/2022/05/12/sca/image-08.png" width="700px"></p>
+<p>还有一些分析点, 基本都是网络传输或文件的交互函数<br>接下来是我该怎么做的大体思路 </p>
+<h3 id="上Hook"><a href="#上Hook" class="headerlink" title="上Hook"></a>上Hook</h3><p>首先直接IAT hook, 把这些系统的公共库, 部分函数Hook住, 看用户态程序的参数情况(<code>Hook的代码进程到时候可能会进行进程挂靠共享目标进程内存, 或者进行远程注入</code>)<br>根据参数的印,以及流转变动打出来进行流程上的分析<br>Hook的框架就Github随意找了一下</p>
+<blockquote>
+<p><a href="https://github.com/tinysec/iathook" target="_blank" rel="noopener">https://github.com/tinysec/iathook</a></p>
+</blockquote>
+<p>下面是案例代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">LONG <span class="title">IATHook</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">	__in_opt <span class="keyword">void</span>* pImageBase ,</span></span></span><br><span class="line"><span class="function"><span class="params">	__in_opt <span class="keyword">char</span>* pszImportDllName ,</span></span></span><br><span class="line"><span class="function"><span class="params">	__in <span class="keyword">char</span>* pszRoutineName ,</span></span></span><br><span class="line"><span class="function"><span class="params">	__in <span class="keyword">void</span>* pFakeRoutine ,</span></span></span><br><span class="line"><span class="function"><span class="params">	__out HANDLE* phHook</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">LONG <span class="title">UnIATHook</span><span class="params">( __in HANDLE hHook )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">GetIATHookOrign</span><span class="params">( __in HANDLE hHook )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(__stdcall *LPFN_MessageBoxA)</span><span class="params">( __in_opt HWND hWnd , __in_opt <span class="keyword">char</span>* lpText , __in_opt <span class="keyword">char</span>* lpCaption , __in UINT uType)</span></span>;</span><br><span class="line"></span><br><span class="line">HANDLE g_hHook_MessageBoxA = <span class="literal">NULL</span>;</span><br><span class="line"><span class="comment">//////////////////////////////////////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> __<span class="function">stdcall <span class="title">Fake_MessageBoxA</span><span class="params">( __in_opt HWND hWnd , __in_opt <span class="keyword">char</span>* lpText , __in_opt <span class="keyword">char</span>* lpCaption , __in UINT uType)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	LPFN_MessageBoxA fnOrigin = (LPFN_MessageBoxA)GetIATHookOrign(g_hHook_MessageBoxA);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 输出相关的关键信息和fnOrigin函数地址</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> fnOrigin(hWnd , <span class="string">"hook"</span> , lpCaption , uType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">BOOL APIENTRY <span class="title">DllMain</span><span class="params">( HMODULE hModule,             <span class="comment">//指向自身的句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">                       DWORD  ul_reason_for_call,   <span class="comment">//调用原因</span></span></span></span><br><span class="line"><span class="function"><span class="params">                       LPVOID lpReserved            <span class="comment">//静态加载为非NULL，动态加载为NULL</span></span></span></span><br><span class="line"><span class="function"><span class="params">                     )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (ul_reason_for_call)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">case</span> DLL_PROCESS_ATTACH:  <span class="comment">//进程创建的时候调用</span></span><br><span class="line">		IATHook(</span><br><span class="line">			GetModuleHandleW(<span class="literal">NULL</span>) ,</span><br><span class="line">			<span class="string">"user32.dll"</span> , </span><br><span class="line">			<span class="string">"MessageBoxA"</span> ,</span><br><span class="line">			Fake_MessageBoxA ,</span><br><span class="line">			&amp;g_hHook_MessageBoxA</span><br><span class="line">		);</span><br><span class="line">		MessageBoxA(<span class="literal">NULL</span> , <span class="string">"test"</span> , <span class="string">"caption"</span> , <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">case</span> DLL_THREAD_ATTACH:   <span class="comment">//线程创建的时候调用</span></span><br><span class="line">    <span class="keyword">case</span> DLL_THREAD_DETACH:   <span class="comment">//线程结束的时候调用</span></span><br><span class="line">    <span class="keyword">case</span> DLL_PROCESS_DETACH:  <span class="comment">//进程结束的时候调用</span></span><br><span class="line">		UnIATHook( g_hHook_MessageBoxA);</span><br><span class="line">		MessageBoxA(<span class="literal">NULL</span> , <span class="string">"test"</span> , <span class="string">"caption"</span> , <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="远程注入我的Hook代码"><a href="#远程注入我的Hook代码" class="headerlink" title="远程注入我的Hook代码"></a>远程注入我的Hook代码</h3><p>上面的Hook代码可以封装成一个Dll, 到时候通过远程线程注入的方式把Dll加载到我的目标Synopsys Detect客户端进程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">InjectDll</span><span class="params">(DWORD dwPid, CHAR szDllName[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    BOOL bRet = TRUE;</span><br><span class="line">    HANDLE hProcess = <span class="literal">NULL</span>, hRemoteThread = <span class="literal">NULL</span>;</span><br><span class="line">    HMODULE hKernel32 = <span class="literal">NULL</span>;</span><br><span class="line">    DWORD dwSize = <span class="number">0</span>;</span><br><span class="line">    LPVOID pDllPathAddr = <span class="literal">NULL</span>;</span><br><span class="line">    PVOID pLoadLibraryAddr = <span class="literal">NULL</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 打开注入进程，获取进程句柄</span></span><br><span class="line">    hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, dwPid);</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == hProcess)</span><br><span class="line">    &#123;</span><br><span class="line">        ShowError(<span class="string">"OpenProcess"</span>);</span><br><span class="line">        bRet = FALSE;</span><br><span class="line">        <span class="keyword">goto</span> <span class="built_in">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 在注入进程中申请可以容纳DLL完成路径名的内存空间</span></span><br><span class="line">    dwSize = <span class="number">1</span> + <span class="built_in">strlen</span>(szDllName);</span><br><span class="line">    pDllPathAddr = VirtualAllocEx(hProcess, <span class="literal">NULL</span>, dwSize, MEM_COMMIT, PAGE_READWRITE);</span><br><span class="line">    <span class="keyword">if</span> (!pDllPathAddr)</span><br><span class="line">    &#123;</span><br><span class="line">        ShowError(<span class="string">"VirtualAllocEx"</span>);</span><br><span class="line">        bRet = FALSE;</span><br><span class="line">        <span class="keyword">goto</span> <span class="built_in">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 把DLL完整路径名写入进程中</span></span><br><span class="line">    <span class="keyword">if</span> (!WriteProcessMemory(hProcess, pDllPathAddr, szDllName, dwSize, <span class="literal">NULL</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        ShowError(<span class="string">"WriteProcessMemory"</span>);</span><br><span class="line">        bRet = FALSE;</span><br><span class="line">        <span class="keyword">goto</span> <span class="built_in">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">     </span><br><span class="line">    hKernel32 = LoadLibrary(<span class="string">"kernel32.dll"</span>);</span><br><span class="line">    <span class="keyword">if</span> (hKernel32 == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ShowError(<span class="string">"LoadLibrary"</span>);</span><br><span class="line">        bRet = FALSE;</span><br><span class="line">        <span class="keyword">goto</span> <span class="built_in">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 获取LoadLibraryA函数地址</span></span><br><span class="line">    pLoadLibraryAddr = GetProcAddress(hKernel32, <span class="string">"LoadLibraryA"</span>);</span><br><span class="line">    <span class="keyword">if</span> (pLoadLibraryAddr == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ShowError(<span class="string">"GetProcAddress "</span>);</span><br><span class="line">        bRet = FALSE;</span><br><span class="line">        <span class="keyword">goto</span> <span class="built_in">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//创建远程线程进行DLL注入</span></span><br><span class="line">    hRemoteThread = CreateRemoteThread(hProcess, <span class="literal">NULL</span>, <span class="number">0</span>, </span><br><span class="line">                      (LPTHREAD_START_ROUTINE)pLoadLibraryAddr,</span><br><span class="line">                       pDllPathAddr, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (hRemoteThread == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ShowError(<span class="string">"CreateRemoteThread"</span>);</span><br><span class="line">        bRet = FALSE;</span><br><span class="line">        <span class="keyword">goto</span> <span class="built_in">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line"><span class="built_in">exit</span>:</span><br><span class="line">    <span class="keyword">if</span> (hKernel32) FreeLibrary(hKernel32);</span><br><span class="line">    <span class="keyword">if</span> (hProcess) CloseHandle(hProcess);</span><br><span class="line">    <span class="keyword">if</span> (hRemoteThread) CloseHandle(hRemoteThread);</span><br><span class="line">     </span><br><span class="line">    <span class="keyword">return</span> bRet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="分析关键数据"><a href="#分析关键数据" class="headerlink" title="分析关键数据"></a>分析关键数据</h3><p>我主要看他会产出什么数据, 根据这些数据以及关键的fnOrigin, 我就开始寻找关键的代码片段, 接下来就得用上动态分析软件类似OllyDbg这类<br>等拿到具体的数据, OllyDbg断点停住, 我会与IDA pro联动, 寻找机函数指令所在的地址, 并进行反编译成C, 取出相关的算法逻辑和流程</p>
+<p><img src="/2022/05/12/sca/image-13.png" width="800px"><br><img src="/2022/05/12/sca/image-11.png" width="800px"></p>
+<p>我分析着发现Java写得检测也还行……真的, 我甚至觉得二进制桌面端的和Java的逻辑是一样的</p>
+<p><br><br><br></p>
+<h2 id="Jar包客户端过程"><a href="#Jar包客户端过程" class="headerlink" title="Jar包客户端过程"></a>Jar包客户端过程</h2><p>当然也可以查看开源集成的方案,是一个Java写的Jar包</p>
+<blockquote>
+<p>项目地址: <a href="https://github.com/blackducksoftware/synopsys-detect" target="_blank" rel="noopener">https://github.com/blackducksoftware/synopsys-detect</a></p>
+</blockquote>
+<blockquote>
+<p>项目说明: <a href="https://community.synopsys.com/s/document-item?bundleId=integrations-detect&amp;topicId=introduction.html&amp;_LANG=enus" target="_blank" rel="noopener">https://community.synopsys.com/s/document-item?bundleId=integrations-detect&amp;topicId=introduction.html&amp;_LANG=enus</a></p>
+</blockquote>
+<p><img src="/2022/05/12/sca/image-03.png" width="1200px"> </p>
+<h3 id="Java检测库"><a href="#Java检测库" class="headerlink" title="Java检测库"></a>Java检测库</h3><p><img src="/2022/05/12/sca/image-05.png" width="200px"></p>
+<blockquote>
+<p>执行脚本</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./detect7.sh --blackduck.url=https://192.168.2.209 --blackduck.api.token=NTA2M2JlNjctMTVlYy00MmI4LTk2OTAtNzE5M2E4ODhmNWQxOjFkMTJjYjdhLWJmMWItNGQ0My05ZjJjLTRmZDlkZWUxYTg0Yg==  --detect.blackduck.scan.mode=INTELLIGENT  --detect.source.path=E:/some_go/src/secpoint-golang/secpoint-golang  --blackduck.offline.mode=false --blackduck.trust.cert=true --detect.diagnostic.extended=true -d</span><br></pre></td></tr></table></figure>
+<h3 id="各个部件"><a href="#各个部件" class="headerlink" title="各个部件"></a>各个部件</h3><ul>
+<li>InspectorExtractor 检察员  <ul>
+<li>NugetInspectorExtractor</li>
+<li>GradleInspectorExtractor</li>
+<li>PipInspectorExtractor</li>
+<li>ProjectInspectorExtractor</li>
+</ul>
+</li>
+<li>DetectorEvaluator   检测评估器<ul>
+<li>applicableEvaluator (应用评估器)</li>
+<li>extractableEvaluator (可提取评估器)</li>
+<li>extractionEvaluator (提取评估器)</li>
+</ul>
+</li>
+<li>detectables   检测器   — 涉及太多了,简约提取<ul>
+<li>clang</li>
+<li>bazel</li>
+<li>cargo</li>
+<li>dart</li>
+<li>git</li>
+<li>go</li>
+<li>gradle</li>
+<li>pip</li>
+<li>swift</li>
+<li>xcode</li>
+<li>yarn</li>
+<li>…..</li>
+</ul>
+</li>
+</ul>
+<h3 id="检测流程"><a href="#检测流程" class="headerlink" title="检测流程"></a>检测流程</h3><img src="http://www.plantuml.com/plantuml/svg/VPHTJzfG6CVl-HJdocY2-m1Sc9YuNUrEBxbXSCYQT2qfrMntHGgs0igY8mEHm1WlCNDe5END-M7MvxHyYnqejeKUTzS-R_tzdvT6HK6MH1wHiuBnL3L6eq1qOTd1CexAUwB8hvX4wHqdnB3aCxyzYF3x4VhWUFoMxKI2vwAH3pncH7-MfKXK_g-J4mNN5mWus9jRBcy8IVk2zNnXDVAagP1-Bk3wNk9UH8GGzCP4_sC7GhaR5aXDXV5eHHJzxfw4yReTP_LKOt93wbyt0e8eOoGUO0c9SUIhdSrCqrrpV4-EVyOuQUxxiXRdUBmEXJkYAwIgar7HhAT8wSWOFso4XMbPXK7R62Z6uEezbvJDYhgp0h9WwAYWbHdIx1OmLOYIbv-gPNR62GuXR3zYjDHEfcPFbZ7GAJtffynkZZ47J-pc5kDZo_Kz0Opb2RAM9iXObh1WZ5l6uFWrDdXiqKqAscvxOb1KhQChSf8dfmqw1YkLj-wRC7mm1WKw7r9_3B1r9B0K5wLFxi1U5GGJ1Jep3CYql1ZUmWpHp4w4K197fEZ7RI7cy_eO6Fc8MHNHUwWFIU4tZCxDywvvqeCVQVFwOgheK-KGYXeydO5UMF9MLCyrGQf2xhx1pItvtWFjaig5V2dcEoxQwsbZ2Cg4PhGFT-TAPY1_bPIzD8iN5z6yrk6sHfJEqXGOsn12CQV26-m6h4o5aKbROeldaYxH6fVqGEX3Ic3-QjDEaCi6FM6l-iL-QKNGiel3QsQccGA3sBkgz19yCFujykSX9z6rpduNSmd6C4VdvD2HT0QoVTfGedTcZBbdE2qjN5gHrAh_0000">
+<h3 id="成分分析细节"><a href="#成分分析细节" class="headerlink" title="成分分析细节"></a>成分分析细节</h3><blockquote>
+<p>当前测试项目为Golang 匹配到GIT - Git, GO_MOD - Go Mod Cli两大项<br>它如何操作? </p>
+</blockquote>
+<h4 id="GoModCliDetectable"><a href="#GoModCliDetectable" class="headerlink" title="GoModCliDetectable"></a>GoModCliDetectable</h4><img src="http://www.plantuml.com/plantuml/svg/dP91Im915CVlyoc6EQlXeOjG41bU4aAYqqACwxIxCJjFPcV3YA2Wg2YmBXRbHGgwH0fH559z6NVjOxJhQccAf9TbUFD-x_t_yr-aWr0IE4upnNIr2i1HhvI1B1GMkHLTqJndVwx0jgaev5mXc4G8_Ow8pm-pASnAIb9TOV_a_gjsvj_k-S-dQBXnDCmjHmLLbpC72L0CmnQJ63Rmg6Q_VEwLAtxrmQissjS71YHOYNcFLtxbpIlNk_ihHwtcIwohfdtpwXq-UHVlhUPTHBS-Q_v-VOo-VlSfZAKhbiTh70IYlSCRSQIsOnZ7RHpVT41emlkuz8uRuNc7h51baXGcXgLCDv_GmPvnc5u4IwYu0PmAWyH8bbeYQ5BIPJ5DaBGbGsGffMaEs6pTWE0WzU0pI0uLI4Xt34p7QrfWo0xeQCuQauu5eJAIJ2HdoUv4Vy02vxq7_cymtLpwo2cY6Sm42dEIqG88llsJ4AQSJsGb8sdHp35ELV0SZcaL9xOqOiBqrW9Js0W78lGD">
+<h4 id="GitDetectable"><a href="#GitDetectable" class="headerlink" title="GitDetectable"></a>GitDetectable</h4><img src="http://www.plantuml.com/plantuml/svg/uqhEpoifoizHS4ajIKqk2SdFp-622Rbdba144vDoKf55dNCoNIjAYXAJI_ABkBYu45frxL3qM2caGfGfFEjS_c9XpxF53S-sTdEXgC7GafvQ4fHQaE-Nc9lAbPTVaggGNvPQf92Vfe2cxbd_XAVzqvxDMVDqpeRdirhICqlqKYjIdwwRyMpQpgVzww4sJcj_idkR3jJ-vxDtF6tT_7JYtYUxbq2qFzc_y5dZUYmkGlQYbO92KMcUEnvteQg6M8PfZGBKZGh0e4pBJ5VGrGNwLQ4eDHTecbv-KMPwPfvUQL4ESU7ZL9IObvn1qEK8XqCrKEZqejGotOB4ecAWunEJaa2yejGq1GzNHnSkBW00">
+<h3 id="最终扫描-amp-结果上报"><a href="#最终扫描-amp-结果上报" class="headerlink" title="最终扫描&amp;结果上报"></a>最终扫描&amp;结果上报</h3><img src="http://www.plantuml.com/plantuml/svg/bPFDJXin4CVlVWgVED4NoA4IQOMKGqL5-W9MraMMZ1tjEaZS4XL1bYRTj46eQca2XrQHA8H-A8LiQ5x67ybRrDG9ML0YRIxUyNhcFxyPUq21C-5p2fzZWGlY5USKJ7yH9Z2bP0ipyO9xE2zmCG1WvlZawSpEM2_i8u6p7k7cgAshZJjB7n_8k0SG5P046umIXW7Z0aE-Wtt8NoVIPg1-rncNA-gsgSAw-RJdOkNmJ5UwwaFD7FPqkUAs3o3cOMQWNsAJVFFE5qMLYfGZxuuyDpj_YVs01C9Q3zddIwYh_Mnkmy6FXfz7PpLvVIW7fqjnMFeysM98b7oSBo1cUmlDnL_LgElmN4TH6X3TsbDn_x7CCqgic-o_D-TTXvVKNONofgsYheo_cc-nwGzNeVl-luyRDOZKIKTUlxNbBLjFbZ3axqwBaVsQpQwglVJrJExcNcQTKEnQcwpciV2IbBdj8Yg8DOReRZ1ziL0F8lsxfMv_g6PTLVTrgv6UUf5cadoX_dpuvCoOkAc_j5qGm3J0TiusKP5uAKPazEVNQ7WmZPfmhQmieM0kowfsRCBgRDfIj6JyCLJXp_6RZiLsKLP1dtntAy3C0-0V">
+<h4 id="runSignatureScanner-离线扫描"><a href="#runSignatureScanner-离线扫描" class="headerlink" title="runSignatureScanner 离线扫描"></a>runSignatureScanner 离线扫描</h4><p>runSignatureScanner最终会来到这个目录进行代码进行Command执行<br><img src="/2022/05/12/sca/image-14.png" width="700px"></p>
+<p>间接执行这个Jar包: scan.cli.jar, 这个Jar包主要做的事情scan.cli.bat\scan.cli.sh这些脚本, shell脚本又内部调用了另一个Jar包scan.cli.impl-standalone.jar<br>接下来就是扫描签名的一堆代码结构</p>
+<h1 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h1><p><img src="/2022/05/12/sca/image-16.png" width="1000px"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">06e840e31fd0        blackducksoftware/blackduck-scan:2022.2.0             &quot;docker-entrypoint.sh&quot;   7 days ago          Up 7 days (healthy)         docker-swarm_scan_1</span><br></pre></td></tr></table></figure>
+<p>优先分析这个应用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker inspect 06e840e31fd0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&quot;GraphDriver&quot;: &#123;</span><br><span class="line">            &quot;Data&quot;: &#123;</span><br><span class="line">                &quot;LowerDir&quot;: &quot;/var/lib/docker/overlay2/4aa3a69fa2f16c000a71def7040e64b630d998938cd6d1821b60a02e899d50de-init/diff:/var/lib/docker/overlay2/b01957a681b2643e1b55f9d65992696bca3aa554ec24eef616e50df9d2cce1c8/diff:/var/lib/docker/overlay2/cf30e03bfe3429cb636acfdc9200b24026b3ac867358354a18a1799714e05775/diff:/var/lib/docker/overlay2/4adb98e6ab0914beb11f1320799a778f185cc6c0fb52b8f5c3ed33fbe0b15c87/diff:/var/lib/docker/overlay2/45d1ce7f2bf8ee6dde77818a560db7ab56e5dc7e105c4e547d4ddb7afec45bb7/diff:/var/lib/docker/overlay2/125b9f44f74046b514a742c42ae4b15d2801221d77ca755b4fe2bea9e4f6ea04/diff:/var/lib/docker/overlay2/68e614dae22c001828f50f78a18b16ca707861a7048b4a8d6e45ebff9a6dd450/diff:/var/lib/docker/overlay2/6f28490bb5ecd9b53c40222f342ce8d8aa6f7d3d86cc2fd5c8cefa00555cd41b/diff:/var/lib/docker/overlay2/aee2797b75a972a43792ac847518443b79a7ad9b0cb2c58913c876aa67561914/diff:/var/lib/docker/overlay2/e567e3ff35714aad9aaf45a8144dcf0216651c169099334202a3632b9a304e8d/diff:/var/lib/docker/overlay2/4b6fa679cc3dded60de622570b3fcab8ee421c6d49e07bc9412bac39ed4d122a/diff:/var/lib/docker/overlay2/6ee0ad7fd34d067f3933d749c2b33abaadd664dc55c3b01c0d287898810efe43/diff:/var/lib/docker/overlay2/24eae1670a778f5198c5ae42409b44a7cf984199b99a7807c86966b40d003d34/diff:/var/lib/docker/overlay2/4c5d5305560eb2cba1df16c7fcf7a92829a615919c82fae87546fa28b2f2300c/diff:/var/lib/docker/overlay2/0e9b0085e371589018ba910008bbb513e53f95486b4d665e6e5c1aacdd80e03f/diff:/var/lib/docker/overlay2/7cded285939312f0931e0b0421808533855c4c4afb3a567802cfdf16d9f8b395/diff&quot;,</span><br><span class="line">                &quot;MergedDir&quot;: &quot;/var/lib/docker/overlay2/4aa3a69fa2f16c000a71def7040e64b630d998938cd6d1821b60a02e899d50de/merged&quot;,</span><br><span class="line">                &quot;UpperDir&quot;: &quot;/var/lib/docker/overlay2/4aa3a69fa2f16c000a71def7040e64b630d998938cd6d1821b60a02e899d50de/diff&quot;,</span><br><span class="line">                &quot;WorkDir&quot;: &quot;/var/lib/docker/overlay2/4aa3a69fa2f16c000a71def7040e64b630d998938cd6d1821b60a02e899d50de/work&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Name&quot;: &quot;overlay2&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>获得overlay2 最后container layer目录, <code>/var/lib/docker/overlay2/4aa3a69fa2f16c000a71def7040e64b630d998938cd6d1821b60a02e899d50de/</code>进入<code>merged/opt/blackduck/hub/hub-scan/lib</code>得到<code>scan.standalone.jar</code></p>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2022/05/12/sca/';
+        this.page.title = 'Synopsys Detect客户端逆向成本分析';
+        this.page.identifier = '2022/05/12/sca/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

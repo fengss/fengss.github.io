@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>树根项目一期[物流]-技术方案 | Coderss</title>
+    <meta name="author" content="coder">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="宋小菜树根项目计划方案
+1、PRD+UIPRD地址: https://星星.yuque.com/prod-tech/589913/iifqqmUI: 待定
+2、数据模型2.1 数据结构
+
+
+3、影响点采购交互概述
+3.1 采购装货单
+
+3.1.1 装货单列表查询
+
+
+现状
+解决方案 
+
+
+
+
+无
+检索调度单未关联的的装货单数据透大致装卸数据[logistics_shipment+logistics_shipment_detail]供应商承运的只能看到自己创建的采购单相关的装货单承运的采购单能看到">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="F0CXvmUgA9">
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/back-end">Java后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cpp">Cpp嵌入式</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/go">Go云原生</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/cloud">Linux安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/reverse">Win安全</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/data">数据与算法</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/work">工作相关</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">文章标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Boost库/">Boost库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cpp编程/">Cpp编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fescar/">Fescar</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gc/">Gc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/">K8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MapReduce/">MapReduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Net/">Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nosql/">Nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python计算库/">Python计算库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sharding-jdbc/">Sharding-jdbc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SkyWalking/">SkyWalking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Turi/">Turi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows系统/">Windows系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows驱动/">Windows驱动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yarn/">Yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/assembly/">assembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-cpp语言/">c/cpp语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/">dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eth/">eth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume/">flume</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go-kernel/">go-kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io/">io</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/juc/">juc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mfc/">mfc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-book/">python-book</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt/">qt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sentinel/">sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skycoin/">skycoin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x86-Windows系统总结/">x86 Windows系统总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中台/">中台</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程编程/">多线程编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/嵌入式/">嵌入式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">历史归档</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.coderss.cn"></form>
+
+        
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1、PRD-UI"><span class="toc-number">1.</span> <span class="toc-text">1、PRD+UI</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2、数据模型"><span class="toc-number">2.</span> <span class="toc-text">2、数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-数据结构"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 数据结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3、影响点"><span class="toc-number">3.</span> <span class="toc-text">3、影响点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#采购交互概述"><span class="toc-number">3.1.</span> <span class="toc-text">采购交互概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-采购装货单"><span class="toc-number">3.2.</span> <span class="toc-text">3.1 采购装货单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-装货单列表查询"><span class="toc-number">3.2.1.</span> <span class="toc-text">3.1.1 装货单列表查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-1-API-采购-商品详情-装卸路线"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">3.1.1.1 [API]采购-商品详情-装卸路线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-2-API-物流-装货单列表"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">3.1.1.2 [API]物流-装货单列表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-装货单-详情查询"><span class="toc-number">3.2.2.</span> <span class="toc-text">3.1.2 装货单-详情查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-1-API-装货单简约信息提取"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">3.1.2.1 [API]装货单简约信息提取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-2-API-装货单详细信息"><span class="toc-number">3.2.2.2.</span> <span class="toc-text">3.1.2.2 [API]装货单详细信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-3-API-装货单-调度单编辑详细信息"><span class="toc-number">3.2.2.3.</span> <span class="toc-text">3.1.2.3 [API]装货单-调度单编辑详细信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-装货单-装货详情查询"><span class="toc-number">3.2.3.</span> <span class="toc-text">3.1.3 装货单-装货详情查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-3-1-API-装货单详细信息"><span class="toc-number">3.2.3.1.</span> <span class="toc-text">3.1.3.1 [API]装货单详细信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-3-2-API-装货单编辑详情信息"><span class="toc-number">3.2.3.2.</span> <span class="toc-text">3.1.3.2 [API]装货单编辑详情信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-4-装货单创建-同步"><span class="toc-number">3.2.4.</span> <span class="toc-text">3.1.4 装货单创建-同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-5-装货单-发货"><span class="toc-number">3.2.5.</span> <span class="toc-text">3.1.5 装货单-发货</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-5-1-API-物流-发货操作-沈伟"><span class="toc-number">3.2.5.1.</span> <span class="toc-text">3.1.5.1 [API]物流-发货操作-沈伟</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-6-装货单-数量修改"><span class="toc-number">3.2.6.</span> <span class="toc-text">3.1.6 装货单-数量修改</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-6-1-API-采购-线路详情-数量修正"><span class="toc-number">3.2.6.1.</span> <span class="toc-text">3.1.6.1 [API]采购-线路详情-数量修正</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-调度单"><span class="toc-number">3.3.</span> <span class="toc-text">3.2 调度单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-调度单列表-待-已发货-查询"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.2.1 调度单列表-待|已发货 查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-1-API-物流-调度单-待发车列表"><span class="toc-number">3.3.1.1.</span> <span class="toc-text">3.2.1.1 [API]物流-调度单-待发车列表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-调度单详情查询"><span class="toc-number">3.3.2.</span> <span class="toc-text">3.2.2 调度单详情查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-1-API-物流-调度单详情-沈伟"><span class="toc-number">3.3.2.1.</span> <span class="toc-text">3.2.2.1 [API]物流-调度单详情-沈伟</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-3-调度单司机、车辆查询"><span class="toc-number">3.3.3.</span> <span class="toc-text">3.2.3 调度单司机、车辆查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-1-API-司机车辆各类API"><span class="toc-number">3.3.3.1.</span> <span class="toc-text">3.2.3.1 [API]司机车辆各类API</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-4-调度单创建"><span class="toc-number">3.3.4.</span> <span class="toc-text">3.2.4 调度单创建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-1-API-调度单创建-沈伟"><span class="toc-number">3.3.4.1.</span> <span class="toc-text">3.2.4.1 [API]调度单创建-沈伟</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-2-API-调度单保存-沈伟"><span class="toc-number">3.3.4.2.</span> <span class="toc-text">3.2.4.2 [API]调度单保存-沈伟</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-5-调度单提交-承运单创建"><span class="toc-number">3.3.5.</span> <span class="toc-text">3.2.5 调度单提交-承运单创建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-5-1-API-物流-承运单创建-沈伟"><span class="toc-number">3.3.5.1.</span> <span class="toc-text">3.2.5.1 [API]物流-承运单创建-沈伟</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-6-调度单-待发货-取消"><span class="toc-number">3.3.6.</span> <span class="toc-text">3.2.6 调度单(待发货)取消</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-6-1-API-物流-调度单取消"><span class="toc-number">3.3.6.1.</span> <span class="toc-text">3.2.6.1 [API]物流-调度单取消</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-承运单"><span class="toc-number">3.4.</span> <span class="toc-text">3.3 承运单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-承运单详情-客户分配件数"><span class="toc-number">3.4.1.</span> <span class="toc-text">3.3.1 承运单详情-客户分配件数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-承运单-直发匹配客户订单-沈伟"><span class="toc-number">3.4.2.</span> <span class="toc-text">3.3.2 承运单-直发匹配客户订单-沈伟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-3-承运单-直发自动签收-沈伟"><span class="toc-number">3.4.3.</span> <span class="toc-text">3.3.3 承运单-直发自动签收-沈伟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-4-承运单-文案"><span class="toc-number">3.4.4.</span> <span class="toc-text">3.3.4 承运单-文案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-5-承运单-多发货点清洗"><span class="toc-number">3.4.5.</span> <span class="toc-text">3.3.5 承运单-多发货点清洗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-6-承运单-多发货点查询"><span class="toc-number">3.4.6.</span> <span class="toc-text">3.3.6 承运单-多发货点查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-批次号影响"><span class="toc-number">3.5.</span> <span class="toc-text">3.4 批次号影响</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-基地直发批次号"><span class="toc-number">3.5.1.</span> <span class="toc-text">3.4.1 基地直发批次号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-2-客户订单配送批次号入小仓"><span class="toc-number">3.5.2.</span> <span class="toc-text">3.4.2 客户订单配送批次号入小仓</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-交易新老客户订单"><span class="toc-number">3.6.</span> <span class="toc-text">3.5 交易新老客户订单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-1-中间态数据-基地直发单"><span class="toc-number">3.6.1.</span> <span class="toc-text">3.5.1 中间态数据-基地直发单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6-场内调线"><span class="toc-number">3.7.</span> <span class="toc-text">3.6 场内调线</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-1-场内调整路线"><span class="toc-number">3.7.1.</span> <span class="toc-text">3.6.1 场内调整路线</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-7-采购单"><span class="toc-number">3.8.</span> <span class="toc-text">3.7 采购单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-1-采购单确认-沈伟"><span class="toc-number">3.8.1.</span> <span class="toc-text">3.7.1 采购单确认-沈伟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-2-采购单取消-沈伟"><span class="toc-number">3.8.2.</span> <span class="toc-text">3.7.2 采购单取消-沈伟</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4、交互内容确定"><span class="toc-number">4.</span> <span class="toc-text">4、交互内容确定</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#采购交互点-MQ-生成采购单"><span class="toc-number">4.1.</span> <span class="toc-text">[采购交互点]-MQ-生成采购单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#采购交互点-确认-取消采购单"><span class="toc-number">4.2.</span> <span class="toc-text">[采购交互点]-确认/取消采购单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#物流交互点-生成调度单"><span class="toc-number">4.3.</span> <span class="toc-text">[物流交互点]-生成调度单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#物流交互点-取消调度单"><span class="toc-number">4.4.</span> <span class="toc-text">[物流交互点]-取消调度单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#物流交互点-生成承运单"><span class="toc-number">4.5.</span> <span class="toc-text">[物流交互点]-生成承运单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#物流交互点-签收"><span class="toc-number">4.6.</span> <span class="toc-text">[物流交互点]-签收</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5、开发说明"><span class="toc-number">5.</span> <span class="toc-text">5、开发说明</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope="" itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+           树根项目一期[物流]-技术方案
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2020/02/17/root/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-02-17T02:22:44.000Z" itemprop="datePublished">2020-02-17</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>宋小菜树根项目计划方案<br><a id="more"></a></p>
+<h1 id="1、PRD-UI"><a href="#1、PRD-UI" class="headerlink" title="1、PRD+UI"></a>1、PRD+UI</h1><p>PRD地址: https://星星.yuque.com/prod-tech/589913/iifqqm<br>UI: 待定</p>
+<h1 id="2、数据模型"><a href="#2、数据模型" class="headerlink" title="2、数据模型"></a>2、数据模型</h1><h2 id="2-1-数据结构"><a href="#2-1-数据结构" class="headerlink" title="2.1 数据结构"></a>2.1 数据结构</h2><img src="http://www.plantuml.com/plantuml/svg/rPJBJi9058RtVOfv0Tx0fHkUegdj21DxmSxKX209c9XmaO09XXW96ZKG5X28YDX6V1bcIj_2GhcKKf2uSzDaydtdp9_JqugoW36GjHZ218cOr-6vWNIeG9M050T0wXH1MKe3975fZkF4tJelGI8WELYrFX11Zq728ma0m0e5V6P49JQeqLnlJQQ3bfrlHqFAI381mOBRVOisYjkEAYWhXrPATgiN6Xh7DNqMLqONK4_k3YpfCs4Uc9P7h6vkv1853xaNVZNj_CrsOIAkgN1Po_95zqdB7puF4u4O6DY58SjaNHf043WPQpg-fRadv_xL1sCAuKKT2aIRHw2v1sgP4zEC7WCGfi65mcf3fpO8Aeec8VSuRpNvxhBgfzSgN5iwNgy3vijZpT15k7lC0TrDOJzsdFQR-nBPUvQMxZR6lhrnimgddc7zAzgfxDDNtcHa1Jqlv7m5kyykt4ROE5bZxoRR6b2pwLDL22LUDHH0pIgh3dr448a7ketfoxM_EugfIs9tnlzp1NP-MqUNaSXlcy7j_PtylSDXfHpt0m00">
+<img src="http://www.plantuml.com/plantuml/svg/tLXTK-9M6BuElo9N7PtH6MnxqQ6zvCRViDjXiYHgPlcm4Dfnh3E8Y-87WYr-LLONNT3M5NJhAiAk_1Wv9-5Vz2GdX9Fa1F1prjveGfxtEM_Uh_Fa-0DSDCe6mkDYL1BzKLzqGfmC2Y69dNQnxFIOA0Ju6LRaYPl901Vo1S8Sx-CvIM2LSW6a_b0Eaihv8Tmiai1On3_1HGLVB2f4V2BFjXOMbFCJiBOroZl2GbnGw01961T1RlaCT3Z2crZJwo1pIU2ZiSd9W8WXpUiTKCk1zVbHBmsXhMbW24H4-2KcHWGr7kf2-JWyIzWNaZWf5cL0PWr503sLbovWV7O0HyIuPztWEYddzk1wYXtH_tyBtf-X_uCMClJ-yRfolGPIxrhRxyc7_Wc1ZmN4qBZwKd2neJIoQ07JIuq79Py_8d1IM7jpaDe1zLgpLXlrCZIKe2FWvaLhyvorG89XNXnhnx1HXhahAfCEQsCmbsl6vV8x59UF5oHE35XgZ3L21hTMvVgygUeCKuJh0CsP28Jzd2I6GvWAfAi892Ukz5IWgsQrvXuoVaTtC9y6ImNvUFicFWiB1o1pW2wQrHFGc6lM_npr3bBOSRaO2u3yAU82sJGDol5yH40XCD1AfOJU3Dc0jt6QWL-Kfdp-C4ykiBSAgWdvyuRyRfOmaQOc2P1yLWUxomDkZzgOG-o89nPIhqobzJf61WRT4Wz3iI2hL8fgBrMA2D2iNy3rKmBmco2EJqWcJ6iXtLh8M2U3olJ2YFZFuF8ZQYjqFm3p7-27Wd8w1sgbGSm_zC98XWwaBQtHwklVYzdcCEUNQFwMTr4p8n84jlAKT-MJQ_p8maDtKAF2wrAfR2uH8yVdF7D85Eub0doIjS-eC1gRWebms6bkOcWqzifAsRQWyEi-c4UXXhlrD6I_QyqTWTHyAvbk8U3teBm2KrbyDyI2KWBkvk5MnOYbHyUhUSbT8FpbHtpPzrXzJYFJ5n7yQEURTZ7atDGg7mLNtuMrwGaQntBoi8Ep43cPQLipyqWTpJnUIpCFrTFC0pOrG-qFzklf3wQ_7c3wQ0AcpovWUhO1G-i3-yGpgGTzQccR8jmu1VkxOA-6jjcEfFWqAnyjmxT5MClYpP8cBlG4MRBXSNjW_XySuX_P4RS79KU_-y7jmLSu3JqylxVBYDx6pmi1yLSXCkKm4v0w9CeGGtrZ0fg6-s-Qdq-HX5JEhrocgZTWci17DTtQJkAQrUSKlHukL9yj03-drW2ZV2afr_FDHW7ELanz4L4NqYekKuNvcYD2qrmzCC7mAp7GHi75PVGNxr9CrstWpZqGRhkblJa2FdcdqChDI1xn9TTjivXBWlbFvbcb4uZ1SJrn8BE4yuzs57bnmJebdUhbIqbtayfErgXfqo6blj4C5iY39lB9XvajH_riwzODtKv2sdpJYPptwRBx32EFDnEdo5TAg45GxVMeNo-rVZlAt3WSq0czJlLk02sGrx5Hdks_0_h-E3GiGeB0Qxf9rLMPDOjm8puKLPmkYqYein135QDwWaHJkjfLPUb01xh_NSlVLz0xCVQdxB_wV3-ZZ6f2xZ7aQ6U0M8x6q7IOOIbQi7D2IExwTrIQb4FXdtuV7dR-E7LrbUlXRgQiftsEcrs19qKbleAyaVzwGvu_A8qTfR229Jc6qHUqh6HtnTMxBHsyxMj12lYMozZz919hDh5KeOUzYMTn9E76rKrypSXnine7PmbuL93_NSBp0HyWlmof5hauo9Mn1IZlmzIbKjxNHEqACa85fombzDy9Kxf_bXffE-Zf75YZZeAhHHW_n1rBYHFhnD8bH7RXstzUMCUewZQgzt-3itKZdCh-CGu5Ab8SdvSXh8ewoWlhALLUsKNJBVnsKeikvsxgNbTsUyVwxEbARqOy7U_KapHJguV_0G00">
+<p><img src="/2020/02/17/root/image-09.png" width="800px"></p>
+<h1 id="3、影响点"><a href="#3、影响点" class="headerlink" title="3、影响点"></a>3、影响点</h1><h2 id="采购交互概述"><a href="#采购交互概述" class="headerlink" title="采购交互概述"></a>采购交互概述</h2><img src="http://www.plantuml.com/plantuml/svg/lLTTRzfM6Bx6lyBIRZO9CgLPEiagkTlbBdQTHJDAdRKI2nkXqpJbWeHHFWB5II5Q2sr66j84AP0jZ80PoOyPv_ZmBtRirpas1nkpDLgaI1W_x-VplEyvHDOJiRY8NnP7mzf8quJrs6OY7ekAuqo6T2vmhOZoTVQbdZl7V-vONmhXi8L2nSeNFwqhKTJ-2wKROZWiRCOIYXXLDX9YR6F2bVXHv8Td4I7mQElfpugqkBIo2cz7sib8Ez1t-sjw-GXdLLnhwlKMQPsm28y-DKnM16NpiMYu5vnkGolEr2Ghf2CfSfdIosS0WWYhw2OD8VJNlv1tQT9vJwEiGUgn7vMuoBbyyrP_DKHgaQ96DrMabL7bENE0YbUZdeQk_u1lc3yXhcouUKFfwz7m9L8B-A8nJWx8pNuGbNP9CYKlBImkV2Oo1oXRHGCj14XPY4GJ8gA6kIBBWRLA2FYtn4Z-jeNBVLov76TAHZSzUJGwJRdStjvc_nJACWCFXhUBTmQEQOYFx6eXE36y1VwjFcuMyAzjf9xYGPrqhsIhDDD363pYvC1wHiMUyrcUtNL8OBhh3-rCGtQgvRxigGbBJzKEVj709PLImZoGr13bgzuDSsykum4O_JUZjEmoIZuJP8Y9apA0XO23J6TCoHrl27sc-BojPZ9beJccFbzOv1ib2qfqIx73uBq3VV1c_cAS-FcBuQo2f7MEqbts_7TonnxZazzn9JirRXRDFc90fKFSpN8pDba9GEm2PkMFZngaVGnRX5bOmrRB0PRkIwIT6XdItPQ-8Zjbn-gnZN99Qc4BlDO4x2epX_Mr9WHyPJpZIE2AkzDnW0bvjeeiyoaLFU0xB5jfcfvecXuB5C18VH7KgpsZO4Po-coSEhEe3amkk4cwR040wB0FJkcvXF97ZdfSpHprBC0Vo9yUFquwK6cV7dKS5QHUe0VLVykELaOwZIaHM_BqE2wOaCnJbssq-DDldoJu9a_V3k0jVpjWJgTMckSXD4xcyDuvKcdVTbc7WjGHhdICQIxjmteESX6yZXAkBdtmdEHtWwHz3GAJgC8U6EVuPFTbOLRVkT1qVtpv5QQ7o-6bpKY-YvCxmeHClSWpePBrRCubDw_Zr90BAT5B4SxTabirH3_Hff3XgHkBFboxBYoF_W7sWqG1Bhn5uKSXsFCKcWm-j54VMntflF_aRbtC91EIx0rG_enByFw9TLvXkM0I8pB4o7KZovrImD_p-3AdyuylQlTPmkDC0NWmFYVLKQy9ZpvtxJiJ-31n74Zc_M_PSVy3aEoT45U9LsokVrPKgZ6zjWSxOjbcmhX2QYSXPZF_pc0ctj921mNKUcllkQtr9yhZPr7bc-yYt_zF-qI_kC7bhfkiFFP9fac71wm-M7ccbtbN0qZ66N-2kQytANMKFBkE4FqHG7kB2lrnkeXQnpXxJLh7z8LiOPUci4xlFXoR63zg3HJygBjdDbdY4kCmHAyQg5MWBwTuigZy1m00">
+<h2 id="3-1-采购装货单"><a href="#3-1-采购装货单" class="headerlink" title="3.1 采购装货单"></a>3.1 采购装货单</h2><hr>
+
+<h3 id="3-1-1-装货单列表查询"><a href="#3-1-1-装货单列表查询" class="headerlink" title="3.1.1 装货单列表查询"></a>3.1.1 装货单列表查询</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>检索调度单未关联的的装货单数据<br>透大致装卸数据[logistics_shipment+logistics_shipment_detail]<br><b>供应商承运的只能看到自己创建的采购单相关的装货单<br>承运的采购单能看到所有相关装货单</b></td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-1-1-1-API-采购-商品详情-装卸路线"><a href="#3-1-1-1-API-采购-商品详情-装卸路线" class="headerlink" title="3.1.1.1 [API]采购-商品详情-装卸路线"></a>3.1.1.1 [API]采购-商品详情-装卸路线</h4><p><img src="/2020/02/17/root/image-10.png" width="150px"></p>
+<p>根据需求子单<code>source_sub_id</code>查询多条装货单细节信息,并体现出实装、实卸请看</p>
+<h4 id="3-1-1-2-API-物流-装货单列表"><a href="#3-1-1-2-API-物流-装货单列表" class="headerlink" title="3.1.1.2 [API]物流-装货单列表"></a>3.1.1.2 [API]物流-装货单列表</h4><p><img src="/2020/02/17/root/image-17.png" width="150px"></p>
+<hr>
+
+<h3 id="3-1-2-装货单-详情查询"><a href="#3-1-2-装货单-详情查询" class="headerlink" title="3.1.2 装货单-详情查询"></a>3.1.2 装货单-详情查询</h3><p><img src="/2020/02/17/root/image-08.png" width="200px"></p>
+<table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>透出装货单所有装卸货数据细节+采购员+供应商[logistics_shipment+logistics_shipment_detail]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-1-2-1-API-装货单简约信息提取"><a href="#3-1-2-1-API-装货单简约信息提取" class="headerlink" title="3.1.2.1 [API]装货单简约信息提取"></a>3.1.2.1 [API]装货单简约信息提取</h4><p><img src="/2020/02/17/root/image-15.png" width="150px"> </p>
+<h4 id="3-1-2-2-API-装货单详细信息"><a href="#3-1-2-2-API-装货单详细信息" class="headerlink" title="3.1.2.2 [API]装货单详细信息"></a>3.1.2.2 [API]装货单详细信息</h4><p><img src="/2020/02/17/root/image-19.png" width="150px"></p>
+<h4 id="3-1-2-3-API-装货单-调度单编辑详细信息"><a href="#3-1-2-3-API-装货单-调度单编辑详细信息" class="headerlink" title="3.1.2.3 [API]装货单-调度单编辑详细信息"></a>3.1.2.3 [API]装货单-调度单编辑详细信息</h4><p><img src="/2020/02/17/root/image-26.png" width="170px"></p>
+<hr>
+
+<h3 id="3-1-3-装货单-装货详情查询"><a href="#3-1-3-装货单-装货详情查询" class="headerlink" title="3.1.3 装货单-装货详情查询"></a>3.1.3 装货单-装货详情查询</h3><p><img src="/2020/02/17/root/image-07.png" width="200px"></p>
+<table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>透出装货单数据细节<br>装货点及装货相关skuId,卸货点及卸货相关skuId,采购员&amp;采购单&amp;供应商,装货单制单时间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-1-3-1-API-装货单详细信息"><a href="#3-1-3-1-API-装货单详细信息" class="headerlink" title="3.1.3.1 [API]装货单详细信息"></a>3.1.3.1 [API]装货单详细信息</h4><table>
+<thead>
+<tr>
+<th>_</th>
+<th>_</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/2020/02/17/root/image-16.png" width="150px"></td>
+<td><img src="/2020/02/17/root/image-18.png" width="150px"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-1-3-2-API-装货单编辑详情信息"><a href="#3-1-3-2-API-装货单编辑详情信息" class="headerlink" title="3.1.3.2 [API]装货单编辑详情信息"></a>3.1.3.2 [API]装货单编辑详情信息</h4><p><img src="/2020/02/17/root/image-23.png" width="150px"></p>
+<hr>
+
+
+<h3 id="3-1-4-装货单创建-同步"><a href="#3-1-4-装货单创建-同步" class="headerlink" title="3.1.4 装货单创建-同步"></a>3.1.4 装货单创建-同步</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>采购单与采购子单数据同步结构一致<br>新增采购装货单同步创建逻辑<br>数据结构如<code>logistics_shipment</code>,<code>logistics_shipment_detail</code> </td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+<h3 id="3-1-5-装货单-发货"><a href="#3-1-5-装货单-发货" class="headerlink" title="3.1.5 装货单-发货"></a>3.1.5 装货单-发货</h3><p><img src="/2020/02/17/root/image-05.png" width="500px"></p>
+<table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>根据此次调度数量修改实发数量及附录发货单&amp;车辆照片</td>
+</tr>
+</tbody>
+</table>
+<img src="http://www.plantuml.com/plantuml/svg/VL7DJi9043wpJz4x-W8UV18l1Ek9j0asda5-IoYjGaCWLT8OIaGj711BIUtBx4otR-6IBQOQusMoCz_EzyqtKofhQbLAz6TyhuFLXpUFb5L5gwgLh8YE0JsN44NLP4czaQkIUlNZ_va4vX8TdQqR47fWsD3TyaZ347M3r_6XaKwi2mNrcCKMHz1P9gCPTgqJCE_OPd5eCLVfrCIcIMCVHpkIvpyzpm_2rTmNQ4_0V-JTTBz5UrrCEqRQCOlVT4bhaUYT8eiyzjdEaWCOUJZUfkCDALKq2U8Mfn8eZLsihsXWWDz7UqCAUSdZ04UxRFM1JpMSpI4QWcxyKfNuElF2HAvSot-8_QTqj2gsaRTAWu4m2sOlpqOAVzmdew7xEJeri0OqgE6hAqYPluR8JgPDiP7aTWVtVHmQD7BuvGun28Kpdd98lBFroShb5m00">
+<h4 id="3-1-5-1-API-物流-发货操作-沈伟"><a href="#3-1-5-1-API-物流-发货操作-沈伟" class="headerlink" title="3.1.5.1 [API]物流-发货操作-沈伟"></a>3.1.5.1 [API]物流-发货操作-沈伟</h4><p><img src="/2020/02/17/root/image-29.png" width="170px"></p>
+<blockquote>
+<p>星星.logisticsservice.delivery.shipment.update</p>
+</blockquote>
+<p><a href="http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.delivery.shipment.update" target="_blank" rel="noopener">http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.delivery.shipment.update</a></p>
+<hr>
+
+
+<h3 id="3-1-6-装货单-数量修改"><a href="#3-1-6-装货单-数量修改" class="headerlink" title="3.1.6 装货单-数量修改"></a>3.1.6 装货单-数量修改</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>装货单直接提供对外数量操作能力<br>需要遵循的:<code>采购数量=装货总数量=卸货总数量</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-1-6-1-API-采购-线路详情-数量修正"><a href="#3-1-6-1-API-采购-线路详情-数量修正" class="headerlink" title="3.1.6.1 [API]采购-线路详情-数量修正"></a>3.1.6.1 [API]采购-线路详情-数量修正</h4><p><img src="/2020/02/17/root/image-11.png" width="150px"></p>
+<p>修改某个装货单的应装、应卸数量  </p>
+<p><br></p>
+<h2 id="3-2-调度单"><a href="#3-2-调度单" class="headerlink" title="3.2 调度单"></a>3.2 调度单</h2><hr>
+
+<h3 id="3-2-1-调度单列表-待-已发货-查询"><a href="#3-2-1-调度单列表-待-已发货-查询" class="headerlink" title="3.2.1 调度单列表-待|已发货 查询"></a>3.2.1 调度单列表-待|已发货 查询</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>搜罗待发货状态<br>列表展示调度单号、调度单制单员姓名、调度车辆车牌号及车长、装货点以及计划装货量、卸货点以及计划卸货量</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-2-1-1-API-物流-调度单-待发车列表"><a href="#3-2-1-1-API-物流-调度单-待发车列表" class="headerlink" title="3.2.1.1 [API]物流-调度单-待发车列表"></a>3.2.1.1 [API]物流-调度单-待发车列表</h4><p><img src="/2020/02/17/root/image-21.png" width="150px"></p>
+<hr>
+
+<h3 id="3-2-2-调度单详情查询"><a href="#3-2-2-调度单详情查询" class="headerlink" title="3.2.2 调度单详情查询"></a>3.2.2 调度单详情查询</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>装货单大概信息、装货单卸货详细数据、调度单基本信息</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-2-2-1-API-物流-调度单详情-沈伟"><a href="#3-2-2-1-API-物流-调度单详情-沈伟" class="headerlink" title="3.2.2.1 [API]物流-调度单详情-沈伟"></a>3.2.2.1 [API]物流-调度单详情-沈伟</h4><table>
+<thead>
+<tr>
+<th>_</th>
+<th>_</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/2020/02/17/root/image-22.png" width="150px"></td>
+<td><img src="/2020/02/17/root/image-28.png" width="150px"></td>
+</tr>
+</tbody>
+</table>
+<p>当前调度单详情</p>
+<blockquote>
+<p>星星.logisticsservice.delivery.detail</p>
+</blockquote>
+<p><a href="http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.delivery.detail" target="_blank" rel="noopener">http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.delivery.detail</a></p>
+<hr>
+
+<h3 id="3-2-3-调度单司机、车辆查询"><a href="#3-2-3-调度单司机、车辆查询" class="headerlink" title="3.2.3 调度单司机、车辆查询"></a>3.2.3 调度单司机、车辆查询</h3><p><img src="/2020/02/17/root/image-06.png" width="300px"></p>
+<table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>根据姓名、手机号查询司机,并填充司机和车辆信息</td>
+<td>复用原逻辑</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-2-3-1-API-司机车辆各类API"><a href="#3-2-3-1-API-司机车辆各类API" class="headerlink" title="3.2.3.1 [API]司机车辆各类API"></a>3.2.3.1 [API]司机车辆各类API</h4><p><img src="/2020/02/17/root/image-14.png" width="900px"></p>
+<p><br></p>
+<hr>
+
+<h3 id="3-2-4-调度单创建"><a href="#3-2-4-调度单创建" class="headerlink" title="3.2.4 调度单创建"></a>3.2.4 调度单创建</h3><p><img src="/2020/02/17/root/image-04.png" width="400px"></p>
+<table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>发货单剩余发货量,划定此次调度单应承运量<br>填充司机车辆信息<br><b>1:本次调度sku件数小于等于sku采购装货单件数</b><br><b>2:本次剩余调度件数可后续派车生成新的调度单</b><br><b>3:装货单所有sku的本次调度件数都为0时,本装货单过滤不包含在所生成的调度单</b><br><b>4:只有一个装货单且调度件数为0,则调度单生成失败</b><br>数据MQ同步采购单状态</td>
+</tr>
+</tbody>
+</table>
+<img src="http://www.plantuml.com/plantuml/svg/VLDDKzfG55sRNv6b3ksCtRBell_1XOxYfWpCKDfr-0oXGAAYKpIMAX6m5Q6LQaWcpO_nlVjU_aLl-Z2ajfDD9havvxvppxblPxUOByXCkuQV9Mgqw6GexUPpnK8-koo2sQRDYwWOg2gVJvP5ASvx-JfEICk1eb7zX1gDG2cpqohL3_XyHDl7pAtoGOtFAjGPugSKPptr41tJCdnPGFisehxP2nITgax8duzOUP5wz_PzAlfD-mwODyI_WD9KokMB6Jd_8LEGy_lotygsSYkATasydX03nxD0rOdReGy_QEsEbxgW-TmtGfZJHSgwm17t7g4R5B5UBz42q0tYMDIe4ljhmf4fxWtvhpezR57T1jDPJh2JBSeutz8fQqIS3dwA08G3GecqbcIXm82fyUaKFXuozrpAvFR-D8U1mkQNeXKA0qr161w1QQ6FS7En7HzuEwXun7OskQ-2Qn6xJLirQdoZvXY9hDk7Xe74LQx_LVNa3BeS8OazeLetw5amiTXtDp9AMal8CAYCQQEEOWKy50Oditzb16gBBFh4EsATsGgA2AHkvV2TE7NkU-1Cmrwr1qGY38lKEgMpWnURo8PFKs8hc25pZ-2p-QYKGmjbAMb0TcRZqe0sm3Lv5hrOfZ3wo_Fa7cwLkMh49lRACx6V-6HtQ5WpJBXzknxll87hn9hte9IUdH6_mMdvrQDI4cnS69XSCRSd06b1XiwO-sVYDcKp-qLSwXZwDm00">
+<h4 id="3-2-4-1-API-调度单创建-沈伟"><a href="#3-2-4-1-API-调度单创建-沈伟" class="headerlink" title="3.2.4.1 [API]调度单创建-沈伟"></a>3.2.4.1 [API]调度单创建-沈伟</h4><p><img src="/2020/02/17/root/image-20.png" width="150px"></p>
+<blockquote>
+<p>星星.logisticsservice.delivery.create</p>
+</blockquote>
+<p><a href="http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.delivery.create" target="_blank" rel="noopener">http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.delivery.create</a></p>
+<h4 id="3-2-4-2-API-调度单保存-沈伟"><a href="#3-2-4-2-API-调度单保存-沈伟" class="headerlink" title="3.2.4.2 [API]调度单保存-沈伟"></a>3.2.4.2 [API]调度单保存-沈伟</h4><p><img src="/2020/02/17/root/image-30.png" width="160px"></p>
+<blockquote>
+<p>星星.logisticsservice.delivery.update</p>
+</blockquote>
+<p><a href="http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.delivery.update" target="_blank" rel="noopener">http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.delivery.update</a></p>
+<hr>
+
+
+<h3 id="3-2-5-调度单提交-承运单创建"><a href="#3-2-5-调度单提交-承运单创建" class="headerlink" title="3.2.5 调度单提交-承运单创建"></a>3.2.5 调度单提交-承运单创建</h3><p><img src="/2020/02/17/root/image-03.png" width="600px"></p>
+<table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>1、调度单所有装货单都发货后,调度单可通过点击“生成承运单”按钮创建承运单。<code>承运单取最后一个发车的装货单实际发车时间;承运单创建时间是生成承运单的时间</code><br>2、如果调度单发货总量等于应卸总量,按装货单原有卸货分配原则分配各个卸货点的卸货量生成承运单;<br>3、如果调度单发货总量小于应卸总量,优先分配服务站类型卸货点,其次档口类型卸货点,最后中心仓类型卸货点,同种类型卸货点按卸货先后顺序分配,直到发货量分配完毕;<br>4、如果调度单发货总量大于应卸总量,剩余量分配到最后卸货点;<br>5、卸货分配量可修改;<br>6、确定卸货方案时,校验总发货量是否等于总卸货分配量;<br>7、调度单生成承运单后,推送调度单的发货信息(装货点以及装货量)到采购模块;<br>数据MQ同步采购服务装货单:实发数据、采购单状态跟进<br>8、老批次号逻辑情况原消息通知</td>
+</tr>
+</tbody>
+</table>
+<img src="http://www.plantuml.com/plantuml/svg/ZLJRRjf047t6N-4FQAkcVKDLleI7H2bfgo8Z4Tfd9roC4SPEILf8I1C7GYu4GbfAZ5t2nzIpbx_es6jPJXL5HM8DipFdd1cVtVMDOhuWK_sI_De6gm6ZWRIHLug5V2uAagu1TJiESarZqr4Kb99rprUJ1MbvvO-wJKpBT_jWbNtd2inTDZq7On_6t_4tsPzmpSmNk6RWCwEymdImXr3jyDCo6zjiQR7fN5BonQnS-F3kVJ4jWtb5kZgRbC0T13Yr6Qw-wnBTm3WvAl6E9IL5F2O95Yt0V5t5abWIQT-0DO3A7VGrkFiXua8JwQbqUifwbIWpBDpw-8aUb4dtcbpRQw8VtvjXIskyjF0TzoLRQiJh-uu1ZGfOG-XUO27TEoOr2mlZ5ZBAwrXI1ECqmTq3mn6IwA53HxgOGYwxYKCWHpPIKNT0Zev9ymjehhIUAygFOY1_K9qA4yAjDs93IgMUcfF_kmsL6l5iDlifOdJOGQ6qF0Eh6SNj7fYzO41TDGxwpWYM9TzhPHJVE_ETUg3GDQ5gKAyAZQzfqj2H7aT9T-P8WONSTeECMfLN32cLpMrb8wchiTH0FWuz1iVGa_91l_GN7NILG8NQ9EOKR4AoxwXeooHgo4w-dVm_4xRm49fxRJRkXnQ-H-8aKvmPC2blfN09leNiffp_d2t83y7Pyf3P3MWU8ql2z8VWkLprsFtk2_4HxdW401Qtq3AGCAEif6C4ei_HjM3UiMKRJSQxAhdTWP65MsZDmDdkETI6wFuqz0zGj_1-yC9kvaHVui4CT8JO_vosvEKGNG3x4sACyO8WepFgTKH2EdaLy4u5_t9rMnoWPxG-8rZNlC3s7_W-WVGN">
+<h4 id="3-2-5-1-API-物流-承运单创建-沈伟"><a href="#3-2-5-1-API-物流-承运单创建-沈伟" class="headerlink" title="3.2.5.1 [API]物流-承运单创建-沈伟"></a>3.2.5.1 [API]物流-承运单创建-沈伟</h4><p><img src="/2020/02/17/root/image-31.png" width="170px"></p>
+<blockquote>
+<p>星星.logisticsservice.scheduling.delivery.create</p>
+</blockquote>
+<p><a href="http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.scheduling.delivery.create" target="_blank" rel="noopener">http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.scheduling.delivery.create</a></p>
+<hr>
+
+<h3 id="3-2-6-调度单-待发货-取消"><a href="#3-2-6-调度单-待发货-取消" class="headerlink" title="3.2.6 调度单(待发货)取消"></a>3.2.6 调度单(待发货)取消</h3><img src="http://www.plantuml.com/plantuml/svg/ZO_1Ji9048RFxbFidV0277m33pu2mVNKT9FQU8QWeOjkMXCWiHG88M8a0HjJgzG3BzEPtRw5cq1gnOkNENpvvvzlcYsNErI95tplG70FwoLfSTjrk7M064depqjOz7ewMHyWiRdBABzc3kMNlqeQ5FmLHaB7NSYM88VWfMRcMOP26ewJRl4OaEfA_RHwq1ICf_WLvjix45A5DtfngvDdqw7wAROxDVXuWsnWQ0qsK_0VS1YZt92cvL8KExqBJ1IZbHhCq0l8IRNxpoL_XAbNgXw7goytwDbvqGxLx0d72OxYlUG-KReHPbsn7mjZ-X-B_5E2_thimkmB-Wq0">
+<h4 id="3-2-6-1-API-物流-调度单取消"><a href="#3-2-6-1-API-物流-调度单取消" class="headerlink" title="3.2.6.1 [API]物流-调度单取消"></a>3.2.6.1 [API]物流-调度单取消</h4><p><img src="/2020/02/17/root/image-24.png" width="170px"></p>
+<p><br></p>
+<h2 id="3-3-承运单"><a href="#3-3-承运单" class="headerlink" title="3.3 承运单"></a>3.3 承运单</h2><hr>
+
+<h3 id="3-3-1-承运单详情-客户分配件数"><a href="#3-3-1-承运单详情-客户分配件数" class="headerlink" title="3.3.1 承运单详情-客户分配件数"></a>3.3.1 承运单详情-客户分配件数</h3><table>
+<thead>
+<tr>
+<th>图例</th>
+<th>图例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/2020/02/17/root/image-01.png" width="150px"></td>
+<td><img src="/2020/02/17/root/image-02.png" width="150px"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>发货过多、过少取不同文案<code>发货不足件数</code>或<code>销端需补单件数</code><br>透各个客户的下单、分配、签收量</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<hr>
+
+<h3 id="3-3-2-承运单-直发匹配客户订单-沈伟"><a href="#3-3-2-承运单-直发匹配客户订单-沈伟" class="headerlink" title="3.3.2 承运单-直发匹配客户订单-沈伟"></a>3.3.2 承运单-直发匹配客户订单-沈伟</h3><blockquote>
+<p>基地直发基于客户配送推行全国,区分两种订单<br>A:基于客户配送新流程的订单<br><span style="text-decoration:line-through">B:基于消耗小仓库存老流程的订单</span><br><span style="text-decoration:line-through">根据以上两类订单,区分两类签收提货操作,由物流承运时告知交易组订单类别</span><br>接下来只有A类订单;过渡期禁止业务分操作场内调线这类需要B类订单的调度</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">业务规则：</span><br><span class="line">1、调度单生成承运单时，卸货点为服务站的发货量匹配客户订单，匹配规则如下：</span><br><span class="line">A、有效订单: 匹配的订单全是基于客户配送新流程订单</span><br><span class="line">B、订单范围：起始时间为上一个自然日凌晨后的订单；</span><br><span class="line">C、匹配原则：按订单量由大到小分配消耗卸货点(服务站)发货量，直到发货量匹配消耗完成；</span><br><span class="line">2、已经匹配的客户订单，在承运单生成后40小时触发签收、提货流程（线上原有流程），剩余量等待该服务站后续有新订单时再触发签收、提货流程；</span><br><span class="line">3、所有卸货点分配量完成签收后，承运单状态变更为配送完成；</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>1、调度单生成承运单时，卸货点为服务站的发货量匹配<code>[新流程]</code>客户订单，匹配规则如下：<br>A、有效订单: 匹配的订单全是基于客户配送新流程订单<br>B、订单范围：起始时间为上一个自然日凌晨后的订单；<br>C、匹配原则：按订单量由大到小分配消耗卸货点(服务站)发货量，直到发货量匹配消耗完成；<br>2、匹配到的客户订单进行交易Mq通知<br>3、已经匹配的客户订单，在承运单生成后40小时触发签收、提货流程(线上原有流程)，剩余量等待该服务站后续有新订单时再触发签收、提货流程；<br>4、所有卸货点分配量完成签收后，承运单状态变更为配送完成；</td>
+</tr>
+</tbody>
+</table>
+<img src="http://www.plantuml.com/plantuml/svg/ZLBBRjfG45tZhs2PA7JHTkTAbVhOPD5LjqXL1Iog8b18KgaxX_0mOC2X8OH7IY7GaBGyaXemeBGVKyzS-oywvXfaPO4gOObxPkRCp3aJY4OEOj6mbsMkSNo4ZJnaMqB00Orv1y-_EA0Wk7CUFNU_H2zUIanh-oEFHPZUGV74rAwC-nGsRc2WeAoo_cyydR1Q0l8wXTZj0hxcU1hqLSYN_P4dejLEGV7CZKBcshYlyc8hNTnngkEptTSxRpyUxWOtp_HjXld1kiQtRrT0INd0weDYrbXq3Js75orZCS5cbzLrIFuo1-tbP2_-IiIPmRBC4T4BoinAvcaT3a2oX-T3QCwDUG46RPId5BMew6n4ux1URiNqafZuVrCvXhecckCfNEMmCh4gcg7F3Jrhw9AXtvZf6vQOOAKBQOL61xMmRkQFl28MFW4KcY1NHLGoF4RRiDDRw5o1F89H4UGK9U54DgNAMeOjBW_xKTtcKjiIiBfcbwpUdDqfN1huJ7WVFd3sfaotG89dambiaJ0lay5G-CEdKEppk_teOImGyfcjBZN3VeTJs8Unx8t7IKYDDpDYNIDX7UniPZKal8qJoHRdsWOrGGgox0H99dBRHRnb7VT850xPAYPxDh9yRZ_iwhv-qVjcpv9ghDdboK8el1_oOYrkN_XAbF-HWuxB7BQn8P6bP3N-RF4xD0SZk2_pGo2J18yjDq_Z2JnaJY_OzyLJse_i9SWhU3QsiqeP-f6HU3J4ecgbIdmB7pPLAvqsjJvDx5x3EUZf7HqyT6emEh4Rb_y8db0aAD3t3m00">
+<hr>
+
+<h3 id="3-3-3-承运单-直发自动签收-沈伟"><a href="#3-3-3-承运单-直发自动签收-沈伟" class="headerlink" title="3.3.3 承运单-直发自动签收-沈伟"></a>3.3.3 承运单-直发自动签收-沈伟</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>匹配[服务站]基于客户配送新订单后,进行签收动作<br>承运单数据状态更正<br>基于客户订单库存入库<br>当前发货子单[卸货点+sku]分配完应卸数量<br>通知采购同步装货单签收信息:<code>装货单号</code>,<code>实签数量</code>,<code>实签人</code>,<code>实签时间点</code>,<code>装货子单状态跟进:已签收</code><br>通知交易触发订单提货:<code>需求子单号</code>,<code>需求子单状态</code>,<code>实签数量情况</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>订单定时签收 </p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/RPBBJi9G48RNz2cwSYCcBbony3LS66CCi32YDI0cxWhAfGsbDSLef950G92a3HXkbY0FOsTw-XOEb6X15oUPCpqpy_t_D2fSN2M51EzARpZCeA60NEUYgwHZD_59tqXwXG8Rc9ilfpfaEwiabn24InwbEPjhe3oubHeMDT3AUxlGK_5nj8M6X4RNDJ-nCc9MWzvmeI30pdxm5k6Pd7Mp7rvEySJCbvW1PS86RQgYs3D4x6VzE1PFd5x7apV7AI6TZCPTKuBcipFfuaCF5GlK9wmEiDnXy-hck21-X8UQxTXbi1fO7Fjue8wfYjLB1-SfoBN0rhdGIUAAXvaEaWBg_OB7N8WzzE48TpjrbZw2OfwmmIg1NQ4lHE8LL2wqCJveQMIzATctj8dAG9LTUOIaNokXsLhRGoX-4GiY_PYFaaXkhsaPl_ijdKc5OXmLcVW8rWiD_8zjVHE_IrsIi76DV0c3TkVsfujfYkNt9iMqyp_DWZyK2RsNtLhB1_RBy3O7-M6OjL-91bMD741TSMQ6Bv0E_mq0">
+<blockquote>
+<p>订单客户主动签收 </p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/VLBDJi9043xJf-2kle07NyE3CSOW1oDA0chYhLGhRSFQ6Y0I818DA9AqyGUXbYWFOsUwVGkdBYPhOpniClbsPhvllfbSyU2mL2na8_C1NolOPM3TABa560PzRDLJO5ojyh6RpfpLGHikG4MkMrcJMwzcmRj5OnhwCx26aVk1ZOb0k7SBhAd8oUbIx0tYbevT4-nBFhx7jeRTaUWHjS_GdFEvWyr7P9woNJZC9ecE4QjQ-ZFp7mctj4XxYtKMgvLFjGBC9ofIHd7SLV594_5Elh1xd2-TR9MBHwLSFd9DwBT3VoGem6vXPumNGpxlfEbagyYENX065x85O4-fYj_KrlVBe0yWg2kPP1nuhuF9nEZWEfIv8SIHtANotj4c6ESa6xmQ10tw8ILnrLOoANfvVQk_cxAcC9FAmBOYQu8qlrD3T_1hvvdymOuiINXBrMYgYUVoBDDdqJBq6nJZnE3g5NZNHFYNjjIwV_eA9NpQ8r-MmJcBdcO96_D-xgU6XYDaqSkcRaW-HXhOPl6TiS3SlYmswlYWluZDuwaEvw_XR90OySqY4EKB">
+<hr>
+
+<h3 id="3-3-4-承运单-文案"><a href="#3-3-4-承运单-文案" class="headerlink" title="3.3.4 承运单-文案"></a>3.3.4 承运单-文案</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原调度单文案</td>
+<td>变更承运单文案</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+<h3 id="3-3-5-承运单-多发货点清洗"><a href="#3-3-5-承运单-多发货点清洗" class="headerlink" title="3.3.5 承运单-多发货点清洗"></a>3.3.5 承运单-多发货点清洗</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>合并清洗硬编码限制单个装货点<br>站点顺序除类型排序外,实际到达时间点排序</td>
+<td>解除合并清洗承运单上部分硬编码限制单个装货点<br>站点顺序除类型排序外,多装货单按货时间先后顺序排列</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+<h3 id="3-3-6-承运单-多发货点查询"><a href="#3-3-6-承运单-多发货点查询" class="headerlink" title="3.3.6 承运单-多发货点查询"></a>3.3.6 承运单-多发货点查询</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查询条件:发车点,只支持首个发货地</td>
+<td>变更支持多个发货地查询</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="3-4-批次号影响"><a href="#3-4-批次号影响" class="headerlink" title="3.4 批次号影响"></a>3.4 批次号影响</h2><hr>
+
+<h3 id="3-4-1-基地直发批次号"><a href="#3-4-1-基地直发批次号" class="headerlink" title="3.4.1 基地直发批次号"></a>3.4.1 基地直发批次号</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原基地单批次号颗粒度到达<code>需求子单</code>即<code>采购子单</code></td>
+<td>现基地单批次号颗粒度不变化</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+<h3 id="3-4-2-客户订单配送批次号入小仓"><a href="#3-4-2-客户订单配送批次号入小仓" class="headerlink" title="3.4.2 客户订单配送批次号入小仓"></a>3.4.2 客户订单配送批次号入小仓</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原先客户订单配送只支持成配</td>
+<td>现客户订单配送支持基地,以客户订单号及基地直发批次号入库小仓,并后期签收提货</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="3-5-交易新老客户订单"><a href="#3-5-交易新老客户订单" class="headerlink" title="3.5 交易新老客户订单"></a>3.5 交易新老客户订单</h2><hr>
+
+<h3 id="3-5-1-中间态数据-基地直发单"><a href="#3-5-1-中间态数据-基地直发单" class="headerlink" title="3.5.1 中间态数据-基地直发单"></a>3.5.1 中间态数据-基地直发单</h3><blockquote>
+<p>基地直发基于客户配送推行全国,区分两种订单<br>A:基于客户配送新流程的订单<br><span style="text-decoration:line-through">B:基于消耗小仓库存老流程的订单</span><br><span style="text-decoration:line-through">根据以上两类订单,区分两类签收提货操作,由物流承运时告知交易组订单类别</span><br>接下来只有A类订单;过渡期禁止业务分操作场内调线这类需要B类订单的调度</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只有<code>苏锡常</code>城配派送的订单才是A类订单<br>由于交易改造对基地单未处理,无法使用调整路线配送</td>
+<td>树根推行<code>上海</code>,<code>苏锡常</code>,<code>浙江</code>三地<br>基地直发单将自动匹配A类订单并进行自动或主动签收、提货<br>中间态基地直发单允许使用调整路线,派送的订单是B类订单<br>所有城市的城配订单将使用A类订单</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="3-6-场内调线"><a href="#3-6-场内调线" class="headerlink" title="3.6 场内调线"></a>3.6 场内调线</h2><hr>
+
+<h3 id="3-6-1-场内调整路线"><a href="#3-6-1-场内调整路线" class="headerlink" title="3.6.1 场内调整路线"></a>3.6.1 场内调整路线</h3><font size="3" color="red">关闭调线功能</font>
+
+<table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原先基于客户订单配送,由于签收和派送不确定性,试点城市的调整路线功能关闭</td>
+<td>现如今<code>交易改造#客户订单城配</code>+<code>树根#基地直发</code>推行全国,场内调整路线关闭<br>其他调度流程(<code>基地直发</code>+<code>客户订单城配</code>)的订单走基于客户自动提货流程</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="3-7-采购单"><a href="#3-7-采购单" class="headerlink" title="3.7 采购单"></a>3.7 采购单</h2><hr>
+
+<h3 id="3-7-1-采购单确认-沈伟"><a href="#3-7-1-采购单确认-沈伟" class="headerlink" title="3.7.1 采购单确认-沈伟"></a>3.7.1 采购单确认-沈伟</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_</td>
+<td>对采购单所关联的所有未生效装货自动进行生效</td>
+</tr>
+</tbody>
+</table>
+<img src="http://www.plantuml.com/plantuml/svg/IqmkoIzIU3QvzydUEKzsxU9ApiyhAShFKNZPtlvYozfdStgVTYs42pxlNFbiQoDKa0kkITSEMRKLLE_JtgdF5wvxiMu95xAihXso8LOApwVCVpQr0wxZMMV3qzRDBngdF9_LydH2ovCTgruiRdsnPJbGIkTf__edkvS-sxBlQVz4k2W0">
+<blockquote>
+<p>星星.logisticsservice.requirement.valid</p>
+</blockquote>
+<p><a href="http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.requirement.valid" target="_blank" rel="noopener">http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.requirement.valid</a></p>
+<hr>
+
+
+<h3 id="3-7-2-采购单取消-沈伟"><a href="#3-7-2-采购单取消-沈伟" class="headerlink" title="3.7.2 采购单取消-沈伟"></a>3.7.2 采购单取消-沈伟</h3><table>
+<thead>
+<tr>
+<th>现状</th>
+<th>解决方案 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_</td>
+<td>当前采购单如果有关联调度单,则不允许采购单取消操作</td>
+</tr>
+</tbody>
+</table>
+<img src="http://www.plantuml.com/plantuml/svg/IqmkoIzIU3QvzydUEKzsxU9ApiyhAShFKNZPtlvYozfdStgVTYs42pxlNFbiQoDKa0kkITSEMRMLmjF-QS-sTK34dlPEXQZZGbQZQuTi52uTYJab2d0ntMUT3S_cTBvOtFfYot8mVqwdxeiDpKztBGFodhPkVj4uXOiJsLXqIvvDN_1iyrI8LUWgKJq0D1fY8CHydQSJkvxFNugYFpMdE1MVuwOl8CrnJvTiV3Qr0sw03eGFjm2_Uo7kWxZiMSU4frtpkLBpKW00">
+<blockquote>
+<p>星星.logisticsservice.requirement.valid</p>
+</blockquote>
+<p><a href="http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.requirement.valid" target="_blank" rel="noopener">http://gateway.星星.com/api_admin/api_doc/detail.htm?api_name=星星.logisticsservice.requirement.valid</a></p>
+<h1 id="4、交互内容确定"><a href="#4、交互内容确定" class="headerlink" title="4、交互内容确定"></a>4、交互内容确定</h1><h2 id="采购交互点-MQ-生成采购单"><a href="#采购交互点-MQ-生成采购单" class="headerlink" title="[采购交互点]-MQ-生成采购单"></a>[采购交互点]-MQ-生成采购单</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PurchaseRequirementSyncEvent</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">4530980811382387427L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求主单号</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer sourceId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> com..jotunheim.logistic.client.constant.requirement.SourceTypeEnum</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 承运方式（0:不区分 1：非自营 2：自营）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer logisticsType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 派送发车点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer storeHouseId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 派送发车地</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String storeHouseName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 提货日期</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Long pickTime;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;PurchaseRequirementDetailSyncEvent&gt; skuList;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PurchaseRequirementDetailSyncEvent</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">7392533409927455042L</span>;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 来源子单id（类型为0：订单号;1：基地采购子单号;2：场内采购子单号）</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * skuId</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer skuId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 需求量</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> BigDecimal amount;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> List&lt;PurchaseOrderSkuLoadUnload&gt; loadUnloadList;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PurchaseOrderSkuLoadUnload</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">4785882465921942883L</span>;</span><br><span class="line">        <span class="keyword">private</span> List&lt;PurchaseOrderLoad&gt; loadList;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> List&lt;PurchaseOrderUnload&gt; unloadList;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PurchaseOrderLoad</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">6628860385227140111L</span>;</span><br><span class="line">        <span class="keyword">private</span> String loadProvince;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String loadCity;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String loadArea;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Integer loadNum;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Long loadTime;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PurchaseOrderUnload</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">503341045385472615L</span>;</span><br><span class="line">        <span class="keyword">private</span> Integer unloadId;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String unloadName;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Integer unloadType;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Integer unloadNum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="采购交互点-确认-取消采购单"><a href="#采购交互点-确认-取消采购单" class="headerlink" title="[采购交互点]-确认/取消采购单"></a>[采购交互点]-确认/取消采购单</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 采购单确认生效与失效</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> shenwei</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2020/2/22 上午10:51</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PurchaseRequirementValidDTO</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">7043483325389542517L</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求主单号</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer sourceId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> com..jotunheim.logistic.client.constant.requirement.SourceTypeEnum</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="物流交互点-生成调度单"><a href="#物流交互点-生成调度单" class="headerlink" title="[物流交互点]-生成调度单"></a>[物流交互点]-生成调度单</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 调度单创建通知-采购单状态MQ</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 起初用于树根项目-调度单创建MQ通知需求子单状态跟进</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> shenwei</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2020/2/22 上午10:59</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeliveryCreateEvent</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">4096681865264014388L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long deliveryId;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer operatorId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求子单维度-采购子单维度</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;RequirementDeliveryDetailInfo&gt; detailInfoList;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RequirementDeliveryDetailInfo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">5070931901568450400L</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 子单状态</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com..jotunheim.logistic.client.constant.requirement.DetailStatusEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer detailStatus;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 子单状态</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com..jotunheim.logistic.client.constant.requirement.DetailStatusEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer shipmentStatus;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 来源子单id（类型为0：订单号;1：基地采购子单号;2：场内采购子单号）</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com..jotunheim.logistic.client.constant.requirement.SourceTypeEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * skuId</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer skuId;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="物流交互点-取消调度单"><a href="#物流交互点-取消调度单" class="headerlink" title="[物流交互点]-取消调度单"></a>[物流交互点]-取消调度单</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 调度单取消通知-采购单状态MQ</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 起初用于树根项目-调度单创建MQ通知需求子单状态跟进</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> shenwei</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2020/2/22 上午11:04</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeliveryCancelEvent</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">860806214240471719L</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求子单维度-采购子单维度</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;RequirementCancelDeliveryDetailInfo&gt; detailInfoList;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long deliveryId;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer operatorId;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RequirementCancelDeliveryDetailInfo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">2632503231194481964L</span>;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 子单状态</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com..jotunheim.logistic.client.constant.requirement.DetailStatusEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer detailStatus;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 来源子单id（类型为0：订单号;1：基地采购子单号;2：场内采购子单号）</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com..jotunheim.logistic.client.constant.requirement.SourceTypeEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="物流交互点-生成承运单"><a href="#物流交互点-生成承运单" class="headerlink" title="[物流交互点]-生成承运单"></a>[物流交互点]-生成承运单</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SchedulingCreateEvent</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">26532044446909589L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 草稿物流单id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    Long schedulingId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 操作用户id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer operatorId;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 订单提货信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;RequirementDetailInfo&gt; orderBatchInfos;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RequirementDetailInfo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 需求单子单id</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer detailId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 子单状态</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com..jotunheim.logistic.client.constant.requirement.DetailStatusEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer detailStatus;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 来源子单id（类型为0：订单号;1：基地采购子单号;2：场内采购子单号）</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com..jotunheim.logistic.client.constant.requirement.SourceTypeEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer sourceType;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * skuId</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer skuId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 批次号</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> String batchNo;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 本次承运数量</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> BigDecimal thisTimeAmount;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 承运数量</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> BigDecimal totalAmount;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="物流交互点-签收"><a href="#物流交互点-签收" class="headerlink" title="[物流交互点]-签收"></a>[物流交互点]-签收</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 物流单签收</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@auther</span>: caotx</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019/8/19 11:43</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeliverySignEvent</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">5686211734579815422L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 唯一key</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String key;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;SignEventInfo&gt; eventInfoList;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SignEventInfo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">6646638350640082703L</span>;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 承运单ID</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Long schedulingId;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com..jotunheim.logistic.client.constant.DeliveryStatusEnum</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer deliveryStatus;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 需求子单ID</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer requirementDetailId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 签收数量</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer signAmount;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 采购子单ID</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> String sourceSubId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * skuId</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer skuId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 主键ID</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> Integer deliverySourceId;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sql原表字段变更</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logistics_delivery_source#shipment_detail_id</span><br></pre></td></tr></table></figure>
+<h1 id="5、开发说明"><a href="#5、开发说明" class="headerlink" title="5、开发说明"></a>5、开发说明</h1><blockquote>
+<p>分支</p>
+</blockquote>
+<blockquote>
+<p>里程碑</p>
+</blockquote>
+<img src="http://www.plantuml.com/plantuml/svg/RP9TJi9058NVPnMp0DW0INbt3xuOw8E9jgR0ksX8QB4sX1z16hL4AqPi4zIqfbOMuzoPSHUE6IXAJUPfxdVEFIUvYeBPE85qG5-RRDR1YeBsAdNTm3IE8PYYYgxL3Vq0Wps4stlUdqDhJjulm8coqTV2vQal7dLjiBpid_Ldj1r9Tn8_mV8K8UbQBEVjIfYP3o84E8_22kM1ObcAIvYVH-0CuICWIqykqOzKRR_whoYVOcqW9usQQknKKHxRx8EknQxl_k3h7blTIvZUl54xaDGgPze3qvRgIgDMrmzLem3-2RrowSAZhiacCRIUDwFsc2ydt3lZBxvem98k19UqPvFKBU1TJIf_cz9HoCCfII892JqrUoIsicnoAk7Fu-PgzoWaSGViGPuNpGI9aB9r6wfM_RcFRm00">
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="disqus_thread">
+        <p class="comment-tips">国内查看评论需要代理~</p>
+    </div>
+    <script>
+    window.disqus_config = function () {
+        this.language = 'zh';
+        this.page.url = 'http://www.coderss.cn/2020/02/17/root/';
+        this.page.title = '树根项目一期[物流]-技术方案';
+        this.page.identifier = '2020/02/17/root/';
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://name.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+<script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1234567890&amp;web_id=1234567890"></script>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
